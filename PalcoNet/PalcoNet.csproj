@@ -130,9 +130,11 @@
     <Compile Include="Modelo\Direccion.cs" />
     <Compile Include="Modelo\Empresa.cs" />
     <Compile Include="Modelo\EstadoPublicacion.cs" />
+    <Compile Include="Modelo\Funcionalidad.cs" />
     <Compile Include="Modelo\Grado.cs" />
     <Compile Include="Modelo\Publicacion.cs" />
     <Compile Include="Modelo\Rol.cs" />
+    <Compile Include="Modelo\Rubro.cs" />
     <Compile Include="Modelo\Tarjeta.cs" />
     <Compile Include="Modelo\Ubicacion.cs" />
     <Compile Include="Modelo\Usuario.cs" />
@@ -156,7 +158,16 @@
     <Compile Include="Registro de Usuario\Menu.designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Repositorios\ClienteRepositorio.cs" />
     <Compile Include="Repositorios\Database.cs" />
+    <Compile Include="Repositorios\DireccionRepositorio.cs" />
+    <Compile Include="Repositorios\EmpresaRepositorio.cs" />
+    <Compile Include="Repositorios\GradoRepositorio.cs" />
+    <Compile Include="Repositorios\PublicacionRepositorio.cs" />
+    <Compile Include="Repositorios\RolRepositorio.cs" />
+    <Compile Include="Repositorios\TarjetaRepositorio.cs" />
+    <Compile Include="Repositorios\UbicacionRepositorio.cs" />
+    <Compile Include="Repositorios\UsuarioRepositorio.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

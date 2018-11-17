@@ -5,3 +5,4 @@ C:\Users\yoona\Desktop\TP PalcoNet Frba 1.0 - 2C 2018\Aplicacion Desktop\PalcoNe
 C:\Users\yoona\Desktop\TP PalcoNet Frba 1.0 - 2C 2018\Aplicacion Desktop\PalcoNet\obj\Debug\PalcoNet.Login_e_Inicio.Log.resources
 C:\Users\yoona\Desktop\TP PalcoNet Frba 1.0 - 2C 2018\Aplicacion Desktop\PalcoNet\obj\Debug\PalcoNet.Login_e_Inicio.Menu.resources
 C:\Users\yoona\Desktop\TP PalcoNet Frba 1.0 - 2C 2018\Aplicacion Desktop\PalcoNet\obj\Debug\PalcoNet.csproj.GenerateResource.Cache
+C:\Users\yoona\Desktop\gdd-2018-gestion-de-gatos\PalcoNet\bin\Debug\PalcoNet.exe.config
