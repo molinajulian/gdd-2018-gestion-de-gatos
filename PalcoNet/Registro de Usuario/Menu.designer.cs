@@ -87,7 +87,6 @@
             this.buttonModificacionRoles = new MaterialSkin.Controls.MaterialRaisedButton();
             this.buttonModificacionClientes = new MaterialSkin.Controls.MaterialRaisedButton();
             this.logout = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.config = new MaterialSkin.Controls.MaterialRaisedButton();
             ((System.ComponentModel.ISupportInitialize)(this.iconClientes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconAltaClientes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconOperaciones)).BeginInit();
@@ -875,25 +874,11 @@
             this.logout.UseVisualStyleBackColor = true;
             this.logout.Click += new System.EventHandler(this.logout_Click);
             // 
-            // config
-            // 
-            this.config.Depth = 0;
-            this.config.Location = new System.Drawing.Point(289, 26);
-            this.config.MouseState = MaterialSkin.MouseState.HOVER;
-            this.config.Name = "config";
-            this.config.Primary = true;
-            this.config.Size = new System.Drawing.Size(149, 36);
-            this.config.TabIndex = 67;
-            this.config.Text = "Configuración";
-            this.config.UseVisualStyleBackColor = true;
-            this.config.Click += new System.EventHandler(this.config_Click);
-            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(595, 584);
-            this.Controls.Add(this.config);
             this.Controls.Add(this.logout);
             this.Controls.Add(this.iconRoles);
             this.Controls.Add(this.textoRoles);
@@ -956,6 +941,7 @@
             this.Name = "Menu";
             this.Text = "PAGO ÁGIL";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Menu_FormClosing);
+            this.Load += new System.EventHandler(this.Menu_Load);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Menu_MouseMove);
             this.SystemColorsChanged += new System.EventHandler(this.Menu_SystemColorsChanged);
             ((System.ComponentModel.ISupportInitialize)(this.iconClientes)).EndInit();
@@ -1041,6 +1027,5 @@
         private MaterialSkin.Controls.MaterialRaisedButton buttonModificacionRoles;
         private MaterialSkin.Controls.MaterialRaisedButton buttonModificacionClientes;
         private MaterialSkin.Controls.MaterialRaisedButton logout;
-        private MaterialSkin.Controls.MaterialRaisedButton config;
     }
 }

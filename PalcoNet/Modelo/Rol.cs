@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PalcoNet.Modelo
 {
-    class Rol
+    public class Rol
     {
         public string Nombre { get; set; }
         public List<Funcionalidad> Funcionalidades { get; set; }

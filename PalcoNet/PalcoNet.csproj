@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>PalcoNet.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MaterialSkin">
       <HintPath>packages\MaterialSkin.0.2.1\lib\MaterialSkin.dll</HintPath>
@@ -48,17 +51,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abm Cliente\Form1.cs">
+    <Compile Include="Abm Cliente\AltaCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Cliente\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Cliente\AltaCliente.designer.cs">
+      <DependentUpon>AltaCliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Empresa Espectaculo\Form1.cs">
+    <Compile Include="Abm Cliente\ListadoCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Empresa Espectaculo\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Cliente\ListadoCliente.designer.cs">
+      <DependentUpon>ListadoCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Cliente\ModificacionCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Cliente\ModificacionCliente.designer.cs">
+      <DependentUpon>ModificacionCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\AltaEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\AltaEmpresa.designer.cs">
+      <DependentUpon>AltaEmpresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\ListadoEmpresas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\ListadoEmpresas.designer.cs">
+      <DependentUpon>ListadoEmpresas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\ModificacionEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\ModificacionEmpresa.designer.cs">
+      <DependentUpon>ModificacionEmpresa.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Grado\Form1.cs">
       <SubType>Form</SubType>
@@ -66,11 +93,23 @@
     <Compile Include="Abm Grado\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Rol\Form1.cs">
+    <Compile Include="Abm Rol\AltaRol.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Rol\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Rol\AltaRol.designer.cs">
+      <DependentUpon>AltaRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Rol\ListadoRoles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\ListadoRoles.designer.cs">
+      <DependentUpon>ListadoRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Rol\ModificacionRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\ModificacionRol.designer.cs">
+      <DependentUpon>ModificacionRol.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Rubro\Form1.cs">
       <SubType>Form</SubType>
@@ -94,12 +133,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Editar Publicacion\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Generar Publicacion\Form1.cs">
@@ -140,12 +173,6 @@
     <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registro de Usuario\ConfiguracionInicial.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Registro de Usuario\ConfiguracionInicial.designer.cs">
-      <DependentUpon>ConfiguracionInicial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Registro de Usuario\Log.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,6 +186,8 @@
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
     <Compile Include="Repositorios\ClienteRepositorio.cs" />
+    <Compile Include="Repositorios\RolesRepository.cs" />
+    <Compile Include="Repositorios\FuncionalidadesRepositorio.cs" />
     <Compile Include="Repositorios\Database.cs" />
     <Compile Include="Repositorios\DireccionRepositorio.cs" />
     <Compile Include="Repositorios\EmpresaRepositorio.cs" />
@@ -168,6 +197,33 @@
     <Compile Include="Repositorios\TarjetaRepositorio.cs" />
     <Compile Include="Repositorios\UbicacionRepositorio.cs" />
     <Compile Include="Repositorios\UsuarioRepositorio.cs" />
+    <EmbeddedResource Include="Abm Cliente\AltaCliente.resx">
+      <DependentUpon>AltaCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Cliente\ListadoCliente.resx">
+      <DependentUpon>ListadoCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Cliente\ModificacionCliente.resx">
+      <DependentUpon>ModificacionCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Empresa Espectaculo\AltaEmpresa.resx">
+      <DependentUpon>AltaEmpresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Empresa Espectaculo\ListadoEmpresas.resx">
+      <DependentUpon>ListadoEmpresas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Empresa Espectaculo\ModificacionEmpresa.resx">
+      <DependentUpon>ModificacionEmpresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\AltaRol.resx">
+      <DependentUpon>AltaRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\ListadoRoles.resx">
+      <DependentUpon>ListadoRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\ModificacionRol.resx">
+      <DependentUpon>ModificacionRol.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -177,9 +233,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Registro de Usuario\ConfiguracionInicial.resx">
-      <DependentUpon>ConfiguracionInicial.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Registro de Usuario\Log.resx">
       <DependentUpon>Log.cs</DependentUpon>
     </EmbeddedResource>

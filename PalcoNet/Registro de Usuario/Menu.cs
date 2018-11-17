@@ -13,6 +13,8 @@ using PalcoNet.Modelo;
 
 using PalcoNet.Repositorios;
 using MaterialSkin.Controls;
+using PagoAgilFrba.AbmCliente;
+using PagoAgilFrba.AbmRol;
 
 namespace PalcoNet.Login_e_Inicio
 {
@@ -23,13 +25,11 @@ namespace PalcoNet.Login_e_Inicio
         Boolean pagos=false;
         Boolean devoluciones = false;
         Boolean rendiciones = false;
-        ConfiguracionInicial conf;
-        public Menu(Usuario user,Log login,ConfiguracionInicial conf)
+        public Menu(Usuario user, Log login)
         {
             InitializeComponent();
             this.user = user;
             this.login = login;
-            this.conf = conf;
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
@@ -58,7 +58,7 @@ namespace PalcoNet.Login_e_Inicio
             ocultarBotonesSide();
             ocultarTodo();
             List<String> funcionalidades = new List<string>();
-            funcionalidades = RolesRepositorio.getFuncionalidades(this.user.RolUsuario);
+            //funcionalidades = RolesRepositorio.getFuncionalidades(this.user.RolUsuario);
             if (funcionalidades == null)
             {
                 MessageBox.Show("Su Rol ha sido inhabilitado. Por favor inicie sesión nuevamente.");
@@ -423,13 +423,6 @@ namespace PalcoNet.Login_e_Inicio
             this.Hide();
         }
 
-        private void config_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            this.conf.Show();
-            this.conf.llenarCombos();
-        }
-
         private void Menu_MouseMove(object sender, MouseEventArgs e)
         {
             colorearDividers();
@@ -443,6 +436,11 @@ namespace PalcoNet.Login_e_Inicio
         private void Menu_Shown(object sender, EventArgs e)
         {
             configurarBotones();
+        }
+
+        private void Menu_Load(object sender, EventArgs e)
+        {
+
         }
         
     }
