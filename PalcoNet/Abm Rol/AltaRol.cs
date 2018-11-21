@@ -7,13 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using PagoAgilFrba.Modelo;
-using PagoAgilFrba.Repositorios;
 using MaterialSkin.Controls;
 using MaterialSkin;
 using PalcoNet.Modelo;
+using Palconet.Repositorios;
 
-namespace PagoAgilFrba.AbmRol
+namespace Palconet.AbmRol
 {
     public partial class AltaRol : MaterialForm
     {
@@ -64,8 +63,8 @@ namespace PagoAgilFrba.AbmRol
                 return;
             }
 
-            rol.nombre = tx_nombre_rol.Text;
-            rol.inhabilitado = false;
+            rol.Nombre = tx_nombre_rol.Text;
+            rol.Habilitado = true;
             listarFuncionalidades();
             RolesRepositorio.agregar(rol,funcionalidades);
             funcionalidades.Clear();

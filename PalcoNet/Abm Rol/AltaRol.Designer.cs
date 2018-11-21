@@ -1,4 +1,4 @@
-﻿namespace PagoAgilFrba.AbmRol
+﻿namespace Palconet.AbmRol
 {
     partial class AltaRol
     {

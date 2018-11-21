@@ -186,11 +186,11 @@
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
     <Compile Include="Repositorios\ClienteRepositorio.cs" />
+    <Compile Include="Repositorios\EmpresasRepositorio.cs" />
     <Compile Include="Repositorios\RolesRepository.cs" />
     <Compile Include="Repositorios\FuncionalidadesRepositorio.cs" />
     <Compile Include="Repositorios\Database.cs" />
     <Compile Include="Repositorios\DireccionRepositorio.cs" />
-    <Compile Include="Repositorios\EmpresaRepositorio.cs" />
     <Compile Include="Repositorios\GradoRepositorio.cs" />
     <Compile Include="Repositorios\PublicacionRepositorio.cs" />
     <Compile Include="Repositorios\RolRepositorio.cs" />

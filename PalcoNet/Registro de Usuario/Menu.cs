@@ -13,14 +13,14 @@ using PalcoNet.Modelo;
 
 using PalcoNet.Repositorios;
 using MaterialSkin.Controls;
-using PagoAgilFrba.AbmCliente;
-using PagoAgilFrba.AbmRol;
+using Palconet.AbmCliente;
+using Palconet.AbmRol;
 
 namespace PalcoNet.Login_e_Inicio
 {
     public partial class Menu : MaterialForm
     {
-        Usuario user;
+      /*  Usuario user;
         Log login;
         Boolean pagos=false;
         Boolean devoluciones = false;
@@ -442,6 +442,11 @@ namespace PalcoNet.Login_e_Inicio
         {
 
         }
-        
+
+        private void materialDivider2_Click(object sender, EventArgs e)
+        {
+
+        }
+     */   
     }
 }

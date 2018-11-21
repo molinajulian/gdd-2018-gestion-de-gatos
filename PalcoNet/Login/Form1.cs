@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MaterialSkin.Controls;
-using MaterialSkin;
-using System.Text.RegularExpressions;
 
-namespace Palconet.AbmEmpresa
+namespace PalcoNet.Generar_Publicacion
 {
-    public partial class AltaEmpresa : MaterialForm
+    public partial class Form1 : Form
     {
-
+        public Form1()
+        {
+            InitializeComponent();
+        }
     }
 }

@@ -7,20 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using PagoAgilFrba.Modelo;
-using PagoAgilFrba.Repositorios;
 using MaterialSkin.Controls;
 using MaterialSkin;
+using PalcoNet.Modelo;
+using Palconet.Repositorios;
 
-namespace PagoAgilFrba.AbmRol
+namespace Palconet.AbmRol
 {
     public partial class ListadoRoles : MaterialForm
     {
         DataTable tabla_roles = new DataTable();
         Char modo;
         Rol rol_actual;
-        PagoAgilFrba.Login_e_Inicio.Menu menu;
-        public ListadoRoles(char modo, PagoAgilFrba.Login_e_Inicio.Menu menu, Rol rol_actual)
+        Menu menu;
+        public ListadoRoles(char modo, Menu menu, Rol rol_actual)
         {
             this.rol_actual = rol_actual;
             this.menu = menu;
@@ -104,12 +104,11 @@ namespace PagoAgilFrba.AbmRol
                 int indice = e.RowIndex;
                 DataGridViewRow row = data_listado_roles.Rows[indice];
                 Rol rol = new Rol();
-                rol.id = Convert.ToInt32(row.Cells["Id"].Value);
-                rol.nombre = row.Cells["Nombre"].Value.ToString();
-                rol.inhabilitado = Convert.ToBoolean(row.Cells["Inhabilitado"].Value);
+                rol.Nombre = row.Cells["Nombre"].Value.ToString();
+                rol.Habilitado = Convert.ToBoolean(row.Cells["habilitado"].Value);
 
                 if (modo.Equals('M')) modificarRol(rol);
-                else bajarRol(rol.nombre, indice);
+                else bajarRol(rol.Nombre, indice);
             }
         }
 
@@ -127,10 +126,10 @@ namespace PagoAgilFrba.AbmRol
             RolesRepositorio.deshabilitar(nombre_rol);
             tabla_roles.Rows[indice].Delete();
             refreshValues();
-            if (nombre_rol == rol_actual.nombre) 
+            if (nombre_rol == rol_actual.Nombre) 
             {
                 this.Hide();
-                this.menu.configurarBotones();
+                //this.menu.configurarBotones();
                 this.Close();
             }
         }

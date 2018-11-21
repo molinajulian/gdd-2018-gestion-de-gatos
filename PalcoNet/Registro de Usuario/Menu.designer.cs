@@ -219,6 +219,7 @@
             this.materialDivider2.Size = new System.Drawing.Size(198, 429);
             this.materialDivider2.TabIndex = 15;
             this.materialDivider2.Text = "materialDivider2";
+            this.materialDivider2.Click += new System.EventHandler(this.materialDivider2_Click);
             // 
             // buttonAltaClientes
             // 

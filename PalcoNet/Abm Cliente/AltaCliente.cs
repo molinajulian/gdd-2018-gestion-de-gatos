@@ -1,5 +1,4 @@
-﻿using PagoAgilFrba.Modelo;
-using PagoAgilFrba.Repositorios;
+﻿using Palconet.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +13,7 @@ using MaterialSkin.Controls;
 using MaterialSkin;
 using PalcoNet.Modelo;
 
-namespace PagoAgilFrba.AbmCliente
+namespace Palconet.AbmCliente
 {
     public partial class AltaCliente : MaterialForm
     {
@@ -85,7 +84,7 @@ namespace PagoAgilFrba.AbmCliente
         {
             this.Hide();
         }
-        private void boton_alta_Click(object sender, EventArgs e)
+        /*private void boton_alta_Click(object sender, EventArgs e)
         {
             //epProvider.Clear();
             if(validarCamposVaciosCliente()) { return; }
@@ -208,6 +207,6 @@ namespace PagoAgilFrba.AbmCliente
         private void AltaCliente_Load(object sender, EventArgs e)
         {
 
-        }
+        }*/
     }
 }

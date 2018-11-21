@@ -7,13 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using PagoAgilFrba.Repositorios;
-using PagoAgilFrba.Modelo;
 using MaterialSkin.Controls;
 using MaterialSkin;
 using System.Text.RegularExpressions;
+using PalcoNet.Modelo;
 
-namespace PagoAgilFrba.AbmEmpresa
+namespace Palconet.AbmEmpresa
 {
     public partial class ModificacionEmpresa : MaterialForm
     {

@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 using PalcoNet.Modelo;
 using PalcoNet.Repositorios;
 
-namespace PagoAgilFrba.Repositorios
+namespace Palconet.Repositorios
 {
     class FuncionalidadesRepositorio
     {

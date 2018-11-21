@@ -7,14 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using PagoAgilFrba.Modelo;
-using PagoAgilFrba.Repositorios;
-using PagoAgilFrba.Excepciones;
 using MaterialSkin.Controls;
 using MaterialSkin;
 using System.Text.RegularExpressions;
+using PalcoNet.Modelo;
 
-namespace PagoAgilFrba.AbmEmpresa
+namespace Palconet.AbmEmpresa
 {
     public partial class ListadoEmpresas : MaterialForm
     {
@@ -37,8 +35,8 @@ namespace PagoAgilFrba.AbmEmpresa
             tabla_empresas.Columns.Add("Direccion", typeof(string));
             tabla_empresas.Columns.Add("Rubro", typeof(string));
             tabla_empresas.Columns.Add("Habilitacion", typeof(string));
-            actualizarTablaEmpresas();
-            this.cargarRubros();
+            //actualizarTablaEmpresas();
+            //this.cargarRubros();
             this.cargarBotonLogico();
 
         }
@@ -66,7 +64,7 @@ namespace PagoAgilFrba.AbmEmpresa
             data_empresas.Columns.Add(btn);
         }
 
-        private void cargarRubros()
+       /* private void cargarRubros()
         {
             List<Rubro> rubros = RubrosRepositorio.getRubros();
             foreach(Rubro rubro in rubros)
@@ -204,7 +202,7 @@ namespace PagoAgilFrba.AbmEmpresa
             tabla_empresas.Rows[indice].Delete();
             actualizarTablaEmpresas();
             MessageBox.Show("La empresa ha sido inhabilitada exitosamente", "Inhabilitacion de empresa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
+        }*/
 
     }
 }

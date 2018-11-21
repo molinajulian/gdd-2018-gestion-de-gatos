@@ -1,7 +1,6 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
-using PagoAgilFrba.Modelo;
-using PagoAgilFrba.Repositorios;
+using PalcoNet.Modelo;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PagoAgilFrba.AbmCliente
+namespace Palconet.AbmCliente
 {
     public partial class ModificacionCliente : MaterialForm
     {
@@ -21,7 +20,7 @@ namespace PagoAgilFrba.AbmCliente
         Boolean hab_original;
         public ModificacionCliente(Int32 dni)
         {
-            InitializeComponent();
+            /*InitializeComponent();
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
@@ -156,6 +155,6 @@ namespace PagoAgilFrba.AbmCliente
         private void button2_Click(object sender, EventArgs e)
         {
             this.Hide();
-        }
+        }*/
     }
 }
