@@ -20,7 +20,7 @@ namespace PalcoNet.Repositorios
             output.Direction = ParameterDirection.Output;
             parametros.Add(output);
             parametros.Add(new SqlParameter("@user", username));
-            parametros.Add(new SqlParameter("@password", Usuario.cifrar(contrasenia)));
+            parametros.Add(new SqlParameter("@password",contrasenia));
             SqlCommand sqlCommand = Database.ejecutarSP("[GD2C2018].[sp_autenticar_usuario]", parametros);
             switch ((int) sqlCommand.Parameters["@salida"].Value)
             {

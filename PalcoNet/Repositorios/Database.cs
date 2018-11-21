@@ -16,27 +16,25 @@ namespace PalcoNet.Repositorios
         {
             if (connection.State == ConnectionState.Closed)
             {
-                connection.ConnectionString =
-                   @System.Configuration.ConfigurationManager.AppSettings["ConnectionString"];
-                // "ConnectionString" se obtiene del app.config
+                connection.ConnectionString = @System.Configuration.ConfigurationManager.ConnectionStrings["GddDB"].ConnectionString;
                 connection.Open();
             }
             return connection;
         }
 
-       
+
         public static SqlCommand BuildSQLCommand(String commandtext, List<SqlParameter> parameters)
         {
             SqlCommand sqlCommand = new SqlCommand();
-            sqlCommand.Connection = GetConnection();
             sqlCommand.CommandText = commandtext;
+            sqlCommand.Connection = GetConnection();
             if (parameters != null)
             {
                 foreach (SqlParameter param in parameters) { sqlCommand.Parameters.Add(param); }
             }
             return sqlCommand;
         }
-        
+
         public static SqlCommand ejecutarSP(String nombreSP, List<SqlParameter> parametros)
         {
             SqlCommand sqlCommand = Database.BuildSQLCommand(nombreSP, parametros);
@@ -77,6 +75,6 @@ namespace PalcoNet.Repositorios
             return sqlCommand.ExecuteNonQuery();
 
         }
-    
+
     }
 }
