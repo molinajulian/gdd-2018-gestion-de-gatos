@@ -17,7 +17,7 @@ namespace PalcoNet.Repositorios
 
             parametros.Add(new SqlParameter("@dni", cliente.Cuil));
             parametros.Add(new SqlParameter("@apellido", cliente.Apellido));
-            parametros.Add(new SqlParameter("@nombre", cliente.Nombre));
+            parametros.Add(new SqlParameter("@nombre", cliente.NombreCliente));
             parametros.Add(new SqlParameter("@fecha_nac", cliente.FechaDeNacimiento));
             parametros.Add(new SqlParameter("@mail", cliente.Email));
             parametros.Add(new SqlParameter("@habilitado", cliente.Activo));
@@ -35,20 +35,45 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@tarjetaFechaVencimiento",cliente.Tarjeta.FechaVencimiento));        
             return parametros;
         }
-        public static SqlDataReader obtenerClienteByNombre(string unNombre)
-        {
-           
-            SqlCommand query = new SqlCommand(
-                                "SELECT  * FROM Cliente c  where  c.nombre like('"+unNombre+"%') ",DataBase.GetConnection());
-            
-            
-            SqlDataReader reader = query.ExecuteReader();
-        
-            while (reader.Read())
-            { 
-                
-            }
-            return reader;
+        public static List<Cliente> obtenerClienteByNombre(string unNombre)
+        {  var clientes = new List<Cliente>();
+           var parametros= new List<SqlParameter>();
+           parametros.Add(new SqlParameter("@Nombre",unNombre));
+           var query =DataBase.ejecutarFuncion("Select * from cliente c where nombre like('@Nombre%')",parametros);
+           SqlDataReader reader = query.ExecuteReader();
+            var ClieDict=Ordinales.Cliente;
+           while (reader.Read())
+           {
+               clientes.Add(
+                   new Cliente() 
+                     {
+                     NombreCliente=reader.GetValue(Ordinales.Cliente["nombre"]).ToString(),
+                     Apellido=reader.GetValue(Ordinales.Cliente["apellido"]).ToString(),
+                     TipoDeDocumento=reader.GetValue(Ordinales.Cliente["tipoDocumento"]).ToString(),
+                     NumeroDocumento=reader.GetValue(Ordinales.Cliente["numeroDocumento"]).ToString(),
+                     Cuil=reader.GetValue(Ordinales.Cliente["cuil"]).ToString(),
+                     Email=reader.GetValue(Ordinales.Cliente["email"]).ToString(),
+                     Telefono=reader.GetValue(Ordinales.Cliente["telefono"]).ToString(),
+                     FechaDeNacimiento=(DateTime)reader.GetValue(Ordinales.Cliente["fechaNacimiento"]),
+                     FechaDeCreacion=(DateTime)reader.GetValue(Ordinales.Cliente["fechaCreacion"]),
+                     Direccion= 
+                        new Direccion(
+                        reader.GetValue(Ordinales.Direccion["calle"]).ToString(),
+                        reader.GetValue(Ordinales.Direccion["numero"]).ToString(),
+                        reader.GetValue(Ordinales.Direccion["departamento"]).ToString(),
+                        reader.GetValue(Ordinales.Direccion["localidad"]).ToString(),
+                        reader.GetValue(Ordinales.Direccion["codPostal"]).ToString()
+                        ),
+                        Tarjeta= new Tarjeta(
+                        reader.GetValue(Ordinales.Tarjeta["numero"]).ToString(),
+                        reader.GetValue(Ordinales.Tarjeta["nombre"]).ToString(),
+                        (DateTime)reader.GetValue(Ordinales.Tarjeta["fechaVencimiento"]),
+                        reader.GetValue(Ordinales.Tarjeta["ccv"]).ToString()
+                        )
+                              
+                            });
+           }
+            return clientes;
         }
     }
 }

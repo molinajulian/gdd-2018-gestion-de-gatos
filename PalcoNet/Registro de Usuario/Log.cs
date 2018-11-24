@@ -16,49 +16,5 @@ namespace PalcoNet.Login_e_Inicio
 {
     public partial class Log : MaterialForm
     {
-        private UsuarioRepositorio usuarioRepositorio = new UsuarioRepositorio();
-        public Log()
-        {
-            InitializeComponent();
-            var materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900,
-                Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-
-        }
-
-        private void btn_login_Click(object sender, EventArgs e)
-        {
-            try {
-                usuarioRepositorio.validarUsuario(textUsuario.Text, textContrasena.Text);
-                textContrasena.Text="Contraseña";
-                textUsuario.Text = "Nombre de Usuario";
-                textContrasena.UseSystemPasswordChar = false;
-                this.Hide();
-                new Menu(usuarioRepositorio.buscarUsuario(textUsuario.Text), this);
-            } catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        private void textUsuario_Click(object sender, EventArgs e)
-        {
-            textUsuario.Clear();
-        }
-
-        private void textContrasena_Click(object sender, EventArgs e)
-        {
-            textContrasena.Clear();
-            textContrasena.UseSystemPasswordChar = true;
-        }
-
-        private void textContrasena_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-            textContrasena.UseSystemPasswordChar = true;
-        }
-
     }
 }

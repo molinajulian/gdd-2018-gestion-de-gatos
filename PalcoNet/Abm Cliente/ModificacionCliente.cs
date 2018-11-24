@@ -156,5 +156,6 @@ namespace Palconet.AbmCliente
         {
             this.Hide();
         }*/
+        }
     }
 }

@@ -42,7 +42,12 @@ namespace PalcoNet.Repositorios
             sqlCommand.ExecuteNonQuery();
             return sqlCommand;
         }
-
+        public static SqlCommand ejecutarFuncion(string funcionSql, List<SqlParameter> parametros)
+        {
+            SqlCommand sqlCommand = DataBase.BuildSQLCommand(funcionSql, parametros);
+            sqlCommand.CommandType = CommandType.Text;
+            return sqlCommand;
+        }
 
         public static SqlDataReader GetDataReader(String commandtext, String commandtype,
                                                     List<SqlParameter> parameters)

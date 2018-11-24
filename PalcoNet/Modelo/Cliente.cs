@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PalcoNet.Modelo
 {
-    class Cliente:Usuario
+    class Cliente:Rol
     {
-        public string Nombre { get; set; }
+        public string NombreCliente { get; set; }
         public string Apellido { get; set; }
         public string TipoDeDocumento { get; set; }
         public string NumeroDocumento { get; set; }

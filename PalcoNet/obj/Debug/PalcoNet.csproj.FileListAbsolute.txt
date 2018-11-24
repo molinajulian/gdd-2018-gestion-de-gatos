@@ -20,3 +20,14 @@ D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj
 D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.Login_e_Inicio.Menu.resources
 D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.csproj.GenerateResource.Cache
 D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\bin\Debug\PalcoNet.exe.config
+C:\Users\yoona\Desktop\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\Palconet.AbmCliente.AltaCliente.resources
+C:\Users\yoona\Desktop\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\Palconet.AbmCliente.ModificacionCliente.resources
+C:\Users\yoona\Desktop\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\Palconet.AbmEmpresa.AltaEmpresa.resources
+C:\Users\yoona\Desktop\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\Palconet.AbmRol.AltaRol.resources
+C:\Users\yoona\Desktop\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.Properties.Resources.resources
+C:\Users\yoona\Desktop\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.csproj.GenerateResource.Cache
+C:\Users\yoona\Desktop\gdd-2018-gestion-de-gatos\PalcoNet\bin\Debug\PalcoNet.exe
+C:\Users\yoona\Desktop\gdd-2018-gestion-de-gatos\PalcoNet\bin\Debug\PalcoNet.pdb
+C:\Users\yoona\Desktop\gdd-2018-gestion-de-gatos\PalcoNet\bin\Debug\MaterialSkin.dll
+C:\Users\yoona\Desktop\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.exe
+C:\Users\yoona\Desktop\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.pdb
