@@ -7,7 +7,14 @@ using System.Threading.Tasks;
 namespace PalcoNet.Modelo
 {
    public static class Ordinales
-    {   
+    {
+
+       public static Dictionary<string, int> UsuarioFields = new Dictionary<string, int>
+                                                {
+                                                    {"username", 0},
+                                                    {"estado", 1},
+                                                    {"rol", 2}
+                                                };
        public static Dictionary<string, int> Cliente = new Dictionary<string, int>
                                                 {   
                                                     {"nombre",0},

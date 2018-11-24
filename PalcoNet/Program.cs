@@ -1,9 +1,9 @@
-﻿using PalcoNet.Login_e_Inicio;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PalcoNet.Registro_de_usuario;
 
 namespace PalcoNet
 {

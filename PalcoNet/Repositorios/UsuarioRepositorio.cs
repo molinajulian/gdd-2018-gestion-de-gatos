@@ -21,21 +21,23 @@ namespace PalcoNet.Repositorios
             parametros.Add(output);
             parametros.Add(new SqlParameter("@user", username));
             parametros.Add(new SqlParameter("@password",contrasenia));
-            SqlCommand sqlCommand = DataBase.ejecutarSP("[GD2C2018].[sp_autenticar_usuario]", parametros);
+            SqlCommand sqlCommand = DataBase.ejecutarSP("[dbo].[sp_autenticar_usuario]", parametros);
             switch ((int) sqlCommand.Parameters["@salida"].Value)
             {
                 case 0:
                     throw new LoginIncorrecto();
                 case -1:
                     throw new UsuarioInhabilitadoException(username);
+                default:
+                    break;
             }
         }
 
         public Usuario buscarUsuario(String username)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@user", username));
-            return Usuario.buildUsuario(DataBase.GetDataReader("[GD2C2018].[sp_buscar_usuario]", "SP", parametros));
+            parametros.Add(new SqlParameter("@username", username));
+            return Usuario.buildUsuario(DataBase.GetDataReader("[dbo].[sp_buscar_usuario]", "SP", parametros));
         }
 
 
