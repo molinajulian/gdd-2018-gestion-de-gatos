@@ -22,7 +22,7 @@ namespace Palconet.Repositorios
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@nombre", nombre));
-            return Database.GetDataReader("404_NOT_FOUND.SP_BUSCAR_ROL", "SP", parametros);
+            return DataBase.GetDataReader("404_NOT_FOUND.SP_BUSCAR_ROL", "SP", parametros);
         }
 
         public static void agregar(Rol rol, List<String> funcionalidades)
@@ -32,13 +32,13 @@ namespace Palconet.Repositorios
 
             parametros_rol.Add(new SqlParameter("@nombre", rol.Nombre));
             parametros_rol.Add(new SqlParameter("@habilitado", rol.Habilitado));
-            Database.WriteInBase("404_NOT_FOUND.SP_AGREGAR_ROL", "SP", parametros_rol);
+            DataBase.WriteInBase("404_NOT_FOUND.SP_AGREGAR_ROL", "SP", parametros_rol);
             
             foreach (String funcionalidad in funcionalidades)
             {
                 parametros_funcionalidades_rol.Add(new SqlParameter("@rol", rol.Nombre));
                 parametros_funcionalidades_rol.Add(new SqlParameter("@funcionalidad", funcionalidad));
-                Database.WriteInBase("404_NOT_FOUND.SP_AGREGAR_ROL_FUNCIONALIDAD", "SP", parametros_funcionalidades_rol);
+                DataBase.WriteInBase("404_NOT_FOUND.SP_AGREGAR_ROL_FUNCIONALIDAD", "SP", parametros_funcionalidades_rol);
                 parametros_funcionalidades_rol.Clear();
             }
         }
@@ -51,7 +51,7 @@ namespace Palconet.Repositorios
             if (String.IsNullOrWhiteSpace(nombre)) parametros.Add(new SqlParameter("@nombre", DBNull.Value));
             else parametros.Add(new SqlParameter("@nombre", nombre));
 
-            SqlDataReader lector = Database.GetDataReader("404_NOT_FOUND.SP_BUSCAR_ROL", "SP", parametros);
+            SqlDataReader lector = DataBase.GetDataReader("404_NOT_FOUND.SP_BUSCAR_ROL", "SP", parametros);
 
             if (lector.HasRows)
             {
@@ -71,7 +71,7 @@ namespace Palconet.Repositorios
             List<String> funcionalidades = new List<String>();
             if (rol==null) parametros.Add(new SqlParameter("@rol_id", DBNull.Value));
             else parametros.Add(new SqlParameter("@rol_id", rol.Nombre));
-            SqlDataReader lector = Database.GetDataReader("404_NOT_FOUND.SP_BUSCAR_ROL_FUNCIONALIDADES", "SP", parametros);
+            SqlDataReader lector = DataBase.GetDataReader("404_NOT_FOUND.SP_BUSCAR_ROL_FUNCIONALIDADES", "SP", parametros);
             if (lector.HasRows)
             {
                 while (lector.Read())
@@ -98,7 +98,7 @@ namespace Palconet.Repositorios
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@nombre", nombre));
-            Database.WriteInBase("404_NOT_FOUND.SP_DESHABILITAR_ROL", "SP", parametros);
+            DataBase.WriteInBase("404_NOT_FOUND.SP_DESHABILITAR_ROL", "SP", parametros);
         }
 
         public static void modificarRol(Rol rol, List<String> funcionalidades)
@@ -107,12 +107,12 @@ namespace Palconet.Repositorios
             List<SqlParameter> parametros_funcionalidades_rol = new List<SqlParameter>();
             parametros_rol.Add(new SqlParameter("@nombre", rol.Nombre));
             parametros_rol.Add(new SqlParameter("@habilitado", rol.Habilitado));
-            Database.WriteInBase("404_NOT_FOUND.SP_MODIFICAR_ROL", "SP", parametros_rol);
+            DataBase.WriteInBase("404_NOT_FOUND.SP_MODIFICAR_ROL", "SP", parametros_rol);
             foreach (String funcionalidad in funcionalidades)
             {
                 parametros_funcionalidades_rol.Add(new SqlParameter("@rol", rol.Nombre));
                 parametros_funcionalidades_rol.Add(new SqlParameter("@funcionalidad", funcionalidad));
-                Database.WriteInBase("404_NOT_FOUND.SP_AGREGAR_ROL_FUNCIONALIDAD", "SP", parametros_funcionalidades_rol);
+                DataBase.WriteInBase("404_NOT_FOUND.SP_AGREGAR_ROL_FUNCIONALIDAD", "SP", parametros_funcionalidades_rol);
                 parametros_funcionalidades_rol.Clear();
             }
         }
@@ -122,7 +122,7 @@ namespace Palconet.Repositorios
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@rol_nombre", rol_nombre));
             parametros.Add(new SqlParameter("@funcionalidad", funcionalidad));
-            SqlDataReader lector = Database.GetDataReader("404_NOT_FOUND.SP_TIENE_FUNCIONALIDAD", "SP", parametros);
+            SqlDataReader lector = DataBase.GetDataReader("404_NOT_FOUND.SP_TIENE_FUNCIONALIDAD", "SP", parametros);
             return lector.HasRows;
         }
     }

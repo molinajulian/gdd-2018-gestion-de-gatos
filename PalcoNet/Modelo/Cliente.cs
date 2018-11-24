@@ -16,9 +16,9 @@ namespace PalcoNet.Modelo
         public string Email { get; set; }
         public string Telefono { get; set; }
         public Direccion Direccion { get; set; }
-        public string CodPostal { get; set; }
         public DateTime FechaDeNacimiento { get; set; }
         public DateTime FechaDeCreacion { get; set; }
-        public Tarjeta Tarjteta { get; set; }
+        public Tarjeta Tarjeta { get; set; }
+        public bool Activo { get; set; }
     }
 }

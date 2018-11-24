@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 namespace PalcoNet.Repositorios
 {
-    class Database
+    static class DataBase
     {
         private static SqlConnection connection = new SqlConnection();
 
@@ -37,7 +37,7 @@ namespace PalcoNet.Repositorios
 
         public static SqlCommand ejecutarSP(String nombreSP, List<SqlParameter> parametros)
         {
-            SqlCommand sqlCommand = Database.BuildSQLCommand(nombreSP, parametros);
+            SqlCommand sqlCommand = DataBase.BuildSQLCommand(nombreSP, parametros);
             sqlCommand.CommandType = CommandType.StoredProcedure;
             sqlCommand.ExecuteNonQuery();
             return sqlCommand;

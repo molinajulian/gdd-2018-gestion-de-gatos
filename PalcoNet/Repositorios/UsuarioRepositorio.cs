@@ -21,7 +21,7 @@ namespace PalcoNet.Repositorios
             parametros.Add(output);
             parametros.Add(new SqlParameter("@user", username));
             parametros.Add(new SqlParameter("@password",contrasenia));
-            SqlCommand sqlCommand = Database.ejecutarSP("[GD2C2018].[sp_autenticar_usuario]", parametros);
+            SqlCommand sqlCommand = DataBase.ejecutarSP("[GD2C2018].[sp_autenticar_usuario]", parametros);
             switch ((int) sqlCommand.Parameters["@salida"].Value)
             {
                 case 0:
@@ -35,7 +35,7 @@ namespace PalcoNet.Repositorios
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@user", username));
-            return Usuario.buildUsuario(Database.GetDataReader("[GD2C2018].[sp_buscar_usuario]", "SP", parametros));
+            return Usuario.buildUsuario(DataBase.GetDataReader("[GD2C2018].[sp_buscar_usuario]", "SP", parametros));
         }
 
 

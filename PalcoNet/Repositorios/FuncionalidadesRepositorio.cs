@@ -15,7 +15,7 @@ namespace Palconet.Repositorios
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
             List<Funcionalidad> funcionalidades = new List<Funcionalidad>();
-            SqlDataReader lector = Database.GetDataReader("404_NOT_FOUND.SP_BUSCAR_FUNCIONALIDADES", "SP", parametros);
+            SqlDataReader lector = DataBase.GetDataReader("404_NOT_FOUND.SP_BUSCAR_FUNCIONALIDADES", "SP", parametros);
 
             if (lector.HasRows)
             {

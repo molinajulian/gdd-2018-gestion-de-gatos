@@ -12,5 +12,6 @@ namespace PalcoNet.Modelo
         public string Numero { get; set; }
         public string Departamento { get; set; }
         public string Localidad { get; set; }
+        public string CodPostal { get; set; }
     }
 }
