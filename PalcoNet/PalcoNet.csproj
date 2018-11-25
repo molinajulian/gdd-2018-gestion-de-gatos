@@ -147,6 +147,12 @@
     <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registro de Usuario\ConfiguracionInicial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registro de Usuario\ConfiguracionInicial.designer.cs">
+      <DependentUpon>ConfiguracionInicial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Registro de Usuario\MenuPpal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -198,6 +204,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Registro de Usuario\ConfiguracionInicial.resx">
+      <DependentUpon>ConfiguracionInicial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Registro de Usuario\MenuPpal.resx">
       <DependentUpon>MenuPpal.cs</DependentUpon>
     </EmbeddedResource>

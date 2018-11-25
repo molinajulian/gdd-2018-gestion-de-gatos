@@ -89,8 +89,8 @@ namespace Palconet.Repositorios
         public static Rol buildRol(SqlDataReader lector)
         {
             Rol rol = new Rol();
-            rol.Nombre = (String)lector["rol_nombre"];
-            rol.Habilitado = (bool)lector["rol_inhabilitado"];
+            Dictionary<string, int> camposRol = Ordinales.CamposRol;
+            rol.Nombre = lector.GetString(camposRol["nombre"]);
             return rol;
         }
 

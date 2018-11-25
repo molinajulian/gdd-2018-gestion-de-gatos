@@ -54,6 +54,7 @@
             this.buttonSidebarRegistroUsuario.TabIndex = 3;
             this.buttonSidebarRegistroUsuario.Text = "Registro de Usuario";
             this.buttonSidebarRegistroUsuario.UseVisualStyleBackColor = true;
+            this.buttonSidebarRegistroUsuario.Click += new System.EventHandler(this.buttonSidebarRegistroUsuario_Click);
             // 
             // buttonGenerarPublicacion
             // 
@@ -78,6 +79,7 @@
             this.logout.TabIndex = 66;
             this.logout.Text = "Logout";
             this.logout.UseVisualStyleBackColor = true;
+            this.logout.Click += new System.EventHandler(this.logout_Click);
             // 
             // materialDivider1
             // 
@@ -161,7 +163,6 @@
             this.buttonPagoComisiones.TabIndex = 73;
             this.buttonPagoComisiones.Text = "Generar Pago de comisiones";
             this.buttonPagoComisiones.UseVisualStyleBackColor = true;
-            this.buttonPagoComisiones.Click += new System.EventHandler(this.buttonPagoComisiones_Click);
             // 
             // buttonListadoEstadistico
             // 
@@ -186,6 +187,7 @@
             this.buttonABMs.TabIndex = 75;
             this.buttonABMs.Text = "ABMs";
             this.buttonABMs.UseVisualStyleBackColor = true;
+            this.buttonABMs.Click += new System.EventHandler(this.buttonABMs_Click);
             // 
             // MenuPpal
             // 
@@ -207,6 +209,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MenuPpal";
             this.Text = "PALCONET";
+            this.Load += new System.EventHandler(this.MenuPpal_Load);
             this.ResumeLayout(false);
 
         }

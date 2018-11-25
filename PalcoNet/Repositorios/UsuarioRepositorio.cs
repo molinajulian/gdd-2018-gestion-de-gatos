@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PalcoNet.Modelo;
+using Palconet.Repositorios;
 
 namespace PalcoNet.Repositorios
 {
@@ -56,5 +57,23 @@ namespace PalcoNet.Repositorios
                 : base(String.Format("El ususername {0} se encuentra inhabilitado", username)) { }
         }
 
+
+        internal static List<Rol> getRoles(Usuario user)
+        {
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@username", user.username));
+            SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_roles_usuario]", "SP", parametros);
+            List<Rol> roles = new List<Rol>();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    Rol rol = RolesRepositorio.buildRol(lector);
+                    roles.Add(rol);
+                }
+                lector.Close();
+            }
+            return roles;
+        }
     }
 }

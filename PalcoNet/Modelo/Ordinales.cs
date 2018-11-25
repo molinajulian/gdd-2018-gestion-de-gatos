@@ -13,7 +13,10 @@ namespace PalcoNet.Modelo
                                                 {
                                                     {"username", 0},
                                                     {"estado", 1},
-                                                    {"rol", 2}
+                                                };
+       public static Dictionary<string, int> CamposRol = new Dictionary<string, int>
+                                                {
+                                                    {"nombre", 0}
                                                 };
        public static Dictionary<string, int> Cliente = new Dictionary<string, int>
                                                 {   

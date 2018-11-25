@@ -34,6 +34,7 @@ namespace PalcoNet.Registro_de_Usuario
         Boolean rendiciones = false;
         public MenuABMs(Usuario user,MenuPpal menuPpal)
         {
+            InitializeComponent();
             this.user = user;
             this.menuPpal = menuPpal;
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -41,6 +42,16 @@ namespace PalcoNet.Registro_de_Usuario
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
          
+        }
+
+        private void buttonModificacion_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonRoles_Click(object sender, EventArgs e)
+        {
+
         }
         
     }

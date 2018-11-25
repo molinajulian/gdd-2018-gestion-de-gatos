@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuPpal));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuABMs));
             this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
             this.buttonSidebarClientes = new MaterialSkin.Controls.MaterialRaisedButton();
             this.buttonSidebarCategorias = new MaterialSkin.Controls.MaterialRaisedButton();
@@ -40,8 +40,8 @@
             this.iconBaja = new System.Windows.Forms.PictureBox();
             this.iconAlta = new System.Windows.Forms.PictureBox();
             this.iconModificacion = new System.Windows.Forms.PictureBox();
-            this.materialDivider2 = new MaterialSkin.Controls.MaterialDivider();
             this.buttonRoles = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.materialDivider2 = new MaterialSkin.Controls.MaterialDivider();
             ((System.ComponentModel.ISupportInitialize)(this.iconBaja)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconAlta)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconModificacion)).BeginInit();
@@ -118,6 +118,7 @@
             this.buttonModificacion.Text = "Modificacion";
             this.buttonModificacion.UseVisualStyleBackColor = true;
             this.buttonModificacion.Visible = false;
+            this.buttonModificacion.Click += new System.EventHandler(this.buttonModificacion_Click);
             // 
             // buttonBajaSucursal
             // 
@@ -183,17 +184,6 @@
             this.iconModificacion.TabStop = false;
             this.iconModificacion.Visible = false;
             // 
-            // materialDivider2
-            // 
-            this.materialDivider2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
-            this.materialDivider2.Depth = 0;
-            this.materialDivider2.Location = new System.Drawing.Point(0, 60);
-            this.materialDivider2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialDivider2.Name = "materialDivider2";
-            this.materialDivider2.Size = new System.Drawing.Size(249, 516);
-            this.materialDivider2.TabIndex = 66;
-            this.materialDivider2.Text = "materialDivider2";
-            // 
             // buttonRoles
             // 
             this.buttonRoles.Depth = 0;
@@ -205,6 +195,18 @@
             this.buttonRoles.TabIndex = 67;
             this.buttonRoles.Text = "Roles";
             this.buttonRoles.UseVisualStyleBackColor = true;
+            this.buttonRoles.Click += new System.EventHandler(this.buttonRoles_Click);
+            // 
+            // materialDivider2
+            // 
+            this.materialDivider2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
+            this.materialDivider2.Depth = 0;
+            this.materialDivider2.Location = new System.Drawing.Point(0, 60);
+            this.materialDivider2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialDivider2.Name = "materialDivider2";
+            this.materialDivider2.Size = new System.Drawing.Size(249, 516);
+            this.materialDivider2.TabIndex = 66;
+            this.materialDivider2.Text = "materialDivider2";
             // 
             // MenuABMs
             // 
@@ -247,7 +249,7 @@
         private System.Windows.Forms.PictureBox iconBaja;
         private System.Windows.Forms.PictureBox iconAlta;
         private System.Windows.Forms.PictureBox iconModificacion;
-        private MaterialSkin.Controls.MaterialDivider materialDivider2;
         private MaterialSkin.Controls.MaterialRaisedButton buttonRoles;
+        private MaterialSkin.Controls.MaterialDivider materialDivider2;
     }
 }

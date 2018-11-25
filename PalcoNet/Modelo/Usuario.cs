@@ -15,10 +15,9 @@ namespace PalcoNet.Modelo
         public Rol rol { get; set; }
         public Boolean isActive { get; set; }
 
-        public Usuario(String username, Rol rol, Boolean isActive)
+        public Usuario(String username, Boolean isActive)
         {
             this.username = username;
-            this.rol = rol;
             this.isActive = isActive;
         }
 
@@ -30,13 +29,14 @@ namespace PalcoNet.Modelo
             {
                 lector.Read();
                 return new Usuario(lector.GetString(camposUsuario["username"]),
-                    RolRepositorio.buscarRol(lector.GetString(camposUsuario["rol"])),
                     lector.GetBoolean(camposUsuario["estado"]));
             }
-            else
-            {
-                return null;
-            }
+            return usuario;
+        }
+
+        internal bool isAdmin()
+        {
+            return rol.Nombre.Equals("ADMINISTRATIVO");
         }
     }
 }
