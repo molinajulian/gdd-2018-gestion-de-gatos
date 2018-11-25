@@ -18,16 +18,19 @@ namespace PalcoNet.Modelo
                                                     {"email",5},
                                                     {"telefono",6},
                                                     {"fechaNacimiento",7},
-                                                    {"fechaCreacion",8}
+                                                    {"fechaCreacion",8},
+                                                    
 
                                                 };
        public static Dictionary<string, int> Direccion = new Dictionary<string, int> 
                                                  {
-                                                 {"calle",0}, 
+                                                 {"codigo",0}, 
                                                  {"numero",1},
                                                  {"departamento",2},
                                                  {"localidad",3},  
-                                                 {"codPostal",4}
+                                                 {"codPostal",4},
+                                                 {"calle",5}
+
                                                                                                
                                                  };
 
@@ -38,5 +41,46 @@ namespace PalcoNet.Modelo
                                                     {"fechaVencimiento",2},
                                                     {"ccv",3}
                                                     };
-    }
+       public static Dictionary<string, int> Empresa = new Dictionary<string, int> 
+                                                    {
+                                                    {"razonSocial",0}, 
+                                                    {"email",1},
+                                                    {"telefono",2},
+                                                    {"codPostal",3}, 
+                                                    {"ciudad",4},
+                                                    {"cuit  ",5}
+                                                    
+                                                    };
+       public static Dictionary<string, int> Rubro = new Dictionary<string, int> 
+                                                    {
+                                                    {"codigo",0},
+                                                    {"descripcion",1}
+                                                    
+                                                    };
+       public static Dictionary<string, int> Publicacion = new Dictionary<string, int> 
+                                                    {
+                                                    {"codigo",0},
+                                                    {"descripcion",1},
+                                                    {"fechaPublicacion",2},
+                                                    {"fechaFuncion",3}
+                                                    };
+       public static Dictionary<string, int> Ubicacion = new Dictionary<string, int> 
+                                                    {
+                                                    {"fila",0},
+                                                    {"asiento",1},
+                                                    {"tipo",3}
+                                                    };
+       public static Dictionary<string, int> Grado = new Dictionary<string, int> 
+                                                    {
+                                                    {"tipo",0},
+                                                    {"comision",1},
+                                                    {"descuento",3}
+                                                    };
+       public static Dictionary<string, int> EstadoPublicacion = new Dictionary<string, int> 
+                                                    {
+                                                    {"estado",0},
+                                                    {"puedeCambiarDeEstado",1},
+                                                    }; 
+   }
+    
 }

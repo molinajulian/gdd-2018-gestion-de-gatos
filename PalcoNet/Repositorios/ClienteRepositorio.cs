@@ -11,7 +11,7 @@ namespace PalcoNet.Repositorios
 {
     class ClienteRepositorio
     {
-        public static List<SqlParameter> GenerarParametrosCliente(Cliente cliente)
+        public static List<SqlParameter> GenerarParametrosCliente(Cliente cliente,string username)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
 
@@ -20,36 +20,27 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@nombre", cliente.NombreCliente));
             parametros.Add(new SqlParameter("@fecha_nac", cliente.FechaDeNacimiento));
             parametros.Add(new SqlParameter("@mail", cliente.Email));
-            parametros.Add(new SqlParameter("@habilitado", cliente.Activo));
             parametros.Add(new SqlParameter("@telefono", cliente.Telefono));
-            parametros.Add(new SqlParameter("@localidad", cliente.Direccion.Localidad));
-            parametros.Add(new SqlParameter("@cp", cliente.Direccion.CodPostal));
-            parametros.Add(new SqlParameter("@calle", cliente.Direccion.Calle));
-            parametros.Add(new SqlParameter("@numero",cliente.Direccion.Numero));        
-            parametros.Add(new SqlParameter("@departamento",cliente.Direccion.Departamento));        
             parametros.Add(new SqlParameter("@tipoDocumento",cliente.TipoDeDocumento));  
             parametros.Add(new SqlParameter("@documento",cliente.NumeroDocumento));        
-            parametros.Add(new SqlParameter("@tarjetaNombre",cliente.Tarjeta.Nombre)); 
-            parametros.Add(new SqlParameter("@tarjetaNumero",cliente.Tarjeta.Numero));        
-            parametros.Add(new SqlParameter("@tarjetaCCV",cliente.Tarjeta.CCV));        
-            parametros.Add(new SqlParameter("@tarjetaFechaVencimiento",cliente.Tarjeta.FechaVencimiento));        
+            parametros.Add(new SqlParameter("@username", username));
             return parametros;
         }
-        public static void CreateCliente(Cliente cliente)
+        public static void CreateCliente(Cliente cliente,string username)
         {
-            List<SqlParameter> parametros = GenerarParametrosCliente(cliente);
+            List<SqlParameter> parametros = GenerarParametrosCliente(cliente,username);
             DataBase.WriteInBase("IngresarClientes", "SP", parametros);
 
         }
-        public static void UpdateCliente(Cliente cliente)
+        public static void UpdateCliente(Cliente cliente, string username)
         {
-            List<SqlParameter> parametros = GenerarParametrosCliente(cliente);
+            List<SqlParameter> parametros = GenerarParametrosCliente(cliente,username);
             DataBase.WriteInBase("UpdateCliente", "SP", parametros);
 
         }
-        public static void DeleteCliente(Cliente cliente)
+        public static void DeleteCliente(Cliente cliente, string username)
         {
-            List<SqlParameter> parametros = GenerarParametrosCliente(cliente);
+            List<SqlParameter> parametros = GenerarParametrosCliente(cliente,username);
             DataBase.WriteInBase("DeleteCliente", "SP", parametros);
 
         }
@@ -67,22 +58,7 @@ namespace PalcoNet.Repositorios
                              Telefono = reader.GetValue(Ordinales.Cliente["telefono"]).ToString(),
                              FechaDeNacimiento = (DateTime)reader.GetValue(Ordinales.Cliente["fechaNacimiento"]),
                              FechaDeCreacion = (DateTime)reader.GetValue(Ordinales.Cliente["fechaCreacion"]),
-                             Direccion =
-                                new Direccion(
-                                reader.GetValue(Ordinales.Direccion["calle"]).ToString(),
-                                reader.GetValue(Ordinales.Direccion["numero"]).ToString(),
-                                reader.GetValue(Ordinales.Direccion["departamento"]).ToString(),
-                                reader.GetValue(Ordinales.Direccion["localidad"]).ToString(),
-                                reader.GetValue(Ordinales.Direccion["codPostal"]).ToString()
-                                ),
-                             Tarjeta = new Tarjeta(
-                             reader.GetValue(Ordinales.Tarjeta["numero"]).ToString(),
-                             reader.GetValue(Ordinales.Tarjeta["nombre"]).ToString(),
-                             (DateTime)reader.GetValue(Ordinales.Tarjeta["fechaVencimiento"]),
-                             reader.GetValue(Ordinales.Tarjeta["ccv"]).ToString()
-                             )
-
-                         };
+                            };
         }
         public static List<Cliente> GetClienteByNombre(string unNombre)
         {  var clientes = new List<Cliente>();
