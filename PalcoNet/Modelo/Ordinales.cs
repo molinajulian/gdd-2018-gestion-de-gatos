@@ -9,14 +9,21 @@ namespace PalcoNet.Modelo
    public static class Ordinales
     {
 
-       public static Dictionary<string, int> UsuarioFields = new Dictionary<string, int>
+       public static Dictionary<string, int> camposUsuario = new Dictionary<string, int>
                                                 {
+                                                    {"id", 0},
                                                     {"username", 0},
                                                     {"estado", 1},
                                                 };
-       public static Dictionary<string, int> CamposRol = new Dictionary<string, int>
+       public static Dictionary<string, int> camposRol = new Dictionary<string, int>
                                                 {
-                                                    {"nombre", 0}
+                                                    {"id", 0},
+                                                    {"nombre", 1}
+                                                };
+       public static Dictionary<string, int> camposFuncionalidad = new Dictionary<string, int>
+                                                {
+                                                    {"id", 0},
+                                                    {"descripcion", 1}
                                                 };
        public static Dictionary<string, int> Cliente = new Dictionary<string, int>
                                                 {   

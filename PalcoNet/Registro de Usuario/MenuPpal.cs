@@ -19,9 +19,13 @@ namespace PalcoNet.Registro_de_Usuario
         Usuario user;
         Log login;
 
+
+        Dictionary<int, Button> funcionalidadPorBoton;
+
         public MenuPpal(Usuario user,Log login)
         {
             InitializeComponent();
+            initFuncionalidadPorBoton();
             this.user = user;
             this.login = login;
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -30,6 +34,22 @@ namespace PalcoNet.Registro_de_Usuario
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
         }
 
+
+        private void funcionalidadPorBoton()
+        {
+/*            funcionalidadPorBoton = new Dictionary<int, Button>
+                                    {
+                                        {16  : buttonGenerarPublicacion}, //GENERAR PUBLICACION
+                                        {17  : buttonEditarPublicacion}, //EDITAR PUBLICACION
+                                        {18  : buttonComprar}, //COMPRAR UBICACION
+                                        {19  : buttonHistorialCliente}, //HISTORIAL CLIENTE
+                                        {20  : buttonCanjeYAdminPuntos}, //CANJEAR Y ADMINISTRAR PUNTOS
+                                        {21  : buttonRegistroUsuario}, //REGISTRAR USUARIO
+                                        {22  : buttonPagoComisiones}, //PAGAR COMISIONES
+                                        {23  : buttonListadoEstadistico} //LISTADO ESTADISTICO
+                                    };*/
+
+        }
         private void MenuPpal_FormClosing(object sender, FormClosingEventArgs e)
         {
             //login.Close();
@@ -60,8 +80,43 @@ namespace PalcoNet.Registro_de_Usuario
             login.ShowDialog();
             this.Close();
         }
+        
+        private void buttonListadoEstadistico_Click(object sender, EventArgs e)
+        {
 
-        private void buttonSidebarRegistroUsuario_Click(object sender, EventArgs e)
+        }
+
+        private void buttonRegistroUsuario_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonGenerarPublicacion_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonEditarPublicacion_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonComprar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonHistorialCliente_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonCanjeYAdminPuntos_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonPagoComisiones_Click(object sender, EventArgs e)
         {
 
         }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PalcoNet.Modelo;
-using Palconet.Repositorios;
+using PalcoNet.Repositorios;
 
 namespace PalcoNet.Repositorios
 {
@@ -61,14 +61,14 @@ namespace PalcoNet.Repositorios
         internal static List<Rol> getRoles(Usuario user)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@username", user.username));
+            parametros.Add(new SqlParameter("@user_id", user.id));
             SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_roles_usuario]", "SP", parametros);
             List<Rol> roles = new List<Rol>();
             if (lector.HasRows)
             {
                 while (lector.Read())
                 {
-                    Rol rol = RolesRepositorio.buildRol(lector);
+                    Rol rol = Rol.buildRol(lector);
                     roles.Add(rol);
                 }
                 lector.Close();

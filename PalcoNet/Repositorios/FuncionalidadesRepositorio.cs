@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 using PalcoNet.Modelo;
 using PalcoNet.Repositorios;
 
-namespace Palconet.Repositorios
+namespace PalcoNet.Repositorios
 {
     class FuncionalidadesRepositorio
     {

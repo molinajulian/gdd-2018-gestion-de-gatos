@@ -1,6 +1,7 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
 using PalcoNet.Modelo;
+using PalcoNet.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Palconet.AbmCliente
+namespace PalcoNet.AbmCliente
 {
     public partial class ModificacionCliente : MaterialForm
     {
@@ -20,7 +21,7 @@ namespace Palconet.AbmCliente
         Boolean hab_original;
         public ModificacionCliente(Int32 dni)
         {
-            /*InitializeComponent();
+            InitializeComponent();
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
@@ -155,7 +156,6 @@ namespace Palconet.AbmCliente
         private void button2_Click(object sender, EventArgs e)
         {
             this.Hide();
-        }*/
         }
     }
 }

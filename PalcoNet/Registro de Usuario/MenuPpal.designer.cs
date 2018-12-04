@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuPpal));
-            this.buttonSidebarRegistroUsuario = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.buttonRegistroUsuario = new MaterialSkin.Controls.MaterialRaisedButton();
             this.buttonGenerarPublicacion = new MaterialSkin.Controls.MaterialRaisedButton();
             this.logout = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
@@ -43,18 +43,18 @@
             this.buttonABMs = new MaterialSkin.Controls.MaterialRaisedButton();
             this.SuspendLayout();
             // 
-            // buttonSidebarRegistroUsuario
+            // buttonRegistroUsuario
             // 
-            this.buttonSidebarRegistroUsuario.Depth = 0;
-            this.buttonSidebarRegistroUsuario.Location = new System.Drawing.Point(199, 193);
-            this.buttonSidebarRegistroUsuario.MouseState = MaterialSkin.MouseState.HOVER;
-            this.buttonSidebarRegistroUsuario.Name = "buttonSidebarRegistroUsuario";
-            this.buttonSidebarRegistroUsuario.Primary = true;
-            this.buttonSidebarRegistroUsuario.Size = new System.Drawing.Size(213, 67);
-            this.buttonSidebarRegistroUsuario.TabIndex = 3;
-            this.buttonSidebarRegistroUsuario.Text = "Registro de Usuario";
-            this.buttonSidebarRegistroUsuario.UseVisualStyleBackColor = true;
-            this.buttonSidebarRegistroUsuario.Click += new System.EventHandler(this.buttonSidebarRegistroUsuario_Click);
+            this.buttonRegistroUsuario.Depth = 0;
+            this.buttonRegistroUsuario.Location = new System.Drawing.Point(199, 193);
+            this.buttonRegistroUsuario.MouseState = MaterialSkin.MouseState.HOVER;
+            this.buttonRegistroUsuario.Name = "buttonRegistroUsuario";
+            this.buttonRegistroUsuario.Primary = true;
+            this.buttonRegistroUsuario.Size = new System.Drawing.Size(213, 67);
+            this.buttonRegistroUsuario.TabIndex = 3;
+            this.buttonRegistroUsuario.Text = "Registro de Usuario";
+            this.buttonRegistroUsuario.UseVisualStyleBackColor = true;
+            this.buttonRegistroUsuario.Click += new System.EventHandler(this.buttonRegistroUsuario_Click);
             // 
             // buttonGenerarPublicacion
             // 
@@ -67,6 +67,7 @@
             this.buttonGenerarPublicacion.TabIndex = 6;
             this.buttonGenerarPublicacion.Text = "Generar Publicacion";
             this.buttonGenerarPublicacion.UseVisualStyleBackColor = true;
+            this.buttonGenerarPublicacion.Click += new System.EventHandler(this.buttonGenerarPublicacion_Click);
             // 
             // logout
             // 
@@ -115,6 +116,7 @@
             this.buttonEditarPublicacion.TabIndex = 69;
             this.buttonEditarPublicacion.Text = "Editar Publicacion";
             this.buttonEditarPublicacion.UseVisualStyleBackColor = true;
+            this.buttonEditarPublicacion.Click += new System.EventHandler(this.buttonEditarPublicacion_Click);
             // 
             // buttonComprar
             // 
@@ -127,6 +129,7 @@
             this.buttonComprar.TabIndex = 70;
             this.buttonComprar.Text = "Comprar";
             this.buttonComprar.UseVisualStyleBackColor = true;
+            this.buttonComprar.Click += new System.EventHandler(this.buttonComprar_Click);
             // 
             // buttonHistorialCliente
             // 
@@ -139,6 +142,7 @@
             this.buttonHistorialCliente.TabIndex = 71;
             this.buttonHistorialCliente.Text = "Historial del cliente";
             this.buttonHistorialCliente.UseVisualStyleBackColor = true;
+            this.buttonHistorialCliente.Click += new System.EventHandler(this.buttonHistorialCliente_Click);
             // 
             // buttonCanjeYAdminPuntos
             // 
@@ -151,6 +155,7 @@
             this.buttonCanjeYAdminPuntos.TabIndex = 72;
             this.buttonCanjeYAdminPuntos.Text = "Canje y administracion de puntos";
             this.buttonCanjeYAdminPuntos.UseVisualStyleBackColor = true;
+            this.buttonCanjeYAdminPuntos.Click += new System.EventHandler(this.buttonCanjeYAdminPuntos_Click);
             // 
             // buttonPagoComisiones
             // 
@@ -163,6 +168,7 @@
             this.buttonPagoComisiones.TabIndex = 73;
             this.buttonPagoComisiones.Text = "Generar Pago de comisiones";
             this.buttonPagoComisiones.UseVisualStyleBackColor = true;
+            this.buttonPagoComisiones.Click += new System.EventHandler(this.buttonPagoComisiones_Click);
             // 
             // buttonListadoEstadistico
             // 
@@ -175,6 +181,7 @@
             this.buttonListadoEstadistico.TabIndex = 74;
             this.buttonListadoEstadistico.Text = "Listado Estadistico";
             this.buttonListadoEstadistico.UseVisualStyleBackColor = true;
+            this.buttonListadoEstadistico.Click += new System.EventHandler(this.buttonListadoEstadistico_Click);
             // 
             // buttonABMs
             // 
@@ -203,7 +210,7 @@
             this.Controls.Add(this.buttonEditarPublicacion);
             this.Controls.Add(this.logout);
             this.Controls.Add(this.buttonGenerarPublicacion);
-            this.Controls.Add(this.buttonSidebarRegistroUsuario);
+            this.Controls.Add(this.buttonRegistroUsuario);
             this.Controls.Add(this.materialDivider1);
             this.Controls.Add(this.materialDivider2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -216,7 +223,7 @@
 
         #endregion
 
-        private MaterialSkin.Controls.MaterialRaisedButton buttonSidebarRegistroUsuario;
+        private MaterialSkin.Controls.MaterialRaisedButton buttonRegistroUsuario;
         private MaterialSkin.Controls.MaterialRaisedButton buttonGenerarPublicacion;
         private MaterialSkin.Controls.MaterialRaisedButton logout;
         private MaterialSkin.Controls.MaterialDivider materialDivider1;

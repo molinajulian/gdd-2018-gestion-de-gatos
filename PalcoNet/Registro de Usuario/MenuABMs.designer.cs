@@ -228,6 +228,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MenuABMs";
             this.Text = "ABMs";
+            this.Load += new System.EventHandler(this.MenuABMs_Load);
             ((System.ComponentModel.ISupportInitialize)(this.iconBaja)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconAlta)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconModificacion)).EndInit();

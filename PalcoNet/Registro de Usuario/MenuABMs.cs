@@ -32,6 +32,7 @@ namespace PalcoNet.Registro_de_Usuario
         Boolean pagos=false;
         Boolean devoluciones = false;
         Boolean rendiciones = false;
+        Dictionary<int, Button> funcionalidadesPorBoton;
         public MenuABMs(Usuario user,MenuPpal menuPpal)
         {
             InitializeComponent();
@@ -44,12 +45,39 @@ namespace PalcoNet.Registro_de_Usuario
          
         }
 
+        private void initFuncionalidesPorBoton() {
+                                        
+           /* funcionalidadesPorBoton = new Dictionary<int,Button> {
+                                        {1   : btn}, //CREAR CLIENTE
+                                        {2   : btn}, //EDITAR CLIENTE
+                                        {3   : btn}, //ELIMINAR CLIENTE
+                                        {4   : btn}, //CREAR EMPRESA
+                                        {5   : btn}, //EDITAR EMPRESA
+                                        {6   : btn}, //ELIMINAR EMPRESA
+                                        {7   : btn}, //CREAR ROL
+                                        {8   : btn}, //EDITAR ROL
+                                        {9   : btn}, //ELIMINAR ROL
+                                        {10  : btn}, //CREAR CATEGORIA
+                                        {11  : btn}, //EDITAR CATEGORIA
+                                        {12  : btn}, //ELIMINAR CATEGORIA
+                                        {13  : btn}, //CREAR GRADO PUBLICACION
+                                        {14  : btn}, //EDITAR GRADO PUBLICACION
+                                        {15  : btn}, //ELIMINAR GRADO PUBLICACION
+                                    };*/
+
+        }
+
         private void buttonModificacion_Click(object sender, EventArgs e)
         {
 
         }
 
         private void buttonRoles_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MenuABMs_Load(object sender, EventArgs e)
         {
 
         }

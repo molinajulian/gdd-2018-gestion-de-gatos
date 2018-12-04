@@ -12,14 +12,14 @@ using MaterialSkin.Controls;
 using MaterialSkin;
 using PalcoNet.Repositorios;
 
-namespace PalcoNet.AbmRol
+namespace PalcoNet.AbmGrado
 {
-    public partial class AltaRol : MaterialForm
+    public partial class AltaGrado : MaterialForm
     {
         Rol rol = new Rol();
         DataTable tabla_funcionalidades = new DataTable();
         List<String> funcionalidades = new List<String>();
-        public AltaRol()
+        public AltaGrado()
         {
             InitializeComponent();
 

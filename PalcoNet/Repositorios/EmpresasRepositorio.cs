@@ -9,7 +9,7 @@ using PalcoNet.Repositorios;
 using PalcoNet.Modelo;
 
 
-namespace Palconet.Repositorios
+namespace PalcoNet.Repositorios
 {
     class EmpresasRepositorio
     {  

@@ -1,6 +1,6 @@
-﻿namespace PalcoNet.AbmRol
+﻿namespace PalcoNet.AbmGrado
 {
-    partial class AltaRol
+    partial class AltaGrado
     {
         /// <summary>
         /// Required designer variable.
@@ -36,6 +36,8 @@
             this.btn_alta_rol = new System.Windows.Forms.Button();
             this.btn_volver = new System.Windows.Forms.Button();
             this.epProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.group_alta_rol.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.data_listado_funcionalidades)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.epProvider)).BeginInit();
@@ -44,15 +46,15 @@
             // lbl_nombre_rol
             // 
             this.lbl_nombre_rol.AutoSize = true;
-            this.lbl_nombre_rol.Location = new System.Drawing.Point(134, 22);
+            this.lbl_nombre_rol.Location = new System.Drawing.Point(62, 26);
             this.lbl_nombre_rol.Name = "lbl_nombre_rol";
-            this.lbl_nombre_rol.Size = new System.Drawing.Size(47, 13);
+            this.lbl_nombre_rol.Size = new System.Drawing.Size(40, 13);
             this.lbl_nombre_rol.TabIndex = 0;
-            this.lbl_nombre_rol.Text = "Nombre:";
+            this.lbl_nombre_rol.Text = "Detalle";
             // 
             // tx_nombre_rol
             // 
-            this.tx_nombre_rol.Location = new System.Drawing.Point(187, 19);
+            this.tx_nombre_rol.Location = new System.Drawing.Point(115, 23);
             this.tx_nombre_rol.Name = "tx_nombre_rol";
             this.tx_nombre_rol.Size = new System.Drawing.Size(100, 20);
             this.tx_nombre_rol.TabIndex = 1;
@@ -60,16 +62,18 @@
             // group_alta_rol
             // 
             this.group_alta_rol.BackColor = System.Drawing.Color.White;
+            this.group_alta_rol.Controls.Add(this.textBox1);
+            this.group_alta_rol.Controls.Add(this.label1);
             this.group_alta_rol.Controls.Add(this.data_listado_funcionalidades);
             this.group_alta_rol.Controls.Add(this.btn_alta_rol);
             this.group_alta_rol.Controls.Add(this.tx_nombre_rol);
             this.group_alta_rol.Controls.Add(this.lbl_nombre_rol);
-            this.group_alta_rol.Location = new System.Drawing.Point(36, 76);
+            this.group_alta_rol.Location = new System.Drawing.Point(22, 79);
             this.group_alta_rol.Name = "group_alta_rol";
             this.group_alta_rol.Size = new System.Drawing.Size(538, 273);
             this.group_alta_rol.TabIndex = 3;
             this.group_alta_rol.TabStop = false;
-            this.group_alta_rol.Text = "Datos del rol";
+            this.group_alta_rol.Text = "Datos del grado";
             // 
             // data_listado_funcionalidades
             // 
@@ -82,17 +86,17 @@
             // 
             // btn_alta_rol
             // 
-            this.btn_alta_rol.Location = new System.Drawing.Point(225, 228);
+            this.btn_alta_rol.Location = new System.Drawing.Point(221, 228);
             this.btn_alta_rol.Name = "btn_alta_rol";
-            this.btn_alta_rol.Size = new System.Drawing.Size(94, 39);
+            this.btn_alta_rol.Size = new System.Drawing.Size(97, 39);
             this.btn_alta_rol.TabIndex = 0;
-            this.btn_alta_rol.Text = "Dar de alta rol";
+            this.btn_alta_rol.Text = "Dar de alta grado";
             this.btn_alta_rol.UseVisualStyleBackColor = true;
             this.btn_alta_rol.Click += new System.EventHandler(this.btn_alta_rol_Click);
             // 
             // btn_volver
             // 
-            this.btn_volver.Location = new System.Drawing.Point(36, 358);
+            this.btn_volver.Location = new System.Drawing.Point(455, 366);
             this.btn_volver.Name = "btn_volver";
             this.btn_volver.Size = new System.Drawing.Size(83, 28);
             this.btn_volver.TabIndex = 4;
@@ -104,15 +108,31 @@
             // 
             this.epProvider.ContainerControl = this;
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(356, 23);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(269, 26);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(81, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Grado Comision";
+            // 
             // AltaRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(602, 406);
+            this.ClientSize = new System.Drawing.Size(574, 406);
             this.Controls.Add(this.btn_volver);
             this.Controls.Add(this.group_alta_rol);
             this.Name = "AltaRol";
-            this.Text = "AltaRol";
+            this.Text = "AltaGradoPublicacion";
             this.group_alta_rol.ResumeLayout(false);
             this.group_alta_rol.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.data_listado_funcionalidades)).EndInit();
@@ -130,5 +150,7 @@
         private System.Windows.Forms.Button btn_volver;
         private System.Windows.Forms.ErrorProvider epProvider;
         private System.Windows.Forms.DataGridView data_listado_funcionalidades;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label1;
     }
 }
