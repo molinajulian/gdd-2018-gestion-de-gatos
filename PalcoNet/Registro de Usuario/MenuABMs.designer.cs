@@ -69,6 +69,7 @@
             this.buttonSidebarClientes.TabIndex = 2;
             this.buttonSidebarClientes.Text = "Clientes";
             this.buttonSidebarClientes.UseVisualStyleBackColor = true;
+            this.buttonSidebarClientes.Click += new System.EventHandler(this.buttonSidebarClientes_Click);
             // 
             // buttonSidebarCategorias
             // 

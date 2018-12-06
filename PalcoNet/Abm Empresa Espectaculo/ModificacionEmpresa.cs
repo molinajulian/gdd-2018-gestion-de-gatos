@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using PagoAgilFrba.Repositorios;
-using PagoAgilFrba.Modelo;
+using PalcoNet.Repositorios;
+using PalcoNet.Modelo;
 using MaterialSkin.Controls;
 using MaterialSkin;
 using System.Text.RegularExpressions;
@@ -31,12 +31,12 @@ namespace PagoAgilFrba.AbmEmpresa
            empresa = EmpresasRepositorio.getEmpresa(cuit);
            cargarRubros();
 
-           tx_cuit.Text = empresa.cuit;
+           tx_cuit_numero.Text = empresa.cuit;
            tx_nombre.Text = empresa.nombre.ToString();
            tx_direccion.Text = empresa.direccion;
            combo_rubros.Text = empresa.rubro.ToString();
 
-           if (empresa.habilitado)
+           if (empresa.Habilitado)
            {
                check_box_habilitacion.Checked = true;
                check_box_habilitacion.Enabled = false;
@@ -65,7 +65,7 @@ namespace PagoAgilFrba.AbmEmpresa
             empresa.habilitado = check_box_habilitacion.Checked;
             empresa.cuit = tx_cuit.Text;
             empresa.nombre = tx_nombre.Text;
-            empresa.direccion = tx_direccion.Text;
+            empresa.Direccion = tx_direccion.Text;
             empresa.rubro = Convert.ToInt32(combo_rubros.Text);
 
             EmpresasRepositorio.modificar(empresa);

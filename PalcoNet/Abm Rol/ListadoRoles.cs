@@ -70,7 +70,7 @@ namespace PalcoNet.AbmRol
 
             foreach(Rol rol in roles)
             {
-                String[] row = new String[] { Convert.ToString(rol.id), Convert.ToString(rol.nombre), Convert.ToString(rol.inhabilitado) };
+                String[] row = new String[] { Convert.ToString(rol.id), Convert.ToString(rol.nombre), Convert.ToString(!rol.Habilitado) };
                 tabla_roles.Rows.Add(row);
             }
 

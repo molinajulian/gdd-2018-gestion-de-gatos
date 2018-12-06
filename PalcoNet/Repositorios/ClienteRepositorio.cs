@@ -120,5 +120,40 @@ namespace PalcoNet.Repositorios
             return clientes;
         }
 
+
+        internal static List<Cliente> getClientes(string p1, string p2, string p3)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void eliminarCliente(int p)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void habilitarCliente(int p)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static bool esClienteExistente(int p)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void modificarCliente(Cliente cliente)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void agregar(Cliente cliente)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static bool esClienteExistenteMail(string p)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -55,11 +55,11 @@ namespace PalcoNet.AbmCliente
                 return;
             }
             tabla_clientes.Clear();
-            List<Cliente> clientes = ClientesRepositorio.getClientes(tx_dni.Text, tx_nombre.Text, tx_apellido.Text);
+            List<Cliente> clientes = ClienteRepositorio.getClientes(tx_dni.Text, tx_nombre.Text, tx_apellido.Text);
             foreach (Cliente cliente in clientes)
             {
-                String hab = cliente.habilitado ? "Si" : "No";
-                String[] row = new String[] { cliente.dni.ToString(), cliente.nombre, cliente.apellido, hab };
+                String hab = cliente.Habilitado ? "Si" : "No";
+                String[] row = new String[] { cliente.NumeroDocumento.ToString(), cliente.nombre, cliente.Apellido, hab };
                 tabla_clientes.Rows.Add(row);
             }
             refreshValues();
@@ -133,11 +133,11 @@ namespace PalcoNet.AbmCliente
             {
                 if (this.data_clientes.SelectedRows[0].Cells["Habilitado"].Value.ToString() == "Si")
                 {
-                    ClientesRepositorio.eliminarCliente(Convert.ToInt32(this.data_clientes.SelectedRows[0].Cells["DNI"].Value.ToString()));
+                    ClienteRepositorio.eliminarCliente(Convert.ToInt32(this.data_clientes.SelectedRows[0].Cells["DNI"].Value.ToString()));
                 }
                 else
                 {
-                    ClientesRepositorio.habilitarCliente(Convert.ToInt32(this.data_clientes.SelectedRows[0].Cells["DNI"].Value.ToString()));
+                    ClienteRepositorio.habilitarCliente(Convert.ToInt32(this.data_clientes.SelectedRows[0].Cells["DNI"].Value.ToString()));
                 }
                 object s = new object();
                 EventArgs ea = new EventArgs();

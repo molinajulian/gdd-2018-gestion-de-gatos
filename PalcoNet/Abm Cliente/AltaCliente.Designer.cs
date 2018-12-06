@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -57,15 +59,15 @@
             this.txMail = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txNombre = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.txtDepto = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.White;
+            this.groupBox1.Controls.Add(this.txtDepto);
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.label14);
             this.groupBox1.Controls.Add(this.button1);
@@ -103,6 +105,22 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos del Nuevo Cliente";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(297, 169);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(203, 20);
+            this.textBox1.TabIndex = 36;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(247, 172);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(31, 13);
+            this.label14.TabIndex = 37;
+            this.label14.Text = "CUIL";
             // 
             // button1
             // 
@@ -340,22 +358,6 @@
             this.txNombre.Size = new System.Drawing.Size(132, 20);
             this.txNombre.TabIndex = 1;
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(297, 169);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(203, 20);
-            this.textBox1.TabIndex = 36;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(247, 172);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(31, 13);
-            this.label14.TabIndex = 37;
-            this.label14.Text = "CUIL";
-            // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(323, 478);
@@ -364,6 +366,13 @@
             this.button2.TabIndex = 39;
             this.button2.Text = "Volver";
             this.button2.UseVisualStyleBackColor = true;
+            // 
+            // txtDepto
+            // 
+            this.txtDepto.Location = new System.Drawing.Point(472, 239);
+            this.txtDepto.Name = "txtDepto";
+            this.txtDepto.Size = new System.Drawing.Size(27, 20);
+            this.txtDepto.TabIndex = 38;
             // 
             // AltaCliente
             // 
@@ -415,5 +424,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox txtDepto;
     }
 }

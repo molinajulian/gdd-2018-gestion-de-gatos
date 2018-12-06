@@ -81,6 +81,11 @@ namespace PalcoNet.Registro_de_Usuario
         {
 
         }
+
+        private void buttonSidebarClientes_Click(object sender, EventArgs e)
+        {
+
+        }
         
     }
 }

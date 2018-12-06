@@ -108,6 +108,16 @@ namespace PalcoNet.Repositorios
             return empresas;
         }
 
+        public static bool verificaConformacionCuit()
+        {
+            return true;
+        }
+
+
+        internal static void deshabilitar(string empresa_cuit)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

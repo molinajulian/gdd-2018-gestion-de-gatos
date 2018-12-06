@@ -25,7 +25,7 @@ namespace PalcoNet.Registro_de_Usuario
         public MenuPpal(Usuario user,Log login)
         {
             InitializeComponent();
-            initFuncionalidadPorBoton();
+            // initFuncionalidadPorBoton();
             this.user = user;
             this.login = login;
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -35,9 +35,9 @@ namespace PalcoNet.Registro_de_Usuario
         }
 
 
-        private void funcionalidadPorBoton()
+        /* private void funcionalidadPorBoton()
         {
-/*            funcionalidadPorBoton = new Dictionary<int, Button>
+            /*                      funcionalidadPorBoton = new Dictionary<int, Button>
                                     {
                                         {16  : buttonGenerarPublicacion}, //GENERAR PUBLICACION
                                         {17  : buttonEditarPublicacion}, //EDITAR PUBLICACION
@@ -47,9 +47,9 @@ namespace PalcoNet.Registro_de_Usuario
                                         {21  : buttonRegistroUsuario}, //REGISTRAR USUARIO
                                         {22  : buttonPagoComisiones}, //PAGAR COMISIONES
                                         {23  : buttonListadoEstadistico} //LISTADO ESTADISTICO
-                                    };*/
+                                    };
 
-        }
+        } */
         private void MenuPpal_FormClosing(object sender, FormClosingEventArgs e)
         {
             //login.Close();

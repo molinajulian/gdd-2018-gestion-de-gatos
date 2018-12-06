@@ -32,11 +32,11 @@
             this.btnVolver = new System.Windows.Forms.Button();
             this.btnAlta = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
-            this.datePickerFechaNac = new System.Windows.Forms.DateTimePicker();
+            this.datePickerFechaVenc = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
-            this.txMail = new System.Windows.Forms.TextBox();
+            this.txBanco = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.txNombre = new System.Windows.Forms.TextBox();
+            this.txNumero = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,11 +46,11 @@
             this.groupBox1.Controls.Add(this.btnVolver);
             this.groupBox1.Controls.Add(this.btnAlta);
             this.groupBox1.Controls.Add(this.label12);
-            this.groupBox1.Controls.Add(this.datePickerFechaNac);
+            this.groupBox1.Controls.Add(this.datePickerFechaVenc);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.txMail);
+            this.groupBox1.Controls.Add(this.txBanco);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.txNombre);
+            this.groupBox1.Controls.Add(this.txNumero);
             this.groupBox1.Location = new System.Drawing.Point(12, 81);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(513, 201);
@@ -86,12 +86,12 @@
             this.label12.TabIndex = 29;
             this.label12.Text = "Fecha de Vencimiento";
             // 
-            // datePickerFechaNac
+            // datePickerFechaVenc
             // 
-            this.datePickerFechaNac.Location = new System.Drawing.Point(367, 58);
-            this.datePickerFechaNac.Name = "datePickerFechaNac";
-            this.datePickerFechaNac.Size = new System.Drawing.Size(130, 20);
-            this.datePickerFechaNac.TabIndex = 12;
+            this.datePickerFechaVenc.Location = new System.Drawing.Point(367, 58);
+            this.datePickerFechaVenc.Name = "datePickerFechaVenc";
+            this.datePickerFechaVenc.Size = new System.Drawing.Size(130, 20);
+            this.datePickerFechaVenc.TabIndex = 12;
             // 
             // label3
             // 
@@ -102,12 +102,12 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Banco";
             // 
-            // txMail
+            // txBanco
             // 
-            this.txMail.Location = new System.Drawing.Point(59, 95);
-            this.txMail.Name = "txMail";
-            this.txMail.Size = new System.Drawing.Size(166, 20);
-            this.txMail.TabIndex = 4;
+            this.txBanco.Location = new System.Drawing.Point(59, 95);
+            this.txBanco.Name = "txBanco";
+            this.txBanco.Size = new System.Drawing.Size(166, 20);
+            this.txBanco.TabIndex = 4;
             // 
             // label1
             // 
@@ -118,20 +118,20 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Numero";
             // 
-            // txNombre
+            // txNumero
             // 
-            this.txNombre.Location = new System.Drawing.Point(59, 58);
-            this.txNombre.Name = "txNombre";
-            this.txNombre.Size = new System.Drawing.Size(166, 20);
-            this.txNombre.TabIndex = 1;
+            this.txNumero.Location = new System.Drawing.Point(59, 58);
+            this.txNumero.Name = "txNumero";
+            this.txNumero.Size = new System.Drawing.Size(166, 20);
+            this.txNumero.TabIndex = 1;
             // 
-            // AltaCliente
+            // AltaTarjeta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(535, 295);
             this.Controls.Add(this.groupBox1);
-            this.Name = "AltaCliente";
+            this.Name = "AltaTarjeta";
             this.Text = "AltaTarjeta";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -142,12 +142,12 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox txNombre;
+        private System.Windows.Forms.TextBox txNumero;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txMail;
+        private System.Windows.Forms.TextBox txBanco;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.DateTimePicker datePickerFechaNac;
+        private System.Windows.Forms.DateTimePicker datePickerFechaVenc;
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.Button btnAlta;
     }

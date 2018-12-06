@@ -28,30 +28,30 @@ namespace PalcoNet.AbmCliente
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
-            Cliente cliente = ClientesRepositorio.getClientes(dni.ToString(), null, null).First();
-            hab_original = cliente.habilitado;
-            txNombre.Text = cliente.nombre;
-            txApellido.Text = cliente.apellido;
-            txDni.Text = cliente.dni.ToString();
-            mail_original = txMail.Text = cliente.mail;
-            txTelefono.Text = cliente.telefono;
-            txLocalidad.Text = cliente.direccion.localidad;
-            txCp.Text = cliente.direccion.cp.ToString();
-            txNumero.Text = cliente.direccion.calle.Split(' ').Last();
-            var auxiliar = cliente.direccion.calle.Split(' ').ToList();
+            Cliente cliente = ClienteRepositorio.getClientes(dni.ToString(), null, null).First();
+            hab_original = cliente.Habilitado;
+            txtNombre.Text = cliente.nombre;
+            txtApellido.Text = cliente.Apellido;
+            txtNumDoc.Text = cliente.NumeroDocumento.ToString();
+            mail_original = txtMail.Text = cliente.Email;
+            txtTel.Text = cliente.Telefono;
+            txtLoc.Text = cliente.Direccion.Localidad;
+            txtCp.Text = cliente.Direccion.CodPostal.ToString();
+            txtNum.Text = cliente.Direccion.Calle.Split(' ').Last();
+            var auxiliar = cliente.Direccion.Calle.Split(' ').ToList();
             auxiliar.RemoveAt(auxiliar.Count-1);
-            txCalle.Text = String.Join(" ",auxiliar);
-            txPiso.Text = cliente.direccion.piso.ToString() == "0" ? "" : cliente.direccion.piso.ToString();
-            txDpto.Text = cliente.direccion.dpto.ToString();
-            dateTimePicker1.Value = cliente.fecha_nac;
+            txtCalle.Text = String.Join(" ",auxiliar);
+            txtPiso.Text = cliente.Direccion.Piso.ToString() == "0" ? "" : cliente.Direccion.Piso.ToString();
+            txtPiso.Text = cliente.Direccion.Departamento.ToString();
+            datePickerFechaNac.Value = cliente.FechaDeNacimiento;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             if (validarCamposVaciosCliente()) { return; }
-            if (txMail.Text != mail_original) 
-            { 
-                if (ClientesRepositorio.esClienteExistenteMail(txMail.Text))
+            if (txtMail.Text != mail_original) 
+            {
+                if (ClienteRepositorio.esClienteExistenteMail(txtMail.Text))
                 {
                     MessageBox.Show("Ya existe un cliente con el mail ingresado");
                     return;
@@ -59,71 +59,71 @@ namespace PalcoNet.AbmCliente
             }
             Cliente cliente = new Cliente();
             Direccion direccion = new Direccion();
-            cliente.dni = Convert.ToInt32(txDni.Text);
-            if (!Regex.IsMatch(txNombre.Text, @"^[a-zA-Z\s]{1,30}$"))
+            cliente.NumeroDocumento =txtNumDoc.Text;
+            if (!Regex.IsMatch(txtNombre.Text, @"^[a-zA-Z\s]{1,30}$"))
             {
                 MessageBox.Show("Ingrese un nombre válido.");
                 return;
             }
-            cliente.nombre = txNombre.Text;
-            if (!Regex.IsMatch(txApellido.Text, @"^[a-zA-Z\s]{1,30}$"))
+            cliente.nombre = txtNombre.Text;
+            if (!Regex.IsMatch(txtApellido.Text, @"^[a-zA-Z\s]{1,30}$"))
             {
                 MessageBox.Show("Ingrese un apellido válido.");
                 return;
             }
-            cliente.apellido = txApellido.Text;
-            if (!Regex.IsMatch(txMail.Text, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"))
+            cliente.Apellido = txtApellido.Text;
+            if (!Regex.IsMatch(txtMail.Text, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"))
             {
                 MessageBox.Show("Ingrese un mail válido.");
                 return;
             }
-            cliente.mail = txMail.Text;
-            cliente.habilitado = hab_original;
-            if (!Regex.IsMatch(txTelefono.Text, @"^[0-9]{1,20}$"))
+            cliente.Email = txtMail.Text;
+            cliente.Habilitado = hab_original;
+            if (!Regex.IsMatch(txtTel.Text, @"^[0-9]{1,20}$"))
             {
                 MessageBox.Show("Ingrese un telefono válido.");
                 return;
             }
-            cliente.telefono = txTelefono.Text;
-            cliente.fecha_nac = dateTimePicker1.Value.Date;
-            if (!Regex.IsMatch(txLocalidad.Text, @"^[a-zA-Z0-9\s]{1,20}$"))
+            cliente.Telefono = txtTel.Text;
+            cliente.FechaDeNacimiento = datePickerFechaNac.Value.Date;
+            if (!Regex.IsMatch(txtLoc.Text, @"^[a-zA-Z0-9\s]{1,20}$"))
             {
                 MessageBox.Show("Ingrese una localidad válida.");
                 return;
             }
-            direccion.localidad = txLocalidad.Text;
-            if (!Regex.IsMatch(txCp.Text, @"^[0-9]{1,4}$"))
+            direccion.Localidad = txtLoc.Text;
+            if (!Regex.IsMatch(txtCp.Text, @"^[0-9]{1,4}$"))
             {
                 MessageBox.Show("Ingrese un código postal válido.");
                 return;
             }
-            direccion.cp = Convert.ToInt16(txCp.Text);
-            if (!Regex.IsMatch(txPiso.Text, @"^[0-9]{1,3}$") && !string.IsNullOrEmpty(txPiso.Text))
+            direccion.CodPostal = txtCp.Text;
+            if (!Regex.IsMatch(txtPiso.Text, @"^[0-9]{1,3}$") && !string.IsNullOrEmpty(txtPiso.Text))
             {
                 MessageBox.Show("Ingrese un piso válido.");
                 return;
             }
-            direccion.piso = string.IsNullOrWhiteSpace(txPiso.Text) ? short.MaxValue : Convert.ToInt16(txPiso.Text);
-            if (!Regex.IsMatch(txDpto.Text, @"^[a-zA-Z]$") && !string.IsNullOrEmpty(txDpto.Text))
+            direccion.Piso = string.IsNullOrWhiteSpace(txtPiso.Text) ? null : txtPiso.Text;
+            if (!Regex.IsMatch(txtDepto.Text, @"^[a-zA-Z]$") && !string.IsNullOrEmpty(txtDepto.Text))
             {
                 MessageBox.Show("Ingrese un departamento válido.");
                 return;
             }
-            direccion.dpto = string.IsNullOrWhiteSpace(txDpto.Text) ? ' ' : txDpto.Text.First();
-            if (!Regex.IsMatch(txCalle.Text, @"^[a-zA-Z0-9\s]{1,50}$"))
+            direccion.Departamento = string.IsNullOrWhiteSpace(txtDepto.Text) ? ' '.ToString() : txtDepto.Text;
+            if (!Regex.IsMatch(txtCalle.Text, @"^[a-zA-Z0-9\s]{1,50}$"))
             {
                 MessageBox.Show("Ingrese una calle válida.");
                 return;
             }
-            if (!Regex.IsMatch(txNumero.Text, @"^[0-9]{1,6}$"))
+            if (!Regex.IsMatch(txtNum.Text, @"^[0-9]{1,6}$"))
             {
                 MessageBox.Show("Ingrese un número válido.");
                 return;
             }
-            direccion.calle = txCalle.Text + " " + txNumero.Text;
-            cliente.direccion = direccion;
+            direccion.Calle = txtCalle.Text + " " + txtNum.Text;
+            cliente.Direccion = direccion;
 
-            ClientesRepositorio.modificarCliente(cliente);
+            ClienteRepositorio.modificarCliente(cliente);
             MessageBox.Show("Cliente modificado correctamente.");
             this.Hide();
             new ListadoCliente('M').Show();
@@ -156,6 +156,26 @@ namespace PalcoNet.AbmCliente
         private void button2_Click(object sender, EventArgs e)
         {
             this.Hide();
+        }
+
+        private void btnAlta_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox7_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox10_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

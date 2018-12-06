@@ -18,7 +18,7 @@ namespace PalcoNet.AbmTarjeta
     public partial class AltaTarjeta : MaterialForm
     {
         Cliente cliente = new Cliente();
-        Direccion direccion = new Direccion();
+        // Direccion direccion = new Direccion();
         public AltaTarjeta()
         {
             InitializeComponent();

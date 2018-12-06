@@ -16,10 +16,12 @@ namespace PalcoNet.Modelo
             Localidad = localidad;
             CodPostal = cp;
         }
+        public Direccion(){}
         public string Calle { get; set; }
         public string Numero { get; set; }
         public string Departamento { get; set; }
         public string Localidad { get; set; }
         public string CodPostal { get; set; }
+        public string Piso { get; set; }
     }
 }

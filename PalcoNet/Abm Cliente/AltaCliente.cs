@@ -89,18 +89,18 @@ namespace PalcoNet.AbmCliente
             //epProvider.Clear();
             if(validarCamposVaciosCliente()) { return; }
 
-            cliente.habilitado = true;
+            cliente.Habilitado = true;
             if (!Regex.IsMatch(txDni.Text, @"^[0-9]{1,8}$"))
             {
                 MessageBox.Show("Ingrese un DNI válido.");
                 return;
             }
-            if (ClientesRepositorio.esClienteExistente(Convert.ToInt32(txDni.Text)))
+            if (ClienteRepositorio.esClienteExistente(Convert.ToInt32(txDni.Text)))
             {
                 MessageBox.Show("Ya existe un cliente con el dni ingresado");
                 return;
             }
-            cliente.dni = Convert.ToInt32(txDni.Text);
+            cliente.NumeroDocumento = txDni.Text;
             if (!Regex.IsMatch(txNombre.Text, @"^[a-zA-Z\s]{1,30}$"))
             {
                 MessageBox.Show("Ingrese un nombre válido.");
@@ -112,49 +112,49 @@ namespace PalcoNet.AbmCliente
                 MessageBox.Show("Ingrese un apellido válido.");
                 return;
             }
-            cliente.apellido = txApellido.Text;
+            cliente.Apellido = txApellido.Text;
             if (!Regex.IsMatch(txMail.Text, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"))
             {
                 MessageBox.Show("Ingrese un mail válido.");
                 return;
             }
-            else if (ClientesRepositorio.esClienteExistenteMail(txMail.Text))
+            else if (ClienteRepositorio.esClienteExistenteMail(txMail.Text))
             {
                 MessageBox.Show("Ya existe un cliente con el mail ingresado");
                 return;
             }
-            cliente.mail = txMail.Text;
+            cliente.Email = txMail.Text;
             if (!Regex.IsMatch(txTelefono.Text, @"^[0-9]{1,20}$"))
             {
                 MessageBox.Show("Ingrese un telefono válido.");
                 return;
             }
-            cliente.telefono = txTelefono.Text;
-            cliente.fecha_nac = datePickerFechaNac.Value.Date;
+            cliente.Telefono = txTelefono.Text;
+            cliente.FechaDeNacimiento = datePickerFechaNac.Value.Date;
             if (!Regex.IsMatch(txLocalidad.Text, @"^[a-zA-Z0-9\s]{1,20}$"))
             {
                 MessageBox.Show("Ingrese una localidad válida.");
                 return;
             }
-            direccion.localidad = txLocalidad.Text;
+            direccion.Localidad = txLocalidad.Text;
             if (!Regex.IsMatch(txCp.Text, @"^[0-9]{1,4}$"))
             {
                 MessageBox.Show("Ingrese un código postal válido.");
                 return;
             }
-            direccion.cp = Convert.ToInt16(txCp.Text);
+            direccion.CodPostal = txCp.Text;
             if (!Regex.IsMatch(txPiso.Text, @"^[0-9]{1,3}$") && !string.IsNullOrEmpty(txPiso.Text))
             {
                 MessageBox.Show("Ingrese un piso válido.");
                 return;
             }
-            direccion.piso = string.IsNullOrWhiteSpace(txPiso.Text) ? short.MaxValue : Convert.ToInt16(txPiso.Text);
+            direccion.Piso = string.IsNullOrWhiteSpace(txPiso.Text) ? null : txPiso.Text;
             if (!Regex.IsMatch(txDpto.Text, @"^[a-zA-Z]$") && !string.IsNullOrEmpty(txDpto.Text))
             {
                 MessageBox.Show("Ingrese un departamento válido.");
                 return;
             }
-            direccion.dpto = string.IsNullOrWhiteSpace(txDpto.Text) ? ' ' : txDpto.Text.First();
+            direccion.Departamento = string.IsNullOrWhiteSpace(txDpto.Text) ? ' '.ToString() : txDpto.Text;
             if (!Regex.IsMatch(txCalle.Text, @"[a-zA-Z0-9\s]{1,50}$"))
             {
                 MessageBox.Show("Ingrese una calle válida.");
@@ -165,11 +165,11 @@ namespace PalcoNet.AbmCliente
                 MessageBox.Show("Ingrese un número válido.");
                 return;
             }
-            direccion.calle = txCalle.Text + " " + txNumero.Text;
-            cliente.direccion = direccion;
+            direccion.Calle = txCalle.Text + " " + txNumero.Text;
+            cliente.Direccion = direccion;
 
 
-            ClientesRepositorio.agregar(cliente);
+            ClienteRepositorio.agregar(cliente);
             limpiarVentana();
             MessageBox.Show("Cliente agregado correctamente");
 
@@ -211,7 +211,7 @@ namespace PalcoNet.AbmCliente
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new AltaTarjeta();
+            // new AltaTarjeta();
         }
     }
 }

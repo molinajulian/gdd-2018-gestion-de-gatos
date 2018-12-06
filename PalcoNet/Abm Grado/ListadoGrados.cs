@@ -11,6 +11,7 @@ using PalcoNet.Modelo;
 using PalcoNet.Repositorios;
 using MaterialSkin.Controls;
 using MaterialSkin;
+using PalcoNet.AbmRol;
 
 namespace PalcoNet.AbmGrado
 {
@@ -70,7 +71,7 @@ namespace PalcoNet.AbmGrado
 
             foreach(Rol rol in roles)
             {
-                String[] row = new String[] { Convert.ToString(rol.id), Convert.ToString(rol.nombre), Convert.ToString(rol.inhabilitado) };
+                String[] row = new String[] { Convert.ToString(rol.id), Convert.ToString(rol.nombre), Convert.ToString(!rol.Habilitado) };
                 tabla_roles.Rows.Add(row);
             }
 
