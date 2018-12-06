@@ -43,6 +43,7 @@ namespace PalcoNet.Registro_de_usuario
             } catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.Show();
             }
         }
 

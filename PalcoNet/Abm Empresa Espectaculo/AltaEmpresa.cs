@@ -13,7 +13,7 @@ using MaterialSkin.Controls;
 using MaterialSkin;
 using System.Text.RegularExpressions;
 
-namespace PagoAgilFrba.AbmEmpresa
+namespace PalcoNet.AbmEmpresa
 {
     public partial class AltaEmpresa : MaterialForm
     {
