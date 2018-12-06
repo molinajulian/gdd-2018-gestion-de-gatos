@@ -29,7 +29,7 @@ namespace PalcoNet.Modelo
         public static Rol buildRol(SqlDataReader lector)
         {
             Dictionary<string, int> camposRol = Ordinales.camposRol;
-            return new Rol(lector.GetInt32(camposRol["nombre"]), lector.GetString(camposRol["nombre"]));
+            return new Rol(lector.GetInt32(camposRol["id"]), lector.GetString(camposRol["nombre"]));
         }
     }
 }
