@@ -213,5 +213,10 @@ namespace PalcoNet.AbmCliente
         {
             // new AltaTarjeta();
         }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtDepto = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -60,7 +61,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txNombre = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
-            this.txtDepto = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -105,6 +105,13 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos del Nuevo Cliente";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // txtDepto
+            // 
+            this.txtDepto.Location = new System.Drawing.Point(472, 239);
+            this.txtDepto.Name = "txtDepto";
+            this.txtDepto.Size = new System.Drawing.Size(27, 20);
+            this.txtDepto.TabIndex = 38;
             // 
             // textBox1
             // 
@@ -366,13 +373,7 @@
             this.button2.TabIndex = 39;
             this.button2.Text = "Volver";
             this.button2.UseVisualStyleBackColor = true;
-            // 
-            // txtDepto
-            // 
-            this.txtDepto.Location = new System.Drawing.Point(472, 239);
-            this.txtDepto.Name = "txtDepto";
-            this.txtDepto.Size = new System.Drawing.Size(27, 20);
-            this.txtDepto.TabIndex = 38;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // AltaCliente
             // 

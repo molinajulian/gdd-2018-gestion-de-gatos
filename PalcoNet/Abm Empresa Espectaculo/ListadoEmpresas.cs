@@ -12,8 +12,10 @@ using PalcoNet.Repositorios;
 using MaterialSkin.Controls;
 using MaterialSkin;
 using System.Text.RegularExpressions;
+using PalcoNet.AbmEmpresa;
+using PalcoNet.Abm_Empresa_Espectaculo;
 
-namespace PagoAgilFrba.AbmEmpresa
+namespace PalcoNet.AbmEmpresa
 {
     public partial class ListadoEmpresas : MaterialForm
     {
@@ -42,6 +44,12 @@ namespace PagoAgilFrba.AbmEmpresa
 
         }
 
+
+        private void cargarRubros()
+        {
+            throw new NotImplementedException();
+        }
+
         private void cargarBotonLogico()
         {
 
@@ -62,10 +70,10 @@ namespace PagoAgilFrba.AbmEmpresa
                 btn.UseColumnTextForButtonValue = true;
             }
             
-            data_empresas.Columns.Add(btn);
+            // data_empresas.Columns.Add(btn);
         }
 
-        private void cargarRubros()
+        /* private void cargarRubros()
         {
             List<Rubro> rubros = RubrosRepositorio.getRubros();
             foreach(Rubro rubro in rubros)
@@ -73,12 +81,12 @@ namespace PagoAgilFrba.AbmEmpresa
                 combo_rubros.Items.Add(rubro);
             }
             combo_rubros.DisplayMember = "detalle";
-        }
+        } */
 
 
         private void btn_buscar_Click(object sender, EventArgs e)
         {
-            if (!verificaTiposDatos()) return;
+            /*if (!verificaTiposDatos()) return;
 
             tabla_empresas.Rows.Clear();
             String rubro_id = "";
@@ -96,13 +104,13 @@ namespace PagoAgilFrba.AbmEmpresa
             }
             actualizarTablaEmpresas();
 
-            if (empresas.Count == 0) MessageBox.Show("No se han encontrado resultados", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            if (empresas.Count == 0) MessageBox.Show("No se han encontrado resultados", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);*/
         }
 
         public bool verificaTiposDatos()
         {
 
-            if ((String.IsNullOrEmpty(tx_tipo.Text) || String.IsNullOrEmpty(tx_numero_cuit.Text) || String.IsNullOrEmpty(tx_verificador.Text))
+            /*if ((String.IsNullOrEmpty(tx_tipo.Text) || String.IsNullOrEmpty(tx_numero_cuit.Text) || String.IsNullOrEmpty(tx_verificador.Text))
                 && (!String.IsNullOrEmpty(tx_tipo.Text) || !String.IsNullOrEmpty(tx_numero_cuit.Text) || !String.IsNullOrEmpty(tx_verificador.Text)))
             {
                 MessageBox.Show("Debe completar el cuit", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -113,7 +121,7 @@ namespace PagoAgilFrba.AbmEmpresa
             {
                 MessageBox.Show("Ingrese un tipo para el cuit valido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
-            }
+            }*/
 
             if (!String.IsNullOrEmpty(tx_numero_cuit.Text) && !Regex.IsMatch(tx_numero_cuit.Text, @"\d{8}$"))
             {
@@ -121,11 +129,11 @@ namespace PagoAgilFrba.AbmEmpresa
                 return false;
             }
 
-            if (!String.IsNullOrEmpty(tx_verificador.Text) && !Regex.IsMatch(tx_verificador.Text, @"\d{1}$"))
+            /*if (!String.IsNullOrEmpty(tx_verificador.Text) && !Regex.IsMatch(tx_verificador.Text, @"\d{1}$"))
             {
                 MessageBox.Show("Ingrese un verificador para el cuit valido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
-            }
+            }*/
             return true;
         }
 
@@ -173,7 +181,7 @@ namespace PagoAgilFrba.AbmEmpresa
         private void modificarEmpresa(String empresa_cuit)
         {
             this.Hide();
-            new ModificacionEmpresa(empresa_cuit).ShowDialog();
+            new PagoAgilFrba.AbmEmpresa.ModificacionEmpresa(empresa_cuit).ShowDialog();
             tabla_empresas.Rows.Clear();
             actualizarTablaEmpresas();
             this.Show();

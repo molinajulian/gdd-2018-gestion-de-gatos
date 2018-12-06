@@ -11,6 +11,7 @@ using MaterialSkin.Controls;
 using MaterialSkin;
 using PalcoNet.Modelo;
 using PalcoNet.Registro_de_usuario;
+using PalcoNet.AbmCliente;
 /*
 using PagoAgilFrba.Modelo;
 using PagoAgilFrba.AbmCliente;
@@ -85,6 +86,16 @@ namespace PalcoNet.Registro_de_Usuario
         private void buttonSidebarClientes_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void buttonSidebarEmpresas_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonAlta_Click(object sender, EventArgs e)
+        {
+            new AltaCliente();
         }
         
     }

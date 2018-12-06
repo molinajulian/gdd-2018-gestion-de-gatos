@@ -17,11 +17,15 @@ C:\Users\yoona\Desktop\gdd-2018-gestion-de-gatos\PalcoNet\bin\Debug\PalcoNet.pdb
 C:\Users\yoona\Desktop\gdd-2018-gestion-de-gatos\PalcoNet\bin\Debug\MaterialSkin.dll
 C:\Users\yoona\Desktop\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.exe
 C:\Users\yoona\Desktop\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.pdb
+C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\bin\Debug\PalcoNet.exe.config
+C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\bin\Debug\PalcoNet.exe
+C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\bin\Debug\PalcoNet.pdb
+C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\bin\Debug\MaterialSkin.dll
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmCliente.AltaCliente.resources
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmCliente.ListadoCliente.resources
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmCliente.ModificacionCliente.resources
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PagoAgilFrba.AbmEmpresa.AltaEmpresa.resources
-C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PagoAgilFrba.AbmEmpresa.ListadoEmpresas.resources
+C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmEmpresa.ListadoEmpresas.resources
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PagoAgilFrba.AbmEmpresa.ModificacionEmpresa.resources
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmGrado.AltaGrado.resources
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmGrado.ListadoGrados.resources
@@ -37,3 +41,5 @@ C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.Registro_de_usuario.Log.resources
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usuario.MenuABMs.resources
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.csproj.GenerateResource.Cache
+C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.exe
+C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.pdb

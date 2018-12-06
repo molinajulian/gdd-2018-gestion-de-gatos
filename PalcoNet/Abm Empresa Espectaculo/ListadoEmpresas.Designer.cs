@@ -1,4 +1,4 @@
-﻿namespace PagoAgilFrba.AbmEmpresa
+﻿namespace PalcoNet.AbmEmpresa
 {
     partial class ListadoEmpresas
     {

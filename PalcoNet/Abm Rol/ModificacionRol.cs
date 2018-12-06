@@ -70,7 +70,7 @@ namespace PalcoNet.AbmRol
             RolRepositorio.modificarRol(rol, funcionalidades_rol);
             limpiarVentana();
             this.Hide();
-            this.menu.configurarBotones();
+            // this.menu.configurarBotones();
         }
 
         private bool validarCamposVacios()

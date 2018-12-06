@@ -118,6 +118,31 @@ namespace PalcoNet.Repositorios
         {
             throw new NotImplementedException();
         }
+
+        internal static Empresa getEmpresa(string cuit)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void modificar(Empresa empresa)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void agregar(Empresa empresa)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static bool esEmpresaExistente(string p)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static bool esEmpresaHabilitada(string empresa_cuit)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

@@ -50,11 +50,17 @@ namespace PalcoNet.AbmTarjeta
             var controles = groupBox1.Controls;
             foreach (Control control in controles)
             {
-                if (control == txPiso || control == txDpto)
+               /* if (control == txPiso || control == txDpto)
                 {
                      
                 }
                 else if(string.IsNullOrWhiteSpace(control.Text))
+                {
+                    MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    error = true;
+                    break;
+                }*/
+                if (string.IsNullOrWhiteSpace(control.Text))
                 {
                     MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     error = true;

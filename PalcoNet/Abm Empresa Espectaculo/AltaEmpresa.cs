@@ -27,7 +27,7 @@ namespace PagoAgilFrba.AbmEmpresa
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
-            cargarRubros();
+            // cargarRubros();
         }
 
         private void btn_alta_empresa_Click(object sender, EventArgs e)
@@ -39,11 +39,11 @@ namespace PagoAgilFrba.AbmEmpresa
                 return;
             }
 
-            empresa.habilitado = true;
-            empresa.cuit = tx_tipo.Text + "-" + tx_cuit_numero.Text + "-" + tx_verificador.Text;
-            empresa.nombre = tx_nombre.Text;
-            empresa.direccion = tx_direccion.Text;
-            empresa.rubro = ((Rubro)combo_rubros.SelectedItem).id;
+            empresa.Habilitado = true;
+            empresa.Cuit = txtCuit.Text;
+            empresa.nombre = txtNombre.Text;
+            // empresa.Direccion = tx_direccion.Text;
+            // empresa.rubro = ((Rubro)combo_rubros.SelectedItem).id;
 
             EmpresasRepositorio.agregar(empresa);
             limpiarVentana();
@@ -57,7 +57,7 @@ namespace PagoAgilFrba.AbmEmpresa
             if (!formularioCompleto())  return false ; 
             if (!verificaTiposDeDatos()) return false;
 
-            if (EmpresasRepositorio.esEmpresaExistente(tx_tipo.Text + "-" + tx_cuit_numero.Text + "-" + tx_verificador.Text))
+            if (EmpresasRepositorio.esEmpresaExistente(txtCuit.Text))
             {
                 MessageBox.Show("Ya existe una empresa con el cuit ingresado", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
@@ -74,29 +74,29 @@ namespace PagoAgilFrba.AbmEmpresa
         private bool verificaTiposDeDatos()
         {
            
-           if (!Regex.IsMatch(tx_tipo.Text, @"\d{2}$"))
+           /*if (!Regex.IsMatch(txtCuit.Text, @"\d{2}$"))
            {
                MessageBox.Show("Ingrese un tipo para el cuit valido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                return false;
-           }
+           }*/
 
-           if (!Regex.IsMatch(tx_cuit_numero.Text, @"\d{8}$"))
+           if (!Regex.IsMatch(txtCuit.Text, @"\d{8}$"))
            {
                MessageBox.Show("Ingrese un numero para el cuit valido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                return false;
            }
 
-           if (!Regex.IsMatch(tx_verificador.Text, @"\d{1}$"))
+           /*if (!Regex.IsMatch(tx_verificador.Text, @"\d{1}$"))
            {
                MessageBox.Show("Ingrese un verificador para el cuit valido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                return false;
-           }
+           }*/
             
-            if(!EmpresasRepositorio.verificaConformacionCuit(tx_tipo.Text + tx_cuit_numero.Text + tx_verificador.Text))
+           /* if(!EmpresasRepositorio.verificaConformacionCuit(tx_tipo.Text + txtCuit.Text + tx_verificador.Text))
            {
                MessageBox.Show("Ingrese un cuit valido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
-           }
+           }*/
 
             return true;
         }
@@ -136,7 +136,7 @@ namespace PagoAgilFrba.AbmEmpresa
 
         }
 
-        private void cargarRubros()
+        /*private void cargarRubros()
         {
             List<Rubro> rubros = RubrosRepositorio.getRubros();
             foreach (Rubro rubro in rubros)
@@ -145,6 +145,11 @@ namespace PagoAgilFrba.AbmEmpresa
             }
             
             combo_rubros.DisplayMember = "detalle";
+        }*/
+
+        private void txtCiudad_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
     }

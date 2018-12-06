@@ -94,6 +94,7 @@
             this.buttonSidebarEmpresas.TabIndex = 5;
             this.buttonSidebarEmpresas.Text = "Empresas";
             this.buttonSidebarEmpresas.UseVisualStyleBackColor = true;
+            this.buttonSidebarEmpresas.Click += new System.EventHandler(this.buttonSidebarEmpresas_Click);
             // 
             // buttonSidebarGradoPublicacion
             // 
@@ -148,6 +149,7 @@
             this.buttonAlta.Text = "Alta";
             this.buttonAlta.UseVisualStyleBackColor = false;
             this.buttonAlta.Visible = false;
+            this.buttonAlta.Click += new System.EventHandler(this.buttonAlta_Click);
             // 
             // iconBaja
             // 

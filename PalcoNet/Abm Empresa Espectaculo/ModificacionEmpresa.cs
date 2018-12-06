@@ -29,26 +29,26 @@ namespace PagoAgilFrba.AbmEmpresa
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
            empresa = EmpresasRepositorio.getEmpresa(cuit);
-           cargarRubros();
+           // cargarRubros();
 
-           tx_cuit_numero.Text = empresa.cuit;
-           tx_nombre.Text = empresa.nombre.ToString();
-           tx_direccion.Text = empresa.direccion;
-           combo_rubros.Text = empresa.rubro.ToString();
+           txtCuit.Text = empresa.Cuit;
+           txtNombre.Text = empresa.nombre.ToString();
+           // tx_direccion.Text = empresa.Direccion;
+           // combo_rubros.Text = empresa.rubro.ToString();
 
            if (empresa.Habilitado)
            {
-               check_box_habilitacion.Checked = true;
-               check_box_habilitacion.Enabled = false;
+               checkHabilitada.Checked = true;
+               checkHabilitada.Enabled = false;
            }
            else
            {
-               check_box_habilitacion.Checked = false;
-               check_box_habilitacion.Enabled = true;
+               checkHabilitada.Checked = false;
+               checkHabilitada.Enabled = true;
            }
         }
 
-        private void cargarRubros()
+        /*private void cargarRubros()
         {
             List<Rubro> rubros = RubrosRepositorio.getRubros();
             foreach (Rubro rubro in rubros)
@@ -56,17 +56,17 @@ namespace PagoAgilFrba.AbmEmpresa
                 combo_rubros.Items.Add(rubro);
             }
             combo_rubros.DisplayMember = "id";
-        }
+        }*/
 
         private void btn_modificar_empresa_Click(object sender, EventArgs e)
         {
             if (!verificaValidaciones()) return;
             
-            empresa.habilitado = check_box_habilitacion.Checked;
-            empresa.cuit = tx_cuit.Text;
-            empresa.nombre = tx_nombre.Text;
-            empresa.Direccion = tx_direccion.Text;
-            empresa.rubro = Convert.ToInt32(combo_rubros.Text);
+            empresa.Habilitado = checkHabilitada.Checked;
+            empresa.Cuit = txtCuit.Text;
+            empresa.nombre = txtNombre.Text;
+            // empresa.Direccion = tx_direccion.Text;
+            // empresa.rubro = Convert.ToInt32(combo_rubros.Text);
 
             EmpresasRepositorio.modificar(empresa);
             limpiarVentana();
@@ -117,6 +117,21 @@ namespace PagoAgilFrba.AbmEmpresa
                  }
              }
              return error;
+         }
+
+         private void textBox3_TextChanged(object sender, EventArgs e)
+         {
+
+         }
+
+         private void txLocalidad_TextChanged(object sender, EventArgs e)
+         {
+
+         }
+
+         private void button1_Click(object sender, EventArgs e)
+         {
+
          }   
     }
 }

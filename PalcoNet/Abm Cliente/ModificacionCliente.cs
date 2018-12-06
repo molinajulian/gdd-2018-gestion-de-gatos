@@ -132,10 +132,10 @@ namespace PalcoNet.AbmCliente
         private bool validarCamposVaciosCliente()
         {
             bool error = false;
-            var controles = groupBox1.Controls;
+            var controles = groupBoxModifCli.Controls;
             foreach (Control control in controles)
             {
-                if (control == txPiso || control == txDpto)
+                if (control == txtPiso || control == txtDepto)
                 {
 
                 }

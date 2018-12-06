@@ -75,6 +75,7 @@
     <Compile Include="Abm Empresa Espectaculo\AltaEmpresa.designer.cs">
       <DependentUpon>AltaEmpresa.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Empresa Espectaculo\EmpresaNoRendidaError.cs" />
     <Compile Include="Abm Empresa Espectaculo\ListadoEmpresas.cs">
       <SubType>Form</SubType>
     </Compile>
