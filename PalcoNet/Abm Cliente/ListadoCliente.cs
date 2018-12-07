@@ -27,6 +27,15 @@ namespace PalcoNet.AbmCliente
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
+            
+
+            initColumns();
+
+
+            data_clientes.Columns[1].Name = "Razon social";
+            data_clientes.Columns[2].Name = "Telefono";
+            data_clientes.Columns[3].Name = "Email";
+
             tabla_clientes.Columns.Add("DNI", typeof(string));
             tabla_clientes.Columns.Add("Nombre", typeof(string));
             tabla_clientes.Columns.Add("Apellido", typeof(string));
@@ -37,6 +46,41 @@ namespace PalcoNet.AbmCliente
             else
                 switch_habilitacion.Hide();
         }
+
+        private void initColumns()
+        {
+            DataGridViewColumn colTipoDoc = new DataGridViewColumn();
+            colTipoDoc.HeaderText = "Tipo doc";
+            data_clientes.Columns.Add(colTipoDoc);
+            DataGridViewColumn colDoc = new DataGridViewColumn();
+            colDoc.HeaderText = "Documento";
+            data_clientes.Columns.Add(colDoc);
+            DataGridViewColumn colCuil = new DataGridViewColumn();
+            colCuil.HeaderText = "Cuil";
+            data_clientes.Columns.Add(colCuil);
+            DataGridViewColumn colNombre = new DataGridViewColumn();
+            colNombre.HeaderText = "Nombre";
+            data_clientes.Columns.Add(colNombre);
+            DataGridViewColumn colApellido = new DataGridViewColumn();
+            colApellido.HeaderText = "Apellido";
+            data_clientes.Columns.Add(colApellido);
+            DataGridViewColumn colEmail = new DataGridViewColumn();
+            colEmail.HeaderText = "Email";
+            data_clientes.Columns.Add(colEmail);
+            DataGridViewColumn colCalle = new DataGridViewColumn();
+            colCalle.HeaderText = "Calle";
+            data_clientes.Columns.Add(colCalle);
+            DataGridViewColumn colNumero = new DataGridViewColumn();
+            colNumero.HeaderText = "Numero";
+            data_clientes.Columns.Add(colNumero);
+            DataGridViewColumn colCiudad = new DataGridViewColumn();
+            colCiudad.HeaderText = "Localidad";
+            data_clientes.Columns.Add(colCiudad);
+            DataGridViewColumn colCP = new DataGridViewColumn();
+            colCP.HeaderText = "Coidigo postal";
+            data_clientes.Columns.Add(colCP);
+        }
+
         private void btn_buscar_Click(object sender, EventArgs e)
         {
             if (!Regex.IsMatch(tx_dni.Text, @"^[0-9]{1,8}$") && !string.IsNullOrEmpty(tx_dni.Text))
@@ -150,6 +194,11 @@ namespace PalcoNet.AbmCliente
         }
 
         private void data_clientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void ListadoCliente_Load(object sender, EventArgs e)
         {
 
         }

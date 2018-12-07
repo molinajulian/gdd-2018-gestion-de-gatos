@@ -46,6 +46,11 @@ namespace PalcoNet.AbmCliente
             datePickerFechaNac.Value = cliente.FechaDeNacimiento;
         }
 
+        public ModificacionCliente()
+        {
+            // TODO: Complete member initialization
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             if (validarCamposVaciosCliente()) { return; }
@@ -174,6 +179,11 @@ namespace PalcoNet.AbmCliente
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtNombre_TextChanged(object sender, EventArgs e)
         {
 
         }

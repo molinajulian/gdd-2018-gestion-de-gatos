@@ -26,7 +26,6 @@ C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmCliente.ModificacionCliente.resources
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmEmpresa.AltaEmpresa.resources
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmEmpresa.ListadoEmpresas.resources
-C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PagoAgilFrba.AbmEmpresa.ModificacionEmpresa.resources
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmGrado.AltaGrado.resources
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmGrado.ListadoGrados.resources
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.Abm_Rubro.Form1.resources
@@ -44,3 +43,4 @@ C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.exe
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.pdb
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.csprojResolveAssemblyReference.cache
+C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmEmpresa.ModificacionEmpresa.resources

@@ -218,5 +218,10 @@ namespace PalcoNet.AbmCliente
         {
 
         }
+
+        private void txNombre_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
