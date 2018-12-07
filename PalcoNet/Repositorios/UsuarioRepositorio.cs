@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using PalcoNet.Modelo;
 using PalcoNet.Repositorios;
 
@@ -22,16 +23,7 @@ namespace PalcoNet.Repositorios
             parametros.Add(output);
             parametros.Add(new SqlParameter("@user", username));
             parametros.Add(new SqlParameter("@password",contrasenia));
-            SqlCommand sqlCommand = DataBase.ejecutarSP("[dbo].[sp_autenticar_usuario]", parametros);
-            switch ((int) sqlCommand.Parameters["@salida"].Value)
-            {
-                case 0:
-                    throw new LoginIncorrecto();
-                case -1:
-                    throw new UsuarioInhabilitadoException(username);
-                default:
-                    break;
-            }
+            DataBase.ejecutarSP("[dbo].[sp_autenticar_usuario]", parametros);
         }
 
         public Usuario buscarUsuario(String username)
@@ -61,7 +53,7 @@ namespace PalcoNet.Repositorios
         internal static List<Rol> getRoles(Usuario user)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@username", user.username));
+            parametros.Add(new SqlParameter("@user_id", user.id));
             SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_roles_usuario]", "SP", parametros);
             List<Rol> roles = new List<Rol>();
             if (lector.HasRows)

@@ -43,4 +43,34 @@ C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.exe
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.pdb
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.csprojResolveAssemblyReference.cache
+<<<<<<< HEAD
 C:\Users\molin\OneDrive\Escritorio\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmEmpresa.ModificacionEmpresa.resources
+=======
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\bin\Debug\PalcoNet.exe.config
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\bin\Debug\PalcoNet.exe
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\bin\Debug\PalcoNet.pdb
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\bin\Debug\MaterialSkin.dll
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmCliente.AltaCliente.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmCliente.ListadoCliente.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmCliente.ModificacionCliente.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmEmpresa.AltaEmpresa.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmEmpresa.ListadoEmpresas.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PagoAgilFrba.AbmEmpresa.ModificacionEmpresa.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmGrado.AltaGrado.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmGrado.ListadoGrados.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.Abm_Rubro.Form1.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmTarjeta.AltaTarjeta.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmRol.AltaRol.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmRol.ListadoRoles.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmRol.ModificacionRol.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.AbmTarjeta.ModificacionTarjeta.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.Properties.Resources.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.Registro_de_usuario.ConfiguracionInicial.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usuario.MenuPpal.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.Registro_de_usuario.Log.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.Registro_de_Usuario.MenuABMs.resources
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.csproj.GenerateResource.Cache
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.csproj.CoreCompileInputs.cache
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.exe
+D:\UTN\GDD\TP PalcoNet Frba 1.0 - 2C 2018\gdd-2018-gestion-de-gatos\PalcoNet\obj\Debug\PalcoNet.pdb
+>>>>>>> 08e138d369d87ba130c0589e95741d75079f0eb6
