@@ -61,7 +61,7 @@ namespace PalcoNet.Repositorios
         internal static List<Rol> getRoles(Usuario user)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@user_id", user.id));
+            parametros.Add(new SqlParameter("@username", user.username));
             SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_roles_usuario]", "SP", parametros);
             List<Rol> roles = new List<Rol>();
             if (lector.HasRows)
