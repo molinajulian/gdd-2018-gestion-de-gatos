@@ -58,6 +58,9 @@ namespace PalcoNet.Repositorios
                              Telefono = reader.GetValue(Ordinales.Cliente["telefono"]).ToString(),
                              FechaDeNacimiento = (DateTime)reader.GetValue(Ordinales.Cliente["fechaNacimiento"]),
                              FechaDeCreacion = (DateTime)reader.GetValue(Ordinales.Cliente["fechaCreacion"]),
+                             Direccion = DireccionRepositorio.ReadDireccionFromDb(reader.GetValue(Ordinales.Cliente["cuil"]).ToString()),
+                             Tarjeta = TarjetaRepositorio.GetTarjetasById(reader.GetValue(Ordinales.Cliente["cuil"]).ToString()).First()
+                             
                             };
         }
         public static List<Cliente> GetClienteByNombre(string unNombre)
@@ -87,6 +90,7 @@ namespace PalcoNet.Repositorios
                     ReadClienteFromDb(reader));
             }
             reader.Close();
+           
             return clientes;
         }
         public static List<Cliente> GetClienteByDNI(string unNumero)

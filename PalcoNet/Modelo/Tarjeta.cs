@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace PalcoNet.Modelo
 {
-    class Tarjeta
-    {   public Tarjeta(string numero, string nombre, DateTime fechavenc, string ccv) 
+   public  class Tarjeta
+    {
+        public Tarjeta() {  }
+        public Tarjeta(string numero, string nombre, DateTime fechavenc, string ccv) 
         {
             Numero = numero;
             Nombre = nombre;

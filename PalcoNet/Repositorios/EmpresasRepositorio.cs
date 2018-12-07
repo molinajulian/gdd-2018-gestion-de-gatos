@@ -57,8 +57,8 @@ namespace PalcoNet.Repositorios
                         Ciudad=reader.GetValue(Ordinales.Empresa["ciudad"]).ToString(),
                         Cuit=reader.GetValue(Ordinales.Empresa["cuit"]).ToString(),
                         Email = reader.GetValue(Ordinales.Empresa["email"]).ToString(),
-                        Telefono = reader.GetValue(Ordinales.Empresa["telefono"]).ToString()
-
+                        Telefono = reader.GetValue(Ordinales.Empresa["telefono"]).ToString(),
+                        Direccion = DireccionRepositorio.ReadDireccionFromDb(reader.GetValue(Ordinales.Empresa["cuit"]).ToString())
                          };
         }
        
@@ -105,6 +105,7 @@ namespace PalcoNet.Repositorios
                     ReadempresaFromDb(reader));
             }
             reader.Close();
+           
             return empresas;
         }
 

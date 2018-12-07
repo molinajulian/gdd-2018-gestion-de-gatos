@@ -44,15 +44,25 @@ namespace PalcoNet.Repositorios
 
         }
 
-        public static Direccion ReadDireccionFromDb(SqlDataReader reader)
+        public static Direccion ReadDireccionFromDb(string  id)
         {
-            return new Direccion(
+            var direccion = new Direccion();
+            var parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@id", id));
+            var query = DataBase.ejecutarFuncion("Select top 1 * from Direccion dir where dir.id = @id", parametros);
+            SqlDataReader reader = query.ExecuteReader();
+            while (reader.Read())
+            {
+                direccion = new Direccion(
                                 reader.GetValue(Ordinales.Direccion["calle"]).ToString(),
                                 reader.GetValue(Ordinales.Direccion["numero"]).ToString(),
                                 reader.GetValue(Ordinales.Direccion["departamento"]).ToString(),
                                 reader.GetValue(Ordinales.Direccion["localidad"]).ToString(),
                                 reader.GetValue(Ordinales.Direccion["codPostal"]).ToString()
                                 );
+
+            }
+            return direccion;
         }
 
     }

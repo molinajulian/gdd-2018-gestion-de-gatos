@@ -46,13 +46,35 @@ namespace PalcoNet.Repositorios
 
         public static Tarjeta ReadTarjetaFromDb(SqlDataReader reader)
         {
-            return  new Tarjeta(
+            var tarjeta = new Tarjeta();
+            while (reader.Read())
+            {
+                tarjeta = new Tarjeta(
                              reader.GetValue(Ordinales.Tarjeta["numeroTarjeta"]).ToString(),
                              reader.GetValue(Ordinales.Tarjeta["nombreTarjeta"]).ToString(),
                              (DateTime)reader.GetValue(Ordinales.Tarjeta["fechaVencimiento"]),
                              reader.GetValue(Ordinales.Tarjeta["ccv"]).ToString()
                              );
-        }
+            }
 
+
+            return tarjeta;
+
+
+        }
+        public static List<Tarjeta> GetTarjetasById(string id)
+        {   
+            var parametros = new List<SqlParameter>();
+            var tarjetas = new List<Tarjeta>();
+            parametros.Add(new SqlParameter("@id", id));
+            var query = DataBase.ejecutarFuncion("Select top 1 * from tarjeta tar where tar.id = @id", parametros);
+            SqlDataReader reader = query.ExecuteReader();
+            while (reader.Read())
+            {
+                tarjetas.Add(ReadTarjetaFromDb(reader));
+
+            }
+            return tarjetas  ;
+        }
     }
 }

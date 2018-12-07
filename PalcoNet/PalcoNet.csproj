@@ -225,6 +225,7 @@
     <Compile Include="Repositorios\DireccionRepositorio.cs" />
     <Compile Include="Repositorios\GradoRepositorio.cs" />
     <Compile Include="Repositorios\PublicacionRepositorio.cs" />
+    <Compile Include="Repositorios\RubroRepositorio.cs" />
     <Compile Include="Repositorios\TarjetaRepositorio.cs" />
     <Compile Include="Repositorios\UbicacionRepositorio.cs" />
     <Compile Include="Repositorios\UsuarioRepositorio.cs" />

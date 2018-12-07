@@ -42,14 +42,24 @@ namespace PalcoNet.Repositorios
 
         }
 
-        public static Rubro ReadRubroFromDb(SqlDataReader reader)
+        public static Rubro ReadRubroFromDb(int id)
         {
-            return new Rubro()
+            var rubro = new Rubro();
+            var parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@id", id));
+            var query = DataBase.ejecutarFuncion("Select top 1 * from rubro r where r.id = @id", parametros);
+            SqlDataReader reader = query.ExecuteReader();
+            while (reader.Read())
             {
-                Descripcion = reader.GetValue(Ordinales.Rubro["descripcion"]).ToString(),
-                Codigo = (int)reader.GetValue(Ordinales.Rubro["codigo"])            
+                rubro= new Rubro()
+                        {
+                            Codigo= (int)reader.GetValue(Ordinales.Rubro["codigo"]),
+                            Descripcion= reader.GetValue(Ordinales.Empresa["descripcion"]).ToString()
 
-            };
+                        };
+                    
+            }
+            return rubro;
         }
 
        
