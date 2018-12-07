@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using PalcoNet.Modelo;
+using PalcoNet.Modelo; 
 using PalcoNet.Repositorios;
 using MaterialSkin.Controls;
 using MaterialSkin;
@@ -181,7 +181,7 @@ namespace PalcoNet.AbmEmpresa
         private void modificarEmpresa(String empresa_cuit)
         {
             this.Hide();
-            new PagoAgilFrba.AbmEmpresa.ModificacionEmpresa(empresa_cuit).ShowDialog();
+            new PalcoNet.AbmEmpresa.ModificacionEmpresa(empresa_cuit).ShowDialog();
             tabla_empresas.Rows.Clear();
             actualizarTablaEmpresas();
             this.Show();
@@ -211,6 +211,11 @@ namespace PalcoNet.AbmEmpresa
             tabla_empresas.Rows[indice].Delete();
             actualizarTablaEmpresas();
             MessageBox.Show("La empresa ha sido inhabilitada exitosamente", "Inhabilitacion de empresa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void tx_numero_cuit_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
     }

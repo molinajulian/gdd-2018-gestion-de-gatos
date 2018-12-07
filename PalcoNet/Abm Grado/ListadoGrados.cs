@@ -59,6 +59,11 @@ namespace PalcoNet.AbmGrado
             data_listado_roles.Columns.Add(btn_accion);
         }
 
+        public ListadoGrados()
+        {
+            // TODO: Complete member initialization
+        }
+
         public void refreshValues()
         {
             data_listado_roles.DataSource = tabla_roles;
@@ -130,6 +135,11 @@ namespace PalcoNet.AbmGrado
                 this.Hide();
                 this.Close();
             }
+        }
+
+        private void tx_nombre_rol_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -364,6 +364,7 @@
             this.txNombre.Name = "txNombre";
             this.txNombre.Size = new System.Drawing.Size(132, 20);
             this.txNombre.TabIndex = 1;
+            this.txNombre.TextChanged += new System.EventHandler(this.txNombre_TextChanged);
             // 
             // button2
             // 

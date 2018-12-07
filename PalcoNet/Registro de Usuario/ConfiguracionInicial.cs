@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -34,16 +35,13 @@ namespace PalcoNet.Registro_de_usuario
 
         public void llenarCombos()
         {
-
             List<Rol> roles = new List<Rol>();
             combo_roles.Items.Clear();
             roles = UsuarioRepositorio.getRoles(user);
-            if (roles == null)
+            if (roles.Count == 0)
             {
-                MessageBox.Show("Este usuario no tiene roles habilitados.");
-            }
-            else
-            {
+                Utils.mostrarError(new Exception("El usuario no tiene roles asociados"));
+            } else { 
                 this.Show();
                 foreach (Rol rol in roles)
                 {

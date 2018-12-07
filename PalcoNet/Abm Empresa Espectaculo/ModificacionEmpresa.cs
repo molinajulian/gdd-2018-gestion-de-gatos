@@ -13,7 +13,7 @@ using MaterialSkin.Controls;
 using MaterialSkin;
 using System.Text.RegularExpressions;
 
-namespace PagoAgilFrba.AbmEmpresa
+namespace PalcoNet.AbmEmpresa
 {
     public partial class ModificacionEmpresa : MaterialForm
     {
@@ -130,6 +130,11 @@ namespace PagoAgilFrba.AbmEmpresa
          }
 
          private void button1_Click(object sender, EventArgs e)
+         {
+
+         }
+
+         private void txtNombre_TextChanged(object sender, EventArgs e)
          {
 
          }   

@@ -152,5 +152,10 @@ namespace PalcoNet.AbmEmpresa
 
         }
 
+        private void txtNombre_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

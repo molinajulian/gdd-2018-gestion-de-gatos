@@ -178,6 +178,7 @@
     <Compile Include="Listado Estadistico\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modelo\Cliente - Copia.cs" />
     <Compile Include="Modelo\Cliente.cs" />
     <Compile Include="Modelo\Direccion.cs" />
     <Compile Include="Modelo\Empresa.cs" />

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btn_atras = new System.Windows.Forms.Button();
             this.btn_limpiar = new System.Windows.Forms.Button();
             this.data_clientes = new System.Windows.Forms.DataGridView();
@@ -48,7 +48,7 @@
             // 
             // btn_atras
             // 
-            this.btn_atras.Location = new System.Drawing.Point(18, 440);
+            this.btn_atras.Location = new System.Drawing.Point(88, 440);
             this.btn_atras.Margin = new System.Windows.Forms.Padding(2);
             this.btn_atras.Name = "btn_atras";
             this.btn_atras.Size = new System.Drawing.Size(74, 28);
@@ -59,7 +59,7 @@
             // 
             // btn_limpiar
             // 
-            this.btn_limpiar.Location = new System.Drawing.Point(477, 440);
+            this.btn_limpiar.Location = new System.Drawing.Point(595, 440);
             this.btn_limpiar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_limpiar.Name = "btn_limpiar";
             this.btn_limpiar.Size = new System.Drawing.Size(74, 28);
@@ -75,20 +75,20 @@
             this.data_clientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.data_clientes.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.data_clientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.NullValue = "-";
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.data_clientes.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.NullValue = "-";
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.data_clientes.DefaultCellStyle = dataGridViewCellStyle2;
             this.data_clientes.Location = new System.Drawing.Point(11, 198);
             this.data_clientes.Name = "data_clientes";
             this.data_clientes.ReadOnly = true;
             this.data_clientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.data_clientes.Size = new System.Drawing.Size(545, 237);
+            this.data_clientes.Size = new System.Drawing.Size(717, 237);
             this.data_clientes.TabIndex = 23;
             this.data_clientes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.data_clientes_CellClick);
             this.data_clientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.data_clientes_CellContentClick);
@@ -107,7 +107,7 @@
             this.grupo_filtros.Margin = new System.Windows.Forms.Padding(2);
             this.grupo_filtros.Name = "grupo_filtros";
             this.grupo_filtros.Padding = new System.Windows.Forms.Padding(2);
-            this.grupo_filtros.Size = new System.Drawing.Size(545, 107);
+            this.grupo_filtros.Size = new System.Drawing.Size(717, 107);
             this.grupo_filtros.TabIndex = 22;
             this.grupo_filtros.TabStop = false;
             this.grupo_filtros.Text = "Filtros de Busqueda";
@@ -115,7 +115,7 @@
             // 
             // tx_apellido
             // 
-            this.tx_apellido.Location = new System.Drawing.Point(235, 31);
+            this.tx_apellido.Location = new System.Drawing.Point(305, 31);
             this.tx_apellido.Margin = new System.Windows.Forms.Padding(2);
             this.tx_apellido.Name = "tx_apellido";
             this.tx_apellido.Size = new System.Drawing.Size(118, 20);
@@ -123,7 +123,7 @@
             // 
             // tx_dni
             // 
-            this.tx_dni.Location = new System.Drawing.Point(412, 31);
+            this.tx_dni.Location = new System.Drawing.Point(495, 31);
             this.tx_dni.Margin = new System.Windows.Forms.Padding(2);
             this.tx_dni.Name = "tx_dni";
             this.tx_dni.Size = new System.Drawing.Size(118, 20);
@@ -131,7 +131,7 @@
             // 
             // tx_nombre
             // 
-            this.tx_nombre.Location = new System.Drawing.Point(56, 31);
+            this.tx_nombre.Location = new System.Drawing.Point(90, 31);
             this.tx_nombre.Margin = new System.Windows.Forms.Padding(2);
             this.tx_nombre.Name = "tx_nombre";
             this.tx_nombre.Size = new System.Drawing.Size(118, 20);
@@ -151,7 +151,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(187, 34);
+            this.label3.Location = new System.Drawing.Point(241, 34);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(44, 13);
@@ -161,7 +161,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(380, 34);
+            this.label2.Location = new System.Drawing.Point(453, 34);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(26, 13);
@@ -171,7 +171,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(5, 34);
+            this.label1.Location = new System.Drawing.Point(28, 34);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 13);
@@ -180,7 +180,7 @@
             // 
             // switch_habilitacion
             // 
-            this.switch_habilitacion.Location = new System.Drawing.Point(168, 440);
+            this.switch_habilitacion.Location = new System.Drawing.Point(268, 440);
             this.switch_habilitacion.Margin = new System.Windows.Forms.Padding(2);
             this.switch_habilitacion.Name = "switch_habilitacion";
             this.switch_habilitacion.Size = new System.Drawing.Size(74, 28);
@@ -191,7 +191,7 @@
             // 
             // btn_modificar
             // 
-            this.btn_modificar.Location = new System.Drawing.Point(325, 440);
+            this.btn_modificar.Location = new System.Drawing.Point(440, 440);
             this.btn_modificar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_modificar.Name = "btn_modificar";
             this.btn_modificar.Size = new System.Drawing.Size(74, 28);
@@ -204,7 +204,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(566, 501);
+            this.ClientSize = new System.Drawing.Size(789, 562);
             this.Controls.Add(this.btn_modificar);
             this.Controls.Add(this.switch_habilitacion);
             this.Controls.Add(this.btn_atras);
@@ -212,7 +212,8 @@
             this.Controls.Add(this.data_clientes);
             this.Controls.Add(this.grupo_filtros);
             this.Name = "ListadoCliente";
-            this.Text = "ListadoBajaCliente";
+            this.Text = "Listado de clientes";
+            this.Load += new System.EventHandler(this.ListadoCliente_Load);
             ((System.ComponentModel.ISupportInitialize)(this.data_clientes)).EndInit();
             this.grupo_filtros.ResumeLayout(false);
             this.grupo_filtros.PerformLayout();

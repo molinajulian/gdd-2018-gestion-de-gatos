@@ -58,9 +58,9 @@
             this.label26 = new System.Windows.Forms.Label();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.groupBoxModifCli = new System.Windows.Forms.GroupBox();
+            this.txtDepto = new System.Windows.Forms.TextBox();
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.btnVolver = new System.Windows.Forms.Button();
-            this.txtDepto = new System.Windows.Forms.TextBox();
             this.groupBoxModifCli.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -302,6 +302,7 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(132, 20);
             this.txtNombre.TabIndex = 1;
+            this.txtNombre.TextChanged += new System.EventHandler(this.txtNombre_TextChanged);
             // 
             // groupBoxModifCli
             // 
@@ -345,6 +346,13 @@
             this.groupBoxModifCli.Text = "Datos del Nuevo Cliente";
             this.groupBoxModifCli.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
+            // txtDepto
+            // 
+            this.txtDepto.Location = new System.Drawing.Point(472, 239);
+            this.txtDepto.Name = "txtDepto";
+            this.txtDepto.Size = new System.Drawing.Size(27, 20);
+            this.txtDepto.TabIndex = 38;
+            // 
             // textBox12
             // 
             this.textBox12.Location = new System.Drawing.Point(472, 203);
@@ -361,13 +369,6 @@
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
             // 
-            // txtDepto
-            // 
-            this.txtDepto.Location = new System.Drawing.Point(472, 239);
-            this.txtDepto.Name = "txtDepto";
-            this.txtDepto.Size = new System.Drawing.Size(27, 20);
-            this.txtDepto.TabIndex = 38;
-            // 
             // ModificacionCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -376,7 +377,7 @@
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.groupBoxModifCli);
             this.Name = "ModificacionCliente";
-            this.Text = "ModificacionCliente";
+            this.Text = "Modificacion de Cliente";
             this.Load += new System.EventHandler(this.ModificacionCliente_Load);
             this.groupBoxModifCli.ResumeLayout(false);
             this.groupBoxModifCli.PerformLayout();

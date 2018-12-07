@@ -30,6 +30,8 @@
         {
             this.data_empresas = new System.Windows.Forms.DataGridView();
             this.grupo_filtros = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.tx_numero_cuit = new System.Windows.Forms.TextBox();
             this.tx_nombre = new System.Windows.Forms.TextBox();
             this.btn_buscar = new System.Windows.Forms.Button();
@@ -37,8 +39,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btn_atras = new System.Windows.Forms.Button();
             this.btn_limpiar = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.data_empresas)).BeginInit();
             this.grupo_filtros.SuspendLayout();
             this.SuspendLayout();
@@ -48,7 +48,7 @@
             this.data_empresas.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.data_empresas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.data_empresas.Location = new System.Drawing.Point(11, 171);
-            this.data_empresas.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.data_empresas.Margin = new System.Windows.Forms.Padding(2);
             this.data_empresas.Name = "data_empresas";
             this.data_empresas.ReadOnly = true;
             this.data_empresas.RowTemplate.Height = 24;
@@ -67,26 +67,45 @@
             this.grupo_filtros.Controls.Add(this.label2);
             this.grupo_filtros.Controls.Add(this.label1);
             this.grupo_filtros.Location = new System.Drawing.Point(10, 87);
-            this.grupo_filtros.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grupo_filtros.Margin = new System.Windows.Forms.Padding(2);
             this.grupo_filtros.Name = "grupo_filtros";
-            this.grupo_filtros.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grupo_filtros.Padding = new System.Windows.Forms.Padding(2);
             this.grupo_filtros.Size = new System.Drawing.Size(623, 71);
             this.grupo_filtros.TabIndex = 1;
             this.grupo_filtros.TabStop = false;
             this.grupo_filtros.Text = "Filtros de Busqueda";
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(242, 31);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(114, 20);
+            this.textBox1.TabIndex = 18;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(212, 34);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(26, 13);
+            this.label3.TabIndex = 17;
+            this.label3.Text = "Mail";
+            // 
             // tx_numero_cuit
             // 
             this.tx_numero_cuit.Location = new System.Drawing.Point(401, 31);
-            this.tx_numero_cuit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tx_numero_cuit.Margin = new System.Windows.Forms.Padding(2);
             this.tx_numero_cuit.Name = "tx_numero_cuit";
             this.tx_numero_cuit.Size = new System.Drawing.Size(117, 20);
             this.tx_numero_cuit.TabIndex = 16;
+            this.tx_numero_cuit.TextChanged += new System.EventHandler(this.tx_numero_cuit_TextChanged);
             // 
             // tx_nombre
             // 
             this.tx_nombre.Location = new System.Drawing.Point(79, 31);
-            this.tx_nombre.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tx_nombre.Margin = new System.Windows.Forms.Padding(2);
             this.tx_nombre.Name = "tx_nombre";
             this.tx_nombre.Size = new System.Drawing.Size(118, 20);
             this.tx_nombre.TabIndex = 15;
@@ -94,7 +113,7 @@
             // btn_buscar
             // 
             this.btn_buscar.Location = new System.Drawing.Point(534, 26);
-            this.btn_buscar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_buscar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_buscar.Name = "btn_buscar";
             this.btn_buscar.Size = new System.Drawing.Size(74, 28);
             this.btn_buscar.TabIndex = 14;
@@ -125,7 +144,7 @@
             // btn_atras
             // 
             this.btn_atras.Location = new System.Drawing.Point(10, 434);
-            this.btn_atras.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_atras.Margin = new System.Windows.Forms.Padding(2);
             this.btn_atras.Name = "btn_atras";
             this.btn_atras.Size = new System.Drawing.Size(74, 28);
             this.btn_atras.TabIndex = 12;
@@ -136,31 +155,13 @@
             // btn_limpiar
             // 
             this.btn_limpiar.Location = new System.Drawing.Point(561, 434);
-            this.btn_limpiar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_limpiar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_limpiar.Name = "btn_limpiar";
             this.btn_limpiar.Size = new System.Drawing.Size(74, 28);
             this.btn_limpiar.TabIndex = 11;
             this.btn_limpiar.Text = "Limpiar";
             this.btn_limpiar.UseVisualStyleBackColor = true;
             this.btn_limpiar.Click += new System.EventHandler(this.btn_limpiar_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(242, 31);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(114, 20);
-            this.textBox1.TabIndex = 18;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(212, 34);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(26, 13);
-            this.label3.TabIndex = 17;
-            this.label3.Text = "Mail";
             // 
             // ListadoEmpresas
             // 
@@ -171,7 +172,7 @@
             this.Controls.Add(this.btn_limpiar);
             this.Controls.Add(this.grupo_filtros);
             this.Controls.Add(this.data_empresas);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ListadoEmpresas";
             this.Text = "Listado de Empresas";
             ((System.ComponentModel.ISupportInitialize)(this.data_empresas)).EndInit();
