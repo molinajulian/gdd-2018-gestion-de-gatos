@@ -46,5 +46,15 @@ namespace PalcoNet.Modelo
                 lector.GetDecimal(camposGetCliente["dom_piso"]).ToString(),lector.GetString(camposGetCliente["dom_localidad"]),lector.GetString(camposGetCliente["dom_cod_postal"])
                 );
         }
+        public static int buildClienteExistente(SqlDataReader lector)
+        {
+            Dictionary<string, int> campoClienteExistente = Ordinales.campoClienteExistente;
+            return lector.GetInt32(campoClienteExistente["cantidad"]);
+        }
+        public static int buildSalidaAgregar(SqlDataReader lector)
+        {
+            Dictionary<string, int> campoSalidaAgregar = Ordinales.campoSalidaAgregar;
+            return lector.GetInt32(campoSalidaAgregar["salida"]);
+        }
     }
 }

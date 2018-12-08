@@ -13,11 +13,19 @@ namespace PalcoNet.Modelo
                                                    {"tipos_doc_id",0},
                                                    {"tipos_doc_descr",1}
                                                };
+       public static Dictionary<string, int> campoSalidaAgregar = new Dictionary<string, int>
+                                                {
+                                                    {"salida",0}
+                                                };
        public static Dictionary<string, int> camposUsuario = new Dictionary<string, int>
                                                 {
                                                     {"id", 0},
                                                     {"username", 1},
                                                     {"estado", 2},
+                                                };
+       public static Dictionary<string, int> campoClienteExistente = new Dictionary<string, int>
+                                                {
+                                                    {"cantidad",0}
                                                 };
        public static Dictionary<string, int> camposRol = new Dictionary<string, int>
                                                 {

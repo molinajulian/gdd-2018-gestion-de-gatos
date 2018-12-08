@@ -155,9 +155,23 @@ namespace PalcoNet.Repositorios
             throw new NotImplementedException();
         }
 
-        internal static bool esClienteExistente(int p)
+        internal static bool esClienteExistente(int tipoDoc,decimal documento,string cuil = "")
         {
-            throw new NotImplementedException();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@tipoDoc", tipoDoc));
+            parametros.Add(new SqlParameter("@doc", documento));
+            parametros.Add(new SqlParameter("@cuil", cuil));
+            SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_existe_cliente]", "SP", parametros);
+            int cantidad = 0 ;
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    cantidad = Cliente.buildClienteExistente(lector);
+                }
+                lector.Close();
+            }
+            return cantidad > 0 ? true : false;
         }
 
         internal static void modificarCliente(Cliente cliente)
@@ -165,9 +179,35 @@ namespace PalcoNet.Repositorios
             throw new NotImplementedException();
         }
 
-        internal static void agregar(Cliente cliente)
+        internal static int agregar(Cliente cliente)
         {
-            throw new NotImplementedException();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@tipoDoc", cliente.TipoDeDocumento));
+            parametros.Add(new SqlParameter("@doc", cliente.NumeroDocumento));
+            parametros.Add(new SqlParameter("@cuil", cliente.Cuil));
+            parametros.Add(new SqlParameter("@nombre", cliente.NombreCliente));
+            parametros.Add(new SqlParameter("@apellido", cliente.Apellido));
+            parametros.Add(new SqlParameter("@fechaNac", cliente.FechaDeNacimiento));
+            parametros.Add(new SqlParameter("@fechaCreacion", cliente.FechaDeCreacion));
+            parametros.Add(new SqlParameter("@mail", cliente.Email));
+            parametros.Add(new SqlParameter("@telefono", cliente.Telefono));
+            parametros.Add(new SqlParameter("@calle", cliente.Direccion.Calle));
+            parametros.Add(new SqlParameter("@nro", cliente.Direccion.Numero));
+            parametros.Add(new SqlParameter("@depto", cliente.Direccion.Departamento));
+            parametros.Add(new SqlParameter("@localidad", cliente.Direccion.Localidad));
+            parametros.Add(new SqlParameter("@piso", cliente.Direccion.Piso));
+            parametros.Add(new SqlParameter("@cp", cliente.Direccion.CodPostal));
+            SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_crear_cliente]", "SP", parametros);
+            int salida = 0;
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    salida = Cliente.buildSalidaAgregar(lector);
+                }
+                lector.Close();
+            }
+            return salida;
         }
 
         internal static bool esClienteExistenteMail(string p)
