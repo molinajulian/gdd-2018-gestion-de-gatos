@@ -42,9 +42,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.switch_habilitacion = new System.Windows.Forms.Button();
             this.btn_modificar = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.buttonLeft = new System.Windows.Forms.Button();
+            this.buttonRigth = new System.Windows.Forms.Button();
+            this.txtLimit = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.data_clientes)).BeginInit();
             this.grupo_filtros.SuspendLayout();
             this.SuspendLayout();
@@ -204,45 +204,49 @@
             this.btn_modificar.UseVisualStyleBackColor = true;
             this.btn_modificar.Click += new System.EventHandler(this.btn_modificar_Click);
             // 
-            // button2
+            // buttonLeft
             // 
-            this.button2.Location = new System.Drawing.Point(255, 440);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(74, 28);
-            this.button2.TabIndex = 29;
-            this.button2.Text = "<";
-            this.button2.UseVisualStyleBackColor = true;
+            this.buttonLeft.Location = new System.Drawing.Point(255, 440);
+            this.buttonLeft.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonLeft.Name = "buttonLeft";
+            this.buttonLeft.Size = new System.Drawing.Size(74, 28);
+            this.buttonLeft.TabIndex = 29;
+            this.buttonLeft.Text = "<<";
+            this.buttonLeft.UseVisualStyleBackColor = true;
+            this.buttonLeft.Click += new System.EventHandler(this.buttonLeft_Click);
             // 
-            // button3
+            // buttonRigth
             // 
-            this.button3.Location = new System.Drawing.Point(416, 440);
-            this.button3.Margin = new System.Windows.Forms.Padding(2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(74, 28);
-            this.button3.TabIndex = 31;
-            this.button3.Text = ">";
-            this.button3.UseVisualStyleBackColor = true;
+            this.buttonRigth.Location = new System.Drawing.Point(416, 440);
+            this.buttonRigth.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonRigth.Name = "buttonRigth";
+            this.buttonRigth.Size = new System.Drawing.Size(74, 28);
+            this.buttonRigth.TabIndex = 31;
+            this.buttonRigth.Text = ">";
+            this.buttonRigth.UseVisualStyleBackColor = true;
+            this.buttonRigth.Click += new System.EventHandler(this.buttonRigth_Click);
             // 
-            // textBox1
+            // txtLimit
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(343, 443);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(60, 26);
-            this.textBox1.TabIndex = 5;
-            this.textBox1.Text = "20";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtLimit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtLimit.Location = new System.Drawing.Point(343, 443);
+            this.txtLimit.Margin = new System.Windows.Forms.Padding(2);
+            this.txtLimit.Name = "txtLimit";
+            this.txtLimit.Size = new System.Drawing.Size(60, 26);
+            this.txtLimit.TabIndex = 5;
+            this.txtLimit.Text = "20";
+            this.txtLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtLimit.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.txtLimit.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLimit_KeyPress);
             // 
             // ListadoCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(789, 562);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.txtLimit);
+            this.Controls.Add(this.buttonLeft);
+            this.Controls.Add(this.buttonRigth);
             this.Controls.Add(this.btn_modificar);
             this.Controls.Add(this.switch_habilitacion);
             this.Controls.Add(this.btn_atras);
@@ -275,8 +279,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button switch_habilitacion;
         private System.Windows.Forms.Button btn_modificar;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button buttonLeft;
+        private System.Windows.Forms.Button buttonRigth;
+        private System.Windows.Forms.TextBox txtLimit;
     }
 }

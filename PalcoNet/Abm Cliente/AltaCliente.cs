@@ -1,5 +1,6 @@
 ﻿using PalcoNet.Modelo;
 using PalcoNet.Repositorios;
+using PalcoNet.AbmTarjeta;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +20,7 @@ namespace PalcoNet.AbmCliente
     {
         Cliente cliente = new Cliente();
         Direccion direccion = new Direccion();
+        List<AltaTarjeta> altasTarjetas = new List<AltaTarjeta>();
         public AltaCliente()
         {
             InitializeComponent();
@@ -27,7 +29,7 @@ namespace PalcoNet.AbmCliente
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-
+            cliente.Tarjeta = new List<Tarjeta>();
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -88,7 +90,8 @@ namespace PalcoNet.AbmCliente
         {
             //epProvider.Clear();
             if(validarCamposVaciosCliente()) { return; }
-
+            List<Tarjeta> algo = new List<Tarjeta>();
+            // algo = altasTarjetas.Select(x => new Tarjeta(x.))
             cliente.Habilitado = true;
             if (!Regex.IsMatch(txDni.Text, @"^[0-9]{1,8}$"))
             {
@@ -211,7 +214,9 @@ namespace PalcoNet.AbmCliente
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // new AltaTarjeta();
+            AltaTarjeta t = new AltaTarjeta(cliente);
+            t.ShowDialog();
+            altasTarjetas.Add(t);
         }
 
         private void button2_Click_1(object sender, EventArgs e)

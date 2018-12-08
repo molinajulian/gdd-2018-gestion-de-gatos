@@ -47,7 +47,7 @@ namespace PalcoNet.Repositorios
         
         public static Cliente ReadClienteFromDb(SqlDataReader reader)
         {
-            return new Cliente()
+            /*return new Cliente()
                          {
                              NombreCliente = reader.GetValue(Ordinales.Cliente["nombre"]).ToString(),
                              Apellido = reader.GetValue(Ordinales.Cliente["apellido"]).ToString(),
@@ -61,7 +61,8 @@ namespace PalcoNet.Repositorios
                              Direccion = DireccionRepositorio.ReadDireccionFromDb(reader.GetValue(Ordinales.Cliente["cuil"]).ToString()),
                              Tarjeta = TarjetaRepositorio.GetTarjetasById(reader.GetValue(Ordinales.Cliente["cuil"]).ToString()).First()
                              
-                            };
+                            };*/
+            return new Cliente();
         }
         public static List<Cliente> GetClienteByNombre(string unNombre)
         {  var clientes = new List<Cliente>();
@@ -125,10 +126,12 @@ namespace PalcoNet.Repositorios
         }
 
 
-        internal static List<Cliente> getClientes()
+        internal static List<Cliente> getClientes(int limit,int offset)
         {
             var clientes = new List<Cliente>();
             List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@limit", limit));
+            parametros.Add(new SqlParameter("@offset", offset));
             SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_get_clientes]", "SP", parametros);
             if (lector.HasRows)
             {

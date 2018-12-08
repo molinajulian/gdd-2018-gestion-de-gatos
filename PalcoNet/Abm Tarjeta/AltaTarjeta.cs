@@ -18,8 +18,9 @@ namespace PalcoNet.AbmTarjeta
     public partial class AltaTarjeta : MaterialForm
     {
         Cliente cliente = new Cliente();
-        // Direccion direccion = new Direccion();
-        public AltaTarjeta()
+        Tarjeta tarjeta = new Tarjeta();
+
+        public AltaTarjeta(Cliente c)
         {
             InitializeComponent();
 
@@ -73,6 +74,36 @@ namespace PalcoNet.AbmTarjeta
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnAlta_Click(object sender, EventArgs e)
+        {
+            if (txtNumero.Text.Length > 16 || txtBanco.Text.Length == 0)
+            {
+                MessageBox.Show("Ingrese un numero de tarjeta válido y un banco.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                tarjeta.Banco = txtBanco.Text;
+                tarjeta.FechaVencimiento = datePickerFechaVenc.Value;
+                tarjeta.Numero = txtNumero.Text;
+                this.Hide();
+            }
+        }
+
+        private void txNumero_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtNumero_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void AltaTarjeta_Load(object sender, EventArgs e)
+        {
+        
         }
     }
 }

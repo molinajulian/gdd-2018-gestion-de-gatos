@@ -18,6 +18,8 @@ namespace PalcoNet.AbmCliente
     public partial class ListadoCliente : MaterialForm
     {
         DataTable tabla_clientes = new DataTable();
+        int limitAnterior = 20;
+        int offsetAnterior = 0;
         public ListadoCliente(Char modo)
         {
             InitializeComponent();
@@ -26,65 +28,42 @@ namespace PalcoNet.AbmCliente
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-
-            
-
+            limitAnterior = Int32.Parse(txtLimit.Text);
+            buttonLeft.Hide();
             initColumns();
-
-
-            data_clientes.Columns[1].Name = "Razon social";
-            data_clientes.Columns[2].Name = "Telefono";
-            data_clientes.Columns[3].Name = "Email";
-
-            tabla_clientes.Columns.Add("DNI", typeof(string));
-            tabla_clientes.Columns.Add("Nombre", typeof(string));
-            tabla_clientes.Columns.Add("Apellido", typeof(string));
-            tabla_clientes.Columns.Add("Habilitado", typeof(string));
-
-            getClientes();
+            getClientes(limitAnterior, offsetAnterior);
             if (modo == 'B')
                 btn_modificar.Hide();
             else
                 switch_habilitacion.Hide();
         }
-        private void getClientes()
+        private void getClientes(int limit,int offset)
         {
             List<Cliente> clientes = new List<Cliente>();
-            clientes = ClienteRepositorio.getClientes();
-            int a = 3;
+            clientes = ClienteRepositorio.getClientes(limit, offset);
+            if (limitAnterior + offsetAnterior <= clientes.Count) 
+            {
+                buttonLeft.Hide();
+            }
+            foreach(Cliente c in clientes)
+            {
+                string[] row = new string[] { c.TipoDeDocumento,c.NumeroDocumento,c.Cuil,c.NombreCliente,c.Apellido,c.Email,c.Direccion.Calle,c.Direccion.Numero,c.Direccion.Localidad,c.Direccion.CodPostal };
+                tabla_clientes.Rows.Add(row);
+            }
+            data_clientes.DataSource = tabla_clientes;
         }
         private void initColumns()
         {
-            DataGridViewColumn colTipoDoc = new DataGridViewColumn();
-            colTipoDoc.HeaderText = "Tipo doc";
-            data_clientes.Columns.Add(colTipoDoc);
-            DataGridViewColumn colDoc = new DataGridViewColumn();
-            colDoc.HeaderText = "Documento";
-            data_clientes.Columns.Add(colDoc);
-            DataGridViewColumn colCuil = new DataGridViewColumn();
-            colCuil.HeaderText = "Cuil";
-            data_clientes.Columns.Add(colCuil);
-            DataGridViewColumn colNombre = new DataGridViewColumn();
-            colNombre.HeaderText = "Nombre";
-            data_clientes.Columns.Add(colNombre);
-            DataGridViewColumn colApellido = new DataGridViewColumn();
-            colApellido.HeaderText = "Apellido";
-            data_clientes.Columns.Add(colApellido);
-            DataGridViewColumn colEmail = new DataGridViewColumn();
-            colEmail.HeaderText = "Email";
-            data_clientes.Columns.Add(colEmail);
-            DataGridViewColumn colCalle = new DataGridViewColumn();
-            colCalle.HeaderText = "Calle";
-            data_clientes.Columns.Add(colCalle);
-            DataGridViewColumn colNumero = new DataGridViewColumn();
-            colNumero.HeaderText = "Numero";
-            data_clientes.Columns.Add(colNumero);
-            DataGridViewColumn colCiudad = new DataGridViewColumn();
-            colCiudad.HeaderText = "Localidad";
-            data_clientes.Columns.Add(colCiudad);
-            DataGridViewColumn colCP = new DataGridViewColumn();
-            colCP.HeaderText = "Coidigo postal";
-            data_clientes.Columns.Add(colCP);
+            tabla_clientes.Columns.Add("Tipo doc", typeof(string));
+            tabla_clientes.Columns.Add("Documento", typeof(string));
+            tabla_clientes.Columns.Add("Cuil", typeof(string));
+            tabla_clientes.Columns.Add("Nombre", typeof(string));
+            tabla_clientes.Columns.Add("Apellido", typeof(string));
+            tabla_clientes.Columns.Add("Email", typeof(string));
+            tabla_clientes.Columns.Add("Calle", typeof(string));
+            tabla_clientes.Columns.Add("Numero", typeof(string));
+            tabla_clientes.Columns.Add("Localidad", typeof(string));
+            tabla_clientes.Columns.Add("Codigo postal", typeof(string));
         }
 
         private void btn_buscar_Click(object sender, EventArgs e)
@@ -129,6 +108,7 @@ namespace PalcoNet.AbmCliente
         }
         public void refreshValues()
         {
+            tabla_clientes.Rows.Clear();
             data_clientes.DataSource = tabla_clientes;
         }
 
@@ -140,18 +120,18 @@ namespace PalcoNet.AbmCliente
 
         private void data_clientes_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (data_clientes.SelectedRows.Count != 0)
-            {
-                DataGridViewRow row = this.data_clientes.SelectedRows[0];
-                if (row.Cells["Habilitado"].Value.ToString() == "No")
-                {
-                    switch_habilitacion.Text="Habilitar";
-                }
-                else
-                {
-                    switch_habilitacion.Text="Inhabilitar";
-                }
-            }
+            //if (data_clientes.SelectedRows.Count != 0)
+            //{
+            //    DataGridViewRow row = this.data_clientes.SelectedRows[0];
+            //    if (row.Cells["Habilitado"].Value.ToString() == "No")
+            //    {
+            //        switch_habilitacion.Text="Habilitar";
+            //    }
+            //    else
+            //    {
+            //        switch_habilitacion.Text="Inhabilitar";
+            //    }
+            //}
         }
 
         private void btn_limpiar_Click(object sender, EventArgs e)
@@ -212,6 +192,34 @@ namespace PalcoNet.AbmCliente
         private void tx_nombre_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonLeft_Click(object sender, EventArgs e)
+        {
+            int offsetActual = Int32.Parse(txtLimit.Text) < limitAnterior + Int32.Parse(txtLimit.Text) ? limitAnterior - Int32.Parse(txtLimit.Text) : 0;
+            if (offsetActual == 0) buttonLeft.Hide();
+            refreshValues();
+            getClientes(Int32.Parse(txtLimit.Text), offsetActual);
+            offsetAnterior = offsetActual;
+            limitAnterior = Int32.Parse(txtLimit.Text);
+        }
+        private void txtLimit_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void buttonRigth_Click(object sender, EventArgs e)
+        {
+            offsetAnterior += limitAnterior;
+            limitAnterior = Int32.Parse(txtLimit.Text);
+            refreshValues();
+            getClientes(Int32.Parse(txtLimit.Text), offsetAnterior);
+            buttonLeft.Show();
         }
 
         

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PalcoNet.Modelo
 {
-    class Cliente:Rol
+    public class Cliente:Rol
     {
         public string NombreCliente { get; set; }
         public string Apellido { get; set; }
@@ -19,7 +19,7 @@ namespace PalcoNet.Modelo
         public Direccion Direccion { get; set; }
         public DateTime FechaDeNacimiento { get; set; }
         public DateTime FechaDeCreacion { get; set; }
-        public Tarjeta Tarjeta { get; set; }
+        public List<Tarjeta> Tarjeta { get; set; }
         public bool Activo { get; set; }
 
         public Cliente(string tipoDeDocumento,string numeroDocumento,string cuil,string nombre,string apellido,string mail,string calle,string nro,string depto,string piso,string localidad,string cp ) 
@@ -40,10 +40,10 @@ namespace PalcoNet.Modelo
         public static Cliente buildGetClientes(SqlDataReader lector)
         {
             Dictionary<string, int> camposGetCliente = Ordinales.camposGetClientes;
-            return new Cliente(lector.GetString(camposGetCliente["tipo_doc_descr"]), lector.GetString(camposGetCliente["cli_doc"]),lector.GetString(camposGetCliente["cli_cuil"]),
+            return new Cliente(lector.GetString(camposGetCliente["tipo_doc_descr"]), lector.GetDecimal(camposGetCliente["cli_doc"]).ToString(),lector.GetString(camposGetCliente["cli_cuil"]),
                 lector.GetString(camposGetCliente["cli_nombre"]),lector.GetString(camposGetCliente["cli_apellido"]),lector.GetString(camposGetCliente["cli_mail"]),
-                lector.GetString(camposGetCliente["dom_calle"]),lector.GetString(camposGetCliente["dom_nro_calle"]),lector.GetString(camposGetCliente["dom_depto"]),
-                lector.GetString(camposGetCliente["dom_piso"]),lector.GetString(camposGetCliente["dom_localidad"]),lector.GetString(camposGetCliente["dom_cod_postal"])
+                lector.GetString(camposGetCliente["dom_calle"]),lector.GetDecimal(camposGetCliente["dom_nro_calle"]).ToString(),lector.GetString(camposGetCliente["dom_depto"]),
+                lector.GetDecimal(camposGetCliente["dom_piso"]).ToString(),lector.GetString(camposGetCliente["dom_localidad"]),lector.GetString(camposGetCliente["dom_cod_postal"])
                 );
         }
     }

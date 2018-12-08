@@ -34,9 +34,9 @@
             this.label12 = new System.Windows.Forms.Label();
             this.datePickerFechaVenc = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
-            this.txBanco = new System.Windows.Forms.TextBox();
+            this.txtBanco = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.txNumero = new System.Windows.Forms.TextBox();
+            this.txtNumero = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,9 +48,9 @@
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.datePickerFechaVenc);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.txBanco);
+            this.groupBox1.Controls.Add(this.txtBanco);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.txNumero);
+            this.groupBox1.Controls.Add(this.txtNumero);
             this.groupBox1.Location = new System.Drawing.Point(12, 81);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(513, 201);
@@ -77,6 +77,7 @@
             this.btnAlta.TabIndex = 13;
             this.btnAlta.Text = "Dar de Alta Tarjeta";
             this.btnAlta.UseVisualStyleBackColor = true;
+            this.btnAlta.Click += new System.EventHandler(this.btnAlta_Click);
             // 
             // label12
             // 
@@ -103,12 +104,12 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Banco";
             // 
-            // txBanco
+            // txtBanco
             // 
-            this.txBanco.Location = new System.Drawing.Point(59, 95);
-            this.txBanco.Name = "txBanco";
-            this.txBanco.Size = new System.Drawing.Size(166, 20);
-            this.txBanco.TabIndex = 4;
+            this.txtBanco.Location = new System.Drawing.Point(59, 95);
+            this.txtBanco.Name = "txtBanco";
+            this.txtBanco.Size = new System.Drawing.Size(166, 20);
+            this.txtBanco.TabIndex = 4;
             // 
             // label1
             // 
@@ -119,12 +120,15 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Numero";
             // 
-            // txNumero
+            // txtNumero
             // 
-            this.txNumero.Location = new System.Drawing.Point(59, 58);
-            this.txNumero.Name = "txNumero";
-            this.txNumero.Size = new System.Drawing.Size(166, 20);
-            this.txNumero.TabIndex = 1;
+            this.txtNumero.Location = new System.Drawing.Point(59, 58);
+            this.txtNumero.MaxLength = 16;
+            this.txtNumero.Name = "txtNumero";
+            this.txtNumero.Size = new System.Drawing.Size(166, 20);
+            this.txtNumero.TabIndex = 1;
+            this.txtNumero.TextChanged += new System.EventHandler(this.txNumero_TextChanged);
+            this.txtNumero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumero_KeyPress);
             // 
             // AltaTarjeta
             // 
@@ -134,6 +138,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "AltaTarjeta";
             this.Text = "AltaTarjeta";
+            this.Load += new System.EventHandler(this.AltaTarjeta_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -143,10 +148,10 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox txNumero;
+        private System.Windows.Forms.TextBox txtNumero;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txBanco;
+        private System.Windows.Forms.TextBox txtBanco;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.DateTimePicker datePickerFechaVenc;
         private System.Windows.Forms.Button btnVolver;

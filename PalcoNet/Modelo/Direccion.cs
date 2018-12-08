@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PalcoNet.Modelo
 {
-    class Direccion
+    public class Direccion
     {
         public Direccion(string calle, string numero, string departamento,string localidad,string cp)
         {
