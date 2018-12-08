@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PalcoNet.Repositorios
 {
-    class RubroRepositorio
+  public  class RubroRepositorio
     {
         public static List<SqlParameter> GenerarParametrosRubro(Rubro rubro)
         {
@@ -46,15 +46,15 @@ namespace PalcoNet.Repositorios
         {
             var rubro = new Rubro();
             var parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@id", id));
-            var query = DataBase.ejecutarFuncion("Select top 1 * from rubro r where r.id = @id", parametros);
+            parametros.Add(new SqlParameter("@id", id));    
+            var query = DataBase.ejecutarFuncion("Select top 1 * from rubro r where r.Rubro_Cod = @id", parametros);
             SqlDataReader reader = query.ExecuteReader();
             while (reader.Read())
             {
                 rubro= new Rubro()
                         {
                             Codigo= (int)reader.GetValue(Ordinales.Rubro["codigo"]),
-                            Descripcion= reader.GetValue(Ordinales.Empresa["descripcion"]).ToString()
+                            Descripcion= reader.GetValue(Ordinales.Rubro["descripcion"]).ToString()
 
                         };
                     

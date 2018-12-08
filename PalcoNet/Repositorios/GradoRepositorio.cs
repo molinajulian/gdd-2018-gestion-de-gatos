@@ -44,15 +44,26 @@ namespace PalcoNet.Repositorios
 
         }
 
-        public static Grado ReadGradoFromDb(SqlDataReader reader)
+        public static Grado ReadGradoFromDb( int id )
         {
-            return new Grado()
+            var grado = new Grado();
+            var parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@id", id));
+            var query = DataBase.ejecutarFuncion("Select top 1 * from grado g where g.grado_cod = @id", parametros);
+            SqlDataReader reader = query.ExecuteReader();
+            while (reader.Read())
             {
-                Comision =(int) reader.GetValue(Ordinales.Grado["descripcion"]),
-                Descuento = (int)reader.GetValue(Ordinales.Grado["codigo"]),
-                Tipo = reader.GetValue(Ordinales.Grado["descripcion"]).ToString()
+                grado = new Grado()
+                {
+                    Comision = (int)reader.GetValue(Ordinales.Grado["descripcion"]),
+                    Descuento = (int)reader.GetValue(Ordinales.Grado["codigo"]),
+                    Tipo = reader.GetValue(Ordinales.Grado["descripcion"]).ToString()
 
-            };
+                };
+
+            }
+            return grado;
+            
         }
 
        

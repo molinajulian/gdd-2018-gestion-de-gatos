@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace PalcoNet.Modelo
 {
-    class EstadoPublicacion
+    public class EstadoPublicacion
     {
-        public string Estado { get; set; }
-        public bool PuedeCambiarDeEstado { get; set; }
+        public int Id { get; set; }
+        public string Descripcion { get; set; }
+        public bool EsPosibleCambio { get; set; }
     }
 }

@@ -42,12 +42,12 @@ namespace PalcoNet.Modelo
        public static Dictionary<string, int> Direccion = new Dictionary<string, int> 
                                                  {
                                                  {"codigo",0}, 
-                                                 {"numero",1},
-                                                 {"departamento",2},
-                                                 {"localidad",3},  
-                                                 {"codPostal",4},
-                                                 {"calle",5}
-
+                                                 {"numero",5},
+                                                 {"departamento",4},
+                                                 {"localidad",2},  
+                                                 {"codPostal",1},
+                                                 {"calle",6}
+                                                 ,{"piso",3}
                                                                                                
                                                  };
 
@@ -78,8 +78,7 @@ namespace PalcoNet.Modelo
                                                     {
                                                     {"codigo",0},
                                                     {"descripcion",1},
-                                                    {"fechaPublicacion",2},
-                                                    {"fechaFuncion",3}
+                                                    {"fechaPublicacion",2}
                                                     };
        public static Dictionary<string, int> Ubicacion = new Dictionary<string, int> 
                                                     {
@@ -95,9 +94,21 @@ namespace PalcoNet.Modelo
                                                     };
        public static Dictionary<string, int> EstadoPublicacion = new Dictionary<string, int> 
                                                     {
-                                                    {"estado",0},
-                                                    {"puedeCambiarDeEstado",1},
+                                                    {"id",0},
+                                                    {"descripcion",1 },
+                                                    {"puedeCambiarDeEstado",2},
+                                                    };
+       public static Dictionary<string, int> Espectaculo = new Dictionary<string, int> 
+                                                    {
+                                                    {"id",0},
+                                                    {"descripcion",1 },
+                                                    {"fecha",2},
+                                                    {"hora",3},
+                                                    {"fechaVencimiento",4},
+                                                    {"idRubro",5},
+                                                    {"idEmpresa",6},
+                                                    {"idDomicilio",7}
                                                     }; 
    }
-    
+
 }

@@ -49,7 +49,7 @@ namespace PalcoNet.Repositorios
             var direccion = new Direccion();
             var parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@id", id));
-            var query = DataBase.ejecutarFuncion("Select top 1 * from Direccion dir where dir.id = @id", parametros);
+            var query = DataBase.ejecutarFuncion("Select top 1 * from Direccion dir where dir.Dom_Id = @id", parametros);
             SqlDataReader reader = query.ExecuteReader();
             while (reader.Read())
             {
@@ -58,7 +58,8 @@ namespace PalcoNet.Repositorios
                                 reader.GetValue(Ordinales.Direccion["numero"]).ToString(),
                                 reader.GetValue(Ordinales.Direccion["departamento"]).ToString(),
                                 reader.GetValue(Ordinales.Direccion["localidad"]).ToString(),
-                                reader.GetValue(Ordinales.Direccion["codPostal"]).ToString()
+                                reader.GetValue(Ordinales.Direccion["codPostal"]).ToString(),
+                                reader.GetValue(Ordinales.Direccion["piso"]).ToString() 
                                 );
 
             }

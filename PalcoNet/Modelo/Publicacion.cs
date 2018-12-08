@@ -10,12 +10,9 @@ namespace PalcoNet.Modelo
     {
         public int    Codigo { get; set; }
         public string Descripcion { get; set; }
-        public List<Ubicacion> Ubicaciones { get; set; }
         public DateTime FechaPublicacion { get; set; }
-        public DateTime FechaFuncion { get; set; }
-        public Rubro Rubro { get; set; }
         public Grado Grado { get; set; }
-        public  Direccion DireccionEspectaculo { get; set; }
         public EstadoPublicacion Estado { get; set; }
+        public Espectaculo Espectaculo { get; set; }
     }
 }
