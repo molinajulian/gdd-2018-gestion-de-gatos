@@ -67,7 +67,7 @@ namespace PalcoNet.Repositorios
             var parametros = new List<SqlParameter>();
             var tarjetas = new List<Tarjeta>();
             parametros.Add(new SqlParameter("@id", id));
-            var query = DataBase.ejecutarFuncion("Select top 1 * from tarjeta tar where tar.id = @id", parametros);
+            var query = DataBase.ejecutarFuncion("Select top 1 * from tarjeta tar where tar.Tar_Cred_Id = @id", parametros);
             SqlDataReader reader = query.ExecuteReader();
             while (reader.Read())
             {
