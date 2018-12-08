@@ -41,12 +41,18 @@ namespace PalcoNet.AbmCliente
             tabla_clientes.Columns.Add("Apellido", typeof(string));
             tabla_clientes.Columns.Add("Habilitado", typeof(string));
 
+            getClientes();
             if (modo == 'B')
                 btn_modificar.Hide();
             else
                 switch_habilitacion.Hide();
         }
-
+        private void getClientes()
+        {
+            List<Cliente> clientes = new List<Cliente>();
+            clientes = ClienteRepositorio.getClientes();
+            int a = 3;
+        }
         private void initColumns()
         {
             DataGridViewColumn colTipoDoc = new DataGridViewColumn();
@@ -199,6 +205,11 @@ namespace PalcoNet.AbmCliente
         }
 
         private void ListadoCliente_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tx_nombre_TextChanged(object sender, EventArgs e)
         {
 
         }
