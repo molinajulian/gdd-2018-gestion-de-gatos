@@ -125,9 +125,21 @@ namespace PalcoNet.Repositorios
         }
 
 
-        internal static List<Cliente> getClientes(string p1, string p2, string p3)
+        internal static List<Cliente> getClientes()
         {
-            throw new NotImplementedException();
+            var clientes = new List<Cliente>();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_get_clientes]", "SP", parametros);
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    Cliente rol = Cliente.buildGetClientes(lector);
+                    clientes.Add(rol);
+                }
+                lector.Close();
+            }
+            return clientes;
         }
 
         internal static void eliminarCliente(int p)
@@ -156,6 +168,11 @@ namespace PalcoNet.Repositorios
         }
 
         internal static bool esClienteExistenteMail(string p)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static List<Cliente> getClientes(string p1, string p2, string p3)
         {
             throw new NotImplementedException();
         }

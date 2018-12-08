@@ -20,6 +20,21 @@ namespace PalcoNet.Modelo
                                                     {"id", 0},
                                                     {"nombre", 1}
                                                 };
+       public static Dictionary<string, int> camposGetClientes = new Dictionary<string, int>
+                                                {
+                                                    {"tipo_doc_descr", 0},
+                                                    {"cli_doc", 1},
+                                                    {"cli_cuil", 2},
+                                                    {"cli_nombre", 3},
+                                                    {"cli_apellido", 4},
+                                                    {"cli_mail", 5},
+                                                    {"dom_calle", 6},
+                                                    {"dom_nro_calle", 7},
+                                                    {"dom_depto",8},
+                                                    {"dom_piso",9},
+                                                    {"dom_localidad", 10},
+                                                    {"dom_cod_postal", 11}
+                                                };
        public static Dictionary<string, int> camposFuncionalidad = new Dictionary<string, int>
                                                 {
                                                     {"id", 0},
