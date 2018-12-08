@@ -35,22 +35,22 @@
             this.txtMail = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.txtDepto = new System.Windows.Forms.TextBox();
+            this.txDpto = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtCiudad = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.txtNumero = new System.Windows.Forms.TextBox();
+            this.txNumero = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.txtPiso = new System.Windows.Forms.TextBox();
+            this.txPiso = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.txtCp = new System.Windows.Forms.TextBox();
+            this.txCp = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.txtLocalidad = new System.Windows.Forms.TextBox();
+            this.txLocalidad = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtCalle = new System.Windows.Forms.TextBox();
+            this.txCalle = new System.Windows.Forms.TextBox();
             this.txtCuit = new System.Windows.Forms.TextBox();
-            this.txtNombre = new System.Windows.Forms.TextBox();
+            this.txtRazon = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.epProvider = new System.Windows.Forms.ErrorProvider(this.components);
@@ -67,22 +67,22 @@
             this.grupo_empresa.Controls.Add(this.txtMail);
             this.grupo_empresa.Controls.Add(this.label4);
             this.grupo_empresa.Controls.Add(this.button1);
-            this.grupo_empresa.Controls.Add(this.txtDepto);
+            this.grupo_empresa.Controls.Add(this.txDpto);
             this.grupo_empresa.Controls.Add(this.label5);
             this.grupo_empresa.Controls.Add(this.txtCiudad);
             this.grupo_empresa.Controls.Add(this.label11);
-            this.grupo_empresa.Controls.Add(this.txtNumero);
+            this.grupo_empresa.Controls.Add(this.txNumero);
             this.grupo_empresa.Controls.Add(this.label10);
-            this.grupo_empresa.Controls.Add(this.txtPiso);
+            this.grupo_empresa.Controls.Add(this.txPiso);
             this.grupo_empresa.Controls.Add(this.label9);
-            this.grupo_empresa.Controls.Add(this.txtCp);
+            this.grupo_empresa.Controls.Add(this.txCp);
             this.grupo_empresa.Controls.Add(this.label7);
             this.grupo_empresa.Controls.Add(this.label8);
-            this.grupo_empresa.Controls.Add(this.txtLocalidad);
+            this.grupo_empresa.Controls.Add(this.txLocalidad);
             this.grupo_empresa.Controls.Add(this.label3);
-            this.grupo_empresa.Controls.Add(this.txtCalle);
+            this.grupo_empresa.Controls.Add(this.txCalle);
             this.grupo_empresa.Controls.Add(this.txtCuit);
-            this.grupo_empresa.Controls.Add(this.txtNombre);
+            this.grupo_empresa.Controls.Add(this.txtRazon);
             this.grupo_empresa.Controls.Add(this.label2);
             this.grupo_empresa.Controls.Add(this.label1);
             this.grupo_empresa.Location = new System.Drawing.Point(9, 84);
@@ -138,13 +138,14 @@
             this.button1.TabIndex = 43;
             this.button1.Text = "Dar de Alta";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // txtDepto
+            // txDpto
             // 
-            this.txtDepto.Location = new System.Drawing.Point(451, 108);
-            this.txtDepto.Name = "txtDepto";
-            this.txtDepto.Size = new System.Drawing.Size(27, 20);
-            this.txtDepto.TabIndex = 41;
+            this.txDpto.Location = new System.Drawing.Point(451, 108);
+            this.txDpto.Name = "txDpto";
+            this.txDpto.Size = new System.Drawing.Size(27, 20);
+            this.txDpto.TabIndex = 41;
             // 
             // label5
             // 
@@ -161,7 +162,6 @@
             this.txtCiudad.Name = "txtCiudad";
             this.txtCiudad.Size = new System.Drawing.Size(143, 20);
             this.txtCiudad.TabIndex = 39;
-            this.txtCiudad.TextChanged += new System.EventHandler(this.txtCiudad_TextChanged);
             // 
             // label11
             // 
@@ -172,12 +172,12 @@
             this.label11.TabIndex = 38;
             this.label11.Text = "Número";
             // 
-            // txtNumero
+            // txNumero
             // 
-            this.txtNumero.Location = new System.Drawing.Point(301, 108);
-            this.txtNumero.Name = "txtNumero";
-            this.txtNumero.Size = new System.Drawing.Size(43, 20);
-            this.txtNumero.TabIndex = 31;
+            this.txNumero.Location = new System.Drawing.Point(301, 108);
+            this.txNumero.Name = "txNumero";
+            this.txNumero.Size = new System.Drawing.Size(43, 20);
+            this.txNumero.TabIndex = 31;
             // 
             // label10
             // 
@@ -188,12 +188,12 @@
             this.label10.TabIndex = 37;
             this.label10.Text = "Piso";
             // 
-            // txtPiso
+            // txPiso
             // 
-            this.txtPiso.Location = new System.Drawing.Point(382, 108);
-            this.txtPiso.Name = "txtPiso";
-            this.txtPiso.Size = new System.Drawing.Size(27, 20);
-            this.txtPiso.TabIndex = 32;
+            this.txPiso.Location = new System.Drawing.Point(382, 108);
+            this.txPiso.Name = "txPiso";
+            this.txPiso.Size = new System.Drawing.Size(27, 20);
+            this.txPiso.TabIndex = 32;
             // 
             // label9
             // 
@@ -204,12 +204,12 @@
             this.label9.TabIndex = 36;
             this.label9.Text = "Dpto";
             // 
-            // txtCp
+            // txCp
             // 
-            this.txtCp.Location = new System.Drawing.Point(455, 72);
-            this.txtCp.Name = "txtCp";
-            this.txtCp.Size = new System.Drawing.Size(59, 20);
-            this.txtCp.TabIndex = 29;
+            this.txCp.Location = new System.Drawing.Point(455, 72);
+            this.txCp.Name = "txCp";
+            this.txCp.Size = new System.Drawing.Size(59, 20);
+            this.txCp.TabIndex = 29;
             // 
             // label7
             // 
@@ -229,12 +229,12 @@
             this.label8.TabIndex = 34;
             this.label8.Text = "Localidad";
             // 
-            // txtLocalidad
+            // txLocalidad
             // 
-            this.txtLocalidad.Location = new System.Drawing.Point(301, 72);
-            this.txtLocalidad.Name = "txtLocalidad";
-            this.txtLocalidad.Size = new System.Drawing.Size(122, 20);
-            this.txtLocalidad.TabIndex = 28;
+            this.txLocalidad.Location = new System.Drawing.Point(301, 72);
+            this.txLocalidad.Name = "txLocalidad";
+            this.txLocalidad.Size = new System.Drawing.Size(122, 20);
+            this.txLocalidad.TabIndex = 28;
             // 
             // label3
             // 
@@ -245,12 +245,12 @@
             this.label3.TabIndex = 33;
             this.label3.Text = "Calle";
             // 
-            // txtCalle
+            // txCalle
             // 
-            this.txtCalle.Location = new System.Drawing.Point(85, 104);
-            this.txtCalle.Name = "txtCalle";
-            this.txtCalle.Size = new System.Drawing.Size(143, 20);
-            this.txtCalle.TabIndex = 30;
+            this.txCalle.Location = new System.Drawing.Point(85, 104);
+            this.txCalle.Name = "txCalle";
+            this.txCalle.Size = new System.Drawing.Size(143, 20);
+            this.txCalle.TabIndex = 30;
             // 
             // txtCuit
             // 
@@ -260,14 +260,13 @@
             this.txtCuit.Size = new System.Drawing.Size(143, 20);
             this.txtCuit.TabIndex = 5;
             // 
-            // txtNombre
+            // txtRazon
             // 
-            this.txtNombre.Location = new System.Drawing.Point(85, 30);
-            this.txtNombre.Margin = new System.Windows.Forms.Padding(2);
-            this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(143, 20);
-            this.txtNombre.TabIndex = 4;
-            this.txtNombre.TextChanged += new System.EventHandler(this.txtNombre_TextChanged);
+            this.txtRazon.Location = new System.Drawing.Point(85, 30);
+            this.txtRazon.Margin = new System.Windows.Forms.Padding(2);
+            this.txtRazon.Name = "txtRazon";
+            this.txtRazon.Size = new System.Drawing.Size(143, 20);
+            this.txtRazon.TabIndex = 4;
             // 
             // label2
             // 
@@ -325,22 +324,22 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtCuit;
-        private System.Windows.Forms.TextBox txtNombre;
+        private System.Windows.Forms.TextBox txtRazon;
         private System.Windows.Forms.ErrorProvider epProvider;
-        private System.Windows.Forms.TextBox txtDepto;
+        private System.Windows.Forms.TextBox txDpto;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtCiudad;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox txtNumero;
+        private System.Windows.Forms.TextBox txNumero;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox txtPiso;
+        private System.Windows.Forms.TextBox txPiso;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txtCp;
+        private System.Windows.Forms.TextBox txCp;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtLocalidad;
+        private System.Windows.Forms.TextBox txLocalidad;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtCalle;
+        private System.Windows.Forms.TextBox txCalle;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.TextBox txtTel;
