@@ -30,7 +30,7 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtDepto = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtCuil = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.comboTiposDoc = new System.Windows.Forms.ComboBox();
@@ -68,7 +68,7 @@
             // 
             this.groupBox1.BackColor = System.Drawing.Color.White;
             this.groupBox1.Controls.Add(this.txtDepto);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.txtCuil);
             this.groupBox1.Controls.Add(this.label14);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.comboTiposDoc);
@@ -113,12 +113,13 @@
             this.txtDepto.Size = new System.Drawing.Size(27, 20);
             this.txtDepto.TabIndex = 38;
             // 
-            // textBox1
+            // txtCuil
             // 
-            this.textBox1.Location = new System.Drawing.Point(297, 169);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(203, 20);
-            this.textBox1.TabIndex = 36;
+            this.txtCuil.Location = new System.Drawing.Point(297, 169);
+            this.txtCuil.Name = "txtCuil";
+            this.txtCuil.Size = new System.Drawing.Size(203, 20);
+            this.txtCuil.TabIndex = 36;
+            this.txtCuil.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label14
             // 
@@ -424,7 +425,7 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox comboTiposDoc;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtCuil;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox txtDepto;

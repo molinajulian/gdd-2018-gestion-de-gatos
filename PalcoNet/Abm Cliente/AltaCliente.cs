@@ -100,16 +100,15 @@ namespace PalcoNet.AbmCliente
         }
         private void boton_alta_Click(object sender, EventArgs e)
         {
-            //epProvider.Clear();
-            // if(validarCamposVaciosCliente()) { return; }
-            // algo = altasTarjetas.Select(x => new Tarjeta(x.))
             cliente.Habilitado = true;
+            TiposDocumento seleccionado = (TiposDocumento)comboTiposDoc.SelectedItem;
+            cliente.TipoDeDocumento = seleccionado.Id;
             if (!Regex.IsMatch(txDni.Text, @"^[0-9]{1,8}$"))
             {
                 MessageBox.Show("Ingrese un DNI válido.");
                 return;
             }
-            if (ClienteRepositorio.esClienteExistente(Convert.ToInt32(txDni.Text)))
+            if (ClienteRepositorio.esClienteExistente(Int32.Parse(seleccionado.Id),Decimal.Parse(txDni.Text)))
             {
                 MessageBox.Show("Ya existe un cliente con el dni ingresado");
                 return;
@@ -132,12 +131,6 @@ namespace PalcoNet.AbmCliente
                 MessageBox.Show("Ingrese un mail válido.");
                 return;
             }
-            else
-                if (ClienteRepositorio.esClienteExistenteMail(txMail.Text))
-                {
-                    MessageBox.Show("Ya existe un cliente con el mail ingresado");
-                    return;
-                }
             cliente.Email = txMail.Text;
             if (!Regex.IsMatch(txTelefono.Text, @"^[0-9]{1,20}$"))
             {
@@ -146,6 +139,20 @@ namespace PalcoNet.AbmCliente
             }
             cliente.Telefono = txTelefono.Text;
             cliente.FechaDeNacimiento = datePickerFechaNac.Value.Date;
+            if (!Regex.IsMatch(txtCuil.Text, @"[0-9]{2}-[0-9]{5,9}-[0-9]{1,2}$"))
+            {
+                MessageBox.Show("Ingrese un cuit valido.");
+                return;
+            }
+            else
+            {
+                if (ClienteRepositorio.esClienteExistente(0, 0, txtCuil.Text)) 
+                {
+                    MessageBox.Show("Ya existe un cliente con ese CUIL.");
+                    return;
+                }
+            }
+            cliente.Cuil = txtCuil.Text;
             if (!Regex.IsMatch(txLocalidad.Text, @"^[a-zA-Z0-9\s]{1,20}$"))
             {
                 MessageBox.Show("Ingrese una localidad válida.");
@@ -163,7 +170,7 @@ namespace PalcoNet.AbmCliente
                 MessageBox.Show("Ingrese un piso válido.");
                 return;
             }
-            direccion.Piso = string.IsNullOrWhiteSpace(txPiso.Text) ? null : txPiso.Text;
+            direccion.Piso = string.IsNullOrWhiteSpace(txPiso.Text) ? ' '.ToString() : txPiso.Text;
             if (!Regex.IsMatch(txDpto.Text, @"^[a-zA-Z]$") && !string.IsNullOrEmpty(txDpto.Text))
             {
                 MessageBox.Show("Ingrese un departamento válido.");
@@ -180,10 +187,16 @@ namespace PalcoNet.AbmCliente
                 MessageBox.Show("Ingrese un número válido.");
                 return;
             }
-            direccion.Calle = txCalle.Text + " " + txNumero.Text;
+            direccion.Calle = txCalle.Text;
+            direccion.Numero = txNumero.Text;
             cliente.Direccion = direccion;
-
-
+            if (cliente.Tarjeta.Count == 0)
+            {
+                MessageBox.Show("Debe registrar al menos una tarjeta para la plataforma.");
+                return;
+            }
+            cliente.FechaDeCreacion = DateTime.Now;
+            cliente.NombreCliente = txNombre.Text;
             ClienteRepositorio.agregar(cliente);
             limpiarVentana();
             MessageBox.Show("Cliente agregado correctamente");
@@ -241,6 +254,11 @@ namespace PalcoNet.AbmCliente
         }
 
         private void comboTiposDoc_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
