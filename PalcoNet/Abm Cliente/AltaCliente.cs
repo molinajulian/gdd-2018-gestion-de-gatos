@@ -90,7 +90,6 @@ namespace PalcoNet.AbmCliente
         {
             //epProvider.Clear();
             if(validarCamposVaciosCliente()) { return; }
-            List<Tarjeta> algo = new List<Tarjeta>();
             // algo = altasTarjetas.Select(x => new Tarjeta(x.))
             cliente.Habilitado = true;
             if (!Regex.IsMatch(txDni.Text, @"^[0-9]{1,8}$"))
