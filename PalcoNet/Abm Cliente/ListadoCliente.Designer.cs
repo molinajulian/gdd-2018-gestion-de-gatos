@@ -42,13 +42,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.switch_habilitacion = new System.Windows.Forms.Button();
             this.btn_modificar = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.data_clientes)).BeginInit();
             this.grupo_filtros.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_atras
             // 
-            this.btn_atras.Location = new System.Drawing.Point(88, 440);
+            this.btn_atras.Location = new System.Drawing.Point(82, 500);
             this.btn_atras.Margin = new System.Windows.Forms.Padding(2);
             this.btn_atras.Name = "btn_atras";
             this.btn_atras.Size = new System.Drawing.Size(74, 28);
@@ -59,7 +62,7 @@
             // 
             // btn_limpiar
             // 
-            this.btn_limpiar.Location = new System.Drawing.Point(595, 440);
+            this.btn_limpiar.Location = new System.Drawing.Point(589, 500);
             this.btn_limpiar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_limpiar.Name = "btn_limpiar";
             this.btn_limpiar.Size = new System.Drawing.Size(74, 28);
@@ -181,7 +184,7 @@
             // 
             // switch_habilitacion
             // 
-            this.switch_habilitacion.Location = new System.Drawing.Point(268, 440);
+            this.switch_habilitacion.Location = new System.Drawing.Point(262, 500);
             this.switch_habilitacion.Margin = new System.Windows.Forms.Padding(2);
             this.switch_habilitacion.Name = "switch_habilitacion";
             this.switch_habilitacion.Size = new System.Drawing.Size(74, 28);
@@ -192,7 +195,7 @@
             // 
             // btn_modificar
             // 
-            this.btn_modificar.Location = new System.Drawing.Point(440, 440);
+            this.btn_modificar.Location = new System.Drawing.Point(434, 500);
             this.btn_modificar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_modificar.Name = "btn_modificar";
             this.btn_modificar.Size = new System.Drawing.Size(74, 28);
@@ -201,11 +204,45 @@
             this.btn_modificar.UseVisualStyleBackColor = true;
             this.btn_modificar.Click += new System.EventHandler(this.btn_modificar_Click);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(255, 440);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(74, 28);
+            this.button2.TabIndex = 29;
+            this.button2.Text = "<";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(416, 440);
+            this.button3.Margin = new System.Windows.Forms.Padding(2);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(74, 28);
+            this.button3.TabIndex = 31;
+            this.button3.Text = ">";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(343, 443);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(60, 26);
+            this.textBox1.TabIndex = 5;
+            this.textBox1.Text = "20";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // ListadoCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(789, 562);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.btn_modificar);
             this.Controls.Add(this.switch_habilitacion);
             this.Controls.Add(this.btn_atras);
@@ -219,6 +256,7 @@
             this.grupo_filtros.ResumeLayout(false);
             this.grupo_filtros.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -237,5 +275,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button switch_habilitacion;
         private System.Windows.Forms.Button btn_modificar;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
