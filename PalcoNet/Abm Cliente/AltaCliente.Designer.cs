@@ -33,7 +33,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboTiposDoc = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
             this.btnAlta = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
@@ -71,7 +71,7 @@
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.label14);
             this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.comboTiposDoc);
             this.groupBox1.Controls.Add(this.label13);
             this.groupBox1.Controls.Add(this.btnAlta);
             this.groupBox1.Controls.Add(this.label12);
@@ -139,13 +139,14 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // comboBox1
+            // comboTiposDoc
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(116, 88);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 34;
+            this.comboTiposDoc.FormattingEnabled = true;
+            this.comboTiposDoc.Location = new System.Drawing.Point(116, 88);
+            this.comboTiposDoc.Name = "comboTiposDoc";
+            this.comboTiposDoc.Size = new System.Drawing.Size(121, 21);
+            this.comboTiposDoc.TabIndex = 34;
+            this.comboTiposDoc.SelectedIndexChanged += new System.EventHandler(this.comboTiposDoc_SelectedIndexChanged);
             // 
             // label13
             // 
@@ -421,7 +422,7 @@
         private System.Windows.Forms.DateTimePicker datePickerFechaNac;
         private System.Windows.Forms.Button btnAlta;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboTiposDoc;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label14;

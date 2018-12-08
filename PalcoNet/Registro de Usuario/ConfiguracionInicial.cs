@@ -40,7 +40,7 @@ namespace PalcoNet.Registro_de_usuario
             roles = UsuarioRepositorio.getRoles(user);
             if (roles.Count == 0)
             {
-                Utils.mostrarError(new Exception("El usuario no tiene roles asociados"));
+                // Utils.mostrarError(new Exception("El usuario no tiene roles asociados"));
             } else { 
                 this.Show();
                 foreach (Rol rol in roles)
@@ -88,6 +88,11 @@ namespace PalcoNet.Registro_de_usuario
         }
 
         private void ConfiguracionInicial_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void combo_roles_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

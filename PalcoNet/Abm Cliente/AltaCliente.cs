@@ -20,7 +20,6 @@ namespace PalcoNet.AbmCliente
     {
         Cliente cliente = new Cliente();
         Direccion direccion = new Direccion();
-        List<AltaTarjeta> altasTarjetas = new List<AltaTarjeta>();
         public AltaCliente()
         {
             InitializeComponent();
@@ -30,6 +29,19 @@ namespace PalcoNet.AbmCliente
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
             cliente.Tarjeta = new List<Tarjeta>();
+            getTiposDocumento();
+        }
+
+        private void getTiposDocumento()
+        {
+            List<TiposDocumento> tipos = new List<TiposDocumento>();
+            comboTiposDoc.Items.Clear();
+            tipos = ClienteRepositorio.getTiposDoc();
+            foreach (TiposDocumento tipo in tipos)
+            {
+                comboTiposDoc.Items.Add(tipo);
+                comboTiposDoc.DisplayMember = "Descripcion";
+            }
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -89,7 +101,7 @@ namespace PalcoNet.AbmCliente
         private void boton_alta_Click(object sender, EventArgs e)
         {
             //epProvider.Clear();
-            if(validarCamposVaciosCliente()) { return; }
+            // if(validarCamposVaciosCliente()) { return; }
             // algo = altasTarjetas.Select(x => new Tarjeta(x.))
             cliente.Habilitado = true;
             if (!Regex.IsMatch(txDni.Text, @"^[0-9]{1,8}$"))
@@ -120,11 +132,12 @@ namespace PalcoNet.AbmCliente
                 MessageBox.Show("Ingrese un mail válido.");
                 return;
             }
-            else if (ClienteRepositorio.esClienteExistenteMail(txMail.Text))
-            {
-                MessageBox.Show("Ya existe un cliente con el mail ingresado");
-                return;
-            }
+            else
+                if (ClienteRepositorio.esClienteExistenteMail(txMail.Text))
+                {
+                    MessageBox.Show("Ya existe un cliente con el mail ingresado");
+                    return;
+                }
             cliente.Email = txMail.Text;
             if (!Regex.IsMatch(txTelefono.Text, @"^[0-9]{1,20}$"))
             {
@@ -213,9 +226,8 @@ namespace PalcoNet.AbmCliente
 
         private void button1_Click(object sender, EventArgs e)
         {
-            AltaTarjeta t = new AltaTarjeta(cliente);
+            AltaTarjeta t = new AltaTarjeta(ref cliente);
             t.ShowDialog();
-            altasTarjetas.Add(t);
         }
 
         private void button2_Click_1(object sender, EventArgs e)
@@ -224,6 +236,11 @@ namespace PalcoNet.AbmCliente
         }
 
         private void txNombre_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboTiposDoc_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

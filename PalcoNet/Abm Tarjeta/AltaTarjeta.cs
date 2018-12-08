@@ -20,10 +20,10 @@ namespace PalcoNet.AbmTarjeta
         Cliente cliente = new Cliente();
         Tarjeta tarjeta = new Tarjeta();
 
-        public AltaTarjeta(Cliente c)
+        public AltaTarjeta(ref Cliente c)
         {
             InitializeComponent();
-
+            cliente = c;
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
@@ -87,6 +87,8 @@ namespace PalcoNet.AbmTarjeta
                 tarjeta.Banco = txtBanco.Text;
                 tarjeta.FechaVencimiento = datePickerFechaVenc.Value;
                 tarjeta.Numero = txtNumero.Text;
+                cliente.Tarjeta.Add(tarjeta);
+                MessageBox.Show("Tarjeta creada con exito.","", MessageBoxButtons.OK, MessageBoxIcon.None);
                 this.Hide();
             }
         }

@@ -8,7 +8,11 @@ namespace PalcoNet.Modelo
 {
    public static class Ordinales
     {
-
+       public static Dictionary<string, int> camposGetTiposDoc = new Dictionary<string, int> 
+                                               {
+                                                   {"tipos_doc_id",0},
+                                                   {"tipos_doc_descr",1}
+                                               };
        public static Dictionary<string, int> camposUsuario = new Dictionary<string, int>
                                                 {
                                                     {"id", 0},

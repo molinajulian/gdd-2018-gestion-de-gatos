@@ -179,5 +179,22 @@ namespace PalcoNet.Repositorios
         {
             throw new NotImplementedException();
         }
+
+        internal static List<TiposDocumento> getTiposDoc()
+        {
+            var tipos = new List<TiposDocumento>();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_get_tipos_doc]", "SP", parametros);
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    TiposDocumento tipo = TiposDocumento.buildGetTiposDoc(lector);
+                    tipos.Add(tipo);
+                }
+                lector.Close();
+            }
+            return tipos;
+        }
     }
 }

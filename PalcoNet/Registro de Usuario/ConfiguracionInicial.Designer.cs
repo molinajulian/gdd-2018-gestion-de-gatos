@@ -41,6 +41,7 @@
             this.combo_roles.Name = "combo_roles";
             this.combo_roles.Size = new System.Drawing.Size(183, 21);
             this.combo_roles.TabIndex = 1;
+            this.combo_roles.SelectedIndexChanged += new System.EventHandler(this.combo_roles_SelectedIndexChanged);
             // 
             // btn_rol_aceptado
             // 
