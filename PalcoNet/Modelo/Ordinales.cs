@@ -113,13 +113,41 @@ namespace PalcoNet.Modelo
                                                     {"asiento",1},
                                                     {"tipo",3}
                                                     };
-       public static Dictionary<string, int> Grado = new Dictionary<string, int> 
+        public static Dictionary<string, int> TipoUbicacion = new Dictionary<string, int>
+                                                    {
+                                                    {"TipoPubl_id",0},
+                                                    {"TipoPubl_descripcion",1}
+                                                    };
+        public static Dictionary<string, int> Grado = new Dictionary<string, int> 
                                                     {
                                                     {"tipo",0},
                                                     {"comision",1},
                                                     {"descuento",3}
                                                     };
-       public static Dictionary<string, int> EstadoPublicacion = new Dictionary<string, int> 
+        public static Dictionary<string, int> ItemFactura = new Dictionary<string, int>
+                                                    {
+                                                    {"itemFact_Id",0},
+                                                    {"itemFact_FactId",1},
+                                                    {"itemFact_Cantidad",2},
+                                                    {"itemFact_Monto",3 }
+                                                    };
+        public static Dictionary<string, int> Factura = new Dictionary<string, int>
+                                                    {
+                                                    {"Fact_Id",0},
+                                                    {"Fact_Metodo_Pago",1},
+                                                    {"Fact_Total",2},
+                                                    {"Fact_Fecha",3 },
+                                                    {"Fact_Empresa_Cuit",4 }
+                                                    };
+        public static Dictionary<string, int> Compra = new Dictionary<string, int>
+                                                    {
+                                                    {"Compra_Id",0},
+                                                    {"Compra_Publicacion_Id",1},
+                                                    {"Compra_Cliente_Documento",2},
+                                                    {"Compra_TipoDoc",3 },
+                                                    {"Compra_Fecha",4 }
+                                                    };
+        public static Dictionary<string, int> EstadoPublicacion = new Dictionary<string, int> 
                                                     {
                                                     {"id",0},
                                                     {"descripcion",1 },
@@ -135,7 +163,13 @@ namespace PalcoNet.Modelo
                                                     {"idRubro",5},
                                                     {"idEmpresa",6},
                                                     {"idDomicilio",7}
-                                                    }; 
-   }
+                                                    };
+        public static Dictionary<string, int> Premio = new Dictionary<string, int>
+                                                    {
+                                                    {"Premio_Id",0},
+                                                    {"Premio_Desc",1},
+                                                    {"Premio_Puntos",2}
+                                                    };
+    }
 
 }

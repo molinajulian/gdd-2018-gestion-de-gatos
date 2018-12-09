@@ -179,6 +179,10 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Modelo\Cliente.cs" />
+    <Compile Include="Modelo\Compra.cs" />
+    <Compile Include="Modelo\Factura.cs" />
+    <Compile Include="Modelo\ItemFactura.cs" />
+    <Compile Include="Modelo\Premio.cs" />
     <Compile Include="Modelo\TiposDocumento.cs" />
     <Compile Include="Modelo\Direccion.cs" />
     <Compile Include="Modelo\Empresa.cs" />
@@ -191,6 +195,7 @@
     <Compile Include="Modelo\Rol.cs" />
     <Compile Include="Modelo\Rubro.cs" />
     <Compile Include="Modelo\Tarjeta.cs" />
+    <Compile Include="Modelo\TipoUbicacion.cs" />
     <Compile Include="Modelo\Ubicacion.cs" />
     <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="Program.cs" />
@@ -220,9 +225,13 @@
       <DependentUpon>MenuABMs.cs</DependentUpon>
     </Compile>
     <Compile Include="Repositorios\ClienteRepositorio.cs" />
+    <Compile Include="Repositorios\CompraRepositorio.cs" />
     <Compile Include="Repositorios\EmpresasRepositorio.cs" />
     <Compile Include="Repositorios\EspectaculoRepositorio.cs" />
     <Compile Include="Repositorios\EstadoPublicacionRepositorio.cs" />
+    <Compile Include="Repositorios\FacturaRepositorio.cs" />
+    <Compile Include="Repositorios\ItemFacturaRepositorio.cs" />
+    <Compile Include="Repositorios\PremioRepositorio.cs" />
     <Compile Include="Repositorios\RolRepositorio.cs" />
     <Compile Include="Repositorios\FuncionalidadesRepositorio.cs" />
     <Compile Include="Repositorios\DataBase.cs" />
@@ -232,6 +241,7 @@
     <Compile Include="Repositorios\RubroRepositorio.cs" />
     <Compile Include="Repositorios\TarjetaRepositorio.cs" />
     <Compile Include="Repositorios\UbicacionRepositorio.cs" />
+    <Compile Include="Repositorios\TipoUbicacionRepositorio.cs" />
     <Compile Include="Repositorios\UsuarioRepositorio.cs" />
     <EmbeddedResource Include="Abm Cliente\AltaCliente.resx">
       <DependentUpon>AltaCliente.cs</DependentUpon>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PalcoNet.Modelo
 {
-    class TiposDocumento:Rol
+    public class TiposDocumento 
     {
 
         public TiposDocumento(int id,string descripcion)

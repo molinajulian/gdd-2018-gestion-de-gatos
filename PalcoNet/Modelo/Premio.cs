@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace PalcoNet.Modelo
 {
-    public class Grado
+    class Premio
     {
-        public string Tipo { get; set; }
-        public int Comision { get; set; }
-        public int Descuento { get; set; }
+        public int Id { get; set; }
+        public double Descuento { get; set; }
+        public int Puntos { get; set; }
     }
 }

@@ -11,6 +11,6 @@ namespace PalcoNet.Modelo
        public int Id{ get; set; }
         public char Fila { get; set; }
         public int Asiento { get; set; }
-        public string TipoUbicacion { get; set; }
+        public TipoUbicacion TipoUbicacion { get; set; }
     }
 }

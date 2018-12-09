@@ -94,12 +94,12 @@ namespace PalcoNet.Repositorios
            
             return clientes;
         }
-        public static List<Cliente> GetClienteByDNI(string unNumero)
+        public static List<Cliente> GetClienteByDNI(int unNumero)
         {
             var clientes = new List<Cliente>();
             var parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@numero", unNumero));
-            var query = DataBase.ejecutarFuncion("Select * from cliente c where c.clie_dni like('@numero%')", parametros);
+            var query = DataBase.ejecutarFuncion("Select * from cliente c where c.clie_dni =@numero", parametros);
             SqlDataReader reader = query.ExecuteReader();
             while (reader.Read())
             {

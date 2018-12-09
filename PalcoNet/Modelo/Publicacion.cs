@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PalcoNet.Modelo
 {
-    class Publicacion
+    public class Publicacion
     {
         public int    Codigo { get; set; }
         public string Descripcion { get; set; }

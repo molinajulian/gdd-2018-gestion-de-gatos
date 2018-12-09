@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PalcoNet.Modelo
 {
-    class Empresa
+    public class Empresa
     {
         public string RazonSocial { get; set; }
         public string Cuit { get; set; }
