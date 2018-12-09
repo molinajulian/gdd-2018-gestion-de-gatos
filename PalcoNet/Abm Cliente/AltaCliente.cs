@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -94,10 +95,6 @@ namespace PalcoNet.AbmCliente
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-        }
         private void boton_alta_Click(object sender, EventArgs e)
         {
             cliente.Habilitado = true;
@@ -126,6 +123,11 @@ namespace PalcoNet.AbmCliente
                 return;
             }
             cliente.Apellido = txApellido.Text;
+            if (!Regex.IsMatch(txMail.Text, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"))
+            {
+                MessageBox.Show("Ingrese un mail válido.");
+                return;
+            }
             if (!Regex.IsMatch(txMail.Text, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"))
             {
                 MessageBox.Show("Ingrese un mail válido.");
@@ -197,9 +199,17 @@ namespace PalcoNet.AbmCliente
             }
             cliente.FechaDeCreacion = DateTime.Now;
             cliente.NombreCliente = txNombre.Text;
-            ClienteRepositorio.agregar(cliente);
-            limpiarVentana();
-            MessageBox.Show("Cliente agregado correctamente");
+            try
+            {
+                ClienteRepositorio.agregar(cliente);
+                limpiarVentana();
+                MessageBox.Show("Cliente agregado correctamente");
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
+            
 
         }
 

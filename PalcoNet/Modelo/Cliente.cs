@@ -51,10 +51,5 @@ namespace PalcoNet.Modelo
             Dictionary<string, int> campoClienteExistente = Ordinales.campoClienteExistente;
             return lector.GetInt32(campoClienteExistente["cantidad"]);
         }
-        public static int buildSalidaAgregar(SqlDataReader lector)
-        {
-            Dictionary<string, int> campoSalidaAgregar = Ordinales.campoSalidaAgregar;
-            return lector.GetInt32(campoSalidaAgregar["salida"]);
-        }
     }
 }

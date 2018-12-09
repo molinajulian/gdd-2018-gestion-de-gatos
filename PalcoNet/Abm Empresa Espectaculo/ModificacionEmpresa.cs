@@ -32,11 +32,11 @@ namespace PalcoNet.AbmEmpresa
            // cargarRubros();
 
            txtCuit.Text = empresa.Cuit;
-           txtNombre.Text = empresa.nombre.ToString();
+           txtNombre.Text = empresa.RazonSocial;
            // tx_direccion.Text = empresa.Direccion;
            // combo_rubros.Text = empresa.rubro.ToString();
 
-           if (empresa.Habilitado)
+           if (empresa.Habilitada)
            {
                checkHabilitada.Checked = true;
                checkHabilitada.Enabled = false;
@@ -62,9 +62,9 @@ namespace PalcoNet.AbmEmpresa
         {
             if (!verificaValidaciones()) return;
             
-            empresa.Habilitado = checkHabilitada.Checked;
+            empresa.Habilitada = checkHabilitada.Checked;
             empresa.Cuit = txtCuit.Text;
-            empresa.nombre = txtNombre.Text;
+            empresa.RazonSocial = txtNombre.Text;
             // empresa.Direccion = tx_direccion.Text;
             // empresa.rubro = Convert.ToInt32(combo_rubros.Text);
 
