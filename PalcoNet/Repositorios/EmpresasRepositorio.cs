@@ -113,9 +113,10 @@ namespace PalcoNet.Repositorios
         }
 
 
-        internal static void deshabilitar(string empresa_cuit)
+        internal static void deshabilitar(string empresa_cuit,string username)
         {
-            throw new NotImplementedException();
+            List<SqlParameter> parametros = DataBase.GenerarParametrosDeleteFromString(empresa_cuit, username);
+            DataBase.WriteInBase("[dbo].[eliminarEmpresa]", "SP", parametros);
         }
 
         internal static Empresa getEmpresa(string cuit)

@@ -40,7 +40,7 @@ namespace PalcoNet.Repositorios
         }
         public static void DeleteCliente(Cliente cliente, string username)
         {
-            List<SqlParameter> parametros = GenerarParametrosCliente(cliente,username);
+            List<SqlParameter> parametros = DataBase.GenerarParametrosDeleteFromInt(cliente.id,username);
             DataBase.WriteInBase("DeleteCliente", "SP", parametros);
 
         }

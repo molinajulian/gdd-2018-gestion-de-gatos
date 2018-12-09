@@ -80,7 +80,15 @@ namespace PalcoNet.Repositorios
             return sqlCommand.ExecuteNonQuery();
 
         }
-        public static List<SqlParameter> GenerarParametrosDelete(int id, string username)
+        public static List<SqlParameter> GenerarParametrosDeleteFromInt(int id, string username)
+        {
+            List<SqlParameter> parametros = new List<SqlParameter>();
+
+            parametros.Add(new SqlParameter("@Id", id));
+            parametros.Add(new SqlParameter("@Username", username));
+            return parametros;
+        }
+        public static List<SqlParameter> GenerarParametrosDeleteFromString(string id, string username)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
 

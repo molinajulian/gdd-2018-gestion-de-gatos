@@ -36,7 +36,7 @@ namespace PalcoNet.Repositorios
 
         public static void DeleteTipoUbicacion(int id,string username)
         {
-            List<SqlParameter> parametros = DataBase.GenerarParametrosDelete(id,username);
+            List<SqlParameter> parametros = DataBase.GenerarParametrosDeleteFromInt(id,username);
             DataBase.WriteInBase("DeletetipoUbicacion", "SP", parametros);
         }
 

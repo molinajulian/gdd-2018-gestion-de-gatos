@@ -13,14 +13,13 @@ namespace PalcoNet.Repositorios
         public static List<SqlParameter> GenerarParametrosPublicacion(Publicacion publicacion, string username)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
-
-            parametros.Add(new SqlParameter("@Descripcion", publicacion.Descripcion));
             parametros.Add(new SqlParameter("@Codigo", publicacion.Codigo));
+            parametros.Add(new SqlParameter("@Descripcion", publicacion.Descripcion));
             parametros.Add(new SqlParameter("@FechaPublicacion", publicacion.FechaPublicacion));
-            parametros.Add(new SqlParameter("@username", username));
+            parametros.AddRange(GradoRepositorio.GenerarParametrosGrado(publicacion.Grado));
             parametros.AddRange(EspectaculoRepositorio.GenerarParametrosEspectaculo(publicacion.Espectaculo, username));
             parametros.AddRange(EstadoPublicacionRepositorio.GenerarParametrosEstadoPublicacion(publicacion.Estado));
-            parametros.AddRange(GradoRepositorio.GenerarParametrosGrado(publicacion.Grado));
+            parametros.Add(new SqlParameter("@username", username));
             return parametros;
         }
         public static void CreatePublicacion(Publicacion publicacion, string username)
