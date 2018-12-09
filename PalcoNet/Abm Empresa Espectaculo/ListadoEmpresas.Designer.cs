@@ -175,6 +175,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ListadoEmpresas";
             this.Text = "Listado de Empresas";
+            this.Load += new System.EventHandler(this.ListadoEmpresas_Load);
             ((System.ComponentModel.ISupportInitialize)(this.data_empresas)).EndInit();
             this.grupo_filtros.ResumeLayout(false);
             this.grupo_filtros.PerformLayout();

@@ -218,5 +218,9 @@ namespace PalcoNet.AbmEmpresa
 
         }
 
+        private void ListadoEmpresas_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

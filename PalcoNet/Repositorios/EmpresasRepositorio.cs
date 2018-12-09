@@ -22,7 +22,6 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@mail", empresa.Email));
             parametros.Add(new SqlParameter("@telefono", empresa.Telefono));
             parametros.Add(new SqlParameter("@localidad", empresa.Direccion.Localidad));
-            parametros.Add(new SqlParameter("@ciudad",empresa.Ciudad));
             parametros.Add(new SqlParameter("@username", username));
             return parametros;
         }
@@ -49,12 +48,11 @@ namespace PalcoNet.Repositorios
 
         }
         
-        public static Empresa ReadempresaFromDb(SqlDataReader reader)
+        public static Empresa ReadEmpresaFromDb(SqlDataReader reader)
         {
             return new Empresa()
                          {
                         RazonSocial=reader.GetValue(Ordinales.Empresa["razonSocial"]).ToString(),
-                        Ciudad=reader.GetValue(Ordinales.Empresa["ciudad"]).ToString(),
                         Cuit=reader.GetValue(Ordinales.Empresa["cuit"]).ToString(),
                         Email = reader.GetValue(Ordinales.Empresa["email"]).ToString(),
                         Telefono = reader.GetValue(Ordinales.Empresa["telefono"]).ToString(),
@@ -72,7 +70,7 @@ namespace PalcoNet.Repositorios
             while (reader.Read())
             {
                 empresas.Add(
-                    ReadempresaFromDb(reader));
+                    ReadEmpresaFromDb(reader));
             }
             reader.Close();
             return empresas;
@@ -87,7 +85,7 @@ namespace PalcoNet.Repositorios
             while (reader.Read())
             {
                 empresas.Add(
-                    ReadempresaFromDb(reader));
+                    ReadEmpresaFromDb(reader));
             }
             reader.Close();
             return empresas;
@@ -102,7 +100,7 @@ namespace PalcoNet.Repositorios
             while (reader.Read())
             {
                 empresas.Add(
-                    ReadempresaFromDb(reader));
+                    ReadEmpresaFromDb(reader));
             }
             reader.Close();
            
@@ -132,12 +130,25 @@ namespace PalcoNet.Repositorios
 
         internal static void agregar(Empresa empresa)
         {
-            throw new NotImplementedException();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@razon_social", empresa.RazonSocial));
+            parametros.Add(new SqlParameter("@cuit", empresa.Cuit));
+            parametros.Add(new SqlParameter("@mail", empresa.Email));
+            parametros.Add(new SqlParameter("@telefono", empresa.Telefono));
+            parametros.Add(new SqlParameter("@calle", empresa.Direccion.Calle));
+            parametros.Add(new SqlParameter("@nro", empresa.Direccion.Numero));
+            parametros.Add(new SqlParameter("@depto", empresa.Direccion.Departamento));
+            parametros.Add(new SqlParameter("@localidad", empresa.Direccion.Localidad));
+            parametros.Add(new SqlParameter("@piso", empresa.Direccion.Piso));
+            parametros.Add(new SqlParameter("@cp", empresa.Direccion.CodPostal));
+            DataBase.ejecutarSP("[dbo].[sp_crear_empresa]", parametros);
         }
 
-        internal static bool esEmpresaExistente(string p)
+        internal static void validarEmpresaInexistente(string cuit)
         {
-            throw new NotImplementedException();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@cuit", cuit));
+            DataBase.ejecutarSP("sp_validar_empresa_inexistente", parametros);
         }
 
         internal static bool esEmpresaHabilitada(string empresa_cuit)

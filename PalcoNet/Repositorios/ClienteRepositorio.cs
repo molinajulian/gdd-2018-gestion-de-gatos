@@ -179,7 +179,7 @@ namespace PalcoNet.Repositorios
             throw new NotImplementedException();
         }
 
-        internal static int agregar(Cliente cliente)
+        internal static void agregar(Cliente cliente)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@tipoDoc", cliente.TipoDeDocumento));
@@ -197,17 +197,7 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@localidad", cliente.Direccion.Localidad));
             parametros.Add(new SqlParameter("@piso", cliente.Direccion.Piso));
             parametros.Add(new SqlParameter("@cp", cliente.Direccion.CodPostal));
-            SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_crear_cliente]", "SP", parametros);
-            int salida = 0;
-            if (lector.HasRows)
-            {
-                while (lector.Read())
-                {
-                    salida = Cliente.buildSalidaAgregar(lector);
-                }
-                lector.Close();
-            }
-            return salida;
+            DataBase.ejecutarSP("[dbo].[sp_crear_cliente]", parametros);
         }
 
         internal static bool esClienteExistenteMail(string p)
