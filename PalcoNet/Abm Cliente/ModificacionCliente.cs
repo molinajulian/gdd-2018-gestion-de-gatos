@@ -64,7 +64,7 @@ namespace PalcoNet.AbmCliente
             }
             Cliente cliente = new Cliente();
             Direccion direccion = new Direccion();
-            cliente.NumeroDocumento =txtNumDoc.Text;
+            cliente.NumeroDocumento =Convert.ToInt32(txtNumDoc.Text);
             if (!Regex.IsMatch(txtNombre.Text, @"^[a-zA-Z\s]{1,30}$"))
             {
                 MessageBox.Show("Ingrese un nombre válido.");

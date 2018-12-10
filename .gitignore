@@ -1,3 +1,3 @@
 PalcoNet/App.config
-PalcoNet/obj/*
-PalcoNet/bin/*
+PalcoNet/obj/
+PalcoNet/bin/

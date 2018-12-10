@@ -156,6 +156,11 @@ namespace PalcoNet.Repositorios
         {
             throw new NotImplementedException();
         }
+
+        internal static void deshabilitar(string empresa_cuit)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

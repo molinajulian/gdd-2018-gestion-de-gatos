@@ -15,6 +15,15 @@ namespace PalcoNet.Modelo
             Id=id.ToString();
             Descripcion = descripcion;
         }
+        public TiposDocumento(string descripcion)
+        {
+            Descripcion = descripcion;
+        }
+
+        public TiposDocumento()
+        {
+            // TODO: Complete member initialization
+        }
         public string Id { get; set; }
         public string Descripcion { get; set; }
 

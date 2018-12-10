@@ -14,10 +14,8 @@ namespace PalcoNet.Repositorios
         public static List<SqlParameter> GenerarParametrosTarjeta(Tarjeta tarjeta)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
-
             parametros.Add(new SqlParameter("@tarjeta", tarjeta.Nombre));
             parametros.Add(new SqlParameter("@tarjeta", tarjeta.Numero));
-            parametros.Add(new SqlParameter("@CCV", tarjeta.CCV));
             parametros.Add(new SqlParameter("@FechaVencimiento", tarjeta.FechaVencimiento));
             return parametros;
         }
@@ -28,6 +26,22 @@ namespace PalcoNet.Repositorios
 
         }
 
+        public static void agregar(Cliente cliente,string clienteId)
+        {
+            int tipoDoc = Convert.ToInt32(clienteId.Substring(0, 1));
+            decimal doc = Convert.ToDecimal(clienteId.Substring(1, clienteId.Length-1));
+            foreach (Tarjeta tar in cliente.Tarjeta)
+            {
+                List<SqlParameter> parametros = new List<SqlParameter>();
+                parametros.Add(new SqlParameter("@num", Convert.ToDecimal(tar.Numero)));
+                parametros.Add(new SqlParameter("@venc", tar.FechaVencimiento));
+                parametros.Add(new SqlParameter("@banco", tar.Banco));
+                parametros.Add(new SqlParameter("@tipoDoc", tipoDoc));
+                parametros.Add(new SqlParameter("@doc",doc));
+                DataBase.GetDataReader("[dbo].[sp_crear_tarjeta]", "SP", parametros);
+            }
+
+        }
 
         public static void UpdateTarjeta(Tarjeta tarjeta)
         {

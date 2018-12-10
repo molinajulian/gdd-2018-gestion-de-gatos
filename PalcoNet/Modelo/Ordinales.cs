@@ -45,7 +45,8 @@ namespace PalcoNet.Modelo
                                                     {"dom_depto",8},
                                                     {"dom_piso",9},
                                                     {"dom_localidad", 10},
-                                                    {"dom_cod_postal", 11}
+                                                    {"dom_cod_postal", 11},
+                                                    {"habilitado",12}
                                                 };
        public static Dictionary<string, int> camposFuncionalidad = new Dictionary<string, int>
                                                 {

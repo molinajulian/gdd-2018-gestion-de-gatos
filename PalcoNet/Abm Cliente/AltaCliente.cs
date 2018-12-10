@@ -97,9 +97,10 @@ namespace PalcoNet.AbmCliente
 
         private void boton_alta_Click(object sender, EventArgs e)
         {
-            cliente.Habilitado = true;
+           //  cliente.Habilitado = true;
             TiposDocumento seleccionado = (TiposDocumento)comboTiposDoc.SelectedItem;
-            cliente.TipoDeDocumento = seleccionado.Id;
+            cliente.TipoDeDocumento = new TiposDocumento();
+            cliente.TipoDeDocumento.Id = seleccionado.Id;
             if (!Regex.IsMatch(txDni.Text, @"^[0-9]{1,8}$"))
             {
                 MessageBox.Show("Ingrese un DNI válido.");
@@ -110,7 +111,7 @@ namespace PalcoNet.AbmCliente
                 MessageBox.Show("Ya existe un cliente con el dni ingresado");
                 return;
             }
-            cliente.NumeroDocumento = txDni.Text;
+            cliente.NumeroDocumento = Convert.ToInt32(txDni.Text);
             if (!Regex.IsMatch(txNombre.Text, @"^[a-zA-Z\s]{1,30}$"))
             {
                 MessageBox.Show("Ingrese un nombre válido.");
@@ -201,9 +202,10 @@ namespace PalcoNet.AbmCliente
             cliente.NombreCliente = txNombre.Text;
             try
             {
-                ClienteRepositorio.agregar(cliente);
+                string clienteId = ClienteRepositorio.agregar(cliente);
+                TarjetaRepositorio.agregar(cliente,clienteId);
                 limpiarVentana();
-                MessageBox.Show("Cliente agregado correctamente");
+                MessageBox.Show("Cliente agregado correctamente con sus respectivas tarjetas");
             }
             catch (SqlException ex)
             {

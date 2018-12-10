@@ -8,17 +8,12 @@ namespace PalcoNet.Modelo
 {
    public class Tarjeta
     {
-        private string p1;
-        private string Text;
-        private string p2;
-
         public Tarjeta() {  }
         public Tarjeta(string numero, string nombre, DateTime fechavenc, string ccv) 
         {
             Numero = numero;
             Nombre = nombre;
             FechaVencimiento = fechavenc;
-            CCV = ccv;
         }
 
         public Tarjeta(string numero, string banco, DateTime fecha)
@@ -32,6 +27,5 @@ namespace PalcoNet.Modelo
         public string   Nombre { get; set; }
         public string   Banco { get; set; }
         public DateTime FechaVencimiento { get; set; }
-        public string   CCV { get; set; }
     }
 }

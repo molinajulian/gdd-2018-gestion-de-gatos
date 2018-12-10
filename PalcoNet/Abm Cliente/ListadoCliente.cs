@@ -47,7 +47,7 @@ namespace PalcoNet.AbmCliente
             }
             foreach(Cliente c in clientes)
             {
-                string[] row = new string[] { c.TipoDeDocumento,c.NumeroDocumento,c.Cuil,c.NombreCliente,c.Apellido,c.Email,c.Direccion.Calle,c.Direccion.Numero,c.Direccion.Localidad,c.Direccion.CodPostal };
+                string[] row = new string[] { c.TipoDeDocumento.Descripcion.ToString(),c.NumeroDocumento.ToString(),c.Cuil,c.NombreCliente,c.Apellido,c.Email,c.Direccion.Calle,c.Direccion.Numero,c.Direccion.Localidad,c.Direccion.CodPostal,c.Habilitado ==true ? "Si":"No" };
                 tabla_clientes.Rows.Add(row);
             }
             data_clientes.DataSource = tabla_clientes;
@@ -64,6 +64,7 @@ namespace PalcoNet.AbmCliente
             tabla_clientes.Columns.Add("Numero", typeof(string));
             tabla_clientes.Columns.Add("Localidad", typeof(string));
             tabla_clientes.Columns.Add("Codigo postal", typeof(string));
+            tabla_clientes.Columns.Add("Habilitado", typeof(string));
         }
 
         private void btn_buscar_Click(object sender, EventArgs e)
@@ -87,8 +88,8 @@ namespace PalcoNet.AbmCliente
             List<Cliente> clientes = ClienteRepositorio.getClientes(tx_dni.Text, tx_nombre.Text, tx_apellido.Text);
             foreach (Cliente cliente in clientes)
             {
-                String hab = cliente.Habilitado ? "Si" : "No";
-                String[] row = new String[] { cliente.NumeroDocumento.ToString(), cliente.nombre, cliente.Apellido, hab };
+                // String hab = cliente.Habilitado ? "Si" : "No";
+                String[] row = new String[] { cliente.NumeroDocumento.ToString(), cliente.nombre, cliente.Apellido,  };
                 tabla_clientes.Rows.Add(row);
             }
             refreshValues();
@@ -163,15 +164,15 @@ namespace PalcoNet.AbmCliente
             {
                 if (this.data_clientes.SelectedRows[0].Cells["Habilitado"].Value.ToString() == "Si")
                 {
-                    ClienteRepositorio.eliminarCliente(Convert.ToInt32(this.data_clientes.SelectedRows[0].Cells["DNI"].Value.ToString()));
+          
+                    ClienteRepositorio.eliminarCliente(this.data_clientes.SelectedRows[0].Cells["Tipo doc"].Value.ToString(), this.data_clientes.SelectedRows[0].Cells["Documento"].Value.ToString());
                 }
                 else
                 {
                     ClienteRepositorio.habilitarCliente(Convert.ToInt32(this.data_clientes.SelectedRows[0].Cells["DNI"].Value.ToString()));
                 }
-                object s = new object();
-                EventArgs ea = new EventArgs();
-                btn_buscar_Click(s, ea);
+                refreshValues();
+                getClientes(limitAnterior,offsetAnterior);
             }
             else
             {
