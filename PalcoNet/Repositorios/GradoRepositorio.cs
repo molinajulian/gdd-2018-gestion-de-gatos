@@ -15,7 +15,7 @@ namespace PalcoNet.Repositorios
             List<SqlParameter> parametros = new List<SqlParameter>();
 
             parametros.Add(new SqlParameter("@Descripcion", grado.Comision));
-            parametros.Add(new SqlParameter("@Descuento", grado.Descuento));
+            parametros.Add(new SqlParameter("@Descuento", grado.Descripcion));
             parametros.Add(new SqlParameter("@Tipo", grado.Tipo));
 
 
@@ -56,7 +56,7 @@ namespace PalcoNet.Repositorios
                 grado = new Grado()
                 {
                     Comision = (int)reader.GetValue(Ordinales.Grado["descripcion"]),
-                    Descuento = (int)reader.GetValue(Ordinales.Grado["codigo"]),
+                    Descripcion = (int)reader.GetValue(Ordinales.Grado["codigo"]),
                     Tipo = reader.GetValue(Ordinales.Grado["descripcion"]).ToString()
 
                 };

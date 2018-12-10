@@ -11,12 +11,13 @@ namespace PalcoNet.Repositorios
     class PublicacionRepositorio
     {
         public static List<SqlParameter> GenerarParametrosPublicacion(Publicacion publicacion, string username)
-        {
+        {   
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@Codigo", publicacion.Codigo));
             parametros.Add(new SqlParameter("@Descripcion", publicacion.Descripcion));
             parametros.Add(new SqlParameter("@FechaPublicacion", publicacion.FechaPublicacion));
-            parametros.AddRange(GradoRepositorio.GenerarParametrosGrado(publicacion.Grado));
+            parametros.Add(new SqlParameter("@GradoId", publicacion.Grado.Id));
+            
             parametros.AddRange(EspectaculoRepositorio.GenerarParametrosEspectaculo(publicacion.Espectaculo, username));
             parametros.AddRange(EstadoPublicacionRepositorio.GenerarParametrosEstadoPublicacion(publicacion.Estado));
             parametros.Add(new SqlParameter("@username", username));
@@ -24,8 +25,18 @@ namespace PalcoNet.Repositorios
         }
         public static void CreatePublicacion(Publicacion publicacion, string username)
         {
-            List<SqlParameter> parametros = GenerarParametrosPublicacion(publicacion, username);
-            DataBase.WriteInBase("IngresarPubl", "SP", parametros);
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@descripcion", publicacion.Descripcion));
+            parametros.Add(new SqlParameter("@fechaPublicacion", publicacion.FechaPublicacion));
+            parametros.Add(new SqlParameter("@gradoId", publicacion.Grado.Id));
+            parametros.Add(new SqlParameter("@espectaculoId", publicacion.Espectaculo.Id));
+            parametros.Add(new SqlParameter("@fechaEspec", publicacion.Espectaculo.Fecha));
+            parametros.Add(new SqlParameter("@Estado", publicacion.Estado.Id));
+
+            parametros.Add(new SqlParameter("@Usuario", username));
+
+
+            DataBase.WriteInBase("[dbo].[sp.crear_publicacion]", "SP", parametros);
 
         }
 

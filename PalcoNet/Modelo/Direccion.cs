@@ -26,6 +26,7 @@ namespace PalcoNet.Modelo
             CodPostal = cp;
         }
         public Direccion(){}
+        public int Id { get; set; }
         public string Calle { get; set; }
         public string Numero { get; set; }
         public string Departamento { get; set; }
