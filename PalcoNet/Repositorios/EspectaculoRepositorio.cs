@@ -19,20 +19,22 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@Fecha", espectaculo.Fecha));
             parametros.Add(new SqlParameter("@Hora", espectaculo.Hora));
             parametros.Add(new SqlParameter("@Descripcion", espectaculo.Descripcion));
-            parametros.AddRange(DireccionRepositorio.GenerarParametrosDireccion(espectaculo.Empresa.Direccion));
-            parametros.AddRange(EmpresasRepositorio.GenerarParametrosEmpresa(espectaculo.Empresa, username));
-            parametros.AddRange(RubroRepositorio.GenerarParametrosRubro(espectaculo.Rubro));
-            foreach(var ubicacion in espectaculo.Ubicaciones)
-            {
-                parametros.AddRange(UbicacionRepositorio.GenerarParametrosUbicacion(ubicacion));
-            
-            }
-            return parametros;
+                        return parametros;
         }
         public static void CreateEspectaculo(Espectaculo espectaculo,string username)
         {
-            List<SqlParameter> parametros = GenerarParametrosEspectaculo(espectaculo,username);
-            DataBase.WriteInBase("Ingresarespectaculos", "SP", parametros);
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@descripcion", espectaculo.Descripcion));
+            parametros.Add(new SqlParameter("@fecha", espectaculo.Fecha));
+            parametros.Add(new SqlParameter("@hora", espectaculo.Hora));
+            parametros.Add(new SqlParameter("@fechaVencimiento", espectaculo.FechaVencimiento));
+            parametros.Add(new SqlParameter("@rubroId", espectaculo.Rubro.Codigo));
+            parametros.Add(new SqlParameter("@empresaId", espectaculo.Empresa.Cuit));
+            parametros.Add(new SqlParameter("@domicilioId", espectaculo.Empresa.Direccion.Id));
+
+
+
+            DataBase.WriteInBase("[dbo].[sp.crear_espectaculo]", "SP", parametros);
 
         }
 

@@ -20,7 +20,7 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@Precio", ubicacion.Precio));
             parametros.Add(new SqlParameter("@EspecCodigo", ubicacion.EspectaculoId));
             parametros.Add(new SqlParameter("@TipoId", ubicacion.TipoUbicacion.Id));
-            parametros.Add(new SqlParameter("@CompraId", ubicacion.CompraID));
+            parametros.Add(new SqlParameter("@CompraId", ubicacion.CompraID));  
 
             
             
@@ -31,8 +31,15 @@ namespace PalcoNet.Repositorios
         }
         public static void CreateUbicacion(Ubicacion ubicacion)
         {
-            List<SqlParameter> parametros = GenerarParametrosUbicacion(ubicacion);
-            DataBase.WriteInBase("Ingresarubicacions", "SP", parametros);
+            List<SqlParameter> parametros = new List<SqlParameter>();
+              parametros.Add(new SqlParameter("@Fila", ubicacion.Fila));
+            parametros.Add(new SqlParameter("@Asiento", ubicacion.Asiento));
+            parametros.Add(new SqlParameter("@SinNumerar", ubicacion.SinNumerar));
+            parametros.Add(new SqlParameter("@Precio", ubicacion.Precio));
+            parametros.Add(new SqlParameter("@EspecCodigo", ubicacion.EspectaculoId));
+            parametros.Add(new SqlParameter("@TipoId", ubicacion.TipoUbicacion.Id));
+            parametros.Add(new SqlParameter("@CompraId", ubicacion.CompraID));
+            DataBase.WriteInBase("[dbo].[sp.crear_ubicacion]", "SP", parametros);
 
         }
 

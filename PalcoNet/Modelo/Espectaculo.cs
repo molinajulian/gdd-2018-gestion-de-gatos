@@ -14,6 +14,6 @@ namespace PalcoNet.Modelo
         public TimeSpan Hora{ get; set; }
         public Rubro Rubro { get; set; }
         public Empresa Empresa { get; set; }
-         
+        public DateTime FechaVencimiento { get; set; }
     }
 }
