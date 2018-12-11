@@ -40,13 +40,6 @@ namespace PalcoNet.AbmEmpresa
             epProvider.Clear();
             if (!formularioCompleto())  return false ; 
             if (!verificaTiposDeDatos()) return false;
-            try
-            {
-                EmpresasRepositorio.validarEmpresaInexistente(txtCuit.Text);
-            } catch(SqlException ex) { 
-                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
             return true;
         }
 

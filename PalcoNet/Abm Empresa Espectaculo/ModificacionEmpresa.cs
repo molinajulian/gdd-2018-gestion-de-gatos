@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -17,58 +18,54 @@ namespace PalcoNet.AbmEmpresa
 {
     public partial class ModificacionEmpresa : MaterialForm
     {
-        Empresa empresa = new Empresa();
+        Empresa empresa;
        
-        public ModificacionEmpresa(String cuit)
+        public ModificacionEmpresa(Empresa empresa)
         {
             InitializeComponent();
+            this.empresa = empresa;
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-
-           empresa = EmpresasRepositorio.getEmpresa(cuit);
-           // cargarRubros();
-
-           txtCuit.Text = empresa.Cuit;
-           txtNombre.Text = empresa.RazonSocial;
-           // tx_direccion.Text = empresa.Direccion;
-           // combo_rubros.Text = empresa.rubro.ToString();
-
-           if (empresa.Habilitada)
-           {
-               checkHabilitada.Checked = true;
-               checkHabilitada.Enabled = false;
-           }
-           else
-           {
-               checkHabilitada.Checked = false;
-               checkHabilitada.Enabled = true;
-           }
+            mostrarDatosEmpresa();
         }
 
-        /*private void cargarRubros()
+        public void mostrarDatosEmpresa()
         {
-            List<Rubro> rubros = RubrosRepositorio.getRubros();
-            foreach (Rubro rubro in rubros)
-            {
-                combo_rubros.Items.Add(rubro);
-            }
-            combo_rubros.DisplayMember = "id";
-        }*/
+            txtRazon.Text = empresa.RazonSocial;
+            txtCuit.Text = empresa.Cuit;
+            txtMail.Text = empresa.Email;
+            txtTel.Text = empresa.Telefono;
+            txtLocalidad.Text = empresa.Direccion.Localidad;
+            txtCalle.Text = empresa.Direccion.Calle;
+            txtNumero.Text = empresa.Direccion.Numero;
+            txtCp.Text = empresa.Direccion.CodPostal;
+            txtPiso.Text = empresa.Direccion.Piso;
+            txtDepto.Text = empresa.Direccion.Departamento;
+            checkDeshabilitada.Checked = !empresa.Habilitada;
+        }
+
+        public void actualizarInstanciaEmpresa()
+        {
+            empresa.RazonSocial = txtRazon.Text;
+            empresa.Cuit = txtCuit.Text;
+            empresa.Email = txtMail.Text;
+            empresa.Telefono = txtTel.Text;
+            empresa.Direccion.Localidad = txtLocalidad.Text;
+            empresa.Direccion.Calle = txtCalle.Text;
+            empresa.Direccion.Numero = txtNumero.Text;
+            empresa.Direccion.CodPostal = txtCp.Text;
+            empresa.Direccion.Piso = txtPiso.Text;
+            empresa.Direccion.Departamento = txtDepto.Text;
+            empresa.Habilitada = checkDeshabilitada.Checked;
+        }
 
         private void btn_modificar_empresa_Click(object sender, EventArgs e)
         {
             if (!verificaValidaciones()) return;
-            
-            empresa.Habilitada = checkHabilitada.Checked;
-            empresa.Cuit = txtCuit.Text;
-            empresa.RazonSocial = txtNombre.Text;
-            // empresa.Direccion = tx_direccion.Text;
-            // empresa.rubro = Convert.ToInt32(combo_rubros.Text);
-
-            EmpresasRepositorio.modificar(empresa);
+            actualizarInstanciaEmpresa();
             limpiarVentana();
             MessageBox.Show("La empresa ha sido modificada exitosamente", "Modificacion de empresa", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -76,10 +73,7 @@ namespace PalcoNet.AbmEmpresa
         private bool verificaValidaciones()
         {
             errorProvider1.Clear();
-            if (!formularioCompleto()) return false;
-           
-
-            return true;
+            return formularioCompleto();
         }
 
        
@@ -108,6 +102,7 @@ namespace PalcoNet.AbmEmpresa
              bool error = true;
 
              var controles = grupo_empresa.Controls;
+             controles.Remove(controles.Find("checkDeshabilitada", false)[0]);
              foreach (Control control in controles)
              {
                  if (string.IsNullOrWhiteSpace(control.Text))
@@ -119,24 +114,33 @@ namespace PalcoNet.AbmEmpresa
              return error;
          }
 
-         private void textBox3_TextChanged(object sender, EventArgs e)
+
+        private Empresa getEmpresaDeUi()
+        {
+            return new Empresa(txtRazon.Text, txtCuit.Text, txtMail.Text, txtTel.Text,
+                new Direccion(txtCalle.Text, txtNumero.Text, txtDepto.Text, txtLocalidad.Text, txtCp.Text, txtPiso.Text),
+                !checkDeshabilitada.Checked);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
          {
+            grupo_empresa.Enabled = false;
+            if (!verificaValidaciones())
+            {
+                grupo_empresa.Enabled = true;
+                return;
+            }
+            try
+            {
+                EmpresasRepositorio.actualizar(getEmpresaDeUi());
+                MessageBox.Show("La empresa ha sido modificada exitosamente", "Modificacion de empresa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            grupo_empresa.Enabled = true;
+        }
 
-         }
-
-         private void txLocalidad_TextChanged(object sender, EventArgs e)
-         {
-
-         }
-
-         private void button1_Click(object sender, EventArgs e)
-         {
-
-         }
-
-         private void txtNombre_TextChanged(object sender, EventArgs e)
-         {
-
-         }   
     }
 }

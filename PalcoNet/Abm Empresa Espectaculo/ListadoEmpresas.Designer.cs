@@ -39,6 +39,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btn_atras = new System.Windows.Forms.Button();
             this.btn_limpiar = new System.Windows.Forms.Button();
+            this.btn_editar = new System.Windows.Forms.Button();
+            this.btn_eliminar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.data_empresas)).BeginInit();
             this.grupo_filtros.SuspendLayout();
             this.SuspendLayout();
@@ -148,6 +150,7 @@
             this.btn_atras.TabIndex = 12;
             this.btn_atras.Text = "Atras";
             this.btn_atras.UseVisualStyleBackColor = true;
+            this.btn_atras.Click += new System.EventHandler(this.btn_atras_Click_1);
             // 
             // btn_limpiar
             // 
@@ -158,12 +161,40 @@
             this.btn_limpiar.TabIndex = 11;
             this.btn_limpiar.Text = "Limpiar";
             this.btn_limpiar.UseVisualStyleBackColor = true;
+            this.btn_limpiar.Click += new System.EventHandler(this.btn_limpiar_Click_1);
+            // 
+            // btn_editar
+            // 
+            this.btn_editar.Enabled = false;
+            this.btn_editar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_editar.Location = new System.Drawing.Point(210, 434);
+            this.btn_editar.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_editar.Name = "btn_editar";
+            this.btn_editar.Size = new System.Drawing.Size(74, 28);
+            this.btn_editar.TabIndex = 13;
+            this.btn_editar.Text = "Editar";
+            this.btn_editar.UseVisualStyleBackColor = true;
+            this.btn_editar.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btn_eliminar
+            // 
+            this.btn_eliminar.Enabled = false;
+            this.btn_eliminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_eliminar.Location = new System.Drawing.Point(333, 434);
+            this.btn_eliminar.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_eliminar.Name = "btn_eliminar";
+            this.btn_eliminar.Size = new System.Drawing.Size(74, 28);
+            this.btn_eliminar.TabIndex = 14;
+            this.btn_eliminar.Text = "Eliminar";
+            this.btn_eliminar.UseVisualStyleBackColor = true;
             // 
             // ListadoEmpresas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(644, 479);
+            this.Controls.Add(this.btn_eliminar);
+            this.Controls.Add(this.btn_editar);
             this.Controls.Add(this.btn_atras);
             this.Controls.Add(this.btn_limpiar);
             this.Controls.Add(this.grupo_filtros);
@@ -191,5 +222,7 @@
         private System.Windows.Forms.TextBox txt_razon_social;
         private System.Windows.Forms.TextBox txt_mail;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btn_editar;
+        private System.Windows.Forms.Button btn_eliminar;
     }
 }

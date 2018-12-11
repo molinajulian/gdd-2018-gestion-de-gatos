@@ -33,15 +33,13 @@
             this.btnVolver = new System.Windows.Forms.Button();
             this.grupo_empresa = new System.Windows.Forms.GroupBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.checkHabilitada = new System.Windows.Forms.CheckBox();
+            this.checkDeshabilitada = new System.Windows.Forms.CheckBox();
             this.txtTel = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtMail = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.txtDepto = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtCiudad = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.txtNumero = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -54,7 +52,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtCalle = new System.Windows.Forms.TextBox();
             this.txtCuit = new System.Windows.Forms.TextBox();
-            this.txtNombre = new System.Windows.Forms.TextBox();
+            this.txtRazon = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
@@ -78,15 +76,13 @@
             // 
             this.grupo_empresa.BackColor = System.Drawing.Color.White;
             this.grupo_empresa.Controls.Add(this.label12);
-            this.grupo_empresa.Controls.Add(this.checkHabilitada);
+            this.grupo_empresa.Controls.Add(this.checkDeshabilitada);
             this.grupo_empresa.Controls.Add(this.txtTel);
             this.grupo_empresa.Controls.Add(this.label6);
             this.grupo_empresa.Controls.Add(this.txtMail);
             this.grupo_empresa.Controls.Add(this.label4);
             this.grupo_empresa.Controls.Add(this.button1);
             this.grupo_empresa.Controls.Add(this.txtDepto);
-            this.grupo_empresa.Controls.Add(this.label5);
-            this.grupo_empresa.Controls.Add(this.txtCiudad);
             this.grupo_empresa.Controls.Add(this.label11);
             this.grupo_empresa.Controls.Add(this.txtNumero);
             this.grupo_empresa.Controls.Add(this.label10);
@@ -99,7 +95,7 @@
             this.grupo_empresa.Controls.Add(this.label3);
             this.grupo_empresa.Controls.Add(this.txtCalle);
             this.grupo_empresa.Controls.Add(this.txtCuit);
-            this.grupo_empresa.Controls.Add(this.txtNombre);
+            this.grupo_empresa.Controls.Add(this.txtRazon);
             this.grupo_empresa.Controls.Add(this.label2);
             this.grupo_empresa.Controls.Add(this.label1);
             this.grupo_empresa.Location = new System.Drawing.Point(28, 80);
@@ -121,14 +117,14 @@
             this.label12.TabIndex = 49;
             this.label12.Text = "Deshabilitada";
             // 
-            // checkHabilitada
+            // checkDeshabilitada
             // 
-            this.checkHabilitada.AutoSize = true;
-            this.checkHabilitada.Location = new System.Drawing.Point(103, 203);
-            this.checkHabilitada.Name = "checkHabilitada";
-            this.checkHabilitada.Size = new System.Drawing.Size(15, 14);
-            this.checkHabilitada.TabIndex = 48;
-            this.checkHabilitada.UseVisualStyleBackColor = true;
+            this.checkDeshabilitada.AutoSize = true;
+            this.checkDeshabilitada.Location = new System.Drawing.Point(103, 203);
+            this.checkDeshabilitada.Name = "checkDeshabilitada";
+            this.checkDeshabilitada.Size = new System.Drawing.Size(15, 14);
+            this.checkDeshabilitada.TabIndex = 48;
+            this.checkDeshabilitada.UseVisualStyleBackColor = true;
             // 
             // txtTel
             // 
@@ -155,7 +151,6 @@
             this.txtMail.Name = "txtMail";
             this.txtMail.Size = new System.Drawing.Size(139, 20);
             this.txtMail.TabIndex = 45;
-            this.txtMail.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // label4
             // 
@@ -183,22 +178,6 @@
             this.txtDepto.Name = "txtDepto";
             this.txtDepto.Size = new System.Drawing.Size(27, 20);
             this.txtDepto.TabIndex = 41;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(27, 75);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(40, 13);
-            this.label5.TabIndex = 40;
-            this.label5.Text = "Ciudad";
-            // 
-            // txtCiudad
-            // 
-            this.txtCiudad.Location = new System.Drawing.Point(85, 68);
-            this.txtCiudad.Name = "txtCiudad";
-            this.txtCiudad.Size = new System.Drawing.Size(143, 20);
-            this.txtCiudad.TabIndex = 39;
             // 
             // label11
             // 
@@ -243,7 +222,7 @@
             // 
             // txtCp
             // 
-            this.txtCp.Location = new System.Drawing.Point(455, 72);
+            this.txtCp.Location = new System.Drawing.Point(301, 68);
             this.txtCp.Name = "txtCp";
             this.txtCp.Size = new System.Drawing.Size(59, 20);
             this.txtCp.TabIndex = 29;
@@ -251,7 +230,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(429, 75);
+            this.label7.Location = new System.Drawing.Point(264, 72);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(21, 13);
             this.label7.TabIndex = 35;
@@ -260,7 +239,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(242, 75);
+            this.label8.Location = new System.Drawing.Point(27, 75);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(53, 13);
             this.label8.TabIndex = 34;
@@ -268,11 +247,10 @@
             // 
             // txtLocalidad
             // 
-            this.txtLocalidad.Location = new System.Drawing.Point(301, 72);
+            this.txtLocalidad.Location = new System.Drawing.Point(86, 72);
             this.txtLocalidad.Name = "txtLocalidad";
-            this.txtLocalidad.Size = new System.Drawing.Size(122, 20);
+            this.txtLocalidad.Size = new System.Drawing.Size(142, 20);
             this.txtLocalidad.TabIndex = 28;
-            this.txtLocalidad.TextChanged += new System.EventHandler(this.txLocalidad_TextChanged);
             // 
             // label3
             // 
@@ -298,14 +276,13 @@
             this.txtCuit.Size = new System.Drawing.Size(143, 20);
             this.txtCuit.TabIndex = 5;
             // 
-            // txtNombre
+            // txtRazon
             // 
-            this.txtNombre.Location = new System.Drawing.Point(85, 30);
-            this.txtNombre.Margin = new System.Windows.Forms.Padding(2);
-            this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(143, 20);
-            this.txtNombre.TabIndex = 4;
-            this.txtNombre.TextChanged += new System.EventHandler(this.txtNombre_TextChanged);
+            this.txtRazon.Location = new System.Drawing.Point(85, 30);
+            this.txtRazon.Margin = new System.Windows.Forms.Padding(2);
+            this.txtRazon.Name = "txtRazon";
+            this.txtRazon.Size = new System.Drawing.Size(143, 20);
+            this.txtRazon.TabIndex = 4;
             // 
             // label2
             // 
@@ -350,15 +327,13 @@
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.GroupBox grupo_empresa;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.CheckBox checkHabilitada;
+        private System.Windows.Forms.CheckBox checkDeshabilitada;
         private System.Windows.Forms.TextBox txtTel;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtMail;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox txtDepto;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtCiudad;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtNumero;
         private System.Windows.Forms.Label label10;
@@ -371,7 +346,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtCalle;
         private System.Windows.Forms.TextBox txtCuit;
-        private System.Windows.Forms.TextBox txtNombre;
+        private System.Windows.Forms.TextBox txtRazon;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
     }

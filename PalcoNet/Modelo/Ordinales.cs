@@ -86,14 +86,13 @@ namespace PalcoNet.Modelo
                                                 };
        public static Dictionary<string, int> Direccion = new Dictionary<string, int> 
                                                  {
-                                                 {"codigo",0}, 
-                                                 {"numero",5},
-                                                 {"departamento",4},
-                                                 {"localidad",2},  
+                                                 {"codigo",0},
                                                  {"codPostal",1},
+                                                 {"localidad",2},
+                                                 {"piso",3},
+                                                 {"departamento",4},
+                                                 { "numero",5},
                                                  {"calle",6}
-                                                 ,{"piso",3}
-                                                                                               
                                                  };
 
        public static Dictionary<string, int> Tarjeta = new Dictionary<string, int> 
@@ -105,10 +104,13 @@ namespace PalcoNet.Modelo
                                                     };
        public static Dictionary<string, int> Empresa = new Dictionary<string, int> 
                                                     {
-                                                    {"razonSocial",0}, 
-                                                    {"email",1},
-                                                    {"telefono",2},
-                                                    {"cuit  ",3},
+                                                    {"cuit",0},
+                                                    {"razonSocial",1},
+                                                    {"fechaCreacion",2},
+                                                    {"email",3},
+                                                    {"domicilioId",4},
+                                                    {"usuarioId", 5},
+                                                    {"telefono",6}
                                                     };
        public static Dictionary<string, int> Rubro = new Dictionary<string, int> 
                                                     {

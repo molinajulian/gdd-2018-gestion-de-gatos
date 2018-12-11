@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PalcoNet.Repositorios;
 
 namespace PalcoNet.Modelo
 {
@@ -22,6 +23,18 @@ namespace PalcoNet.Modelo
             Habilitada = true;
         }
 
+
+        public Empresa(string razonSocial, string cuit, string email,
+            string telefono, Direccion direccion, bool habilitada)
+        {
+            RazonSocial = razonSocial;
+            Cuit = cuit;
+            Email = email;
+            Telefono = telefono;
+            Direccion = direccion;
+            Habilitada = habilitada;
+        }
+
         public Empresa(string razonSocial, string cuit, string email, 
             string telefono, Direccion direccion)
         {
@@ -31,19 +44,26 @@ namespace PalcoNet.Modelo
             Telefono = telefono;
             Direccion = direccion;
             Habilitada = true;
-        }public static Empresa buildEmrpesa(SqlDataReader lector)
+        }
+
+        public static Empresa buildEmrpesa(SqlDataReader lector)
         {
             Usuario usuario = null;
             Dictionary<string, int> camposEmpresa = Ordinales.Empresa;
-            if (lector.HasRows)
-            {
-                lector.Read();
                 return new Empresa(
-                    lector.GetString(camposEmpresa["razon_social"]),
-                    lector.GetString(camposEmpresa["cuit"]),
-                    lector.GetString(camposEmpresa["email"]),
-                    lector.GetString(camposEmpresa["telefono"]),
-                    null);
+                    lector[camposEmpresa["razonSocial"]].ToString(),
+                    lector[camposEmpresa["cuit"]].ToString(),
+                    lector[camposEmpresa["email"]].ToString(),
+                    lector[camposEmpresa["telefono"]].ToString(),
+                    DireccionRepositorio.ReadDireccionFromDb(
+                        Convert.ToString(lector.GetInt32(camposEmpresa["domicilioId"]))));
+        }
+
+        public class EmpresaNoEncontradaException : Exception
+        {
+            public EmpresaNoEncontradaException() : base("No se encontro la empresa buscada")
+            {
+
             }
         }
     }

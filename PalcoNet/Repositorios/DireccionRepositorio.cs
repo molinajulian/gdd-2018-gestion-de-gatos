@@ -49,7 +49,7 @@ namespace PalcoNet.Repositorios
             var direccion = new Direccion();
             var parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@id", id));
-            var query = DataBase.ejecutarFuncion("Select top 1 * from Direccion dir where dir.Dom_Id = @id", parametros);
+            var query = DataBase.ejecutarFuncion("Select top 1 * from GESTION_DE_GATOS.Domicilios dom where dom.Dom_Id = @id", parametros);
             SqlDataReader reader = query.ExecuteReader();
             while (reader.Read())
             {
