@@ -91,10 +91,7 @@ namespace PalcoNet.Modelo
                                                     {"razonSocial",0}, 
                                                     {"email",1},
                                                     {"telefono",2},
-                                                    {"codPostal",3}, 
-                                                    {"ciudad",4},
-                                                    {"cuit  ",5}
-                                                    
+                                                    {"cuit  ",3},
                                                     };
        public static Dictionary<string, int> Rubro = new Dictionary<string, int> 
                                                     {

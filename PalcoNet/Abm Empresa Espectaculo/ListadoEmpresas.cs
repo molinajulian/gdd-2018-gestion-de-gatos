@@ -39,16 +39,10 @@ namespace PalcoNet.AbmEmpresa
             tabla_empresas.Columns.Add("Rubro", typeof(string));
             tabla_empresas.Columns.Add("Habilitacion", typeof(string));
             actualizarTablaEmpresas();
-            this.cargarRubros();
             this.cargarBotonLogico();
 
         }
 
-
-        private void cargarRubros()
-        {
-            throw new NotImplementedException();
-        }
 
         private void cargarBotonLogico()
         {
@@ -86,54 +80,43 @@ namespace PalcoNet.AbmEmpresa
 
         private void btn_buscar_Click(object sender, EventArgs e)
         {
-            /*if (!verificaTiposDatos()) return;
+            if (!verificarAlgunIngreso()) return;
+            if (!verificaTiposDatos()) return;
 
             tabla_empresas.Rows.Clear();
-            String rubro_id = "";
-            if(!String.IsNullOrWhiteSpace(combo_rubros.Text)) rubro_id = (((Rubro)combo_rubros.SelectedItem).id).ToString();
-
-            
-            List<Empresa> empresas = EmpresasRepositorio.getEmpresas(tx_tipo.Text,tx_numero_cuit.Text,tx_verificador.Text, tx_nombre.Text, rubro_id);
+            List<Empresa> empresas = EmpresasRepositorio.getEmpresas(txt_razon_social.Text, txt_mail.Text, txt_cuit.Text);
 
             foreach (Empresa empresa in empresas)
             {
                
-                String[] row = new String[] { empresa.cuit, empresa.nombre, empresa.direccion, 
-                    Convert.ToString(empresa.rubro),Convert.ToString(empresa.habilitado) };
+                String[] row = new String[] { empresa.RazonSocial, empresa.Email, empresa.Telefono,
+                    Convert.ToString(empresa.Habilitada) };
                 tabla_empresas.Rows.Add(row);
             }
             actualizarTablaEmpresas();
 
-            if (empresas.Count == 0) MessageBox.Show("No se han encontrado resultados", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);*/
+            if (empresas.Count == 0) MessageBox.Show("No se han encontrado resultados", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private bool verificarAlgunIngreso()
+        {
+            return txt_razon_social.Text != null || txt_mail != null || txt_cuit != null;
         }
 
         public bool verificaTiposDatos()
         {
-
-            /*if ((String.IsNullOrEmpty(tx_tipo.Text) || String.IsNullOrEmpty(tx_numero_cuit.Text) || String.IsNullOrEmpty(tx_verificador.Text))
-                && (!String.IsNullOrEmpty(tx_tipo.Text) || !String.IsNullOrEmpty(tx_numero_cuit.Text) || !String.IsNullOrEmpty(tx_verificador.Text)))
+            if (!Regex.IsMatch(txt_mail.Text, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"))
             {
-                MessageBox.Show("Debe completar el cuit", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ingrese un mail válido.");
                 return false;
             }
 
-            if (!String.IsNullOrEmpty(tx_tipo.Text) && !Regex.IsMatch(tx_tipo.Text, @"\d{1,2}$"))
+            if (!Regex.IsMatch(txt_cuit.Text, @"[0-9]{2}-[0-9]{5,9}-[0-9]{1,2}$"))
             {
-                MessageBox.Show("Ingrese un tipo para el cuit valido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }*/
-
-            if (!String.IsNullOrEmpty(tx_numero_cuit.Text) && !Regex.IsMatch(tx_numero_cuit.Text, @"\d{8}$"))
-            {
-                MessageBox.Show("Ingrese un numero para el cuit valido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ingrese un CUIT válido.");
                 return false;
             }
 
-            /*if (!String.IsNullOrEmpty(tx_verificador.Text) && !Regex.IsMatch(tx_verificador.Text, @"\d{1}$"))
-            {
-                MessageBox.Show("Ingrese un verificador para el cuit valido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }*/
             return true;
         }
 

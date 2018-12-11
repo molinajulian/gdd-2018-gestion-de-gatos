@@ -161,6 +161,29 @@ namespace PalcoNet.Repositorios
         {
             throw new NotImplementedException();
         }
+
+        public static List<Empresa> getEmpresas(string razonSocial, string mail, string cuit)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            String sql = stringBuilder
+                .Append("SELECT Emp_Razon_Social, Emp_Mail, Emp_Tel, Emp_Cuit FROM dbo.GESTION_DE_GATOS.Empresas WHERE ")
+                .Append(razonSocial == null ? "" : "Emp_Razon_Social LIKE %" + razonSocial + "% AND")
+                .Append(mail == null ? "" : "Emp_Mail LIKE %" + mail + "% AND")
+                .Append(cuit == null ? "" : "Emp_Cuit LIKE %" + cuit + "% AND")
+                .ToString();
+            if (sql.EndsWith("AND"))
+            {
+                sql = sql.Substring(0, sql.Length - 3);
+            }
+            List<Empresa> empresas = new List<Empresa>();
+            var camposEmpresa = Ordinales.Empresa;
+            SqlDataReader reader = DataBase.GetDataReader(sql, "T", new List<SqlParameter>());
+            while (reader.Read())
+            {
+                empresas.Add(new Empresa(reader.GetString("razon_social"), reader.GetString("")));
+            }
+            reader.Close();
+        }
     }
 }
 

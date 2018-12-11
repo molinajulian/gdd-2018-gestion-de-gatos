@@ -1,6 +1,7 @@
 ﻿using PalcoNet.Modelo;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,20 @@ namespace PalcoNet.Modelo
             Telefono = telefono;
             Direccion = direccion;
             Habilitada = true;
+        }public static Empresa buildEmrpesa(SqlDataReader lector)
+        {
+            Usuario usuario = null;
+            Dictionary<string, int> camposEmpresa = Ordinales.Empresa;
+            if (lector.HasRows)
+            {
+                lector.Read();
+                return new Empresa(
+                    lector.GetString(camposEmpresa["razon_social"]),
+                    lector.GetString(camposEmpresa["cuit"]),
+                    lector.GetString(camposEmpresa["email"]),
+                    lector.GetString(camposEmpresa["telefono"]),
+                    null);
+            }
         }
     }
 }
