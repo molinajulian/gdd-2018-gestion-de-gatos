@@ -19,31 +19,29 @@ namespace PalcoNet.AbmCliente
     {
         String mail_original;
         Boolean hab_original;
-        public ModificacionCliente(Int32 dni)
+        public ModificacionCliente(int doc,string descripcionDoc)
         {
             InitializeComponent();
-
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-
-            Cliente cliente = ClienteRepositorio.getClientes(dni.ToString(), null, null).First();
-            hab_original = cliente.Habilitado;
-            txtNombre.Text = cliente.nombre;
-            txtApellido.Text = cliente.Apellido;
-            txtNumDoc.Text = cliente.NumeroDocumento.ToString();
-            mail_original = txtMail.Text = cliente.Email;
-            txtTel.Text = cliente.Telefono;
-            txtLoc.Text = cliente.Direccion.Localidad;
-            txtCp.Text = cliente.Direccion.CodPostal.ToString();
-            txtNum.Text = cliente.Direccion.Calle.Split(' ').Last();
-            var auxiliar = cliente.Direccion.Calle.Split(' ').ToList();
-            auxiliar.RemoveAt(auxiliar.Count-1);
-            txtCalle.Text = String.Join(" ",auxiliar);
-            txtPiso.Text = cliente.Direccion.Piso.ToString() == "0" ? "" : cliente.Direccion.Piso.ToString();
-            txtPiso.Text = cliente.Direccion.Departamento.ToString();
-            datePickerFechaNac.Value = cliente.FechaDeNacimiento;
+            Cliente cliente = ClienteRepositorio.getCliente(doc, descripcionDoc);
+            //hab_original = cliente.Habilitado;
+            //txtNombre.Text = cliente.nombre;
+            //txtApellido.Text = cliente.Apellido;
+            //txtNumDoc.Text = cliente.NumeroDocumento.ToString();
+            //mail_original = txtMail.Text = cliente.Email;
+            //txtTel.Text = cliente.Telefono;
+            //txtLoc.Text = cliente.Direccion.Localidad;
+            //txtCp.Text = cliente.Direccion.CodPostal.ToString();
+            //txtNum.Text = cliente.Direccion.Calle.Split(' ').Last();
+            //var auxiliar = cliente.Direccion.Calle.Split(' ').ToList();
+            //auxiliar.RemoveAt(auxiliar.Count-1);
+            //txtCalle.Text = String.Join(" ",auxiliar);
+            //txtPiso.Text = cliente.Direccion.Piso.ToString() == "0" ? "" : cliente.Direccion.Piso.ToString();
+            //txtPiso.Text = cliente.Direccion.Departamento.ToString();
+            //datePickerFechaNac.Value = cliente.FechaDeNacimiento;
         }
 
         public ModificacionCliente()

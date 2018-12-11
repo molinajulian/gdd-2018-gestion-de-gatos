@@ -33,6 +33,8 @@
             this.btn_limpiar = new System.Windows.Forms.Button();
             this.data_clientes = new System.Windows.Forms.DataGridView();
             this.grupo_filtros = new System.Windows.Forms.GroupBox();
+            this.txEmail = new System.Windows.Forms.TextBox();
+            this.labelEmail = new System.Windows.Forms.Label();
             this.tx_apellido = new System.Windows.Forms.TextBox();
             this.tx_dni = new System.Windows.Forms.TextBox();
             this.tx_nombre = new System.Windows.Forms.TextBox();
@@ -42,9 +44,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.switch_habilitacion = new System.Windows.Forms.Button();
             this.btn_modificar = new System.Windows.Forms.Button();
-            this.buttonLeft = new System.Windows.Forms.Button();
-            this.buttonRigth = new System.Windows.Forms.Button();
-            this.txtLimit = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.data_clientes)).BeginInit();
             this.grupo_filtros.SuspendLayout();
             this.SuspendLayout();
@@ -91,7 +90,7 @@
             this.data_clientes.Name = "data_clientes";
             this.data_clientes.ReadOnly = true;
             this.data_clientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.data_clientes.Size = new System.Drawing.Size(717, 237);
+            this.data_clientes.Size = new System.Drawing.Size(752, 237);
             this.data_clientes.TabIndex = 23;
             this.data_clientes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.data_clientes_CellClick);
             this.data_clientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.data_clientes_CellContentClick);
@@ -99,6 +98,8 @@
             // grupo_filtros
             // 
             this.grupo_filtros.BackColor = System.Drawing.Color.White;
+            this.grupo_filtros.Controls.Add(this.txEmail);
+            this.grupo_filtros.Controls.Add(this.labelEmail);
             this.grupo_filtros.Controls.Add(this.tx_apellido);
             this.grupo_filtros.Controls.Add(this.tx_dni);
             this.grupo_filtros.Controls.Add(this.tx_nombre);
@@ -110,40 +111,58 @@
             this.grupo_filtros.Margin = new System.Windows.Forms.Padding(2);
             this.grupo_filtros.Name = "grupo_filtros";
             this.grupo_filtros.Padding = new System.Windows.Forms.Padding(2);
-            this.grupo_filtros.Size = new System.Drawing.Size(717, 107);
+            this.grupo_filtros.Size = new System.Drawing.Size(752, 107);
             this.grupo_filtros.TabIndex = 22;
             this.grupo_filtros.TabStop = false;
             this.grupo_filtros.Text = "Filtros de Busqueda";
             this.grupo_filtros.Enter += new System.EventHandler(this.grupo_filtros_Enter);
             // 
+            // txEmail
+            // 
+            this.txEmail.Location = new System.Drawing.Point(587, 31);
+            this.txEmail.Margin = new System.Windows.Forms.Padding(2);
+            this.txEmail.Name = "txEmail";
+            this.txEmail.Size = new System.Drawing.Size(93, 20);
+            this.txEmail.TabIndex = 6;
+            // 
+            // labelEmail
+            // 
+            this.labelEmail.AutoSize = true;
+            this.labelEmail.Location = new System.Drawing.Point(537, 34);
+            this.labelEmail.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelEmail.Name = "labelEmail";
+            this.labelEmail.Size = new System.Drawing.Size(32, 13);
+            this.labelEmail.TabIndex = 5;
+            this.labelEmail.Text = "Email";
+            // 
             // tx_apellido
             // 
-            this.tx_apellido.Location = new System.Drawing.Point(305, 31);
+            this.tx_apellido.Location = new System.Drawing.Point(265, 31);
             this.tx_apellido.Margin = new System.Windows.Forms.Padding(2);
             this.tx_apellido.Name = "tx_apellido";
-            this.tx_apellido.Size = new System.Drawing.Size(118, 20);
+            this.tx_apellido.Size = new System.Drawing.Size(94, 20);
             this.tx_apellido.TabIndex = 2;
             // 
             // tx_dni
             // 
-            this.tx_dni.Location = new System.Drawing.Point(495, 31);
+            this.tx_dni.Location = new System.Drawing.Point(423, 31);
             this.tx_dni.Margin = new System.Windows.Forms.Padding(2);
             this.tx_dni.Name = "tx_dni";
-            this.tx_dni.Size = new System.Drawing.Size(118, 20);
+            this.tx_dni.Size = new System.Drawing.Size(90, 20);
             this.tx_dni.TabIndex = 3;
             // 
             // tx_nombre
             // 
-            this.tx_nombre.Location = new System.Drawing.Point(90, 31);
+            this.tx_nombre.Location = new System.Drawing.Point(76, 31);
             this.tx_nombre.Margin = new System.Windows.Forms.Padding(2);
             this.tx_nombre.Name = "tx_nombre";
-            this.tx_nombre.Size = new System.Drawing.Size(118, 20);
+            this.tx_nombre.Size = new System.Drawing.Size(96, 20);
             this.tx_nombre.TabIndex = 1;
             this.tx_nombre.TextChanged += new System.EventHandler(this.tx_nombre_TextChanged);
             // 
             // btn_buscar
             // 
-            this.btn_buscar.Location = new System.Drawing.Point(244, 75);
+            this.btn_buscar.Location = new System.Drawing.Point(318, 79);
             this.btn_buscar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_buscar.Name = "btn_buscar";
             this.btn_buscar.Size = new System.Drawing.Size(74, 28);
@@ -155,17 +174,18 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(241, 34);
+            this.label3.Location = new System.Drawing.Point(217, 34);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(44, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Apellido";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(453, 34);
+            this.label2.Location = new System.Drawing.Point(384, 34);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(26, 13);
@@ -204,49 +224,11 @@
             this.btn_modificar.UseVisualStyleBackColor = true;
             this.btn_modificar.Click += new System.EventHandler(this.btn_modificar_Click);
             // 
-            // buttonLeft
-            // 
-            this.buttonLeft.Location = new System.Drawing.Point(255, 440);
-            this.buttonLeft.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonLeft.Name = "buttonLeft";
-            this.buttonLeft.Size = new System.Drawing.Size(74, 28);
-            this.buttonLeft.TabIndex = 29;
-            this.buttonLeft.Text = "<<";
-            this.buttonLeft.UseVisualStyleBackColor = true;
-            this.buttonLeft.Click += new System.EventHandler(this.buttonLeft_Click);
-            // 
-            // buttonRigth
-            // 
-            this.buttonRigth.Location = new System.Drawing.Point(416, 440);
-            this.buttonRigth.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonRigth.Name = "buttonRigth";
-            this.buttonRigth.Size = new System.Drawing.Size(74, 28);
-            this.buttonRigth.TabIndex = 31;
-            this.buttonRigth.Text = ">";
-            this.buttonRigth.UseVisualStyleBackColor = true;
-            this.buttonRigth.Click += new System.EventHandler(this.buttonRigth_Click);
-            // 
-            // txtLimit
-            // 
-            this.txtLimit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLimit.Location = new System.Drawing.Point(343, 443);
-            this.txtLimit.Margin = new System.Windows.Forms.Padding(2);
-            this.txtLimit.Name = "txtLimit";
-            this.txtLimit.Size = new System.Drawing.Size(60, 26);
-            this.txtLimit.TabIndex = 5;
-            this.txtLimit.Text = "20";
-            this.txtLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtLimit.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            this.txtLimit.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLimit_KeyPress);
-            // 
             // ListadoCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(789, 562);
-            this.Controls.Add(this.txtLimit);
-            this.Controls.Add(this.buttonLeft);
-            this.Controls.Add(this.buttonRigth);
+            this.ClientSize = new System.Drawing.Size(965, 559);
             this.Controls.Add(this.btn_modificar);
             this.Controls.Add(this.switch_habilitacion);
             this.Controls.Add(this.btn_atras);
@@ -260,7 +242,6 @@
             this.grupo_filtros.ResumeLayout(false);
             this.grupo_filtros.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -279,8 +260,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button switch_habilitacion;
         private System.Windows.Forms.Button btn_modificar;
-        private System.Windows.Forms.Button buttonLeft;
-        private System.Windows.Forms.Button buttonRigth;
-        private System.Windows.Forms.TextBox txtLimit;
+        private System.Windows.Forms.TextBox txEmail;
+        private System.Windows.Forms.Label labelEmail;
     }
 }

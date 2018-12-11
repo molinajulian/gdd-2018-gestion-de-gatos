@@ -30,7 +30,6 @@
         {
             this.txtCuil = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
             this.btnAlta = new System.Windows.Forms.Button();
@@ -59,7 +58,6 @@
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.groupBoxModifCli = new System.Windows.Forms.GroupBox();
             this.txtDepto = new System.Windows.Forms.TextBox();
-            this.textBox12 = new System.Windows.Forms.TextBox();
             this.btnVolver = new System.Windows.Forms.Button();
             this.groupBoxModifCli.SuspendLayout();
             this.SuspendLayout();
@@ -79,15 +77,6 @@
             this.label14.Size = new System.Drawing.Size(31, 13);
             this.label14.TabIndex = 37;
             this.label14.Text = "CUIL";
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(12, 285);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(178, 40);
-            this.button3.TabIndex = 35;
-            this.button3.Text = "Modificar Tarjeta";
-            this.button3.UseVisualStyleBackColor = true;
             // 
             // comboBox1
             // 
@@ -177,7 +166,7 @@
             // 
             this.txtCp.Location = new System.Drawing.Point(415, 203);
             this.txtCp.Name = "txtCp";
-            this.txtCp.Size = new System.Drawing.Size(85, 20);
+            this.txtCp.Size = new System.Drawing.Size(51, 20);
             this.txtCp.TabIndex = 7;
             // 
             // label19
@@ -310,14 +299,12 @@
             this.groupBoxModifCli.Controls.Add(this.txtDepto);
             this.groupBoxModifCli.Controls.Add(this.txtCuil);
             this.groupBoxModifCli.Controls.Add(this.label14);
-            this.groupBoxModifCli.Controls.Add(this.button3);
             this.groupBoxModifCli.Controls.Add(this.comboBox1);
             this.groupBoxModifCli.Controls.Add(this.label13);
             this.groupBoxModifCli.Controls.Add(this.btnAlta);
             this.groupBoxModifCli.Controls.Add(this.label15);
             this.groupBoxModifCli.Controls.Add(this.datePickerFechaNac);
             this.groupBoxModifCli.Controls.Add(this.label16);
-            this.groupBoxModifCli.Controls.Add(this.textBox12);
             this.groupBoxModifCli.Controls.Add(this.txtNum);
             this.groupBoxModifCli.Controls.Add(this.label17);
             this.groupBoxModifCli.Controls.Add(this.txtPiso);
@@ -353,13 +340,6 @@
             this.txtDepto.Size = new System.Drawing.Size(27, 20);
             this.txtDepto.TabIndex = 38;
             // 
-            // textBox12
-            // 
-            this.textBox12.Location = new System.Drawing.Point(472, 203);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(28, 20);
-            this.textBox12.TabIndex = 11;
-            // 
             // btnVolver
             // 
             this.btnVolver.Location = new System.Drawing.Point(319, 469);
@@ -389,7 +369,6 @@
 
         private System.Windows.Forms.TextBox txtCuil;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button btnAlta;
@@ -417,7 +396,6 @@
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.GroupBox groupBoxModifCli;
-        private System.Windows.Forms.TextBox textBox12;
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.TextBox txtDepto;
 

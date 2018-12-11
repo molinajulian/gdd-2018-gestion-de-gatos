@@ -39,7 +39,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.datePickerFechaNac = new System.Windows.Forms.DateTimePicker();
             this.label11 = new System.Windows.Forms.Label();
-            this.txDpto = new System.Windows.Forms.TextBox();
             this.txNumero = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.txPiso = new System.Windows.Forms.TextBox();
@@ -77,7 +76,6 @@
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.datePickerFechaNac);
             this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.txDpto);
             this.groupBox1.Controls.Add(this.txNumero);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.txPiso);
@@ -194,13 +192,6 @@
             this.label11.Text = "Número";
             this.label11.Click += new System.EventHandler(this.label11_Click);
             // 
-            // txDpto
-            // 
-            this.txDpto.Location = new System.Drawing.Point(472, 203);
-            this.txDpto.Name = "txDpto";
-            this.txDpto.Size = new System.Drawing.Size(28, 20);
-            this.txDpto.TabIndex = 11;
-            // 
             // txNumero
             // 
             this.txNumero.Location = new System.Drawing.Point(321, 239);
@@ -237,7 +228,7 @@
             // 
             this.txCp.Location = new System.Drawing.Point(415, 203);
             this.txCp.Name = "txCp";
-            this.txCp.Size = new System.Drawing.Size(85, 20);
+            this.txCp.Size = new System.Drawing.Size(51, 20);
             this.txCp.TabIndex = 7;
             // 
             // label7
@@ -418,7 +409,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txPiso;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txDpto;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.DateTimePicker datePickerFechaNac;
         private System.Windows.Forms.Button btnAlta;
