@@ -174,12 +174,12 @@ namespace PalcoNet.AbmCliente
                 return;
             }
             direccion.Piso = string.IsNullOrWhiteSpace(txPiso.Text) ? ' '.ToString() : txPiso.Text;
-            if (!Regex.IsMatch(txDpto.Text, @"^[a-zA-Z]$") && !string.IsNullOrEmpty(txDpto.Text))
+            if (!Regex.IsMatch(txtDepto.Text, @"^[a-zA-Z]$") && !string.IsNullOrEmpty(txtDepto.Text))
             {
                 MessageBox.Show("Ingrese un departamento válido.");
                 return;
             }
-            direccion.Departamento = string.IsNullOrWhiteSpace(txDpto.Text) ? ' '.ToString() : txDpto.Text;
+            direccion.Departamento = string.IsNullOrWhiteSpace(txtDepto.Text) ? ' '.ToString() : txtDepto.Text;
             if (!Regex.IsMatch(txCalle.Text, @"[a-zA-Z0-9\s]{1,50}$"))
             {
                 MessageBox.Show("Ingrese una calle válida.");
@@ -230,7 +230,7 @@ namespace PalcoNet.AbmCliente
             var controles = groupBox1.Controls;
             foreach (Control control in controles)
             {
-                if (control == txPiso || control == txDpto)
+                if (control == txPiso || control == txtDepto)
                 {
                      
                 }

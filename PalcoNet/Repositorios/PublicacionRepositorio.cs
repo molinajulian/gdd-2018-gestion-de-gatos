@@ -30,7 +30,7 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@fechaPublicacion", publicacion.FechaPublicacion));
             parametros.Add(new SqlParameter("@gradoId", publicacion.Grado.Id));
             parametros.Add(new SqlParameter("@espectaculoId", publicacion.Espectaculo.Id));
-            parametros.Add(new SqlParameter("@fechaEspec", publicacion.Espectaculo.Fecha));
+           // parametros.Add(new SqlParameter("@fechaEspec", publicacion.Espectaculo.Fecha));
             parametros.Add(new SqlParameter("@Estado", publicacion.Estado.Id));
 
             parametros.Add(new SqlParameter("@Usuario", username));
