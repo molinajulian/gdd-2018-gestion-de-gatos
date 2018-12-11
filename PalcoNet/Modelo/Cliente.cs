@@ -22,18 +22,29 @@ namespace PalcoNet.Modelo
         public List<Tarjeta> Tarjeta { get; set; }
         public Boolean Habilitado { get; set; }
 
-        public Cliente(string tipoDeDocumento,int numeroDocumento,string cuil,string nombre,string apellido,string mail,string calle,string nro,string depto,string piso,string localidad,string cp,bool habilitado ) 
-        { 
-            NombreCliente=nombre;
-            Apellido=apellido;
+        public Cliente(string tipoDeDocumento, int numeroDocumento, string cuil, string nombre, string apellido, string mail, string calle, string nro, string depto, string piso, string localidad, string cp, bool habilitado)
+        {
+            NombreCliente = nombre;
+            Apellido = apellido;
             TipoDeDocumento = new TiposDocumento(tipoDeDocumento);
-            NumeroDocumento=numeroDocumento;
-            Cuil=cuil;
-            Email=mail;
-            Direccion = new Direccion(calle,nro,depto,localidad,cp);
+            NumeroDocumento = numeroDocumento;
+            Cuil = cuil;
+            Email = mail;
+            Direccion = new Direccion(calle, nro.ToString(), depto, localidad, cp);
             Habilitado = habilitado;
         }
-
+        public Cliente(string tipoDeDocumento, int numeroDocumento, string cuil, string nombre, string apellido, string mail, string tel,string calle, string nro, string depto, string piso, string localidad, string cp, bool habilitado)
+        {
+            NombreCliente = nombre;
+            Apellido = apellido;
+            TipoDeDocumento = new TiposDocumento(tipoDeDocumento);
+            NumeroDocumento = numeroDocumento;
+            Cuil = cuil;
+            Email = mail;
+            Direccion = new Direccion(calle, nro.ToString(), depto, localidad, cp);
+            Habilitado = habilitado;
+            Telefono = tel;
+        }
         public Cliente()
         {
             
@@ -45,6 +56,16 @@ namespace PalcoNet.Modelo
                 lector.GetString(camposGetCliente["cli_nombre"]),lector.GetString(camposGetCliente["cli_apellido"]),lector.GetString(camposGetCliente["cli_mail"]),
                 lector.GetString(camposGetCliente["dom_calle"]),lector.GetDecimal(camposGetCliente["dom_nro_calle"]).ToString(),lector.GetString(camposGetCliente["dom_depto"]),
                 lector.GetDecimal(camposGetCliente["dom_piso"]).ToString(),lector.GetString(camposGetCliente["dom_localidad"]),lector.GetString(camposGetCliente["dom_cod_postal"]),
+                lector.GetBoolean(camposGetCliente["habilitado"])
+                );
+        }
+        public static Cliente buildGetCliente(SqlDataReader lector)
+        {
+            Dictionary<string, int> camposGetCliente = Ordinales.camposGetCliente;
+            return new Cliente(lector.GetString(camposGetCliente["tipo_doc_descr"]), (int)lector.GetDecimal(camposGetCliente["cli_doc"]), lector.GetString(camposGetCliente["cli_cuil"]),
+                lector.GetString(camposGetCliente["cli_nombre"]), lector.GetString(camposGetCliente["cli_apellido"]), lector.GetString(camposGetCliente["cli_mail"]),lector.GetDecimal(camposGetCliente["cli_tel"]).ToString(),
+                lector.GetString(camposGetCliente["dom_calle"]), lector.GetDecimal(camposGetCliente["dom_nro_calle"]).ToString(), lector.GetString(camposGetCliente["dom_depto"]),
+                lector.GetDecimal(camposGetCliente["dom_piso"]).ToString(), lector.GetString(camposGetCliente["dom_localidad"]), lector.GetString(camposGetCliente["dom_cod_postal"]),
                 lector.GetBoolean(camposGetCliente["habilitado"])
                 );
         }

@@ -11,6 +11,7 @@ namespace PalcoNet.Repositorios
 {
     class ClienteRepositorio
     {
+
         public static List<SqlParameter> GenerarParametrosCliente(Cliente cliente,string username)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
@@ -125,13 +126,24 @@ namespace PalcoNet.Repositorios
             return clientes;
         }
 
-
-        internal static List<Cliente> getClientes(int limit,int offset)
+        internal static Cliente getCliente(int doc,string descripcionTipoDoc)
+        {
+            Cliente cli = new Cliente();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@doc", doc));
+            parametros.Add(new SqlParameter("@descripcionTipoDoc", descripcionTipoDoc));
+            SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_get_cliente]", "SP", parametros);
+            while (lector.Read())
+            {
+                cli = Cliente.buildGetCliente(lector);
+            }
+            lector.Close();
+            return cli;
+        }
+        internal static List<Cliente> getClientes()
         {
             var clientes = new List<Cliente>();
             List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@limit", limit));
-            parametros.Add(new SqlParameter("@offset", offset));
             SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_get_clientes]", "SP", parametros);
             if (lector.HasRows)
             {
@@ -214,9 +226,46 @@ namespace PalcoNet.Repositorios
             throw new NotImplementedException();
         }
 
-        internal static List<Cliente> getClientes(string p1, string p2, string p3)
+        private static void añadirParametroDoc(string doc,ref string query)
         {
-            throw new NotImplementedException();
+            query+="where c.Cli_Doc = "+ Convert.ToDecimal(doc)+" ";
+        }
+        private static void añadirParametroNombre(string nombre, ref string query)
+        {
+            string subQuery = "c.Cli_Nombre like('%"+nombre+"%')";
+            query = query.Contains("where")? query+"and "+subQuery : query+"where "+subQuery;
+        }
+        private static void añadirParametroApellido(string apellido, ref string query)
+        {
+            string subQuery = "c.Cli_Apellido like('%"+apellido+"%')";
+            query = query.Contains("where") ? query + "and " + subQuery : query + "where " + subQuery;
+        }
+        private static void añadirParametroEmail(string email, ref string query)
+        {
+            string subQuery = "c.Cli_Mail like('%"+email+"%') ";
+            query = query.Contains("where") ? query + "and " + subQuery : query + "where " + subQuery;
+        }
+        internal static List<Cliente> getClientes(string doc, string nombre, string apellido, string email)
+        {
+            var clientes = new List<Cliente>();
+            var parametros = new List<SqlParameter>();
+            string query = "SELECT td.Tipo_Doc_Descr,c.Cli_Doc,isnull(c.Cli_Cuil,'') as cuil, c.Cli_Nombre,c.Cli_Apellido,c.Cli_Mail,d.Dom_Calle,d.Dom_Nro_Calle,d.Dom_Depto,d.Dom_Piso,isnull(d.Dom_Localidad,'') as localidad,d.Dom_Cod_Postal,c.Cli_Habilitado FROM GESTION_DE_GATOS.Clientes c JOIN GESTION_DE_GATOS.Tipos_Doc td ON td.Tipo_Doc_Id = c.Cli_Tipo_Doc_Id JOIN GESTION_DE_GATOS.Domicilios d  ON d.Dom_Id = c.Cli_Domicilio_Id ";
+            if (!string.IsNullOrEmpty(doc)) añadirParametroDoc(doc,ref query);
+            if (!string.IsNullOrEmpty(nombre)) añadirParametroNombre(nombre, ref query);
+            if (!string.IsNullOrEmpty(apellido)) añadirParametroApellido(apellido, ref query);
+            if (!string.IsNullOrEmpty(email)) añadirParametroEmail(email,ref query);
+            var resultadoQuery = DataBase.ejecutarFuncion(query, parametros);
+            SqlDataReader lector = resultadoQuery.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    Cliente cli = Cliente.buildGetClientes(lector);
+                    clientes.Add(cli);
+                }
+                lector.Close();
+            }
+            return clientes;
         }
 
         internal static List<TiposDocumento> getTiposDoc()

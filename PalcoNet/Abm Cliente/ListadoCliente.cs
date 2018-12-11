@@ -18,8 +18,6 @@ namespace PalcoNet.AbmCliente
     public partial class ListadoCliente : MaterialForm
     {
         DataTable tabla_clientes = new DataTable();
-        int limitAnterior = 20;
-        int offsetAnterior = 0;
         public ListadoCliente(Char modo)
         {
             InitializeComponent();
@@ -28,23 +26,17 @@ namespace PalcoNet.AbmCliente
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-            limitAnterior = Int32.Parse(txtLimit.Text);
-            buttonLeft.Hide();
             initColumns();
-            getClientes(limitAnterior, offsetAnterior);
+            getClientes();
             if (modo == 'B')
                 btn_modificar.Hide();
             else
                 switch_habilitacion.Hide();
         }
-        private void getClientes(int limit,int offset)
+        private void getClientes()
         {
             List<Cliente> clientes = new List<Cliente>();
-            clientes = ClienteRepositorio.getClientes(limit, offset);
-            if (limitAnterior + offsetAnterior <= clientes.Count) 
-            {
-                buttonLeft.Hide();
-            }
+            clientes = ClienteRepositorio.getClientes();
             foreach(Cliente c in clientes)
             {
                 string[] row = new string[] { c.TipoDeDocumento.Descripcion.ToString(),c.NumeroDocumento.ToString(),c.Cuil,c.NombreCliente,c.Apellido,c.Email,c.Direccion.Calle,c.Direccion.Numero,c.Direccion.Localidad,c.Direccion.CodPostal,c.Habilitado ==true ? "Si":"No" };
@@ -69,42 +61,35 @@ namespace PalcoNet.AbmCliente
 
         private void btn_buscar_Click(object sender, EventArgs e)
         {
-            if (!Regex.IsMatch(tx_dni.Text, @"^[0-9]{1,8}$") && !string.IsNullOrEmpty(tx_dni.Text))
+            if (!string.IsNullOrEmpty(tx_dni.Text) && !Regex.IsMatch(tx_dni.Text, @"^[0-9]{1,8}$"))
             {
                 MessageBox.Show("Ingrese un DNI válido.");
                 return;
             }
-            if (!Regex.IsMatch(tx_nombre.Text, @"^[a-zA-Z\s]{1,30}$") && !string.IsNullOrEmpty(tx_nombre.Text))
+            if (!string.IsNullOrEmpty(tx_nombre.Text) && !Regex.IsMatch(tx_nombre.Text, @"^[a-zA-Z\s]{1,30}$"))
             {
                 MessageBox.Show("Ingrese un nombre válido.");
                 return;
             }
-            if (!Regex.IsMatch(tx_apellido.Text, @"^[a-zA-Z\s]{1,30}$") && !string.IsNullOrEmpty(tx_apellido.Text))
+            if (!string.IsNullOrEmpty(tx_apellido.Text) && !Regex.IsMatch(tx_apellido.Text, @"^[a-zA-Z\s]{1,30}$"))
             {
                 MessageBox.Show("Ingrese un apellido válido.");
                 return;
             }
-            tabla_clientes.Clear();
-            List<Cliente> clientes = ClienteRepositorio.getClientes(tx_dni.Text, tx_nombre.Text, tx_apellido.Text);
-            foreach (Cliente cliente in clientes)
+            if (!string.IsNullOrEmpty(txEmail.Text) && !Regex.IsMatch(txEmail.Text, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"))
             {
-                // String hab = cliente.Habilitado ? "Si" : "No";
-                String[] row = new String[] { cliente.NumeroDocumento.ToString(), cliente.nombre, cliente.Apellido,  };
+                MessageBox.Show("Ingrese un mail válido.");
+                return;
+            }
+            tabla_clientes.Clear();
+            List<Cliente> clientes = ClienteRepositorio.getClientes(tx_dni.Text, tx_nombre.Text, tx_apellido.Text,txEmail.Text);
+            foreach (Cliente c in clientes)
+            {
+                string[] row = new string[] { c.TipoDeDocumento.Descripcion.ToString(), c.NumeroDocumento.ToString(), c.Cuil, c.NombreCliente, c.Apellido, c.Email, c.Direccion.Calle, c.Direccion.Numero, c.Direccion.Localidad, c.Direccion.CodPostal, c.Habilitado == true ? "Si" : "No" };
                 tabla_clientes.Rows.Add(row);
             }
-            refreshValues();
-            if (this.data_clientes.RowCount > 0)
-            {
-                DataGridViewRow r = this.data_clientes.SelectedRows[0];
-                if (r.Cells["Habilitado"].Value.ToString() == "No")
-                {
-                    switch_habilitacion.Text = "Habilitar";
-                }
-                else
-                {
-                    switch_habilitacion.Text = "Inhabilitar";
-                }
-            }
+            data_clientes.DataSource = tabla_clientes;
+            // refreshValues();
 
         }
         public void refreshValues()
@@ -150,12 +135,15 @@ namespace PalcoNet.AbmCliente
         {
             if (this.data_clientes.RowCount > 0)
             {
-                Int32 dni = Convert.ToInt32(this.data_clientes.SelectedRows[0].Cells["DNI"].Value.ToString());
+                int doc = Convert.ToInt32(this.data_clientes.SelectedRows[0].Cells["Documento"].Value.ToString());
+                string descripcionTipoDoc = this.data_clientes.SelectedRows[0].Cells["Tipo doc"].Value.ToString();
                 this.Hide();
-                new ModificacionCliente(dni).Show();
+                new ModificacionCliente(doc,descripcionTipoDoc).Show();
             }
             else
+            {
                 MessageBox.Show("Busque y seleccione un cliente antes.");
+            }
         }
 
         private void switch_habilitacion_Click(object sender, EventArgs e)
@@ -172,7 +160,7 @@ namespace PalcoNet.AbmCliente
                     ClienteRepositorio.habilitarCliente(Convert.ToInt32(this.data_clientes.SelectedRows[0].Cells["DNI"].Value.ToString()));
                 }
                 refreshValues();
-                getClientes(limitAnterior,offsetAnterior);
+                getClientes();
             }
             else
             {
@@ -199,28 +187,15 @@ namespace PalcoNet.AbmCliente
         {
 
         }
-
-        private void buttonLeft_Click(object sender, EventArgs e)
-        {
-            int offsetActual = Int32.Parse(txtLimit.Text) < limitAnterior + Int32.Parse(txtLimit.Text) ? limitAnterior - Int32.Parse(txtLimit.Text) : 0;
-            if (offsetActual == 0) buttonLeft.Hide();
-            refreshValues();
-            getClientes(Int32.Parse(txtLimit.Text), offsetActual);
-            offsetAnterior = offsetActual;
-            limitAnterior = Int32.Parse(txtLimit.Text);
-        }
         private void txtLimit_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
-        private void buttonRigth_Click(object sender, EventArgs e)
+
+        private void label3_Click(object sender, EventArgs e)
         {
-            offsetAnterior += limitAnterior;
-            limitAnterior = Int32.Parse(txtLimit.Text);
-            refreshValues();
-            getClientes(Int32.Parse(txtLimit.Text), offsetAnterior);
-            buttonLeft.Show();
+
         }
 
         
