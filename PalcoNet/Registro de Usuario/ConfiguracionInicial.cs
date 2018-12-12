@@ -20,6 +20,7 @@ namespace PalcoNet.Registro_de_usuario
     public partial class ConfiguracionInicial : MaterialForm
     {
         Usuario user;
+        private List<Rol> rolesDeUsuario;
         Log login;
         public ConfiguracionInicial(Usuario user, Log login)
         {
@@ -30,25 +31,37 @@ namespace PalcoNet.Registro_de_usuario
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-            llenarCombos();
+
+            configurarSegunRoles();
         }
 
-        public void llenarCombos()
+        public void configurarSegunRoles()
         {
-            List<Rol> roles = new List<Rol>();
-            combo_roles.Items.Clear();
-            roles = UsuarioRepositorio.getRoles(user);
-            if (roles.Count == 0)
+            rolesDeUsuario = user.obtenerRoles();
+            if (rolesDeUsuario.Count == 1)
+            {
+                user.rol = rolesDeUsuario.First();
+                avanzarAMenuPpal();
+            }
+            else if (rolesDeUsuario.Count == 0)
             {
                 MessageBox.Show("ERROR", "El usuario no tiene roles asociados");
-            } else { 
-                this.Show();
-                foreach (Rol rol in roles)
-                {
-                    combo_roles.Items.Add(rol);
-                }
-                combo_roles.DisplayMember = "Nombre";
             }
+            else
+            {
+                llenarCombos(rolesDeUsuario);
+            }
+        }
+
+        public void llenarCombos(List<Rol> rolesDeUsuario)
+        {
+            combo_roles.Items.Clear();
+            this.Show();
+            foreach (Rol rol in rolesDeUsuario)
+            {
+                combo_roles.Items.Add(rol);
+            }
+            combo_roles.DisplayMember = "Nombre";
         }
 
         private void btn_rol_aceptado_Click(object sender, EventArgs e)
@@ -57,11 +70,16 @@ namespace PalcoNet.Registro_de_usuario
             if (camposVacios()) { return; }
             this.user.rol = (Rol)combo_roles.SelectedItem;
             {
-                this.Hide();
-                MenuPpal menu = new MenuPpal(this.user, this.login);
-                menu.ShowDialog();
-                this.Close();
+                avanzarAMenuPpal();
             }
+        }
+
+        private void avanzarAMenuPpal()
+        {
+            this.Hide();
+            MenuPpal menu = new MenuPpal(this.user, this.login);
+            menu.ShowDialog();
+            this.Close();
         }
 
         private bool camposVacios()
@@ -80,11 +98,6 @@ namespace PalcoNet.Registro_de_usuario
         private void ConfiguracionInicial_FormClosing(object sender, FormClosingEventArgs e)
         {
             login.Close();
-        }
-
-        private void ConfiguracionInicial_Shown(object sender, EventArgs e)
-        {
-            llenarCombos();
         }
 
         private void ConfiguracionInicial_Load(object sender, EventArgs e)

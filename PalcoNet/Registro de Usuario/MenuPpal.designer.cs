@@ -29,45 +29,47 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuPpal));
-            this.buttonRegistroUsuario = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.buttonGenerarPublicacion = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.btnRegistroUsuario = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.btnGenerarPublicacion = new MaterialSkin.Controls.MaterialRaisedButton();
             this.logout = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
             this.materialDivider2 = new MaterialSkin.Controls.MaterialDivider();
-            this.buttonEditarPublicacion = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.buttonComprar = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.buttonHistorialCliente = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.buttonCanjeYAdminPuntos = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.buttonPagoComisiones = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.buttonListadoEstadistico = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.buttonABMs = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.btnEditarPublicacion = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.btnComprar = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.btnHistorialCliente = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.btnCanjeYAdminPuntos = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.btnPagoComisiones = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.btnListadoEstadistico = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.btnABMs = new MaterialSkin.Controls.MaterialRaisedButton();
             this.SuspendLayout();
             // 
-            // buttonRegistroUsuario
+            // btnRegistroUsuario
             // 
-            this.buttonRegistroUsuario.Depth = 0;
-            this.buttonRegistroUsuario.Location = new System.Drawing.Point(199, 193);
-            this.buttonRegistroUsuario.MouseState = MaterialSkin.MouseState.HOVER;
-            this.buttonRegistroUsuario.Name = "buttonRegistroUsuario";
-            this.buttonRegistroUsuario.Primary = true;
-            this.buttonRegistroUsuario.Size = new System.Drawing.Size(213, 67);
-            this.buttonRegistroUsuario.TabIndex = 3;
-            this.buttonRegistroUsuario.Text = "Registro de Usuario";
-            this.buttonRegistroUsuario.UseVisualStyleBackColor = true;
-            this.buttonRegistroUsuario.Click += new System.EventHandler(this.buttonRegistroUsuario_Click);
+            this.btnRegistroUsuario.Depth = 0;
+            this.btnRegistroUsuario.Location = new System.Drawing.Point(199, 193);
+            this.btnRegistroUsuario.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnRegistroUsuario.Name = "btnRegistroUsuario";
+            this.btnRegistroUsuario.Primary = true;
+            this.btnRegistroUsuario.Size = new System.Drawing.Size(213, 67);
+            this.btnRegistroUsuario.TabIndex = 3;
+            this.btnRegistroUsuario.Text = "Registro de Usuario";
+            this.btnRegistroUsuario.UseVisualStyleBackColor = true;
+            this.btnRegistroUsuario.Visible = false;
+            this.btnRegistroUsuario.Click += new System.EventHandler(this.buttonRegistroUsuario_Click);
             // 
-            // buttonGenerarPublicacion
+            // btnGenerarPublicacion
             // 
-            this.buttonGenerarPublicacion.Depth = 0;
-            this.buttonGenerarPublicacion.Location = new System.Drawing.Point(46, 284);
-            this.buttonGenerarPublicacion.MouseState = MaterialSkin.MouseState.HOVER;
-            this.buttonGenerarPublicacion.Name = "buttonGenerarPublicacion";
-            this.buttonGenerarPublicacion.Primary = true;
-            this.buttonGenerarPublicacion.Size = new System.Drawing.Size(213, 67);
-            this.buttonGenerarPublicacion.TabIndex = 6;
-            this.buttonGenerarPublicacion.Text = "Generar Publicacion";
-            this.buttonGenerarPublicacion.UseVisualStyleBackColor = true;
-            this.buttonGenerarPublicacion.Click += new System.EventHandler(this.buttonGenerarPublicacion_Click);
+            this.btnGenerarPublicacion.Depth = 0;
+            this.btnGenerarPublicacion.Location = new System.Drawing.Point(46, 284);
+            this.btnGenerarPublicacion.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnGenerarPublicacion.Name = "btnGenerarPublicacion";
+            this.btnGenerarPublicacion.Primary = true;
+            this.btnGenerarPublicacion.Size = new System.Drawing.Size(213, 67);
+            this.btnGenerarPublicacion.TabIndex = 6;
+            this.btnGenerarPublicacion.Text = "Generar Publicacion";
+            this.btnGenerarPublicacion.UseVisualStyleBackColor = true;
+            this.btnGenerarPublicacion.Visible = false;
+            this.btnGenerarPublicacion.Click += new System.EventHandler(this.buttonGenerarPublicacion_Click);
             // 
             // logout
             // 
@@ -105,112 +107,119 @@
             this.materialDivider2.TabIndex = 68;
             this.materialDivider2.Text = "materialDivider2";
             // 
-            // buttonEditarPublicacion
+            // btnEditarPublicacion
             // 
-            this.buttonEditarPublicacion.Depth = 0;
-            this.buttonEditarPublicacion.Location = new System.Drawing.Point(317, 284);
-            this.buttonEditarPublicacion.MouseState = MaterialSkin.MouseState.HOVER;
-            this.buttonEditarPublicacion.Name = "buttonEditarPublicacion";
-            this.buttonEditarPublicacion.Primary = true;
-            this.buttonEditarPublicacion.Size = new System.Drawing.Size(213, 67);
-            this.buttonEditarPublicacion.TabIndex = 69;
-            this.buttonEditarPublicacion.Text = "Editar Publicacion";
-            this.buttonEditarPublicacion.UseVisualStyleBackColor = true;
-            this.buttonEditarPublicacion.Click += new System.EventHandler(this.buttonEditarPublicacion_Click);
+            this.btnEditarPublicacion.Depth = 0;
+            this.btnEditarPublicacion.Location = new System.Drawing.Point(317, 284);
+            this.btnEditarPublicacion.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnEditarPublicacion.Name = "btnEditarPublicacion";
+            this.btnEditarPublicacion.Primary = true;
+            this.btnEditarPublicacion.Size = new System.Drawing.Size(213, 67);
+            this.btnEditarPublicacion.TabIndex = 69;
+            this.btnEditarPublicacion.Text = "Editar Publicacion";
+            this.btnEditarPublicacion.UseVisualStyleBackColor = true;
+            this.btnEditarPublicacion.Visible = false;
+            this.btnEditarPublicacion.Click += new System.EventHandler(this.buttonEditarPublicacion_Click);
             // 
-            // buttonComprar
+            // btnComprar
             // 
-            this.buttonComprar.Depth = 0;
-            this.buttonComprar.Location = new System.Drawing.Point(46, 377);
-            this.buttonComprar.MouseState = MaterialSkin.MouseState.HOVER;
-            this.buttonComprar.Name = "buttonComprar";
-            this.buttonComprar.Primary = true;
-            this.buttonComprar.Size = new System.Drawing.Size(213, 67);
-            this.buttonComprar.TabIndex = 70;
-            this.buttonComprar.Text = "Comprar";
-            this.buttonComprar.UseVisualStyleBackColor = true;
-            this.buttonComprar.Click += new System.EventHandler(this.buttonComprar_Click);
+            this.btnComprar.Depth = 0;
+            this.btnComprar.Location = new System.Drawing.Point(46, 377);
+            this.btnComprar.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnComprar.Name = "btnComprar";
+            this.btnComprar.Primary = true;
+            this.btnComprar.Size = new System.Drawing.Size(213, 67);
+            this.btnComprar.TabIndex = 70;
+            this.btnComprar.Text = "Comprar";
+            this.btnComprar.UseVisualStyleBackColor = true;
+            this.btnComprar.Visible = false;
+            this.btnComprar.Click += new System.EventHandler(this.buttonComprar_Click);
             // 
-            // buttonHistorialCliente
+            // btnHistorialCliente
             // 
-            this.buttonHistorialCliente.Depth = 0;
-            this.buttonHistorialCliente.Location = new System.Drawing.Point(317, 377);
-            this.buttonHistorialCliente.MouseState = MaterialSkin.MouseState.HOVER;
-            this.buttonHistorialCliente.Name = "buttonHistorialCliente";
-            this.buttonHistorialCliente.Primary = true;
-            this.buttonHistorialCliente.Size = new System.Drawing.Size(213, 67);
-            this.buttonHistorialCliente.TabIndex = 71;
-            this.buttonHistorialCliente.Text = "Historial del cliente";
-            this.buttonHistorialCliente.UseVisualStyleBackColor = true;
-            this.buttonHistorialCliente.Click += new System.EventHandler(this.buttonHistorialCliente_Click);
+            this.btnHistorialCliente.Depth = 0;
+            this.btnHistorialCliente.Location = new System.Drawing.Point(317, 377);
+            this.btnHistorialCliente.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnHistorialCliente.Name = "btnHistorialCliente";
+            this.btnHistorialCliente.Primary = true;
+            this.btnHistorialCliente.Size = new System.Drawing.Size(213, 67);
+            this.btnHistorialCliente.TabIndex = 71;
+            this.btnHistorialCliente.Text = "Historial del cliente";
+            this.btnHistorialCliente.UseVisualStyleBackColor = true;
+            this.btnHistorialCliente.Visible = false;
+            this.btnHistorialCliente.Click += new System.EventHandler(this.buttonHistorialCliente_Click);
             // 
-            // buttonCanjeYAdminPuntos
+            // btnCanjeYAdminPuntos
             // 
-            this.buttonCanjeYAdminPuntos.Depth = 0;
-            this.buttonCanjeYAdminPuntos.Location = new System.Drawing.Point(46, 466);
-            this.buttonCanjeYAdminPuntos.MouseState = MaterialSkin.MouseState.HOVER;
-            this.buttonCanjeYAdminPuntos.Name = "buttonCanjeYAdminPuntos";
-            this.buttonCanjeYAdminPuntos.Primary = true;
-            this.buttonCanjeYAdminPuntos.Size = new System.Drawing.Size(213, 67);
-            this.buttonCanjeYAdminPuntos.TabIndex = 72;
-            this.buttonCanjeYAdminPuntos.Text = "Canje y administracion de puntos";
-            this.buttonCanjeYAdminPuntos.UseVisualStyleBackColor = true;
-            this.buttonCanjeYAdminPuntos.Click += new System.EventHandler(this.buttonCanjeYAdminPuntos_Click);
+            this.btnCanjeYAdminPuntos.Depth = 0;
+            this.btnCanjeYAdminPuntos.Location = new System.Drawing.Point(46, 466);
+            this.btnCanjeYAdminPuntos.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnCanjeYAdminPuntos.Name = "btnCanjeYAdminPuntos";
+            this.btnCanjeYAdminPuntos.Primary = true;
+            this.btnCanjeYAdminPuntos.Size = new System.Drawing.Size(213, 67);
+            this.btnCanjeYAdminPuntos.TabIndex = 72;
+            this.btnCanjeYAdminPuntos.Text = "Canje y administracion de puntos";
+            this.btnCanjeYAdminPuntos.UseVisualStyleBackColor = true;
+            this.btnCanjeYAdminPuntos.Visible = false;
+            this.btnCanjeYAdminPuntos.Click += new System.EventHandler(this.buttonCanjeYAdminPuntos_Click);
             // 
-            // buttonPagoComisiones
+            // btnPagoComisiones
             // 
-            this.buttonPagoComisiones.Depth = 0;
-            this.buttonPagoComisiones.Location = new System.Drawing.Point(317, 466);
-            this.buttonPagoComisiones.MouseState = MaterialSkin.MouseState.HOVER;
-            this.buttonPagoComisiones.Name = "buttonPagoComisiones";
-            this.buttonPagoComisiones.Primary = true;
-            this.buttonPagoComisiones.Size = new System.Drawing.Size(213, 67);
-            this.buttonPagoComisiones.TabIndex = 73;
-            this.buttonPagoComisiones.Text = "Generar Pago de comisiones";
-            this.buttonPagoComisiones.UseVisualStyleBackColor = true;
-            this.buttonPagoComisiones.Click += new System.EventHandler(this.buttonPagoComisiones_Click);
+            this.btnPagoComisiones.Depth = 0;
+            this.btnPagoComisiones.Location = new System.Drawing.Point(317, 466);
+            this.btnPagoComisiones.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnPagoComisiones.Name = "btnPagoComisiones";
+            this.btnPagoComisiones.Primary = true;
+            this.btnPagoComisiones.Size = new System.Drawing.Size(213, 67);
+            this.btnPagoComisiones.TabIndex = 73;
+            this.btnPagoComisiones.Text = "Generar Pago de comisiones";
+            this.btnPagoComisiones.UseVisualStyleBackColor = true;
+            this.btnPagoComisiones.Visible = false;
+            this.btnPagoComisiones.Click += new System.EventHandler(this.buttonPagoComisiones_Click);
             // 
-            // buttonListadoEstadistico
+            // btnListadoEstadistico
             // 
-            this.buttonListadoEstadistico.Depth = 0;
-            this.buttonListadoEstadistico.Location = new System.Drawing.Point(199, 561);
-            this.buttonListadoEstadistico.MouseState = MaterialSkin.MouseState.HOVER;
-            this.buttonListadoEstadistico.Name = "buttonListadoEstadistico";
-            this.buttonListadoEstadistico.Primary = true;
-            this.buttonListadoEstadistico.Size = new System.Drawing.Size(213, 67);
-            this.buttonListadoEstadistico.TabIndex = 74;
-            this.buttonListadoEstadistico.Text = "Listado Estadistico";
-            this.buttonListadoEstadistico.UseVisualStyleBackColor = true;
-            this.buttonListadoEstadistico.Click += new System.EventHandler(this.buttonListadoEstadistico_Click);
+            this.btnListadoEstadistico.Depth = 0;
+            this.btnListadoEstadistico.Location = new System.Drawing.Point(199, 561);
+            this.btnListadoEstadistico.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnListadoEstadistico.Name = "btnListadoEstadistico";
+            this.btnListadoEstadistico.Primary = true;
+            this.btnListadoEstadistico.Size = new System.Drawing.Size(213, 67);
+            this.btnListadoEstadistico.TabIndex = 74;
+            this.btnListadoEstadistico.Text = "Listado Estadistico";
+            this.btnListadoEstadistico.UseVisualStyleBackColor = true;
+            this.btnListadoEstadistico.Visible = false;
+            this.btnListadoEstadistico.Click += new System.EventHandler(this.buttonListadoEstadistico_Click);
             // 
-            // buttonABMs
+            // btnABMs
             // 
-            this.buttonABMs.Depth = 0;
-            this.buttonABMs.Location = new System.Drawing.Point(46, 77);
-            this.buttonABMs.MouseState = MaterialSkin.MouseState.HOVER;
-            this.buttonABMs.Name = "buttonABMs";
-            this.buttonABMs.Primary = true;
-            this.buttonABMs.Size = new System.Drawing.Size(149, 68);
-            this.buttonABMs.TabIndex = 75;
-            this.buttonABMs.Text = "ABMs";
-            this.buttonABMs.UseVisualStyleBackColor = true;
-            this.buttonABMs.Click += new System.EventHandler(this.buttonABMs_Click);
+            this.btnABMs.Depth = 0;
+            this.btnABMs.Location = new System.Drawing.Point(46, 77);
+            this.btnABMs.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnABMs.Name = "btnABMs";
+            this.btnABMs.Primary = true;
+            this.btnABMs.Size = new System.Drawing.Size(149, 68);
+            this.btnABMs.TabIndex = 75;
+            this.btnABMs.Text = "ABMs";
+            this.btnABMs.UseVisualStyleBackColor = true;
+            this.btnABMs.Visible = false;
+            this.btnABMs.Click += new System.EventHandler(this.buttonABMs_Click);
             // 
             // MenuPpal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(594, 672);
-            this.Controls.Add(this.buttonABMs);
-            this.Controls.Add(this.buttonListadoEstadistico);
-            this.Controls.Add(this.buttonPagoComisiones);
-            this.Controls.Add(this.buttonCanjeYAdminPuntos);
-            this.Controls.Add(this.buttonHistorialCliente);
-            this.Controls.Add(this.buttonComprar);
-            this.Controls.Add(this.buttonEditarPublicacion);
+            this.Controls.Add(this.btnABMs);
+            this.Controls.Add(this.btnListadoEstadistico);
+            this.Controls.Add(this.btnPagoComisiones);
+            this.Controls.Add(this.btnCanjeYAdminPuntos);
+            this.Controls.Add(this.btnHistorialCliente);
+            this.Controls.Add(this.btnComprar);
+            this.Controls.Add(this.btnEditarPublicacion);
             this.Controls.Add(this.logout);
-            this.Controls.Add(this.buttonGenerarPublicacion);
-            this.Controls.Add(this.buttonRegistroUsuario);
+            this.Controls.Add(this.btnGenerarPublicacion);
+            this.Controls.Add(this.btnRegistroUsuario);
             this.Controls.Add(this.materialDivider1);
             this.Controls.Add(this.materialDivider2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -223,17 +232,17 @@
 
         #endregion
 
-        private MaterialSkin.Controls.MaterialRaisedButton buttonRegistroUsuario;
-        private MaterialSkin.Controls.MaterialRaisedButton buttonGenerarPublicacion;
+        private MaterialSkin.Controls.MaterialRaisedButton btnRegistroUsuario;
+        private MaterialSkin.Controls.MaterialRaisedButton btnGenerarPublicacion;
         private MaterialSkin.Controls.MaterialRaisedButton logout;
         private MaterialSkin.Controls.MaterialDivider materialDivider1;
         private MaterialSkin.Controls.MaterialDivider materialDivider2;
-        private MaterialSkin.Controls.MaterialRaisedButton buttonEditarPublicacion;
-        private MaterialSkin.Controls.MaterialRaisedButton buttonComprar;
-        private MaterialSkin.Controls.MaterialRaisedButton buttonHistorialCliente;
-        private MaterialSkin.Controls.MaterialRaisedButton buttonCanjeYAdminPuntos;
-        private MaterialSkin.Controls.MaterialRaisedButton buttonPagoComisiones;
-        private MaterialSkin.Controls.MaterialRaisedButton buttonListadoEstadistico;
-        private MaterialSkin.Controls.MaterialRaisedButton buttonABMs;
+        private MaterialSkin.Controls.MaterialRaisedButton btnEditarPublicacion;
+        private MaterialSkin.Controls.MaterialRaisedButton btnComprar;
+        private MaterialSkin.Controls.MaterialRaisedButton btnHistorialCliente;
+        private MaterialSkin.Controls.MaterialRaisedButton btnCanjeYAdminPuntos;
+        private MaterialSkin.Controls.MaterialRaisedButton btnPagoComisiones;
+        private MaterialSkin.Controls.MaterialRaisedButton btnListadoEstadistico;
+        private MaterialSkin.Controls.MaterialRaisedButton btnABMs;
     }
 }

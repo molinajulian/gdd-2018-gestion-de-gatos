@@ -16,26 +16,27 @@ using PalcoNet.AbmGrado;
 using PalcoNet.AbmEmpresa;
 using PalcoNet.Abm_Empresa_Espectaculo;
 using PalcoNet.AbmRol;
+using PalcoNet.Repositorios;
 
 namespace PalcoNet.Registro_de_Usuario
 {
     public partial class MenuABMs : MaterialForm
     {
-        Usuario user;
         MenuPpal menuPpal;
-        // Dictionary<int, Button> funcionalidadesPorBoton;
         String actual;
+        private List<Funcionalidad> funcionalidades;
 
-        public MenuABMs(Usuario user,MenuPpal menuPpal)
+        public MenuABMs(List<Funcionalidad> funcionalidades,MenuPpal menuPpal)
         {
             InitializeComponent();
-            this.user = user;
+            this.funcionalidades = funcionalidades;
             this.menuPpal = menuPpal;
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
          
+            configurarBotones();
         }
         private void ocultarBotones(){
             iconAlta.Hide();
@@ -91,26 +92,66 @@ namespace PalcoNet.Registro_de_Usuario
             buttonBajaCliente.Show();
         }
 
+        private void configurarBotones()
+        {
+            Dictionary<int, Button> funcionalidadesPorBoton = getFuncionalidadesPorBoton();
+            foreach (Funcionalidad funcionalidad in funcionalidades)
+            {
+                if(funcionalidadesPorBoton.ContainsKey(funcionalidad.id))
+                {
+                    funcionalidadesPorBoton[funcionalidad.id].Visible = true;
+                    activarCategoriaAdecuada(funcionalidad);
+                }
+            }
+        }
 
-        private void initFuncionalidesPorBoton() {
-           /*funcionalidadesPorBoton[1]=buttonAlta;
-                                        {1   : buttonAlta}, //CREAR CLIENTE
-                                        {2   : btn}, //EDITAR CLIENTE
-                                        {3   : btn}, //ELIMINAR CLIENTE
-                                        {4   : btn}, //CREAR EMPRESA
-                                        {5   : btn}, //EDITAR EMPRESA
-                                        {6   : btn}, //ELIMINAR EMPRESA
-                                        {7   : btn}, //CREAR ROL
-                                        {8   : btn}, //EDITAR ROL
-                                        {9   : btn}, //ELIMINAR ROL
-                                        {10  : btn}, //CREAR CATEGORIA
-                                        {11  : btn}, //EDITAR CATEGORIA
-                                        {12  : btn}, //ELIMINAR CATEGORIA
-                                        {13  : btn}, //CREAR GRADO PUBLICACION
-                                        {14  : btn}, //EDITAR GRADO PUBLICACION
-                                        {15  : btn}, //ELIMINAR GRADO PUBLICACION*/
-                                    
+        private void activarCategoriaAdecuada(Funcionalidad funcionalidad)
+        {
+            switch (funcionalidad.id)
+            {
+                case 1:
+                case 2:
+                case 3:
+                    buttonSidebarClientes.Visible = true;
+                    break;
+                case 4:
+                case 5:
+                case 6:
+                    buttonSidebarEmpresas.Visible = true;
+                    break;
+                case 7:
+                case 8:
+                case 9:
+                    buttonRoles.Visible = true;
+                    break;
+                case 13:
+                case 14:
+                case 15:
+                    buttonSidebarGradoPublicacion.Visible = true;
+                    break;
+            }
+        }
 
+        private Dictionary<int, Button> getFuncionalidadesPorBoton()
+        {
+            return new Dictionary<int, Button>()
+            {
+                {1, buttonAltaCliente}, //CREAR CLIENTE
+                {2, buttonModificacionCliente}, //EDITAR CLIENTE
+                {3, buttonBajaCliente}, //ELIMINAR CLIENTE
+                {4, buttonAltaEmpresa}, //CREAR EMPRESA
+                {5, buttonModificacionEmpresa}, //EDITAR EMPRESA
+                {6, buttonBajaEmpresa}, //ELIMINAR EMPRESA
+                {7, buttonAltaRol}, //CREAR ROL
+                {8, buttonModificacionRol}, //EDITAR ROL
+                {9, buttonBajaRol}, //ELIMINAR ROL
+                // {10  , buttonAltaC}, //CREAR CATEGORIA
+                // {11  , btn}, //EDITAR CATEGORIA
+                // {12  , btn}, //ELIMINAR CATEGORIA
+                {13, buttonAltaGrado}, //CREAR GRADO PUBLICACION
+                {14, buttonModificacionGrado}, //EDITAR GRADO PUBLICACION
+                {15, buttonBajaGrado} //ELIMINAR GRADO PUBLICACION
+            };
         }
 
         private void buttonModificacionRol_Click(object sender, EventArgs e)

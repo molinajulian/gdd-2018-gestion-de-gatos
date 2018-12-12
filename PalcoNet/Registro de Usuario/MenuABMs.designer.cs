@@ -79,6 +79,7 @@
             this.buttonSidebarClientes.TabIndex = 2;
             this.buttonSidebarClientes.Text = "Clientes";
             this.buttonSidebarClientes.UseVisualStyleBackColor = true;
+            this.buttonSidebarClientes.Visible = false;
             this.buttonSidebarClientes.Click += new System.EventHandler(this.buttonSidebarClientes_Click);
             // 
             // buttonSidebarCategorias
@@ -92,6 +93,7 @@
             this.buttonSidebarCategorias.TabIndex = 4;
             this.buttonSidebarCategorias.Text = "Categorias";
             this.buttonSidebarCategorias.UseVisualStyleBackColor = true;
+            this.buttonSidebarCategorias.Visible = false;
             this.buttonSidebarCategorias.Click += new System.EventHandler(this.buttonSidebarCategorias_Click);
             // 
             // buttonSidebarEmpresas
@@ -105,6 +107,7 @@
             this.buttonSidebarEmpresas.TabIndex = 5;
             this.buttonSidebarEmpresas.Text = "Empresas";
             this.buttonSidebarEmpresas.UseVisualStyleBackColor = true;
+            this.buttonSidebarEmpresas.Visible = false;
             this.buttonSidebarEmpresas.Click += new System.EventHandler(this.buttonSidebarEmpresas_Click);
             // 
             // buttonSidebarGradoPublicacion
@@ -118,6 +121,7 @@
             this.buttonSidebarGradoPublicacion.TabIndex = 59;
             this.buttonSidebarGradoPublicacion.Text = "Grado de publicacion";
             this.buttonSidebarGradoPublicacion.UseVisualStyleBackColor = true;
+            this.buttonSidebarGradoPublicacion.Visible = false;
             this.buttonSidebarGradoPublicacion.Click += new System.EventHandler(this.buttonSidebarGradoPublicacion_Click);
             // 
             // buttonModificacionRol
@@ -211,6 +215,7 @@
             this.buttonRoles.TabIndex = 67;
             this.buttonRoles.Text = "Roles";
             this.buttonRoles.UseVisualStyleBackColor = true;
+            this.buttonRoles.Visible = false;
             this.buttonRoles.Click += new System.EventHandler(this.buttonRoles_Click);
             // 
             // materialDivider2

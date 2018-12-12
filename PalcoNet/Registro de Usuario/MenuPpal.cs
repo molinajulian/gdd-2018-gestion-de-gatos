@@ -7,10 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using MaterialSkin.Controls;
 using MaterialSkin;
 using PalcoNet.Modelo;
 using PalcoNet.Registro_de_usuario;
+using PalcoNet.Repositorios;
 
 namespace PalcoNet.Registro_de_Usuario
 {
@@ -18,38 +20,72 @@ namespace PalcoNet.Registro_de_Usuario
     {
         Usuario user;
         Log login;
-
-
-        Dictionary<int, Button> funcionalidadPorBoton;
+        private List<Funcionalidad> funcionalidadesPorRol;
 
         public MenuPpal(Usuario user,Log login)
         {
             InitializeComponent();
-            // initFuncionalidadPorBoton();
             this.user = user;
             this.login = login;
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+
+            configurarFuncionesParaElRol(user.rol);
         }
 
-
-        /* private void funcionalidadPorBoton()
+        private void inicializarFuncionalidadesPorRol(Rol rol)
         {
-            /*                      funcionalidadPorBoton = new Dictionary<int, Button>
-                                    {
-                                        {16  : buttonGenerarPublicacion}, //GENERAR PUBLICACION
-                                        {17  : buttonEditarPublicacion}, //EDITAR PUBLICACION
-                                        {18  : buttonComprar}, //COMPRAR UBICACION
-                                        {19  : buttonHistorialCliente}, //HISTORIAL CLIENTE
-                                        {20  : buttonCanjeYAdminPuntos}, //CANJEAR Y ADMINISTRAR PUNTOS
-                                        {21  : buttonRegistroUsuario}, //REGISTRAR USUARIO
-                                        {22  : buttonPagoComisiones}, //PAGAR COMISIONES
-                                        {23  : buttonListadoEstadistico} //LISTADO ESTADISTICO
-                                    };
+            funcionalidadesPorRol = RolRepositorio.buscarFuncionalidadesPorRol(rol);
+        }
 
-        } */
+        public void configurarFuncionesParaElRol(Rol rol)
+        {
+            inicializarFuncionalidadesPorRol(rol);
+            Dictionary<int, Button> funcionalidadPorBoton = getFuncionalidadPorBoton();
+            foreach (Funcionalidad funcionalidad in funcionalidadesPorRol)
+            {
+                if (funcionalidadPorBoton.ContainsKey(funcionalidad.id))
+                {
+                    funcionalidadPorBoton[funcionalidad.id].Visible = true;
+                }
+            }
+
+            if (tieneAlgunaFuncionalidadAbm(funcionalidadesPorRol))
+            {
+                btnABMs.Visible = true;
+            }
+        }
+
+        private Boolean tieneAlgunaFuncionalidadAbm(List<Funcionalidad> funcionalidades)
+        {
+            foreach (Funcionalidad funcionalidad in funcionalidades)
+            {
+                if (funcionalidad.id >= 1 || funcionalidad.id <= 15)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private Dictionary<int, Button> getFuncionalidadPorBoton()
+        {
+           return new Dictionary<int, Button>()
+            {
+                {16  , btnGenerarPublicacion}, //GENERAR PUBLICACION
+                {17  , btnEditarPublicacion}, //EDITAR PUBLICACION
+                {18  , btnComprar}, //COMPRAR UBICACION
+                {19  , btnHistorialCliente}, //HISTORIAL CLIENTE
+                {20  , btnCanjeYAdminPuntos}, //CANJEAR Y ADMINISTRAR PUNTOS
+                {21  , btnRegistroUsuario}, //REGISTRAR USUARIO
+                {22  , btnPagoComisiones}, //PAGAR COMISIONES
+                {23  , btnListadoEstadistico} //LISTADO ESTADISTICO
+            };
+
+        }
+
         private void MenuPpal_FormClosing(object sender, FormClosingEventArgs e)
         {
             //login.Close();
@@ -57,7 +93,7 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonABMs_Click(object sender, EventArgs e)
         {
-            MenuABMs abms = new MenuABMs(user, this);
+            MenuABMs abms = new MenuABMs(funcionalidadesPorRol, this);
             abms.ShowDialog();
         }
 

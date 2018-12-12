@@ -42,5 +42,10 @@ namespace PalcoNet.Modelo
         {
             return rol.nombre.Equals("ADMINISTRATIVO");
         }
+
+        public List<Rol> obtenerRoles()
+        {
+            return UsuarioRepositorio.getRoles(this);
+        }
     }
 }

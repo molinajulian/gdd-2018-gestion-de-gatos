@@ -28,17 +28,15 @@ namespace PalcoNet.Registro_de_usuario
                 Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
         }
-
         private void btn_login_Click(object sender, EventArgs e)
         {
             try {
+                this.Hide();
                 usuarioRepositorio.validarUsuario(textUsuario.Text, textContrasena.Text);
                 ConfiguracionInicial configInicial = new ConfiguracionInicial(usuarioRepositorio.buscarUsuario(textUsuario.Text), this);
                 textContrasena.Text = "Contraseña";
                 textUsuario.Text = "Nombre de Usuario";
                 textContrasena.UseSystemPasswordChar = false;
-                configInicial.Visible = false;
-                this.Hide();
                 configInicial.ShowDialog();
             } catch(Exception ex)
             {

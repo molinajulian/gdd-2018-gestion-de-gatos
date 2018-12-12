@@ -13,7 +13,7 @@ namespace PalcoNet.Repositorios
     class RolRepositorio
     {
 
-        public List<Funcionalidad> buscarFuncionalidadesPorRol(Rol rol)
+        public static List<Funcionalidad> buscarFuncionalidadesPorRol(Rol rol)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@rol_id", rol.id));

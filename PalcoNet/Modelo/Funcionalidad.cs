@@ -24,7 +24,7 @@ namespace PalcoNet.Modelo
             Dictionary<string, int> camposFuncionalidad = Ordinales.camposFuncionalidad;
             return new Funcionalidad(
                 lector.GetInt32(camposFuncionalidad["id"]),
-                lector.GetString(camposFuncionalidad["detalle"]));
+                lector.GetString(camposFuncionalidad["descripcion"]));
         }
     }
 }
