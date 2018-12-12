@@ -11,123 +11,9 @@ namespace PalcoNet.Repositorios
 {
     class ClienteRepositorio
     {
-
-        public static List<SqlParameter> GenerarParametrosCliente(Cliente cliente,string username)
-        {
-            List<SqlParameter> parametros = new List<SqlParameter>();
-
-            parametros.Add(new SqlParameter("@dni", cliente.Cuil));
-            parametros.Add(new SqlParameter("@apellido", cliente.Apellido));
-            parametros.Add(new SqlParameter("@nombre", cliente.NombreCliente));
-            parametros.Add(new SqlParameter("@fecha_nac", cliente.FechaDeNacimiento));
-            parametros.Add(new SqlParameter("@mail", cliente.Email));
-            parametros.Add(new SqlParameter("@telefono", cliente.Telefono));
-            parametros.Add(new SqlParameter("@tipoDocumento",cliente.TipoDeDocumento));  
-            parametros.Add(new SqlParameter("@documento",cliente.NumeroDocumento));        
-            parametros.Add(new SqlParameter("@username", username));
-            return parametros;
-        }
-        public static void CreateCliente(Cliente cliente,string username)
-        {
-            List<SqlParameter> parametros = GenerarParametrosCliente(cliente,username);
-            DataBase.WriteInBase("IngresarClientes", "SP", parametros);
-
-        }
-        public static void UpdateCliente(Cliente cliente, string username)
-        {
-            List<SqlParameter> parametros = GenerarParametrosCliente(cliente,username);
-            DataBase.WriteInBase("UpdateCliente", "SP", parametros);
-
-        }
-        public static void DeleteCliente(Cliente cliente, string username)
-        {
-            List<SqlParameter> parametros = DataBase.GenerarParametrosDeleteFromInt(cliente.id,username);
-            DataBase.WriteInBase("DeleteCliente", "SP", parametros);
-
-        }
-        
-        public static Cliente ReadClienteFromDb(SqlDataReader reader)
-        {
-            /*return new Cliente()
-                         {
-                             NombreCliente = reader.GetValue(Ordinales.Cliente["nombre"]).ToString(),
-                             Apellido = reader.GetValue(Ordinales.Cliente["apellido"]).ToString(),
-                             TipoDeDocumento = reader.GetValue(Ordinales.Cliente["tipoDocumento"]).ToString(),
-                             NumeroDocumento = reader.GetValue(Ordinales.Cliente["numeroDocumento"]).ToString(),
-                             Cuil = reader.GetValue(Ordinales.Cliente["cuil"]).ToString(),
-                             Email = reader.GetValue(Ordinales.Cliente["email"]).ToString(),
-                             Telefono = reader.GetValue(Ordinales.Cliente["telefono"]).ToString(),
-                             FechaDeNacimiento = (DateTime)reader.GetValue(Ordinales.Cliente["fechaNacimiento"]),
-                             FechaDeCreacion = (DateTime)reader.GetValue(Ordinales.Cliente["fechaCreacion"]),
-                             Direccion = DireccionRepositorio.ReadDireccionFromDb(reader.GetValue(Ordinales.Cliente["cuil"]).ToString()),
-                             Tarjeta = TarjetaRepositorio.GetTarjetasById(reader.GetValue(Ordinales.Cliente["cuil"]).ToString()).First()
-                             
-                            };*/
-            return new Cliente();
-        }
-        public static List<Cliente> GetClienteByNombre(string unNombre)
-        {  var clientes = new List<Cliente>();
-           var parametros= new List<SqlParameter>();
-           parametros.Add(new SqlParameter("@Nombre",unNombre));
-           var query =DataBase.ejecutarFuncion("Select * from cliente c where c.clie_nombre like('@Nombre%')",parametros);
-           SqlDataReader reader = query.ExecuteReader();
-           while (reader.Read())
-           {
-               clientes.Add(ReadClienteFromDb(reader)
-                   );
-           }
-           reader.Close();
-            return clientes;
-        }
-        public static List<Cliente> GetClienteByApellido(string unApellido)
-        {
-            var clientes = new List<Cliente>();
-            var parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@Apellido", unApellido));
-            var query = DataBase.ejecutarFuncion("Select * from cliente c where c.clie_apellido like('@Apellido%')", parametros);
-            SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read())
-            {
-                clientes.Add(
-                    ReadClienteFromDb(reader));
-            }
-            reader.Close();
-           
-            return clientes;
-        }
-        public static List<Cliente> GetClienteByDNI(int unNumero)
-        {
-            var clientes = new List<Cliente>();
-            var parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@numero", unNumero));
-            var query = DataBase.ejecutarFuncion("Select * from cliente c where c.clie_dni =@numero", parametros);
-            SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read())
-            {
-                clientes.Add(
-                    ReadClienteFromDb(reader));
-            }
-            reader.Close();
-            return clientes;
-        }
-        public static List<Cliente> GetClienteByEmail(string unEmail)
-        {
-            var clientes = new List<Cliente>();
-            var parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@email", unEmail));
-            var query = DataBase.ejecutarFuncion("Select * from cliente c where c.clie_email like('@email%')", parametros);
-            SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read())
-            {
-                clientes.Add(
-                    ReadClienteFromDb(reader));
-            }
-            reader.Close();
-            return clientes;
-        }
-
         internal static Cliente getCliente(int doc,string descripcionTipoDoc)
         {
+
             Cliente cli = new Cliente();
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@doc", doc));
@@ -191,7 +77,23 @@ namespace PalcoNet.Repositorios
 
         internal static void modificarCliente(Cliente cliente)
         {
-            throw new NotImplementedException();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@tipoDoc", Convert.ToInt32(cliente.TipoDeDocumento.Id)));
+            parametros.Add(new SqlParameter("@doc", Convert.ToDecimal(cliente.NumeroDocumento)));
+            parametros.Add(new SqlParameter("@cuil", cliente.Cuil));
+            parametros.Add(new SqlParameter("@nombre", cliente.NombreCliente));
+            parametros.Add(new SqlParameter("@apellido", cliente.Apellido));
+            parametros.Add(new SqlParameter("@fechaNac", cliente.FechaDeNacimiento));
+            parametros.Add(new SqlParameter("@mail", cliente.Email));
+            parametros.Add(new SqlParameter("@telefono", Convert.ToDecimal(cliente.Telefono)));
+            parametros.Add(new SqlParameter("@calle", cliente.Direccion.Calle));
+            parametros.Add(new SqlParameter("@nro", Convert.ToDecimal(cliente.Direccion.Numero)));
+            parametros.Add(new SqlParameter("@depto", cliente.Direccion.Departamento));
+            parametros.Add(new SqlParameter("@localidad", cliente.Direccion.Localidad));
+            parametros.Add(new SqlParameter("@piso", Convert.ToDecimal(cliente.Direccion.Piso)));
+            parametros.Add(new SqlParameter("@cp", cliente.Direccion.CodPostal));
+            parametros.Add(new SqlParameter("@habilitado", cliente.Habilitado));
+            SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_modificar_cliente]", "SP", parametros);
         }
 
         internal static string agregar(Cliente cliente)
@@ -218,7 +120,6 @@ namespace PalcoNet.Repositorios
             SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_crear_cliente]", "SP", parametros);
             string id = output.Value.ToString();
             return id;
-            // DataBase.ejecutarSP("[dbo].[sp_crear_cliente]", parametros);
         }
 
         internal static bool esClienteExistenteMail(string p)

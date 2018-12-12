@@ -35,14 +35,22 @@ namespace PalcoNet.AbmCliente
         }
         private void getClientes()
         {
-            List<Cliente> clientes = new List<Cliente>();
-            clientes = ClienteRepositorio.getClientes();
-            foreach(Cliente c in clientes)
+            try
             {
-                string[] row = new string[] { c.TipoDeDocumento.Descripcion.ToString(),c.NumeroDocumento.ToString(),c.Cuil,c.NombreCliente,c.Apellido,c.Email,c.Direccion.Calle,c.Direccion.Numero,c.Direccion.Localidad,c.Direccion.CodPostal,c.Habilitado ==true ? "Si":"No" };
-                tabla_clientes.Rows.Add(row);
+                List<Cliente> clientes = new List<Cliente>();
+                clientes = ClienteRepositorio.getClientes();
+                foreach (Cliente c in clientes)
+                {
+                    string[] row = new string[] { c.TipoDeDocumento.Descripcion.ToString(), c.NumeroDocumento.ToString(), c.Cuil, c.NombreCliente, c.Apellido, c.Email, c.Direccion.Calle, c.Direccion.Numero, c.Direccion.Localidad, c.Direccion.CodPostal, c.Habilitado == true ? "Si" : "No" };
+                    tabla_clientes.Rows.Add(row);
+                }
+                data_clientes.DataSource = tabla_clientes;
             }
-            data_clientes.DataSource = tabla_clientes;
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Ocurrio un error al obtener la información de los clientes");
+                this.Show();
+            }
         }
         private void initColumns()
         {

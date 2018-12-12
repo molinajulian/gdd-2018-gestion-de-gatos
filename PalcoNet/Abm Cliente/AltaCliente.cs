@@ -33,7 +33,7 @@ namespace PalcoNet.AbmCliente
             getTiposDocumento();
         }
 
-        private void getTiposDocumento()
+        public void getTiposDocumento()
         {
             List<TiposDocumento> tipos = new List<TiposDocumento>();
             comboTiposDoc.Items.Clear();

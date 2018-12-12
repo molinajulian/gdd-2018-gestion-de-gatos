@@ -30,7 +30,7 @@
         {
             this.txtCuil = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboTiposDoc = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
             this.btnAlta = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
@@ -59,6 +59,9 @@
             this.groupBoxModifCli = new System.Windows.Forms.GroupBox();
             this.txtDepto = new System.Windows.Forms.TextBox();
             this.btnVolver = new System.Windows.Forms.Button();
+            this.checkHabilitado = new System.Windows.Forms.CheckBox();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.directorySearcher1 = new System.DirectoryServices.DirectorySearcher();
             this.groupBoxModifCli.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,13 +81,13 @@
             this.label14.TabIndex = 37;
             this.label14.Text = "CUIL";
             // 
-            // comboBox1
+            // comboTiposDoc
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(116, 88);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 34;
+            this.comboTiposDoc.FormattingEnabled = true;
+            this.comboTiposDoc.Location = new System.Drawing.Point(116, 88);
+            this.comboTiposDoc.Name = "comboTiposDoc";
+            this.comboTiposDoc.Size = new System.Drawing.Size(121, 21);
+            this.comboTiposDoc.TabIndex = 34;
             // 
             // label13
             // 
@@ -296,10 +299,11 @@
             // groupBoxModifCli
             // 
             this.groupBoxModifCli.BackColor = System.Drawing.Color.White;
+            this.groupBoxModifCli.Controls.Add(this.checkHabilitado);
             this.groupBoxModifCli.Controls.Add(this.txtDepto);
             this.groupBoxModifCli.Controls.Add(this.txtCuil);
             this.groupBoxModifCli.Controls.Add(this.label14);
-            this.groupBoxModifCli.Controls.Add(this.comboBox1);
+            this.groupBoxModifCli.Controls.Add(this.comboTiposDoc);
             this.groupBoxModifCli.Controls.Add(this.label13);
             this.groupBoxModifCli.Controls.Add(this.btnAlta);
             this.groupBoxModifCli.Controls.Add(this.label15);
@@ -349,6 +353,31 @@
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
             // 
+            // checkHabilitado
+            // 
+            this.checkHabilitado.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkHabilitado.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.checkHabilitado.FlatAppearance.CheckedBackColor = System.Drawing.Color.White;
+            this.checkHabilitado.Location = new System.Drawing.Point(386, 275);
+            this.checkHabilitado.Name = "checkHabilitado";
+            this.checkHabilitado.Size = new System.Drawing.Size(80, 20);
+            this.checkHabilitado.TabIndex = 20;
+            this.checkHabilitado.Text = "Habilitado";
+            this.checkHabilitado.UseVisualStyleBackColor = true;
+            this.checkHabilitado.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            // 
+            // directorySearcher1
+            // 
+            this.directorySearcher1.ClientTimeout = System.TimeSpan.Parse("-00:00:01");
+            this.directorySearcher1.ServerPageTimeLimit = System.TimeSpan.Parse("-00:00:01");
+            this.directorySearcher1.ServerTimeLimit = System.TimeSpan.Parse("-00:00:01");
+            // 
             // ModificacionCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -369,7 +398,7 @@
 
         private System.Windows.Forms.TextBox txtCuil;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboTiposDoc;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button btnAlta;
         private System.Windows.Forms.Label label15;
@@ -398,6 +427,9 @@
         private System.Windows.Forms.GroupBox groupBoxModifCli;
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.TextBox txtDepto;
+        private System.Windows.Forms.CheckBox checkHabilitado;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.DirectoryServices.DirectorySearcher directorySearcher1;
 
     }
 }

@@ -48,7 +48,7 @@ namespace PalcoNet.Repositorios
         public static Compra ReadCompraFromDb(int id)
         {
             var compra = new Compra();
-            var parametros = new List<SqlParameter>();
+            /*var parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@id", id));
             var query = DataBase.ejecutarFuncion("Select top 1 * from compra g where g.compra_cod = @id", parametros);
             SqlDataReader reader = query.ExecuteReader();
@@ -62,7 +62,7 @@ namespace PalcoNet.Repositorios
                     Fecha= (DateTime)reader.GetValue(Ordinales.Compra["Fecha_Id"])
                 };
 
-            }
+            }*/
             return compra;
 
         }
