@@ -19,77 +19,118 @@ namespace PalcoNet.AbmCliente
     {
         String mail_original;
         Boolean hab_original;
+        bool cuilNulo = false, deptoNulo = false, pisoNulo = false, telNulo = false;
+        Cliente cliente;
         public ModificacionCliente(int doc,string descripcionDoc)
         {
-            InitializeComponent();
-            var materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-            Cliente cliente = ClienteRepositorio.getCliente(doc, descripcionDoc);
-            //hab_original = cliente.Habilitado;
-            //txtNombre.Text = cliente.nombre;
-            //txtApellido.Text = cliente.Apellido;
-            //txtNumDoc.Text = cliente.NumeroDocumento.ToString();
-            //mail_original = txtMail.Text = cliente.Email;
-            //txtTel.Text = cliente.Telefono;
-            //txtLoc.Text = cliente.Direccion.Localidad;
-            //txtCp.Text = cliente.Direccion.CodPostal.ToString();
-            //txtNum.Text = cliente.Direccion.Calle.Split(' ').Last();
-            //var auxiliar = cliente.Direccion.Calle.Split(' ').ToList();
-            //auxiliar.RemoveAt(auxiliar.Count-1);
-            //txtCalle.Text = String.Join(" ",auxiliar);
-            //txtPiso.Text = cliente.Direccion.Piso.ToString() == "0" ? "" : cliente.Direccion.Piso.ToString();
-            //txtPiso.Text = cliente.Direccion.Departamento.ToString();
-            //datePickerFechaNac.Value = cliente.FechaDeNacimiento;
-        }
-
-        public ModificacionCliente()
-        {
-            // TODO: Complete member initialization
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (validarCamposVaciosCliente()) { return; }
-            if (txtMail.Text != mail_original) 
+            try
             {
-                if (ClienteRepositorio.esClienteExistenteMail(txtMail.Text))
-                {
-                    MessageBox.Show("Ya existe un cliente con el mail ingresado");
-                    return;
-                }
+                InitializeComponent();
+                var materialSkinManager = MaterialSkinManager.Instance;
+                materialSkinManager.AddFormToManage(this);
+                materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+                materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+                getTiposDocumento();
+                cliente = ClienteRepositorio.getCliente(doc, descripcionDoc);
+                if (cliente.Habilitado) checkHabilitado.Checked = true;
+                txtNombre.Text = cliente.NombreCliente;
+                txtApellido.Text = cliente.Apellido;
+                txtNumDoc.Text = cliente.NumeroDocumento.ToString();
+                txtMail.Text = cliente.Email;
+                if (cliente.Telefono == "0")
+                {   txtTel.Text = "";telNulo = true;}
+                else { txtTel.Text = cliente.Telefono; }
+                txtLoc.Text = cliente.Direccion.Localidad;
+                txtCp.Text = cliente.Direccion.CodPostal;
+                txtNum.Text = cliente.Direccion.Numero;
+                txtCalle.Text = cliente.Direccion.Calle;
+                txtPiso.Text = string.IsNullOrEmpty(cliente.Direccion.Piso) || cliente.Direccion.Piso.ToString() == "0" ? "" : cliente.Direccion.Piso.ToString();
+                datePickerFechaNac.Value = cliente.FechaDeNacimiento;
+                comboTiposDoc.SelectedIndex = comboTiposDoc.FindString(cliente.TipoDeDocumento.Descripcion);
+                if (string.IsNullOrEmpty(cliente.Cuil)) cuilNulo = true;
+                if (string.IsNullOrEmpty(cliente.Direccion.Departamento)) deptoNulo = true;
+                if (string.IsNullOrEmpty(cliente.Direccion.Piso)) pisoNulo = true;
+                if (string.IsNullOrEmpty(cliente.Telefono)) telNulo = true;
             }
-            Cliente cliente = new Cliente();
+            catch (Exception e)
+            {
+                MessageBox.Show("Hubo un error al obtener los datos del cliente",e.Message);
+                this.Show();
+            }
+        }
+        private void verificarCamposNulos(Cliente cli)
+        {
+
+        }
+        private void getTiposDocumento()
+        {
+            List<TiposDocumento> tipos = new List<TiposDocumento>();
+            comboTiposDoc.Items.Clear();
+            tipos = ClienteRepositorio.getTiposDoc();
+            foreach (TiposDocumento tipo in tipos)
+            {
+                comboTiposDoc.Items.Add(tipo);
+                comboTiposDoc.DisplayMember = "Descripcion";
+            }
+        }
+        private void btnAlta_Click(object sender, EventArgs e)
+        {
+            TiposDocumento seleccionado = (TiposDocumento)comboTiposDoc.SelectedItem;
+            Cliente clienteModificado = new Cliente();
+            clienteModificado.TipoDeDocumento = new TiposDocumento();
+            clienteModificado.TipoDeDocumento.Id = seleccionado.Id;
             Direccion direccion = new Direccion();
-            cliente.NumeroDocumento =Convert.ToInt32(txtNumDoc.Text);
+            if (!Regex.IsMatch(txtNumDoc.Text, @"^[0-9]{1,8}$"))
+            {
+                MessageBox.Show("Ingrese un DNI válido.");
+                return;
+            }
+            if ((cliente.NumeroDocumento != Int32.Parse(txtNumDoc.Text) || cliente.TipoDeDocumento.Descripcion != seleccionado.Descripcion) && ClienteRepositorio.esClienteExistente(Int32.Parse(seleccionado.Id), Decimal.Parse(txtNumDoc.Text)))
+            {
+                MessageBox.Show("Ya existe un cliente con el dni ingresado");
+                return;
+            }
+            clienteModificado.NumeroDocumento = Convert.ToInt32(txtNumDoc.Text);
             if (!Regex.IsMatch(txtNombre.Text, @"^[a-zA-Z\s]{1,30}$"))
             {
                 MessageBox.Show("Ingrese un nombre válido.");
                 return;
             }
-            cliente.nombre = txtNombre.Text;
-            if (!Regex.IsMatch(txtApellido.Text, @"^[a-zA-Z\s]{1,30}$"))
+            clienteModificado.nombre = txtNombre.Text;
+            if (!Regex.IsMatch(txtApellido.Text, @"^[a-zA-Z\sáéíóú]{1,30}$"))
             {
                 MessageBox.Show("Ingrese un apellido válido.");
                 return;
             }
-            cliente.Apellido = txtApellido.Text;
+            clienteModificado.Apellido = txtApellido.Text;
             if (!Regex.IsMatch(txtMail.Text, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"))
             {
                 MessageBox.Show("Ingrese un mail válido.");
                 return;
             }
-            cliente.Email = txtMail.Text;
-            cliente.Habilitado = hab_original;
-            if (!Regex.IsMatch(txtTel.Text, @"^[0-9]{1,20}$"))
+            clienteModificado.Email = txtMail.Text;
+            if (!telNulo && !Regex.IsMatch(txtTel.Text, @"^[0-9]{1,20}$"))
             {
                 MessageBox.Show("Ingrese un telefono válido.");
                 return;
             }
-            cliente.Telefono = txtTel.Text;
-            cliente.FechaDeNacimiento = datePickerFechaNac.Value.Date;
-            if (!Regex.IsMatch(txtLoc.Text, @"^[a-zA-Z0-9\s]{1,20}$"))
+            clienteModificado.Telefono = txtTel.Text;
+            clienteModificado.FechaDeNacimiento = datePickerFechaNac.Value.Date;
+            if (!string.IsNullOrEmpty(txtPiso.Text) && !Regex.IsMatch(txtCuil.Text, @"[0-9]{2}-[0-9]{5,9}-[0-9]{1,2}$"))
+            {
+                MessageBox.Show("Ingrese un cuit valido.");
+                return;
+            }
+            else
+            {
+                if (cliente.Cuil != txtCuil.Text && ClienteRepositorio.esClienteExistente(0, 0, txtCuil.Text))
+                {
+                    MessageBox.Show("Ya existe un cliente con ese CUIL.");
+                    return;
+                }
+            }
+            clienteModificado.Cuil = txtCuil.Text;
+            if (!string.IsNullOrEmpty(txtPiso.Text) && !Regex.IsMatch(txtLoc.Text, @"^[a-zA-Z0-9\s]{1,20}$"))
             {
                 MessageBox.Show("Ingrese una localidad válida.");
                 return;
@@ -101,19 +142,19 @@ namespace PalcoNet.AbmCliente
                 return;
             }
             direccion.CodPostal = txtCp.Text;
-            if (!Regex.IsMatch(txtPiso.Text, @"^[0-9]{1,3}$") && !string.IsNullOrEmpty(txtPiso.Text))
+            if (!string.IsNullOrEmpty(txtPiso.Text) && !Regex.IsMatch(txtPiso.Text, @"^[0-9]{1,3}$") && !string.IsNullOrEmpty(txtPiso.Text))
             {
                 MessageBox.Show("Ingrese un piso válido.");
                 return;
             }
-            direccion.Piso = string.IsNullOrWhiteSpace(txtPiso.Text) ? null : txtPiso.Text;
-            if (!Regex.IsMatch(txtDepto.Text, @"^[a-zA-Z]$") && !string.IsNullOrEmpty(txtDepto.Text))
+            direccion.Piso = string.IsNullOrWhiteSpace(txtPiso.Text) ? ' '.ToString() : txtPiso.Text;
+            if (!string.IsNullOrEmpty(txtPiso.Text) && !Regex.IsMatch(txtDepto.Text, @"^[a-zA-Z]$") && !string.IsNullOrEmpty(txtDepto.Text))
             {
                 MessageBox.Show("Ingrese un departamento válido.");
                 return;
             }
             direccion.Departamento = string.IsNullOrWhiteSpace(txtDepto.Text) ? ' '.ToString() : txtDepto.Text;
-            if (!Regex.IsMatch(txtCalle.Text, @"^[a-zA-Z0-9\s]{1,50}$"))
+            if (!Regex.IsMatch(txtCalle.Text, @"[a-zA-Z0-9\s]{1,50}$"))
             {
                 MessageBox.Show("Ingrese una calle válida.");
                 return;
@@ -123,10 +164,12 @@ namespace PalcoNet.AbmCliente
                 MessageBox.Show("Ingrese un número válido.");
                 return;
             }
-            direccion.Calle = txtCalle.Text + " " + txtNum.Text;
-            cliente.Direccion = direccion;
-
-            ClienteRepositorio.modificarCliente(cliente);
+            direccion.Calle = txtCalle.Text;
+            direccion.Numero = txtNum.Text;
+            clienteModificado.Direccion = direccion;
+            clienteModificado.FechaDeCreacion = DateTime.Now;
+            clienteModificado.NombreCliente = txtNombre.Text;
+            ClienteRepositorio.modificarCliente(clienteModificado);
             MessageBox.Show("Cliente modificado correctamente.");
             this.Hide();
             new ListadoCliente('M').Show();
@@ -161,11 +204,6 @@ namespace PalcoNet.AbmCliente
             this.Hide();
         }
 
-        private void btnAlta_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void textBox7_TextChanged(object sender, EventArgs e)
         {
 
@@ -182,6 +220,21 @@ namespace PalcoNet.AbmCliente
         }
 
         private void txtNombre_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
 
         }
