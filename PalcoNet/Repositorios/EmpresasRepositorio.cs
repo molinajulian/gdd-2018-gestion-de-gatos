@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net;
+using System.Windows.Forms;
 using PalcoNet.Repositorios;
 using PalcoNet.Modelo;
 
@@ -124,9 +126,22 @@ namespace PalcoNet.Repositorios
             throw new NotImplementedException();
         }
 
-        internal static void modificar(Empresa empresa)
+        internal static void actualizar(Empresa empresa)
         {
-            throw new NotImplementedException();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@razon_social", empresa.RazonSocial));
+            parametros.Add(new SqlParameter("@cuit", empresa.Cuit));
+            parametros.Add(new SqlParameter("@mail", empresa.Email));
+            parametros.Add(new SqlParameter("@telefono", empresa.Telefono));
+            parametros.Add(new SqlParameter("@domicilio_id", empresa.Direccion.Id));
+            parametros.Add(new SqlParameter("@calle", empresa.Direccion.Calle));
+            parametros.Add(new SqlParameter("@nro", empresa.Direccion.Numero));
+            parametros.Add(new SqlParameter("@depto", empresa.Direccion.Departamento));
+            parametros.Add(new SqlParameter("@localidad", empresa.Direccion.Localidad));
+            parametros.Add(new SqlParameter("@piso", empresa.Direccion.Piso));
+            parametros.Add(new SqlParameter("@cp", empresa.Direccion.CodPostal));
+            parametros.Add(new SqlParameter("@habilitada", empresa.Habilitada ? 1 : 0));
+            DataBase.ejecutarSP("[dbo].[sp_actualizar_empresa]", parametros);
         }
 
         internal static void agregar(Empresa empresa)
@@ -145,21 +160,24 @@ namespace PalcoNet.Repositorios
             DataBase.ejecutarSP("[dbo].[sp_crear_empresa]", parametros);
         }
 
-        internal static void validarEmpresaInexistente(string cuit)
+        public static List<Empresa> getEmpresas(string razonSocial, string mail, string cuit)
         {
-            List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@cuit", cuit));
-            DataBase.ejecutarSP("sp_validar_empresa_inexistente", parametros);
-        }
-
-        internal static bool esEmpresaHabilitada(string empresa_cuit)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static void deshabilitar(string empresa_cuit)
-        {
-            throw new NotImplementedException();
+            StringBuilder stringBuilder = new StringBuilder();
+            String sql = stringBuilder
+                .Append("SELECT * FROM GESTION_DE_GATOS.Empresas WHERE ")
+                .Append("Emp_Razon_Social LIKE ('%" + razonSocial + "%') AND ")
+                .Append("Emp_Mail LIKE ('%" + mail + "%') AND ")
+                .Append("Emp_Cuit LIKE ('%" + cuit + "%')")
+                .ToString();
+            List<Empresa> empresas = new List<Empresa>();
+            var camposEmpresa = Ordinales.Empresa;
+            SqlDataReader lector = DataBase.GetDataReader(sql, "T", new List<SqlParameter>());
+            while (lector.Read())
+            {
+               empresas.Add(Empresa.buildEmrpesa(lector));
+            }
+            lector.Close();
+            return empresas;
         }
     }
 }

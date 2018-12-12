@@ -33,5 +33,10 @@ namespace PalcoNet.Modelo
         public string Localidad { get; set; }
         public string CodPostal { get; set; }
         public string Piso { get; set; }
+
+        public override string ToString()
+        {
+            return Calle + " " + Numero;
+        }
     }
 }

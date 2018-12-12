@@ -42,7 +42,7 @@ namespace PalcoNet.Registro_de_usuario
                 configInicial.ShowDialog();
             } catch(Exception ex)
             {
-                MessageBox.Show("ERROR", ex.Message);
+                MessageBox.Show(ex.Message, "ERROR");
             }
         }
 
