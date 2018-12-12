@@ -77,7 +77,23 @@ namespace PalcoNet.Repositorios
 
         internal static void modificarCliente(Cliente cliente)
         {
-            throw new NotImplementedException();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@tipoDoc", Convert.ToInt32(cliente.TipoDeDocumento.Id)));
+            parametros.Add(new SqlParameter("@doc", Convert.ToDecimal(cliente.NumeroDocumento)));
+            parametros.Add(new SqlParameter("@cuil", cliente.Cuil));
+            parametros.Add(new SqlParameter("@nombre", cliente.NombreCliente));
+            parametros.Add(new SqlParameter("@apellido", cliente.Apellido));
+            parametros.Add(new SqlParameter("@fechaNac", cliente.FechaDeNacimiento));
+            parametros.Add(new SqlParameter("@mail", cliente.Email));
+            parametros.Add(new SqlParameter("@telefono", Convert.ToDecimal(cliente.Telefono)));
+            parametros.Add(new SqlParameter("@calle", cliente.Direccion.Calle));
+            parametros.Add(new SqlParameter("@nro", Convert.ToDecimal(cliente.Direccion.Numero)));
+            parametros.Add(new SqlParameter("@depto", cliente.Direccion.Departamento));
+            parametros.Add(new SqlParameter("@localidad", cliente.Direccion.Localidad));
+            parametros.Add(new SqlParameter("@piso", Convert.ToDecimal(cliente.Direccion.Piso)));
+            parametros.Add(new SqlParameter("@cp", cliente.Direccion.CodPostal));
+            parametros.Add(new SqlParameter("@habilitado", cliente.Habilitado));
+            SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_modificar_cliente]", "SP", parametros);
         }
 
         internal static string agregar(Cliente cliente)
@@ -104,7 +120,6 @@ namespace PalcoNet.Repositorios
             SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_crear_cliente]", "SP", parametros);
             string id = output.Value.ToString();
             return id;
-            // DataBase.ejecutarSP("[dbo].[sp_crear_cliente]", parametros);
         }
 
         internal static bool esClienteExistenteMail(string p)
