@@ -204,7 +204,7 @@
             this.Controls.Add(this.btn_volver);
             this.Controls.Add(this.group_domicilio);
             this.Name = "ModificarDomicilio";
-            this.Text = "ModificacionRol";
+            this.Text = "Modificacion de Domicilio";
             this.group_domicilio.ResumeLayout(false);
             this.group_domicilio.PerformLayout();
             this.ResumeLayout(false);

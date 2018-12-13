@@ -19,6 +19,17 @@ namespace PalcoNet.AbmDomicilio
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
             this.domicilio = domicilio;
+            inicializarUi();
+        }
+
+        private void inicializarUi()
+        {
+            txCalle.Text = domicilio.Calle;
+            txNumero.Text = domicilio.Numero;
+            txCp.Text = domicilio.CodPostal;
+            txLocalidad.Text = domicilio.Localidad;
+            txPiso.Text = domicilio.Piso;
+            txDpto.Text = domicilio.Departamento;
         }
 
         private bool validarCamposDomicilio()
@@ -56,9 +67,14 @@ namespace PalcoNet.AbmDomicilio
             return true;
         }
 
-        private Domicilio getDomicilioDeUi()
+        private void actualizarDomicilioDeUi()
         {
-            return new Domicilio(txCalle.Text, txNumero.Text, txDpto.Text, txLocalidad.Text, txCp.Text, txPiso.Text);
+            domicilio.Calle = txCalle.Text;
+            domicilio.Numero = txNumero.Text;
+            domicilio.Localidad = txLocalidad.Text;
+            domicilio.CodPostal = txCp.Text;
+            domicilio.Piso = txPiso.Text;
+            domicilio.Departamento = txDpto.Text;
         }
 
         private void btn_actualizar_domicilio_Click(object sender, System.EventArgs e)
@@ -71,7 +87,8 @@ namespace PalcoNet.AbmDomicilio
             }
             try
             {
-                DomiciliosRepositorio.actualizar(getDomicilioDeUi());
+                actualizarDomicilioDeUi();
+                DomiciliosRepositorio.actualizar(domicilio);
                 MessageBox.Show("El domicilio ha sido actualizado exitosamente", "Modificacion de domicilio", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (SqlException ex)
