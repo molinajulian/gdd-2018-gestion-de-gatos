@@ -1,15 +1,7 @@
 ﻿using PalcoNet.Modelo;
-using PalcoNet.Repositorios;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
 using MaterialSkin.Controls;
 using MaterialSkin;
 
@@ -17,8 +9,7 @@ namespace PalcoNet.AbmTarjeta
 {
     public partial class AltaTarjeta : MaterialForm
     {
-        Cliente cliente = new Cliente();
-        Tarjeta tarjeta = new Tarjeta();
+        Cliente cliente;
 
         public AltaTarjeta(ref Cliente c)
         {
@@ -30,7 +21,6 @@ namespace PalcoNet.AbmTarjeta
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
         }
-
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -51,16 +41,6 @@ namespace PalcoNet.AbmTarjeta
             var controles = groupBox1.Controls;
             foreach (Control control in controles)
             {
-                /* if (control == txPiso || control == txDpto)
-                {
-                     
-                }
-                else if(string.IsNullOrWhiteSpace(control.Text))
-                {
-                    MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    error = true;
-                    break;
-                }*/ 
                 if (string.IsNullOrWhiteSpace(control.Text))
                 {
                     MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -71,11 +51,6 @@ namespace PalcoNet.AbmTarjeta
             return error;
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnAlta_Click(object sender, EventArgs e)
         {
             if (txtNumero.Text.Length > 16 || txtBanco.Text.Length == 0)
@@ -84,28 +59,15 @@ namespace PalcoNet.AbmTarjeta
             }
             else
             {
-                tarjeta.Banco = txtBanco.Text;
-                tarjeta.FechaVencimiento = datePickerFechaVenc.Value;
-                tarjeta.Numero = txtNumero.Text;
-                cliente.Tarjeta.Add(tarjeta);
+                cliente.Tarjeta.Add(new Tarjeta(txtNumero.Text, txtBanco.Text, datePickerFechaVenc.Value));
                 MessageBox.Show("Tarjeta creada con exito.","", MessageBoxButtons.OK, MessageBoxIcon.None);
                 this.Hide();
             }
         }
 
-        private void txNumero_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void txtNumero_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
-        }
-
-        private void AltaTarjeta_Load(object sender, EventArgs e)
-        {
-        
         }
     }
 }

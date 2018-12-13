@@ -11,37 +11,6 @@ namespace PalcoNet.Repositorios
 {
     class ClienteRepositorio
     {
-        internal static Cliente getCliente(int doc,string descripcionTipoDoc)
-        {
-
-            Cliente cli = new Cliente();
-            List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@doc", doc));
-            parametros.Add(new SqlParameter("@descripcionTipoDoc", descripcionTipoDoc));
-            SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_get_cliente]", "SP", parametros);
-            while (lector.Read())
-            {
-                cli = Cliente.buildGetCliente(lector);
-            }
-            lector.Close();
-            return cli;
-        }
-        internal static List<Cliente> getClientes()
-        {
-            var clientes = new List<Cliente>();
-            List<SqlParameter> parametros = new List<SqlParameter>();
-            SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_get_clientes]", "SP", parametros);
-            if (lector.HasRows)
-            {
-                while (lector.Read())
-                {
-                    Cliente cli = Cliente.buildGetClientes(lector);
-                    clientes.Add(cli);
-                }
-                lector.Close();
-            }
-            return clientes;
-        }
 
         internal static void eliminarCliente(string tipoDocDescr,string doc)
         {
@@ -62,17 +31,11 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@tipoDoc", tipoDoc));
             parametros.Add(new SqlParameter("@doc", documento));
             parametros.Add(new SqlParameter("@cuil", cuil));
-            SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_existe_cliente]", "SP", parametros);
-            int cantidad = 0 ;
-            if (lector.HasRows)
-            {
-                while (lector.Read())
-                {
-                    cantidad = Cliente.buildClienteExistente(lector);
-                }
-                lector.Close();
-            }
-            return cantidad > 0 ? true : false;
+            SqlParameter output = new SqlParameter("@existencias", 0);
+            output.Direction = ParameterDirection.Output;
+            parametros.Add(output);
+            SqlCommand sqlCommand = DataBase.ejecutarSP("[dbo].[sp_existe_cliente]", parametros);
+            return Convert.ToInt32(sqlCommand.Parameters["@existencias"].Value) > 0;
         }
 
         internal static void modificarCliente(Cliente cliente)
@@ -114,60 +77,33 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@localidad", cliente.Domicilio.Localidad));
             parametros.Add(new SqlParameter("@piso", cliente.Domicilio.Piso));
             parametros.Add(new SqlParameter("@cp", cliente.Domicilio.CodPostal));
-            SqlParameter output = new SqlParameter("@salida", 0);
+            SqlParameter output = new SqlParameter("@id", -1);
             output.Direction = ParameterDirection.Output;
             parametros.Add(output);
-            SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_crear_cliente]", "SP", parametros);
-            string id = output.Value.ToString();
-            return id;
+            SqlCommand cmd = DataBase.ejecutarSP("[dbo].[sp_crear_cliente]", parametros);
+            return cmd.Parameters["@id"].ToString();
         }
 
-        internal static bool esClienteExistenteMail(string p)
+        public static List<Cliente> getClientes(String nombre, String apellido, String numero_documento, String email)
         {
-            throw new NotImplementedException();
-        }
-
-        private static void añadirParametroDoc(string doc,ref string query)
-        {
-            query+="where c.Cli_Doc = "+ Convert.ToDecimal(doc)+" ";
-        }
-        private static void añadirParametroNombre(string nombre, ref string query)
-        {
-            string subQuery = "c.Cli_Nombre like('%"+nombre+"%')";
-            query = query.Contains("where")? query+"and "+subQuery : query+"where "+subQuery;
-        }
-        private static void añadirParametroApellido(string apellido, ref string query)
-        {
-            string subQuery = "c.Cli_Apellido like('%"+apellido+"%')";
-            query = query.Contains("where") ? query + "and " + subQuery : query + "where " + subQuery;
-        }
-        private static void añadirParametroEmail(string email, ref string query)
-        {
-            string subQuery = "c.Cli_Mail like('%"+email+"%') ";
-            query = query.Contains("where") ? query + "and " + subQuery : query + "where " + subQuery;
-        }
-        internal static List<Cliente> getClientes(string doc, string nombre, string apellido, string email)
-        {
-            var clientes = new List<Cliente>();
-            var parametros = new List<SqlParameter>();
-            string query = "SELECT td.Tipo_Doc_Descr,c.Cli_Doc,isnull(c.Cli_Cuil,'') as cuil, c.Cli_Nombre,c.Cli_Apellido,c.Cli_Mail,d.Dom_Calle,d.Dom_Nro_Calle,d.Dom_Depto,d.Dom_Piso,isnull(d.Dom_Localidad,'') as localidad,d.Dom_Cod_Postal,c.Cli_Habilitado FROM GESTION_DE_GATOS.Clientes c JOIN GESTION_DE_GATOS.Tipos_Doc td ON td.Tipo_Doc_Id = c.Cli_Tipo_Doc_Id JOIN GESTION_DE_GATOS.Domicilios d  ON d.Dom_Id = c.Cli_Domicilio_Id ";
-            if (!string.IsNullOrEmpty(doc)) añadirParametroDoc(doc,ref query);
-            if (!string.IsNullOrEmpty(nombre)) añadirParametroNombre(nombre, ref query);
-            if (!string.IsNullOrEmpty(apellido)) añadirParametroApellido(apellido, ref query);
-            if (!string.IsNullOrEmpty(email)) añadirParametroEmail(email,ref query);
-            var resultadoQuery = DataBase.ejecutarFuncion(query, parametros);
-            SqlDataReader lector = resultadoQuery.ExecuteReader();
-            if (lector.HasRows)
+            StringBuilder stringBuilder = new StringBuilder();
+            String sql = stringBuilder
+                .Append("SELECT * FROM GESTION_DE_GATOS.Clientes WHERE ")
+                .Append("Cli_Nombre LIKE ('%" + nombre + "%') AND ")
+                .Append("Cli_Apellido LIKE ('%" + apellido+ "%') AND ")
+                .Append("Cli_Mail LIKE ('%" + email + "%') ")
+                .Append(!numero_documento.Equals("") ? ("AND Cli_Doc = " + numero_documento) : "")
+                .ToString();
+            List<Cliente> clientes = new List<Cliente>();
+            SqlDataReader lector = DataBase.GetDataReader(sql, "T", new List<SqlParameter>());
+            while (lector.Read())
             {
-                while (lector.Read())
-                {
-                    Cliente cli = Cliente.buildGetClientes(lector);
-                    clientes.Add(cli);
-                }
-                lector.Close();
+                clientes.Add(Cliente.build(lector));
             }
+            lector.Close();
             return clientes;
         }
+
 
         internal static List<TiposDocumento> getTiposDoc()
         {

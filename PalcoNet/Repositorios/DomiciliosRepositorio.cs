@@ -68,5 +68,25 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@cp", domicilio.CodPostal));
             DataBase.ejecutarSP("[dbo].[sp_actualizar_domicilio]", parametros);
         }
+
+        public static Domicilio getDomicilio(string dom_id)
+        {
+            String sql = "SELECT * FROM GESTION_DE_GATOS.Domicilios WHERE Dom_Id = " + dom_id;
+            SqlDataReader lector = DataBase.GetDataReader(sql, "T", new List<SqlParameter>());
+            if (lector.HasRows && lector.Read())
+            {
+                return Domicilio.buildDomicilio(lector);
+            }
+
+            throw new DomicilioNoEncontradoException(dom_id);
+        }
+
+        public class DomicilioNoEncontradoException : Exception
+        {
+            public DomicilioNoEncontradoException(String id) : base("No se encontro un domicilio con el Id : " + id)
+            {
+
+            }
+        }
     }
 }

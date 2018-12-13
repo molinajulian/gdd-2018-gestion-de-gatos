@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PalcoNet.Repositorios;
 
 namespace PalcoNet.Modelo
 {
@@ -33,7 +31,8 @@ namespace PalcoNet.Modelo
             Domicilio = new Domicilio(calle, nro.ToString(), depto, localidad, cp, piso);
             Habilitado = habilitado;
         }
-        public Cliente(string tipoDeDocumento, int numeroDocumento, string cuil, string nombre, string apellido, string mail, string tel,string calle, string nro, string depto, string piso, string localidad, string cp, bool habilitado,DateTime fechaNac)
+        public Cliente(string tipoDeDocumento, int numeroDocumento, string cuil, string nombre, string apellido, 
+            string mail, string tel, bool habilitado, DateTime fechaNac, Domicilio domicilio)
         {
             NombreCliente = nombre;
             Apellido = apellido;
@@ -41,7 +40,7 @@ namespace PalcoNet.Modelo
             NumeroDocumento = numeroDocumento;
             Cuil = cuil;
             Email = mail;
-            Domicilio = new Domicilio(calle, nro.ToString(), depto, localidad, cp,piso);
+            Domicilio = domicilio;
             Habilitado = habilitado;
             Telefono = tel;
             FechaDeNacimiento = fechaNac;
@@ -50,29 +49,21 @@ namespace PalcoNet.Modelo
         {
             
         }
-        public static Cliente buildGetClientes(SqlDataReader lector)
-        {
-            Dictionary<string, int> camposGetCliente = Ordinales.camposGetClientes;
-            return new Cliente(lector.GetString(camposGetCliente["tipo_doc_descr"]), (int)lector.GetDecimal(camposGetCliente["cli_doc"]),lector.GetString(camposGetCliente["cli_cuil"]),
-                lector.GetString(camposGetCliente["cli_nombre"]),lector.GetString(camposGetCliente["cli_apellido"]),lector.GetString(camposGetCliente["cli_mail"]),
-                lector.GetString(camposGetCliente["dom_calle"]),lector.GetDecimal(camposGetCliente["dom_nro_calle"]).ToString(),lector.GetString(camposGetCliente["dom_depto"]),
-                lector.GetDecimal(camposGetCliente["dom_piso"]).ToString(),lector.GetString(camposGetCliente["dom_localidad"]),lector.GetString(camposGetCliente["dom_cod_postal"]),
-                lector.GetBoolean(camposGetCliente["habilitado"])
-                );
-        }
-        public static Cliente buildGetCliente(SqlDataReader lector)
+
+        public static Cliente build (SqlDataReader lector)
         {
             Dictionary<string, int> camposGetCliente = Ordinales.camposGetCliente;
-            return new Cliente(lector.GetString(camposGetCliente["tipo_doc_descr"]), (int)lector.GetDecimal(camposGetCliente["cli_doc"]), lector.GetString(camposGetCliente["cli_cuil"]),
-                lector.GetString(camposGetCliente["cli_nombre"]), lector.GetString(camposGetCliente["cli_apellido"]), lector.GetString(camposGetCliente["cli_mail"]),lector.GetDecimal(camposGetCliente["cli_tel"]).ToString(),
-                lector.GetString(camposGetCliente["dom_calle"]), lector.GetDecimal(camposGetCliente["dom_nro_calle"]).ToString(), lector.GetString(camposGetCliente["dom_depto"]),
-                lector.GetDecimal(camposGetCliente["dom_piso"]).ToString(), lector.GetString(camposGetCliente["dom_localidad"]), lector.GetString(camposGetCliente["dom_cod_postal"]),
-                lector.GetBoolean(camposGetCliente["habilitado"]),lector.GetDateTime(camposGetCliente["cli_fecha_nac"]));
-        }
-        public static int buildClienteExistente(SqlDataReader lector)
-        {
-            Dictionary<string, int> campoClienteExistente = Ordinales.campoClienteExistente;
-            return lector.GetInt32(campoClienteExistente["cantidad"]);
+            return new Cliente(
+                lector[camposGetCliente["tipo_doc_descr"]].ToString(),
+                Convert.ToInt32(lector[camposGetCliente["cli_doc"]]),
+                lector[camposGetCliente["cli_cuil"]].ToString(),
+                lector[camposGetCliente["cli_nombre"]].ToString(),
+                lector[camposGetCliente["cli_apellido"]].ToString(),
+                lector[camposGetCliente["cli_mail"]].ToString(),
+                lector[camposGetCliente["cli_tel"]].ToString(),
+                lector.GetBoolean(camposGetCliente["cli_habilitado"]),
+                lector.GetDateTime(camposGetCliente["cli_fecha_nac"]),
+                DomiciliosRepositorio.getDomicilio(lector[camposGetCliente["cli_dom_id"]].ToString()));
         }
     }
 }

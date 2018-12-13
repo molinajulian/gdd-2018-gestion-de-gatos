@@ -256,6 +256,7 @@
             this.btnVolver.TabIndex = 38;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // directorySearcher1
             // 
@@ -272,7 +273,6 @@
             this.Controls.Add(this.groupBoxModifCli);
             this.Name = "ModificacionCliente";
             this.Text = "Modificacion de Cliente";
-            this.Load += new System.EventHandler(this.ModificacionCliente_Load);
             this.groupBoxModifCli.ResumeLayout(false);
             this.groupBoxModifCli.PerformLayout();
             this.ResumeLayout(false);

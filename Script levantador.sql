@@ -1001,14 +1001,16 @@ END
 go
 
 GO
+
 IF (OBJECT_ID('sp_existe_cliente', 'P') IS NOT NULL) DROP PROCEDURE sp_existe_cliente 
 GO
-CREATE PROCEDURE sp_existe_cliente (@tipoDoc int,@doc decimal,@cuil nvarchar)
+CREATE PROCEDURE sp_existe_cliente (@tipoDoc int,@doc decimal,@cuil nvarchar, @existencias INT OUTPUT)
 AS BEGIN
-	if(@cuil <> '') SELECT COUNT(*) as cantidad FROM GESTION_DE_GATOS.Clientes WHERE Cli_Cuil = @cuil
-	else SELECT COUNT(*) as cantidad FROM GESTION_DE_GATOS.Clientes WHERE Cli_Tipo_Doc_Id = @tipoDoc AND Cli_Doc = @doc
+	
+	if(@cuil <> '') SET @existencias = (SELECT COUNT(*) FROM GESTION_DE_GATOS.Clientes WHERE Cli_Cuil = @cuil);
+	else SET @existencias = (SELECT COUNT(*) FROM GESTION_DE_GATOS.Clientes WHERE Cli_Tipo_Doc_Id = @tipoDoc AND Cli_Doc = @doc);
 END 
-go
+GO
 
 GO
 IF (OBJECT_ID('sp_eliminar_cliente', 'P') IS NOT NULL) DROP PROCEDURE sp_eliminar_cliente 

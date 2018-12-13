@@ -48,25 +48,23 @@ namespace PalcoNet.Modelo
                                                     {"dom_cod_postal", 11},
                                                     {"habilitado",12}
                                                 };
-       public static Dictionary<string, int> camposGetCliente = new Dictionary<string, int>
+        public static Dictionary<string, int> camposGetCliente = new Dictionary<string, int>
                                                 {
                                                     {"tipo_doc_descr", 0},
                                                     {"cli_doc", 1},
-                                                    {"cli_cuil", 2},
+                                                    {"cli_apellido", 2},
                                                     {"cli_nombre", 3},
-                                                    {"cli_apellido", 4},
-                                                    {"cli_mail", 5},
-                                                    {"cli_tel", 6},
-                                                    {"dom_calle", 7},
-                                                    {"dom_nro_calle", 8},
-                                                    {"dom_depto",9},
-                                                    {"dom_piso",10},
-                                                    {"dom_localidad", 11},
-                                                    {"dom_cod_postal", 12},
-                                                    {"habilitado",13},
-                                                    {"cli_fecha_nac",14}
+                                                    {"cli_cuil", 4},
+                                                    {"cli_fecha_nac", 5},
+                                                    {"cli_fecha_creacion", 6},
+                                                    {"cli_mail", 7},
+                                                    {"cli_tel", 8},
+                                                    {"cli_dom_id", 9},
+                                                    {"cli_puntos", 10},
+                                                    {"cli_usuario_id", 11},
+                                                    {"cli_habilitado", 12}
                                                 };
-       public static Dictionary<string, int> camposFuncionalidad = new Dictionary<string, int>
+        public static Dictionary<string, int> camposFuncionalidad = new Dictionary<string, int>
                                                 {
                                                     {"id", 0},
                                                     {"descripcion", 1}

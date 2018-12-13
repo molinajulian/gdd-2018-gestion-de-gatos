@@ -208,7 +208,7 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonModificacionCliente_Click(object sender, EventArgs e)
         {
-            ListadoCliente lc = new ListadoCliente('M');
+            ListadoCliente lc = new ListadoCliente();
             lc.ShowDialog();
         }
 
@@ -220,7 +220,7 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonBajaCliente_Click(object sender, EventArgs e)
         {
-            ListadoCliente lc = new ListadoCliente('B');
+            ListadoCliente lc = new ListadoCliente();
             lc.ShowDialog();
         }
 

@@ -57,7 +57,6 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos de Nueva Tarjeta";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // btnVolver
             // 
@@ -127,7 +126,6 @@
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(166, 20);
             this.txtNumero.TabIndex = 1;
-            this.txtNumero.TextChanged += new System.EventHandler(this.txNumero_TextChanged);
             this.txtNumero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumero_KeyPress);
             // 
             // AltaTarjeta
@@ -138,7 +136,6 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "AltaTarjeta";
             this.Text = "AltaTarjeta";
-            this.Load += new System.EventHandler(this.AltaTarjeta_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

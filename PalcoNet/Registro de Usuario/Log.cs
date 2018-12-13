@@ -31,13 +31,12 @@ namespace PalcoNet.Registro_de_usuario
         private void btn_login_Click(object sender, EventArgs e)
         {
             try {
-                this.Hide();
                 usuarioRepositorio.validarUsuario(textUsuario.Text, textContrasena.Text);
-                ConfiguracionInicial configInicial = new ConfiguracionInicial(usuarioRepositorio.buscarUsuario(textUsuario.Text), this);
+                this.Hide();
+                new ConfiguracionInicial(usuarioRepositorio.buscarUsuario(textUsuario.Text), this).Show();
                 textContrasena.Text = "Contraseña";
                 textUsuario.Text = "Nombre de Usuario";
                 textContrasena.UseSystemPasswordChar = false;
-                configInicial.ShowDialog();
             } catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "ERROR");
