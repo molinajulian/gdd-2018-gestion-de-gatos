@@ -40,7 +40,7 @@
             this.btn_atras = new System.Windows.Forms.Button();
             this.btn_limpiar = new System.Windows.Forms.Button();
             this.btn_editar = new System.Windows.Forms.Button();
-            this.btn_eliminar = new System.Windows.Forms.Button();
+            this.btn_cambiar_estado = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.data_empresas)).BeginInit();
             this.grupo_filtros.SuspendLayout();
             this.SuspendLayout();
@@ -176,25 +176,25 @@
             this.btn_editar.UseVisualStyleBackColor = true;
             this.btn_editar.Click += new System.EventHandler(this.button1_Click);
             // 
-            // btn_eliminar
+            // btn_cambiar_estado
             // 
-            this.btn_eliminar.Enabled = false;
-            this.btn_eliminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_eliminar.Location = new System.Drawing.Point(333, 434);
-            this.btn_eliminar.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_eliminar.Name = "btn_eliminar";
-            this.btn_eliminar.Size = new System.Drawing.Size(74, 28);
-            this.btn_eliminar.TabIndex = 14;
-            this.btn_eliminar.Text = "Eliminar";
-            this.btn_eliminar.UseVisualStyleBackColor = true;
-            this.btn_eliminar.Click += new System.EventHandler(this.btn_eliminar_Click);
+            this.btn_cambiar_estado.Enabled = false;
+            this.btn_cambiar_estado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_cambiar_estado.Location = new System.Drawing.Point(334, 434);
+            this.btn_cambiar_estado.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_cambiar_estado.Name = "btn_cambiar_estado";
+            this.btn_cambiar_estado.Size = new System.Drawing.Size(157, 28);
+            this.btn_cambiar_estado.TabIndex = 14;
+            this.btn_cambiar_estado.Text = "Deshabilitar/Habilitar";
+            this.btn_cambiar_estado.UseVisualStyleBackColor = true;
+            this.btn_cambiar_estado.Click += new System.EventHandler(this.btn_cambiar_estado_Click);
             // 
             // ListadoEmpresas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(644, 479);
-            this.Controls.Add(this.btn_eliminar);
+            this.Controls.Add(this.btn_cambiar_estado);
             this.Controls.Add(this.btn_editar);
             this.Controls.Add(this.btn_atras);
             this.Controls.Add(this.btn_limpiar);
@@ -224,6 +224,6 @@
         private System.Windows.Forms.TextBox txt_mail;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btn_editar;
-        private System.Windows.Forms.Button btn_eliminar;
+        private System.Windows.Forms.Button btn_cambiar_estado;
     }
 }

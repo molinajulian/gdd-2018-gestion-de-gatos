@@ -162,10 +162,12 @@ END
 GO
 
 
-IF (OBJECT_ID('sp_eliminar_empresa', 'P') IS NOT NULL) DROP PROCEDURE sp_eliminar_empresa
+IF (OBJECT_ID('sp_cambiar_estado_empresa', 'P') IS NOT NULL) DROP PROCEDURE sp_cambiar_estado_empresa
 GO
-CREATE procedure dbo.sp_eliminar_empresa (@cuit nvarchar(255))
+CREATE procedure dbo.sp_cambiar_estado_empresa (@cuit nvarchar(255), @estado_final INT, @resultado INT OUTPUT)
 AS BEGIN
-	DELETE FROM [GESTION_DE_GATOS].Empresas WHERE Emp_Cuit = @cuit; 
+	UPDATE GESTION_DE_GATOS.Empresas SET Emp_Habilitada = @estado_final WHERE Emp_Cuit = @cuit;
+	SELECT @resultado = Emp_Habilitada FROM GESTION_DE_GATOS.Empresas WHERE Emp_Cuit = @cuit;
 END
 GO
+

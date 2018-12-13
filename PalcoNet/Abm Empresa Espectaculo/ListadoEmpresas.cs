@@ -68,6 +68,11 @@ namespace PalcoNet.AbmEmpresa
         }
 
 
+        private String[] generarFila(Empresa empresa)
+        {
+            return new []{ empresa.Cuit, empresa.RazonSocial, empresa.Direccion.ToString(),
+                empresa.Email, empresa.Telefono, Convert.ToString(empresa.Habilitada)};
+        }
 
         private void btn_buscar_Click(object sender, EventArgs e)
         {
@@ -79,22 +84,20 @@ namespace PalcoNet.AbmEmpresa
                 empresas = EmpresasRepositorio.getEmpresas(txt_razon_social.Text, txt_mail.Text, txt_cuit.Text);
                 foreach (Empresa empresa in empresas)
                 {
-                    String[] row = { empresa.Cuit, empresa.RazonSocial, empresa.Direccion.ToString(),
-                        empresa.Email, empresa.Telefono, Convert.ToString(empresa.Habilitada) };
-                    tabla_empresas.Rows.Add(row);
+                    tabla_empresas.Rows.Add(generarFila(empresa));
                 }
                 actualizarTablaEmpresas();
                 if (empresas.Count == 0)
                 {
                     MessageBox.Show("No se han encontrado resultados", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     btn_editar.Enabled = false;
-                    btn_eliminar.Enabled = false;
+                    btn_cambiar_estado.Enabled = false;
 
                 }
                 else
                 {
                     btn_editar.Enabled = true;
-                    btn_eliminar.Enabled = true;
+                    btn_cambiar_estado.Enabled = true;
                 }
             }
             catch (Exception ex)
@@ -144,46 +147,6 @@ namespace PalcoNet.AbmEmpresa
 
         }
 
-        private void data_empresas_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
-            if (tabla_empresas.Rows.Count == 0) return;
-            
-            if (tabla_empresas.Rows.Count < e.RowIndex + 1) return;
-            if (e.ColumnIndex == 5 || e.ColumnIndex == 0)
-            {
-                int indice = e.RowIndex;
-                DataGridViewRow row = data_empresas.Rows[indice];
-                String empresa_cuit = row.Cells["Cuit"].Value.ToString();
-                
-             
-            }
-        }
-/*
-        private void bajarEmpresa(String empresa_cuit,int indice)
-        {
-            if (!EmpresasRepositorio.esEmpresaHabilitada(empresa_cuit))
-            {
-                MessageBox.Show("La empresa ya se encuentra inhabilitada", "Inhabilitacion de empresa", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            try
-            {
-                EmpresasRepositorio.deshabilitar(empresa_cuit);
-            }
-            catch (EmpresaNoRendidaError e)
-            {
-                MessageBox.Show(e.Message, "ERROR", MessageBoxButtons.OK,MessageBoxIcon.Error);
-              
-                return;
-            }
-            tabla_empresas.Rows[indice].Delete();
-            actualizarTablaEmpresas();
-            MessageBox.Show("La empresa ha sido inhabilitada exitosamente", "Inhabilitacion de empresa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-*/
-
         private void button1_Click(object sender, EventArgs e)
         {
             try
@@ -217,13 +180,21 @@ namespace PalcoNet.AbmEmpresa
             this.Hide();
         }
 
-        private void btn_eliminar_Click(object sender, EventArgs e)
+        private void btn_cambiar_estado_Click(object sender, EventArgs e)
         {
-            EmpresasRepositorio.eliminar(getEmpresaSeleccionada());
-            MessageBox.Show("Empresa Eliminada exitosamente", "Eliminacion de Empresa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.limpiarEmpresas();
+            Empresa empresa = getEmpresaSeleccionada();
+            empresa.Habilitada = EmpresasRepositorio.cambiarEstado(empresa);
+            String detalleHabilitacion = empresa.Habilitada ? "HABILITADA" : "DESHABILITADA";
+            actualizarFilaSeleccionada(empresa);
+            MessageBox.Show("Estado de " + empresa.RazonSocial + " cambiado a : " + detalleHabilitacion, "Estado de Empresa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public void actualizarFilaSeleccionada(Empresa empresa)
+        {
+            data_empresas.Rows[data_empresas.SelectedRows[0].Index].SetValues(generarFila(empresa));
         }
     }
+    
 
     public class EmpresaNoSeleccionadaException : Exception
     {

@@ -186,6 +186,18 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@cuit", empresa.Cuit));
             DataBase.ejecutarSP("[dbo].[sp_eliminar_empresa]", parametros);
         }
+
+        public static bool cambiarEstado(Empresa empresa)
+        {
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            SqlParameter output = new SqlParameter("@resultado", 0);
+            output.Direction = ParameterDirection.Output;
+            parametros.Add(output);
+            parametros.Add(new SqlParameter("@cuit", empresa.Cuit));
+            parametros.Add(new SqlParameter("@estado_final", empresa.Habilitada ? 0 : 1));
+            SqlCommand sqlCommand = DataBase.ejecutarSP("[dbo].[sp_cambiar_estado_empresa]", parametros);
+            return Convert.ToInt32(sqlCommand.Parameters["@resultado"].Value) == 1;
+        }
     }
 }
 
