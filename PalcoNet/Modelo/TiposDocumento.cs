@@ -31,7 +31,8 @@ namespace PalcoNet.Modelo
         internal static TiposDocumento buildGetTiposDoc(System.Data.SqlClient.SqlDataReader lector)
         {
             Dictionary<string, int> camposTiposDoc = Ordinales.camposGetTiposDoc;
-            return new TiposDocumento(lector.GetInt32(camposTiposDoc["tipos_doc_id"]), lector.GetString(camposTiposDoc["tipos_doc_descr"]));
+            return new TiposDocumento(lector.GetInt32(camposTiposDoc["tipos_doc_id"]),
+                lector.GetString(camposTiposDoc["tipos_doc_descr"]));
         }
     }
 }

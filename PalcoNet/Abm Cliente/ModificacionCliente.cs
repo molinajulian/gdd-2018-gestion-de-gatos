@@ -23,7 +23,6 @@ namespace PalcoNet.AbmCliente
                 materialSkinManager.AddFormToManage(this);
                 materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
                 materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-                getTiposDocumento();
                 this.cliente = cliente;
                 llenarCamposUi();
             }
@@ -43,20 +42,19 @@ namespace PalcoNet.AbmCliente
             txtMail.Text = cliente.Email;
             txtTel.Text = cliente.Telefono; 
             datePickerFechaNac.Value = cliente.FechaDeNacimiento;
+            llenarComboTiposDoc();
             comboTiposDoc.SelectedIndex = comboTiposDoc.FindString(cliente.TipoDeDocumento.Descripcion);
         }
 
-        private void getTiposDocumento()
+        private void llenarComboTiposDoc()
         {
-            List<TiposDocumento> tipos = new List<TiposDocumento>();
             comboTiposDoc.Items.Clear();
-            tipos = ClienteRepositorio.getTiposDoc();
-            foreach (TiposDocumento tipo in tipos)
+            foreach (TiposDocumento tipo in ClienteRepositorio.getTiposDoc())
             {
                 comboTiposDoc.Items.Add(tipo);
-                comboTiposDoc.DisplayMember = "Descripcion";
-                comboTiposDoc.ValueMember = "Id";
             }
+            comboTiposDoc.DisplayMember = "Descripcion";
+            comboTiposDoc.ValueMember = "Id";
         }
 
         private void button1_Click(object sender, EventArgs e)

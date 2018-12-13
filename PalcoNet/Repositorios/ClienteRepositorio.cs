@@ -56,7 +56,7 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@piso", Convert.ToDecimal(cliente.Domicilio.Piso)));
             parametros.Add(new SqlParameter("@cp", cliente.Domicilio.CodPostal));
             parametros.Add(new SqlParameter("@habilitado", cliente.Habilitado));
-            SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_modificar_cliente]", "SP", parametros);
+            DataBase.ejecutarSP("[dbo].[sp_modificar_cliente]", parametros);
         }
 
         internal static string agregar(Cliente cliente)
@@ -120,6 +120,28 @@ namespace PalcoNet.Repositorios
                 lector.Close();
             }
             return tipos;
+        }
+
+        public static TiposDocumento getTipoDoc(int tipoDeDocumentoId)
+        {
+            String sql = "SELECT [Tipo_Doc_Id] ,[Tipo_Doc_Descr] FROM [GESTION_DE_GATOS].[Tipos_Doc]" +
+                         " WHERE Tipo_Doc_Id = " + tipoDeDocumentoId;
+            SqlDataReader lector = DataBase.GetDataReader(sql, "T", new List<SqlParameter>());
+            if(lector.HasRows && lector.Read())
+            {
+                TiposDocumento tipoDoc = TiposDocumento.buildGetTiposDoc(lector);
+                lector.Close();
+                return tipoDoc;
+            }
+            throw new TipoDocNoEncontradoException(tipoDeDocumentoId);
+        }
+
+        public class TipoDocNoEncontradoException : Exception
+        {
+            public TipoDocNoEncontradoException(int id) : base("No se encontro un tipo de documento con id : " + id)
+            {
+
+            }
         }
     }
 }

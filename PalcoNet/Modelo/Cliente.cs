@@ -20,23 +20,12 @@ namespace PalcoNet.Modelo
         public List<Tarjeta> Tarjeta { get; set; }
         public Boolean Habilitado { get; set; }
 
-        public Cliente(string tipoDeDocumento, int numeroDocumento, string cuil, string nombre, string apellido, string mail, string calle, string nro, string depto, string piso, string localidad, string cp, bool habilitado)
-        {
-            NombreCliente = nombre;
-            Apellido = apellido;
-            TipoDeDocumento = new TiposDocumento(tipoDeDocumento);
-            NumeroDocumento = numeroDocumento;
-            Cuil = cuil;
-            Email = mail;
-            Domicilio = new Domicilio(calle, nro.ToString(), depto, localidad, cp, piso);
-            Habilitado = habilitado;
-        }
-        public Cliente(string tipoDeDocumento, int numeroDocumento, string cuil, string nombre, string apellido, 
+        public Cliente(int tipoDeDocumento_id, int numeroDocumento, string cuil, string nombre, string apellido, 
             string mail, string tel, bool habilitado, DateTime fechaNac, Domicilio domicilio)
         {
             NombreCliente = nombre;
             Apellido = apellido;
-            TipoDeDocumento = new TiposDocumento(tipoDeDocumento);
+            TipoDeDocumento = ClienteRepositorio.getTipoDoc(tipoDeDocumento_id);
             NumeroDocumento = numeroDocumento;
             Cuil = cuil;
             Email = mail;
@@ -54,7 +43,7 @@ namespace PalcoNet.Modelo
         {
             Dictionary<string, int> camposGetCliente = Ordinales.camposGetCliente;
             return new Cliente(
-                lector[camposGetCliente["tipo_doc_descr"]].ToString(),
+                Convert.ToInt32(lector[camposGetCliente["tipo_doc_id"]]),
                 Convert.ToInt32(lector[camposGetCliente["cli_doc"]]),
                 lector[camposGetCliente["cli_cuil"]].ToString(),
                 lector[camposGetCliente["cli_nombre"]].ToString(),

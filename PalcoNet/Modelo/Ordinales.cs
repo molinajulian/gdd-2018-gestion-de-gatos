@@ -50,7 +50,7 @@ namespace PalcoNet.Modelo
                                                 };
         public static Dictionary<string, int> camposGetCliente = new Dictionary<string, int>
                                                 {
-                                                    {"tipo_doc_descr", 0},
+                                                    {"tipo_doc_id", 0},
                                                     {"cli_doc", 1},
                                                     {"cli_apellido", 2},
                                                     {"cli_nombre", 3},
