@@ -134,6 +134,7 @@ namespace PalcoNet.AbmEmpresa
         private void limpiarEmpresas()
         {
             tabla_empresas.Rows.Clear();
+            data_empresas.ClearSelection();
             actualizarTablaEmpresas();
         }
 
@@ -214,6 +215,13 @@ namespace PalcoNet.AbmEmpresa
         private void btn_atras_Click_1(object sender, EventArgs e)
         {
             this.Hide();
+        }
+
+        private void btn_eliminar_Click(object sender, EventArgs e)
+        {
+            EmpresasRepositorio.eliminar(getEmpresaSeleccionada());
+            MessageBox.Show("Empresa Eliminada exitosamente", "Eliminacion de Empresa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.limpiarEmpresas();
         }
     }
 

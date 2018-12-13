@@ -17,13 +17,15 @@ namespace PalcoNet.Modelo
             CodPostal = cp;
             Piso = piso;
         }
-        public Direccion(string calle, string numero, string departamento, string localidad, string cp)
+        public Direccion(int id, string calle, string numero, string departamento, string localidad, string cp, string piso)
         {
+            Id = id;
             Calle = calle;
             Numero = numero;
             Departamento = departamento;
             Localidad = localidad;
             CodPostal = cp;
+            Piso = piso;
         }
         public Direccion(){}
         public int Id { get; set; }

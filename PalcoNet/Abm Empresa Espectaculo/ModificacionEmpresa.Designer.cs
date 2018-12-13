@@ -71,6 +71,7 @@
             this.btnVolver.TabIndex = 44;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // grupo_empresa
             // 
@@ -270,6 +271,7 @@
             // 
             // txtCuit
             // 
+            this.txtCuit.Enabled = false;
             this.txtCuit.Location = new System.Drawing.Point(301, 144);
             this.txtCuit.Margin = new System.Windows.Forms.Padding(2);
             this.txtCuit.Name = "txtCuit";

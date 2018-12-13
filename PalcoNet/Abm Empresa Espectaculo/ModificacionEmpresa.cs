@@ -59,27 +59,13 @@ namespace PalcoNet.AbmEmpresa
             empresa.Direccion.CodPostal = txtCp.Text;
             empresa.Direccion.Piso = txtPiso.Text;
             empresa.Direccion.Departamento = txtDepto.Text;
-            empresa.Habilitada = checkDeshabilitada.Checked;
-        }
-
-        private void btn_modificar_empresa_Click(object sender, EventArgs e)
-        {
-            if (!verificaValidaciones()) return;
-            actualizarInstanciaEmpresa();
-            limpiarVentana();
-            MessageBox.Show("La empresa ha sido modificada exitosamente", "Modificacion de empresa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            empresa.Habilitada = !checkDeshabilitada.Checked;
         }
 
         private bool verificaValidaciones()
         {
             errorProvider1.Clear();
             return formularioCompleto();
-        }
-
-       
-        private void btn_atras_Click(object sender, EventArgs e)
-        {
-            this.Hide();
         }
 
          private void limpiarVentana()
@@ -114,14 +100,6 @@ namespace PalcoNet.AbmEmpresa
              return error;
          }
 
-
-        private Empresa getEmpresaDeUi()
-        {
-            return new Empresa(txtRazon.Text, txtCuit.Text, txtMail.Text, txtTel.Text,
-                new Direccion(txtCalle.Text, txtNumero.Text, txtDepto.Text, txtLocalidad.Text, txtCp.Text, txtPiso.Text),
-                !checkDeshabilitada.Checked);
-        }
-
         private void button1_Click(object sender, EventArgs e)
          {
             grupo_empresa.Enabled = false;
@@ -132,7 +110,8 @@ namespace PalcoNet.AbmEmpresa
             }
             try
             {
-                EmpresasRepositorio.actualizar(getEmpresaDeUi());
+                actualizarInstanciaEmpresa();
+                EmpresasRepositorio.actualizar(empresa);
                 MessageBox.Show("La empresa ha sido modificada exitosamente", "Modificacion de empresa", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (SqlException ex)
@@ -142,5 +121,9 @@ namespace PalcoNet.AbmEmpresa
             grupo_empresa.Enabled = true;
         }
 
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
     }
 }

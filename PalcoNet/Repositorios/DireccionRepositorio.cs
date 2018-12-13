@@ -54,6 +54,7 @@ namespace PalcoNet.Repositorios
             while (reader.Read())
             {
                 direccion = new Direccion(
+                                Convert.ToInt32(id),
                                 reader.GetValue(Ordinales.Direccion["calle"]).ToString(),
                                 reader.GetValue(Ordinales.Direccion["numero"]).ToString(),
                                 reader.GetValue(Ordinales.Direccion["departamento"]).ToString(),

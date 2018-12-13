@@ -179,6 +179,13 @@ namespace PalcoNet.Repositorios
             lector.Close();
             return empresas;
         }
+
+        public static void eliminar(Empresa empresa)
+        {
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@cuit", empresa.Cuit));
+            DataBase.ejecutarSP("[dbo].[sp_eliminar_empresa]", parametros);
+        }
     }
 }
 

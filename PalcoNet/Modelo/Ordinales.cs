@@ -111,7 +111,8 @@ namespace PalcoNet.Modelo
                                                     {"email",3},
                                                     {"domicilioId",4},
                                                     {"usuarioId", 5},
-                                                    {"telefono",6}
+                                                    {"telefono",6},
+                                                    {"habilitada", 7}
                                                     };
        public static Dictionary<string, int> Rubro = new Dictionary<string, int> 
                                                     {
