@@ -23,7 +23,7 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@apellido", empresa.RazonSocial));
             parametros.Add(new SqlParameter("@mail", empresa.Email));
             parametros.Add(new SqlParameter("@telefono", empresa.Telefono));
-            parametros.Add(new SqlParameter("@localidad", empresa.Direccion.Localidad));
+            parametros.Add(new SqlParameter("@localidad", empresa.Domicilio.Localidad));
             parametros.Add(new SqlParameter("@username", username));
             return parametros;
         }
@@ -58,7 +58,7 @@ namespace PalcoNet.Repositorios
                         Cuit=reader.GetValue(Ordinales.Empresa["cuit"]).ToString(),
                         Email = reader.GetValue(Ordinales.Empresa["email"]).ToString(),
                         Telefono = reader.GetValue(Ordinales.Empresa["telefono"]).ToString(),
-                        Direccion = DireccionRepositorio.ReadDireccionFromDb(reader.GetValue(Ordinales.Empresa["cuit"]).ToString())
+                        Domicilio = DireccionRepositorio.ReadDireccionFromDb(reader.GetValue(Ordinales.Empresa["cuit"]).ToString())
                          };
         }
        
@@ -133,13 +133,7 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@cuit", empresa.Cuit));
             parametros.Add(new SqlParameter("@mail", empresa.Email));
             parametros.Add(new SqlParameter("@telefono", empresa.Telefono));
-            parametros.Add(new SqlParameter("@domicilio_id", empresa.Direccion.Id));
-            parametros.Add(new SqlParameter("@calle", empresa.Direccion.Calle));
-            parametros.Add(new SqlParameter("@nro", empresa.Direccion.Numero));
-            parametros.Add(new SqlParameter("@depto", empresa.Direccion.Departamento));
-            parametros.Add(new SqlParameter("@localidad", empresa.Direccion.Localidad));
-            parametros.Add(new SqlParameter("@piso", empresa.Direccion.Piso));
-            parametros.Add(new SqlParameter("@cp", empresa.Direccion.CodPostal));
+            parametros.Add(new SqlParameter("@domicilio_id", empresa.Domicilio.Id));
             parametros.Add(new SqlParameter("@habilitada", empresa.Habilitada ? 1 : 0));
             DataBase.ejecutarSP("[dbo].[sp_actualizar_empresa]", parametros);
         }
@@ -151,12 +145,7 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@cuit", empresa.Cuit));
             parametros.Add(new SqlParameter("@mail", empresa.Email));
             parametros.Add(new SqlParameter("@telefono", empresa.Telefono));
-            parametros.Add(new SqlParameter("@calle", empresa.Direccion.Calle));
-            parametros.Add(new SqlParameter("@nro", empresa.Direccion.Numero));
-            parametros.Add(new SqlParameter("@depto", empresa.Direccion.Departamento));
-            parametros.Add(new SqlParameter("@localidad", empresa.Direccion.Localidad));
-            parametros.Add(new SqlParameter("@piso", empresa.Direccion.Piso));
-            parametros.Add(new SqlParameter("@cp", empresa.Direccion.CodPostal));
+            parametros.Add(new SqlParameter("@dom_id", empresa.Domicilio.Id));
             DataBase.ejecutarSP("[dbo].[sp_crear_empresa]", parametros);
         }
 

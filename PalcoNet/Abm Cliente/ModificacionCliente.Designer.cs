@@ -35,31 +35,20 @@
             this.btnAlta = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.datePickerFechaNac = new System.Windows.Forms.DateTimePicker();
-            this.label16 = new System.Windows.Forms.Label();
-            this.txtNum = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.txtPiso = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.txtCp = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.txtLoc = new System.Windows.Forms.TextBox();
             this.txtTel = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.txtNumDoc = new System.Windows.Forms.TextBox();
             this.txtApellido = new System.Windows.Forms.TextBox();
-            this.label23 = new System.Windows.Forms.Label();
-            this.txtCalle = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.txtMail = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.groupBoxModifCli = new System.Windows.Forms.GroupBox();
-            this.txtDepto = new System.Windows.Forms.TextBox();
-            this.btnVolver = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.checkHabilitado = new System.Windows.Forms.CheckBox();
+            this.btnVolver = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.directorySearcher1 = new System.DirectoryServices.DirectorySearcher();
             this.groupBoxModifCli.SuspendLayout();
@@ -100,7 +89,8 @@
             // 
             // btnAlta
             // 
-            this.btnAlta.Location = new System.Drawing.Point(311, 321);
+            this.btnAlta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAlta.Location = new System.Drawing.Point(165, 287);
             this.btnAlta.Name = "btnAlta";
             this.btnAlta.Size = new System.Drawing.Size(178, 40);
             this.btnAlta.TabIndex = 13;
@@ -123,79 +113,6 @@
             this.datePickerFechaNac.Name = "datePickerFechaNac";
             this.datePickerFechaNac.Size = new System.Drawing.Size(136, 20);
             this.datePickerFechaNac.TabIndex = 12;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(271, 242);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(44, 13);
-            this.label16.TabIndex = 27;
-            this.label16.Text = "Número";
-            // 
-            // txtNum
-            // 
-            this.txtNum.Location = new System.Drawing.Point(321, 239);
-            this.txtNum.Name = "txtNum";
-            this.txtNum.Size = new System.Drawing.Size(43, 20);
-            this.txtNum.TabIndex = 9;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(370, 242);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(27, 13);
-            this.label17.TabIndex = 25;
-            this.label17.Text = "Piso";
-            // 
-            // txtPiso
-            // 
-            this.txtPiso.Location = new System.Drawing.Point(403, 239);
-            this.txtPiso.Name = "txtPiso";
-            this.txtPiso.Size = new System.Drawing.Size(27, 20);
-            this.txtPiso.TabIndex = 10;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(436, 242);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(30, 13);
-            this.label18.TabIndex = 23;
-            this.label18.Text = "Dpto";
-            // 
-            // txtCp
-            // 
-            this.txtCp.Location = new System.Drawing.Point(415, 203);
-            this.txtCp.Name = "txtCp";
-            this.txtCp.Size = new System.Drawing.Size(51, 20);
-            this.txtCp.TabIndex = 7;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(388, 206);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(21, 13);
-            this.label19.TabIndex = 20;
-            this.label19.Text = "CP";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(9, 206);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(53, 13);
-            this.label20.TabIndex = 19;
-            this.label20.Text = "Localidad";
-            // 
-            // txtLoc
-            // 
-            this.txtLoc.Location = new System.Drawing.Point(62, 203);
-            this.txtLoc.Name = "txtLoc";
-            this.txtLoc.Size = new System.Drawing.Size(320, 20);
-            this.txtLoc.TabIndex = 6;
             // 
             // txtTel
             // 
@@ -228,35 +145,18 @@
             this.txtNumDoc.Name = "txtNumDoc";
             this.txtNumDoc.Size = new System.Drawing.Size(136, 20);
             this.txtNumDoc.TabIndex = 3;
-            this.txtNumDoc.TextChanged += new System.EventHandler(this.textBox7_TextChanged);
             // 
             // txtApellido
             // 
-            this.txtApellido.Location = new System.Drawing.Point(250, 44);
+            this.txtApellido.Location = new System.Drawing.Point(297, 44);
             this.txtApellido.Name = "txtApellido";
-            this.txtApellido.Size = new System.Drawing.Size(132, 20);
+            this.txtApellido.Size = new System.Drawing.Size(203, 20);
             this.txtApellido.TabIndex = 2;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(9, 242);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(30, 13);
-            this.label23.TabIndex = 12;
-            this.label23.Text = "Calle";
-            // 
-            // txtCalle
-            // 
-            this.txtCalle.Location = new System.Drawing.Point(62, 239);
-            this.txtCalle.Name = "txtCalle";
-            this.txtCalle.Size = new System.Drawing.Size(203, 20);
-            this.txtCalle.TabIndex = 8;
             // 
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(200, 47);
+            this.label24.Location = new System.Drawing.Point(247, 47);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(44, 13);
             this.label24.TabIndex = 10;
@@ -277,7 +177,6 @@
             this.txtMail.Name = "txtMail";
             this.txtMail.Size = new System.Drawing.Size(175, 20);
             this.txtMail.TabIndex = 4;
-            this.txtMail.TextChanged += new System.EventHandler(this.textBox10_TextChanged);
             // 
             // label26
             // 
@@ -292,15 +191,14 @@
             // 
             this.txtNombre.Location = new System.Drawing.Point(62, 44);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(132, 20);
+            this.txtNombre.Size = new System.Drawing.Size(175, 20);
             this.txtNombre.TabIndex = 1;
-            this.txtNombre.TextChanged += new System.EventHandler(this.txtNombre_TextChanged);
             // 
             // groupBoxModifCli
             // 
             this.groupBoxModifCli.BackColor = System.Drawing.Color.White;
+            this.groupBoxModifCli.Controls.Add(this.button1);
             this.groupBoxModifCli.Controls.Add(this.checkHabilitado);
-            this.groupBoxModifCli.Controls.Add(this.txtDepto);
             this.groupBoxModifCli.Controls.Add(this.txtCuil);
             this.groupBoxModifCli.Controls.Add(this.label14);
             this.groupBoxModifCli.Controls.Add(this.comboTiposDoc);
@@ -308,22 +206,11 @@
             this.groupBoxModifCli.Controls.Add(this.btnAlta);
             this.groupBoxModifCli.Controls.Add(this.label15);
             this.groupBoxModifCli.Controls.Add(this.datePickerFechaNac);
-            this.groupBoxModifCli.Controls.Add(this.label16);
-            this.groupBoxModifCli.Controls.Add(this.txtNum);
-            this.groupBoxModifCli.Controls.Add(this.label17);
-            this.groupBoxModifCli.Controls.Add(this.txtPiso);
-            this.groupBoxModifCli.Controls.Add(this.label18);
-            this.groupBoxModifCli.Controls.Add(this.txtCp);
-            this.groupBoxModifCli.Controls.Add(this.label19);
-            this.groupBoxModifCli.Controls.Add(this.label20);
-            this.groupBoxModifCli.Controls.Add(this.txtLoc);
             this.groupBoxModifCli.Controls.Add(this.txtTel);
             this.groupBoxModifCli.Controls.Add(this.label21);
             this.groupBoxModifCli.Controls.Add(this.label22);
             this.groupBoxModifCli.Controls.Add(this.txtNumDoc);
             this.groupBoxModifCli.Controls.Add(this.txtApellido);
-            this.groupBoxModifCli.Controls.Add(this.label23);
-            this.groupBoxModifCli.Controls.Add(this.txtCalle);
             this.groupBoxModifCli.Controls.Add(this.label24);
             this.groupBoxModifCli.Controls.Add(this.label25);
             this.groupBoxModifCli.Controls.Add(this.txtMail);
@@ -331,27 +218,20 @@
             this.groupBoxModifCli.Controls.Add(this.txtNombre);
             this.groupBoxModifCli.Location = new System.Drawing.Point(8, 73);
             this.groupBoxModifCli.Name = "groupBoxModifCli";
-            this.groupBoxModifCli.Size = new System.Drawing.Size(513, 376);
+            this.groupBoxModifCli.Size = new System.Drawing.Size(513, 378);
             this.groupBoxModifCli.TabIndex = 2;
             this.groupBoxModifCli.TabStop = false;
             this.groupBoxModifCli.Text = "Datos del Nuevo Cliente";
-            this.groupBoxModifCli.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
-            // txtDepto
+            // button1
             // 
-            this.txtDepto.Location = new System.Drawing.Point(472, 239);
-            this.txtDepto.Name = "txtDepto";
-            this.txtDepto.Size = new System.Drawing.Size(27, 20);
-            this.txtDepto.TabIndex = 38;
-            // 
-            // btnVolver
-            // 
-            this.btnVolver.Location = new System.Drawing.Point(319, 469);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(178, 40);
-            this.btnVolver.TabIndex = 38;
-            this.btnVolver.Text = "Volver";
-            this.btnVolver.UseVisualStyleBackColor = true;
+            this.button1.Location = new System.Drawing.Point(246, 215);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(236, 40);
+            this.button1.TabIndex = 38;
+            this.button1.Text = "Modificar Domicilio";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // checkHabilitado
             // 
@@ -360,17 +240,22 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.checkHabilitado.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.checkHabilitado.FlatAppearance.CheckedBackColor = System.Drawing.Color.White;
-            this.checkHabilitado.Location = new System.Drawing.Point(386, 275);
+            this.checkHabilitado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkHabilitado.Location = new System.Drawing.Point(39, 226);
             this.checkHabilitado.Name = "checkHabilitado";
-            this.checkHabilitado.Size = new System.Drawing.Size(80, 20);
+            this.checkHabilitado.Size = new System.Drawing.Size(97, 22);
             this.checkHabilitado.TabIndex = 20;
             this.checkHabilitado.Text = "Habilitado";
             this.checkHabilitado.UseVisualStyleBackColor = true;
-            this.checkHabilitado.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // backgroundWorker1
+            // btnVolver
             // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.btnVolver.Location = new System.Drawing.Point(330, 457);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(178, 40);
+            this.btnVolver.TabIndex = 38;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
             // 
             // directorySearcher1
             // 
@@ -403,22 +288,11 @@
         private System.Windows.Forms.Button btnAlta;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.DateTimePicker datePickerFechaNac;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox txtNum;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox txtPiso;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TextBox txtCp;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.TextBox txtLoc;
         private System.Windows.Forms.TextBox txtTel;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.TextBox txtNumDoc;
         private System.Windows.Forms.TextBox txtApellido;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.TextBox txtCalle;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.TextBox txtMail;
@@ -426,10 +300,9 @@
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.GroupBox groupBoxModifCli;
         private System.Windows.Forms.Button btnVolver;
-        private System.Windows.Forms.TextBox txtDepto;
         private System.Windows.Forms.CheckBox checkHabilitado;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.DirectoryServices.DirectorySearcher directorySearcher1;
-
+        private System.Windows.Forms.Button button1;
     }
 }

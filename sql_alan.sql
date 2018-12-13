@@ -66,15 +66,75 @@ AS BEGIN
 END 
 go
 
+
+sp_addmessage @msgnum = 50004,  
+              @severity = 10,  
+              @msgtext = 'Domicilio ya existente.';
+GO
+IF (OBJECT_ID('sp_agregar_domicilio', 'P') IS NOT NULL) DROP PROCEDURE sp_agregar_domicilio 
+GO
+CREATE PROCEDURE sp_agregar_domicilio (@calle nvarchar(50),@nro numeric(18), @depto nvarchar(50),
+									   @localidad varchar(20),@piso numeric(18),@cp nvarchar(50),
+									   @dom_id INT OUTPUT)
+AS BEGIN
+	DECLARE @salida INT = 0;
+    SET @salida = (SELECT ISNULL((SELECT COUNT(1)
+		FROM [GD2C2018].[GESTION_DE_GATOS].Domicilios
+		WHERE Dom_Cod_Postal = @cp AND Dom_Localidad = @localidad AND Dom_Piso = @piso 
+				AND Dom_Depto = @depto AND Dom_Nro_Calle = @nro AND Dom_Calle = @calle), 0));
+	IF @salida = 0
+	BEGIN 
+		INSERT INTO GESTION_DE_GATOS.Domicilios 
+		(Dom_Localidad, Dom_Cod_Postal,Dom_Piso,Dom_Depto,Dom_Nro_Calle,Dom_Calle) VALUES (@localidad, @cp,@piso,@depto,@nro,@calle);
+		SET @dom_id = (SELECT TOP 1 Dom_Id FROM GESTION_DE_GATOS.Domicilios ORDER BY Dom_Id DESC);
+	END
+	ELSE
+	BEGIN
+		RAISERROR (50004, 10, 1)
+		RETURN;
+	END	
+END
+GO
+
+IF (OBJECT_ID('sp_get_domicilios', 'P') IS NOT NULL) DROP PROCEDURE sp_get_domicilios
+GO
+CREATE PROCEDURE sp_get_domicilios (@calle nvarchar(50), @nro numeric(18))
+AS BEGIN
+	SELECT * FROM GESTION_DE_GATOS.Domicilios
+		WHERE Dom_Calle = @calle AND Dom_Nro_Calle = @nro;
+END 
+go
+
+IF (OBJECT_ID('sp_eliminar_domicilio', 'P') IS NOT NULL) DROP PROCEDURE sp_eliminar_domicilio 
+GO
+CREATE PROCEDURE sp_eliminar_domicilio (@calle nvarchar(50),@nro numeric(18), @depto nvarchar(50),
+									 @localidad varchar(20),@piso numeric(18),@cp nvarchar(50))
+AS BEGIN
+    DELETE FROM [GD2C2018].[GESTION_DE_GATOS].Domicilios
+		WHERE Dom_Cod_Postal = @cp AND Dom_Localidad = @localidad AND Dom_Piso = @piso 
+				AND Dom_Depto = @depto AND Dom_Nro_Calle = @nro AND Dom_Calle = @calle;
+END
+GO
+
+IF (OBJECT_ID('sp_actualizar_domicilio', 'P') IS NOT NULL) DROP PROCEDURE sp_actualizar_domicilio 
+GO
+CREATE PROCEDURE sp_actualizar_domicilio (@dom_id INT, @calle nvarchar(50),@nro numeric(18), @depto nvarchar(50),
+									 @localidad varchar(20),@piso numeric(18),@cp nvarchar(50))
+AS BEGIN
+    UPDATE [GD2C2018].[GESTION_DE_GATOS].Domicilios
+		SET Dom_Cod_Postal = @cp, Dom_Localidad = @localidad, Dom_Piso = @piso,
+			Dom_Depto = @depto, Dom_Nro_Calle = @nro, Dom_Calle = @calle
+		WHERE Dom_Id = @dom_id;
+END
+GO
+
 IF (OBJECT_ID('sp_crear_empresa', 'P') IS NOT NULL) DROP PROCEDURE sp_crear_empresa
 go
-CREATE procedure dbo.sp_crear_empresa (@razon_social nvarchar(255), @cuit nvarchar(255),
-								@mail nvarchar(50),@telefono numeric(20),@calle nvarchar(50),@nro numeric(18),
-								@depto nvarchar(50),@localidad varchar(20),@piso numeric(18),@cp nvarchar(50))
+CREATE procedure dbo.sp_crear_empresa (@razon_social nvarchar(255), @cuit nvarchar(255), 
+									   @mail nvarchar(50), @telefono numeric(20), @dom_id INT)
 as
 begin
 	declare @nuevoUsuario int
-	declare @nuevoDomicilio int
 	EXEC sp_validar_empresa @razon_social, @cuit;
 	begin transaction
 		begin try
@@ -85,13 +145,10 @@ begin
 					HASHBYTES('SHA2_256','palconet2018'),
 					1)
 				SET @nuevoUsuario = (SELECT TOP 1 Usuario_Id FROM GESTION_DE_GATOS.Usuarios ORDER BY Usuario_Id DESC)
-				INSERT INTO GESTION_DE_GATOS.Domicilios 
-					(Dom_Localidad, Dom_Cod_Postal,Dom_Piso,Dom_Depto,Dom_Nro_Calle,Dom_Calle) VALUES (@localidad, @cp,@piso,@depto,@nro,@calle)
-				SET @nuevoDomicilio = (SELECT TOP 1 Dom_Id FROM GESTION_DE_GATOS.Domicilios ORDER BY Dom_Id DESC)
 				INSERT INTO GESTION_DE_GATOS.Empresas 
 				(Emp_Razon_Social, Emp_Cuit, Emp_Fecha_Creacion, Emp_Mail, Emp_Dom_Id,
 					Emp_Usuario_Id, Emp_Tel)
-				VALUES (@razon_social, @cuit, GETDATE(), @mail, @nuevoDomicilio, @nuevoUsuario, @telefono)
+				VALUES (@razon_social, @cuit, GETDATE(), @mail, @dom_id, @nuevoUsuario, @telefono)
 			end
 		end try
 		begin catch
@@ -146,18 +203,12 @@ IF (OBJECT_ID('sp_actualizar_empresa', 'P') IS NOT NULL) DROP PROCEDURE sp_actua
 go
 CREATE procedure dbo.sp_actualizar_empresa (@razon_social nvarchar(255), @cuit nvarchar(255),
 								@mail nvarchar(50),@telefono numeric(20),
-								@domicilio_id INT, @calle nvarchar(50),@nro numeric(18),
-								@depto nvarchar(50),@localidad varchar(20),@piso numeric(18),@cp nvarchar(50),
-								@habilitada INT)
+								@domicilio_id INT, @habilitada INT)
 AS BEGIN
 	UPDATE [GESTION_DE_GATOS].Empresas
-		SET Emp_Mail = @mail, Emp_Tel = @telefono, Emp_Habilitada = @habilitada, Emp_Razon_Social = @razon_social
+		SET Emp_Mail = @mail, Emp_Tel = @telefono, Emp_Habilitada = @habilitada, Emp_Razon_Social = @razon_social,
+			Emp_Dom_Id = @domicilio_id
 		WHERE Emp_Cuit = @cuit; 
-	UPDATE [GESTION_DE_GATOS].Domicilios
-		SET Dom_Localidad = @localidad, Dom_Cod_Postal = @cp,
-			Dom_Calle = @calle, Dom_Nro_Calle = @nro, 
-			Dom_Piso = @piso, Dom_Depto = @depto
-		WHERE Dom_Id = @domicilio_id;
 END
 GO
 
@@ -167,7 +218,33 @@ GO
 CREATE procedure dbo.sp_cambiar_estado_empresa (@cuit nvarchar(255), @estado_final INT, @resultado INT OUTPUT)
 AS BEGIN
 	UPDATE GESTION_DE_GATOS.Empresas SET Emp_Habilitada = @estado_final WHERE Emp_Cuit = @cuit;
-	SELECT @resultado = Emp_Habilitada FROM GESTION_DE_GATOS.Empresas WHERE Emp_Cuit = @cuit;
+	SELECT @resultado = Emp_Habilitada FROM GESTION_DE_GATOS.Empresas WHERE Emp_Cuit = @cuit);
 END
 GO
 
+
+ALTER TABLE GESTION_DE_GATOS.Ubicaciones
+ ADD CONSTRAINT DF_Ubic_Sin_Numerar DEFAULT 0 FOR Ubic_Sin_Numerar;
+
+IF (OBJECT_ID('sp_agregar_ubicacion', 'P') IS NOT NULL) DROP PROCEDURE sp_agregar_ubicacion
+GO
+CREATE procedure dbo.sp_agregar_ubicacion(@ubic_tipo INT, @ubic_precio NUMERIC(18), @ubic_espec_codigo NUMERIC(18)
+										  @cnt_filas INT, @cnt_asientos INT)
+AS BEGIN 
+	DECLARE @indice_fila INT = 0;
+	DECLARE @indice_asiento INT = 0;
+	BEGIN
+		WHILE @indice_fila < @cnt_filas
+		BEGIN
+		    WHILE @indice_asiento < @cnt_asientos
+			BEGIN
+				INSERT INTO Ubicacion(Ubic_Fila, Ubic_Asiento, Ubic_Precio
+									  Ubic_Espec_Cod, Ubic_Tipo_Cod) 
+						VALUES(@indice_fila, @indice_asiento, @ubic_precio, @ubic_espec_codigo, @ubic_tipo);
+				SET @indice_asiento = @indice_asiento + 1;
+			END;
+		   SET @indice_fila = @indice_fila + 1;
+		END;
+	END
+END
+GO

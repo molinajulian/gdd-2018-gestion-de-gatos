@@ -10,6 +10,13 @@ namespace PalcoNet.Repositorios
 {
     class PublicacionRepositorio
     {
+
+        public static void generarPublicacion(Publicacion publicacion)
+        {
+
+        }
+
+
         public static List<SqlParameter> GenerarParametrosPublicacion(Publicacion publicacion, string username)
         {   
             List<SqlParameter> parametros = new List<SqlParameter>();

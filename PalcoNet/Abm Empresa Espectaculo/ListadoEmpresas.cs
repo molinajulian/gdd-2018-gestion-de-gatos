@@ -36,7 +36,7 @@ namespace PalcoNet.AbmEmpresa
 
             tabla_empresas.Columns.Add("Cuit", typeof(string));
             tabla_empresas.Columns.Add("Razon Social", typeof(string));
-            tabla_empresas.Columns.Add("Direccion", typeof(string));
+            tabla_empresas.Columns.Add("Domicilio", typeof(string));
             tabla_empresas.Columns.Add("Email", typeof(string));
             tabla_empresas.Columns.Add("Telefono", typeof(string));
             tabla_empresas.Columns.Add("Habilitada", typeof(string));
@@ -70,7 +70,7 @@ namespace PalcoNet.AbmEmpresa
 
         private String[] generarFila(Empresa empresa)
         {
-            return new []{ empresa.Cuit, empresa.RazonSocial, empresa.Direccion.ToString(),
+            return new []{ empresa.Cuit, empresa.RazonSocial, empresa.Domicilio.ToString(),
                 empresa.Email, empresa.Telefono, Convert.ToString(empresa.Habilitada)};
         }
 
@@ -193,8 +193,13 @@ namespace PalcoNet.AbmEmpresa
         {
             data_empresas.Rows[data_empresas.SelectedRows[0].Index].SetValues(generarFila(empresa));
         }
+
+        private void ListadoEmpresas_Load(object sender, EventArgs e)
+        {
+
+        }
     }
-    
+
 
     public class EmpresaNoSeleccionadaException : Exception
     {

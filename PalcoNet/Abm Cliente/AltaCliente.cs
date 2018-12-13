@@ -3,24 +3,20 @@ using PalcoNet.Repositorios;
 using PalcoNet.AbmTarjeta;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using MaterialSkin.Controls;
 using MaterialSkin;
+using PalcoNet.AbmDomicilio;
 
 namespace PalcoNet.AbmCliente
 {
     public partial class AltaCliente : MaterialForm
     {
         Cliente cliente = new Cliente();
-        Direccion direccion = new Direccion();
+        Domicilio domicilio = new Domicilio();
         public AltaCliente()
         {
             InitializeComponent();
@@ -43,56 +39,6 @@ namespace PalcoNet.AbmCliente
                 comboTiposDoc.Items.Add(tipo);
                 comboTiposDoc.DisplayMember = "Descripcion";
             }
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox6_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void boton_alta_Click(object sender, EventArgs e)
@@ -156,43 +102,7 @@ namespace PalcoNet.AbmCliente
                 }
             }
             cliente.Cuil = txtCuil.Text;
-            if (!Regex.IsMatch(txLocalidad.Text, @"^[a-zA-Z0-9\s]{1,20}$"))
-            {
-                MessageBox.Show("Ingrese una localidad válida.");
-                return;
-            }
-            direccion.Localidad = txLocalidad.Text;
-            if (!Regex.IsMatch(txCp.Text, @"^[0-9]{1,4}$"))
-            {
-                MessageBox.Show("Ingrese un código postal válido.");
-                return;
-            }
-            direccion.CodPostal = txCp.Text;
-            if (!Regex.IsMatch(txPiso.Text, @"^[0-9]{1,3}$") && !string.IsNullOrEmpty(txPiso.Text))
-            {
-                MessageBox.Show("Ingrese un piso válido.");
-                return;
-            }
-            direccion.Piso = string.IsNullOrWhiteSpace(txPiso.Text) ? ' '.ToString() : txPiso.Text;
-            if (!Regex.IsMatch(txtDepto.Text, @"^[a-zA-Z]$") && !string.IsNullOrEmpty(txtDepto.Text))
-            {
-                MessageBox.Show("Ingrese un departamento válido.");
-                return;
-            }
-            direccion.Departamento = string.IsNullOrWhiteSpace(txtDepto.Text) ? ' '.ToString() : txtDepto.Text;
-            if (!Regex.IsMatch(txCalle.Text, @"[a-zA-Z0-9\s]{1,50}$"))
-            {
-                MessageBox.Show("Ingrese una calle válida.");
-                return;
-            }
-            if (!Regex.IsMatch(txNumero.Text, @"^[0-9]{1,6}$"))
-            {
-                MessageBox.Show("Ingrese un número válido.");
-                return;
-            }
-            direccion.Calle = txCalle.Text;
-            direccion.Numero = txNumero.Text;
-            cliente.Direccion = direccion;
+            cliente.Domicilio = domicilio;
             if (cliente.Tarjeta.Count == 0)
             {
                 MessageBox.Show("Debe registrar al menos una tarjeta para la plataforma.");
@@ -211,8 +121,6 @@ namespace PalcoNet.AbmCliente
             {
                 MessageBox.Show(ex.Message, "ERROR");
             }
-            
-
         }
 
         private void limpiarVentana()
@@ -230,11 +138,8 @@ namespace PalcoNet.AbmCliente
             var controles = groupBox1.Controls;
             foreach (Control control in controles)
             {
-                if (control == txPiso || control == txtDepto)
-                {
-                     
-                }
-                else if(string.IsNullOrWhiteSpace(control.Text))
+                
+                if(string.IsNullOrWhiteSpace(control.Text))
                 {
                     MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     error = true;
@@ -244,35 +149,16 @@ namespace PalcoNet.AbmCliente
             return error;
         }
 
-        private void AltaCliente_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             AltaTarjeta t = new AltaTarjeta(ref cliente);
             t.ShowDialog();
         }
 
-        private void button2_Click_1(object sender, EventArgs e)
+        private void btnRegistrarDomicilio_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void txNombre_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboTiposDoc_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
+            AltaDomicilio altaDomicilio = new AltaDomicilio(domicilio);
+            altaDomicilio.ShowDialog();
         }
     }
 }

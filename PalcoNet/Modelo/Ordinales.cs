@@ -85,9 +85,9 @@ namespace PalcoNet.Modelo
                                                     
 
                                                 };
-       public static Dictionary<string, int> Direccion = new Dictionary<string, int> 
+       public static Dictionary<string, int> Domicilio = new Dictionary<string, int> 
                                                  {
-                                                 {"codigo",0},
+                                                 {"id",0},
                                                  {"codPostal",1},
                                                  {"localidad",2},
                                                  {"piso",3},

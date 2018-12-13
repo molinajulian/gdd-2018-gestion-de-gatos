@@ -13,13 +13,13 @@ using PalcoNet.Modelo;
 using MaterialSkin.Controls;
 using MaterialSkin;
 using System.Text.RegularExpressions;
+using PalcoNet.AbmDomicilio;
 
 namespace PalcoNet.AbmEmpresa
 {
     public partial class ModificacionEmpresa : MaterialForm
     {
         Empresa empresa;
-       
         public ModificacionEmpresa(Empresa empresa)
         {
             InitializeComponent();
@@ -38,12 +38,6 @@ namespace PalcoNet.AbmEmpresa
             txtCuit.Text = empresa.Cuit;
             txtMail.Text = empresa.Email;
             txtTel.Text = empresa.Telefono;
-            txtLocalidad.Text = empresa.Direccion.Localidad;
-            txtCalle.Text = empresa.Direccion.Calle;
-            txtNumero.Text = empresa.Direccion.Numero;
-            txtCp.Text = empresa.Direccion.CodPostal;
-            txtPiso.Text = empresa.Direccion.Piso;
-            txtDepto.Text = empresa.Direccion.Departamento;
             checkDeshabilitada.Checked = !empresa.Habilitada;
         }
 
@@ -53,12 +47,6 @@ namespace PalcoNet.AbmEmpresa
             empresa.Cuit = txtCuit.Text;
             empresa.Email = txtMail.Text;
             empresa.Telefono = txtTel.Text;
-            empresa.Direccion.Localidad = txtLocalidad.Text;
-            empresa.Direccion.Calle = txtCalle.Text;
-            empresa.Direccion.Numero = txtNumero.Text;
-            empresa.Direccion.CodPostal = txtCp.Text;
-            empresa.Direccion.Piso = txtPiso.Text;
-            empresa.Direccion.Departamento = txtDepto.Text;
             empresa.Habilitada = !checkDeshabilitada.Checked;
         }
 
@@ -124,6 +112,12 @@ namespace PalcoNet.AbmEmpresa
         private void btnVolver_Click(object sender, EventArgs e)
         {
             this.Hide();
+        }
+
+        private void btn_modificar_domicilio_Click(object sender, EventArgs e)
+        {
+            ModificarDomicilio modificarDomicilio = new ModificarDomicilio(empresa.Domicilio);
+            modificarDomicilio.ShowDialog();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace PalcoNet.AbmTarjeta
     public partial class ModificacionTarjeta : MaterialForm
     {
         Cliente cliente = new Cliente();
-        Direccion direccion = new Direccion();
+        Domicilio _domicilio = new Domicilio();
         public ModificacionTarjeta()
         {
             InitializeComponent();

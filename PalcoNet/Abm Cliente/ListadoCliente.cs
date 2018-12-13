@@ -41,7 +41,7 @@ namespace PalcoNet.AbmCliente
                 clientes = ClienteRepositorio.getClientes();
                 foreach (Cliente c in clientes)
                 {
-                    string[] row = new string[] { c.TipoDeDocumento.Descripcion.ToString(), c.NumeroDocumento.ToString(), c.Cuil, c.NombreCliente, c.Apellido, c.Email, c.Direccion.Calle, c.Direccion.Numero, c.Direccion.Localidad, c.Direccion.CodPostal, c.Habilitado == true ? "Si" : "No" };
+                    string[] row = new string[] { c.TipoDeDocumento.Descripcion.ToString(), c.NumeroDocumento.ToString(), c.Cuil, c.NombreCliente, c.Apellido, c.Email, c.Domicilio.Calle, c.Domicilio.Numero, c.Domicilio.Localidad, c.Domicilio.CodPostal, c.Habilitado == true ? "Si" : "No" };
                     tabla_clientes.Rows.Add(row);
                 }
                 data_clientes.DataSource = tabla_clientes;
@@ -93,7 +93,7 @@ namespace PalcoNet.AbmCliente
             List<Cliente> clientes = ClienteRepositorio.getClientes(tx_dni.Text, tx_nombre.Text, tx_apellido.Text,txEmail.Text);
             foreach (Cliente c in clientes)
             {
-                string[] row = new string[] { c.TipoDeDocumento.Descripcion.ToString(), c.NumeroDocumento.ToString(), c.Cuil, c.NombreCliente, c.Apellido, c.Email, c.Direccion.Calle, c.Direccion.Numero, c.Direccion.Localidad, c.Direccion.CodPostal, c.Habilitado == true ? "Si" : "No" };
+                string[] row = new string[] { c.TipoDeDocumento.Descripcion.ToString(), c.NumeroDocumento.ToString(), c.Cuil, c.NombreCliente, c.Apellido, c.Email, c.Domicilio.Calle, c.Domicilio.Numero, c.Domicilio.Localidad, c.Domicilio.CodPostal, c.Habilitado == true ? "Si" : "No" };
                 tabla_clientes.Rows.Add(row);
             }
             data_clientes.DataSource = tabla_clientes;

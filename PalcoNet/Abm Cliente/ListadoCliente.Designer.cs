@@ -50,7 +50,7 @@
             // 
             // btn_atras
             // 
-            this.btn_atras.Location = new System.Drawing.Point(82, 500);
+            this.btn_atras.Location = new System.Drawing.Point(87, 456);
             this.btn_atras.Margin = new System.Windows.Forms.Padding(2);
             this.btn_atras.Name = "btn_atras";
             this.btn_atras.Size = new System.Drawing.Size(74, 28);
@@ -61,7 +61,7 @@
             // 
             // btn_limpiar
             // 
-            this.btn_limpiar.Location = new System.Drawing.Point(589, 500);
+            this.btn_limpiar.Location = new System.Drawing.Point(594, 456);
             this.btn_limpiar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_limpiar.Name = "btn_limpiar";
             this.btn_limpiar.Size = new System.Drawing.Size(74, 28);
@@ -204,7 +204,7 @@
             // 
             // switch_habilitacion
             // 
-            this.switch_habilitacion.Location = new System.Drawing.Point(262, 500);
+            this.switch_habilitacion.Location = new System.Drawing.Point(267, 456);
             this.switch_habilitacion.Margin = new System.Windows.Forms.Padding(2);
             this.switch_habilitacion.Name = "switch_habilitacion";
             this.switch_habilitacion.Size = new System.Drawing.Size(74, 28);
@@ -215,7 +215,7 @@
             // 
             // btn_modificar
             // 
-            this.btn_modificar.Location = new System.Drawing.Point(434, 500);
+            this.btn_modificar.Location = new System.Drawing.Point(439, 456);
             this.btn_modificar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_modificar.Name = "btn_modificar";
             this.btn_modificar.Size = new System.Drawing.Size(74, 28);
@@ -228,7 +228,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(965, 559);
+            this.ClientSize = new System.Drawing.Size(775, 512);
             this.Controls.Add(this.btn_modificar);
             this.Controls.Add(this.switch_habilitacion);
             this.Controls.Add(this.btn_atras);

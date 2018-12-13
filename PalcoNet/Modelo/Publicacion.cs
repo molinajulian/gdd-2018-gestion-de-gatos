@@ -14,5 +14,21 @@ namespace PalcoNet.Modelo
         public Grado Grado { get; set; }
         public EstadoPublicacion Estado { get; set; }
         public Espectaculo Espectaculo { get; set; }
+        public List<Sector> sectores { get; set; }
+
+        public Publicacion()
+        {
+
+        }
+        public Publicacion(string descripcion, DateTime fechaPublicacion, Grado grado,
+            EstadoPublicacion estado, Espectaculo espectaculo, List<Sector> sectores)
+        {
+            Descripcion = descripcion;
+            FechaPublicacion = fechaPublicacion;
+            Grado = grado;
+            Estado = estado;
+            Espectaculo = espectaculo;
+            this.sectores = sectores;
+        }
     }
 }

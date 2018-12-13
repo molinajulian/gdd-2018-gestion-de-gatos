@@ -16,7 +16,7 @@ namespace PalcoNet.Modelo
         public string Cuil { get; set; }
         public string Email { get; set; }
         public string Telefono { get; set; }
-        public Direccion Direccion { get; set; }
+        public Domicilio Domicilio { get; set; }
         public DateTime FechaDeNacimiento { get; set; }
         public DateTime FechaDeCreacion { get; set; }
         public List<Tarjeta> Tarjeta { get; set; }
@@ -30,7 +30,7 @@ namespace PalcoNet.Modelo
             NumeroDocumento = numeroDocumento;
             Cuil = cuil;
             Email = mail;
-            Direccion = new Direccion(calle, nro.ToString(), depto, localidad, cp, piso);
+            Domicilio = new Domicilio(calle, nro.ToString(), depto, localidad, cp, piso);
             Habilitado = habilitado;
         }
         public Cliente(string tipoDeDocumento, int numeroDocumento, string cuil, string nombre, string apellido, string mail, string tel,string calle, string nro, string depto, string piso, string localidad, string cp, bool habilitado,DateTime fechaNac)
@@ -41,7 +41,7 @@ namespace PalcoNet.Modelo
             NumeroDocumento = numeroDocumento;
             Cuil = cuil;
             Email = mail;
-            Direccion = new Direccion(calle, nro.ToString(), depto, localidad, cp,piso);
+            Domicilio = new Domicilio(calle, nro.ToString(), depto, localidad, cp,piso);
             Habilitado = habilitado;
             Telefono = tel;
             FechaDeNacimiento = fechaNac;

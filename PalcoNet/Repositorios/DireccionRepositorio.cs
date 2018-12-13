@@ -10,57 +10,57 @@ namespace PalcoNet.Repositorios
 {
     class DireccionRepositorio
     {
-        public static List<SqlParameter> GenerarParametrosDireccion(Direccion direccion)
+        public static List<SqlParameter> GenerarParametrosDireccion(Domicilio domicilio)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
 
-            parametros.Add(new SqlParameter("@localidad", direccion.Localidad));
-            parametros.Add(new SqlParameter("@cp", direccion.CodPostal));
-            parametros.Add(new SqlParameter("@calle", direccion.Calle));
-            parametros.Add(new SqlParameter("@numero", direccion.Numero));
-            parametros.Add(new SqlParameter("@departamento", direccion.Departamento));       
+            parametros.Add(new SqlParameter("@localidad", domicilio.Localidad));
+            parametros.Add(new SqlParameter("@cp", domicilio.CodPostal));
+            parametros.Add(new SqlParameter("@calle", domicilio.Calle));
+            parametros.Add(new SqlParameter("@numero", domicilio.Numero));
+            parametros.Add(new SqlParameter("@departamento", domicilio.Departamento));       
             return parametros;
         }
-        public static void CreateDireccion(Direccion direccion)
+        public static void CreateDireccion(Domicilio domicilio)
         {
-            List<SqlParameter> parametros = GenerarParametrosDireccion(direccion);
+            List<SqlParameter> parametros = GenerarParametrosDireccion(domicilio);
             DataBase.WriteInBase("Ingresardireccions", "SP", parametros);
 
         }
 
 
-        public static void UpdateDireccion(Direccion direccion)
+        public static void UpdateDireccion(Domicilio domicilio)
         {
-            List<SqlParameter> parametros = GenerarParametrosDireccion(direccion);
+            List<SqlParameter> parametros = GenerarParametrosDireccion(domicilio);
             DataBase.WriteInBase("Updatedireccion", "SP", parametros);
 
         }
 
 
-        public static void DeleteDireccion(Direccion direccion)
+        public static void DeleteDireccion(Domicilio domicilio)
         {
-            List<SqlParameter> parametros = GenerarParametrosDireccion(direccion);
+            List<SqlParameter> parametros = GenerarParametrosDireccion(domicilio);
             DataBase.WriteInBase("Deletedireccion", "SP", parametros);
 
         }
 
-        public static Direccion ReadDireccionFromDb(string  id)
+        public static Domicilio ReadDireccionFromDb(string  id)
         {
-            var direccion = new Direccion();
+            var direccion = new Domicilio();
             var parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@id", id));
             var query = DataBase.ejecutarFuncion("Select top 1 * from GESTION_DE_GATOS.Domicilios dom where dom.Dom_Id = @id", parametros);
             SqlDataReader reader = query.ExecuteReader();
             while (reader.Read())
             {
-                direccion = new Direccion(
+                direccion = new Domicilio(
                                 Convert.ToInt32(id),
-                                reader.GetValue(Ordinales.Direccion["calle"]).ToString(),
-                                reader.GetValue(Ordinales.Direccion["numero"]).ToString(),
-                                reader.GetValue(Ordinales.Direccion["departamento"]).ToString(),
-                                reader.GetValue(Ordinales.Direccion["localidad"]).ToString(),
-                                reader.GetValue(Ordinales.Direccion["codPostal"]).ToString(),
-                                reader.GetValue(Ordinales.Direccion["piso"]).ToString() 
+                                reader.GetValue(Ordinales.Domicilio["calle"]).ToString(),
+                                reader.GetValue(Ordinales.Domicilio["numero"]).ToString(),
+                                reader.GetValue(Ordinales.Domicilio["departamento"]).ToString(),
+                                reader.GetValue(Ordinales.Domicilio["localidad"]).ToString(),
+                                reader.GetValue(Ordinales.Domicilio["codPostal"]).ToString(),
+                                reader.GetValue(Ordinales.Domicilio["piso"]).ToString() 
                                 );
 
             }

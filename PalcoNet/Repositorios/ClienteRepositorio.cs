@@ -86,12 +86,12 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@fechaNac", cliente.FechaDeNacimiento));
             parametros.Add(new SqlParameter("@mail", cliente.Email));
             parametros.Add(new SqlParameter("@telefono", Convert.ToDecimal(cliente.Telefono)));
-            parametros.Add(new SqlParameter("@calle", cliente.Direccion.Calle));
-            parametros.Add(new SqlParameter("@nro", Convert.ToDecimal(cliente.Direccion.Numero)));
-            parametros.Add(new SqlParameter("@depto", cliente.Direccion.Departamento));
-            parametros.Add(new SqlParameter("@localidad", cliente.Direccion.Localidad));
-            parametros.Add(new SqlParameter("@piso", Convert.ToDecimal(cliente.Direccion.Piso)));
-            parametros.Add(new SqlParameter("@cp", cliente.Direccion.CodPostal));
+            parametros.Add(new SqlParameter("@calle", cliente.Domicilio.Calle));
+            parametros.Add(new SqlParameter("@nro", Convert.ToDecimal(cliente.Domicilio.Numero)));
+            parametros.Add(new SqlParameter("@depto", cliente.Domicilio.Departamento));
+            parametros.Add(new SqlParameter("@localidad", cliente.Domicilio.Localidad));
+            parametros.Add(new SqlParameter("@piso", Convert.ToDecimal(cliente.Domicilio.Piso)));
+            parametros.Add(new SqlParameter("@cp", cliente.Domicilio.CodPostal));
             parametros.Add(new SqlParameter("@habilitado", cliente.Habilitado));
             SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_modificar_cliente]", "SP", parametros);
         }
@@ -108,12 +108,12 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@fechaCreacion", cliente.FechaDeCreacion));
             parametros.Add(new SqlParameter("@mail", cliente.Email));
             parametros.Add(new SqlParameter("@telefono", Convert.ToInt32(cliente.Telefono)));
-            parametros.Add(new SqlParameter("@calle", cliente.Direccion.Calle));
-            parametros.Add(new SqlParameter("@nro", Convert.ToDecimal(cliente.Direccion.Numero)));
-            parametros.Add(new SqlParameter("@depto", cliente.Direccion.Departamento));
-            parametros.Add(new SqlParameter("@localidad", cliente.Direccion.Localidad));
-            parametros.Add(new SqlParameter("@piso", cliente.Direccion.Piso));
-            parametros.Add(new SqlParameter("@cp", cliente.Direccion.CodPostal));
+            parametros.Add(new SqlParameter("@calle", cliente.Domicilio.Calle));
+            parametros.Add(new SqlParameter("@nro", Convert.ToDecimal(cliente.Domicilio.Numero)));
+            parametros.Add(new SqlParameter("@depto", cliente.Domicilio.Departamento));
+            parametros.Add(new SqlParameter("@localidad", cliente.Domicilio.Localidad));
+            parametros.Add(new SqlParameter("@piso", cliente.Domicilio.Piso));
+            parametros.Add(new SqlParameter("@cp", cliente.Domicilio.CodPostal));
             SqlParameter output = new SqlParameter("@salida", 0);
             output.Direction = ParameterDirection.Output;
             parametros.Add(output);

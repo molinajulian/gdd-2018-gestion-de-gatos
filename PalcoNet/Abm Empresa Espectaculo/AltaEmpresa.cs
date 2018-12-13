@@ -14,15 +14,16 @@ using PalcoNet.Repositorios;
 using MaterialSkin.Controls;
 using MaterialSkin;
 using System.Text.RegularExpressions;
+using PalcoNet.AbmDomicilio;
 
 namespace PalcoNet.AbmEmpresa
 {
     public partial class AltaEmpresa : MaterialForm
     {
+        Domicilio domicilio = new Domicilio();
         public AltaEmpresa()
         {
             InitializeComponent();
-
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
@@ -31,8 +32,7 @@ namespace PalcoNet.AbmEmpresa
 
         private Empresa getEmpresaDeUi()
         {
-             return new Empresa(txtRazon.Text, txtCuit.Text, txtMail.Text, txtTel.Text,
-                new Direccion(txCalle.Text, txNumero.Text, txDpto.Text, txLocalidad.Text, txCp.Text, txPiso.Text));
+             return new Empresa(txtRazon.Text, txtCuit.Text, txtMail.Text, txtTel.Text, domicilio);
         }
 
         private bool verificaValidaciones()
@@ -65,29 +65,9 @@ namespace PalcoNet.AbmEmpresa
                 MessageBox.Show("Ingrese un CUIT válido.");
                 return false;
             }
-            if (!Regex.IsMatch(txCp.Text, @"^[0-9]{1,4}$"))
+            if (domicilio.Id == -1)
             {
-                MessageBox.Show("Ingrese un código postal válido.");
-                return false;
-            }
-            if (!Regex.IsMatch(txPiso.Text, @"^[0-9]{1,3}$") && !string.IsNullOrEmpty(txPiso.Text))
-            {
-                MessageBox.Show("Ingrese un piso válido.");
-                return false;
-            }
-            if (!Regex.IsMatch(txDpto.Text, @"^[a-zA-Z]$") && !string.IsNullOrEmpty(txDpto.Text))
-            {
-                MessageBox.Show("Ingrese un departamento válido.");
-                return false;
-            }
-            if (!Regex.IsMatch(txCalle.Text, @"[a-zA-Z0-9\s]{1,50}$"))
-            {
-                MessageBox.Show("Ingrese una calle válida.");
-                return false;
-            }
-            if (!Regex.IsMatch(txNumero.Text, @"^[0-9]{1,6}$"))
-            {
-                MessageBox.Show("Ingrese un número válido.");
+                MessageBox.Show("Debe registrar un domicilio.");
                 return false;
             }
             return true;
@@ -144,5 +124,10 @@ namespace PalcoNet.AbmEmpresa
             grupo_empresa.Enabled = true;
         }
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            AltaDomicilio altaDomicilio = new AltaDomicilio(domicilio);
+            altaDomicilio.ShowDialog();
+        }
     }
 }

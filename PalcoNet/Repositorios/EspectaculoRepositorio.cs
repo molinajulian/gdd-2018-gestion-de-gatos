@@ -16,26 +16,19 @@ namespace PalcoNet.Repositorios
 
             parametros.Add(new SqlParameter("@Descripcion", espectaculo.Descripcion));
             parametros.Add(new SqlParameter("@Id", espectaculo.Id));
-            parametros.Add(new SqlParameter("@Fecha", espectaculo.Fecha));
             parametros.Add(new SqlParameter("@Hora", espectaculo.Hora));
             parametros.Add(new SqlParameter("@Descripcion", espectaculo.Descripcion));
                         return parametros;
         }
-        public static void CreateEspectaculo(Espectaculo espectaculo,string username)
+        public static void CreateEspectaculo(Espectaculo espectaculo)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@descripcion", espectaculo.Descripcion));
-            parametros.Add(new SqlParameter("@fecha", espectaculo.Fecha));
             parametros.Add(new SqlParameter("@hora", espectaculo.Hora));
-            parametros.Add(new SqlParameter("@fechaVencimiento", espectaculo.FechaVencimiento));
             parametros.Add(new SqlParameter("@rubroId", espectaculo.Rubro.Codigo));
             parametros.Add(new SqlParameter("@empresaId", espectaculo.Empresa.Cuit));
-            parametros.Add(new SqlParameter("@domicilioId", espectaculo.Empresa.Direccion.Id));
-
-
-
-            DataBase.WriteInBase("[dbo].[sp.crear_espectaculo]", "SP", parametros);
-
+            parametros.Add(new SqlParameter("@domicilioId", espectaculo.Empresa.Domicilio.Id));
+            DataBase.ejecutarSP("[dbo].[sp.crear_espectaculo]", parametros);
         }
 
 
@@ -56,6 +49,7 @@ namespace PalcoNet.Repositorios
 
         public static Espectaculo ReadEspectaculoFromDb(int id)
         {
+            /*
             var espectaculo = new Espectaculo();
             var parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@id", id));
@@ -67,7 +61,6 @@ namespace PalcoNet.Repositorios
                 {
                     Id = (int)reader.GetValue(Ordinales.Espectaculo["codigo"]),
                     Descripcion = reader.GetValue(Ordinales.Espectaculo["descripcion"]).ToString(),
-                    Fecha = (DateTime)reader.GetValue(Ordinales.Espectaculo["descripcion"]),
                     Hora = (TimeSpan)reader.GetValue(Ordinales.Espectaculo["descripcion"]),
                     Empresa= EmpresasRepositorio.GetempresaByCuit(reader.GetValue(Ordinales.Espectaculo["idEmpresa"]).ToString()).First(),
                     Rubro= RubroRepositorio.ReadRubroFromDb((int)reader.GetValue(Ordinales.Espectaculo["idRubro"])),
@@ -76,7 +69,8 @@ namespace PalcoNet.Repositorios
                 };
 
             }
-            return espectaculo;
+            return espectaculo;*/
+            return null;
         }
 
     }

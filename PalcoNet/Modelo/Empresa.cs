@@ -15,7 +15,7 @@ namespace PalcoNet.Modelo
         public string Cuit { get; set; }
         public string Email { get; set; }
         public string Telefono { get; set; }
-        public Direccion Direccion { get; set; }
+        public Domicilio Domicilio { get; set; }
         public bool Habilitada { get; set; }
 
         public Empresa()
@@ -25,24 +25,24 @@ namespace PalcoNet.Modelo
 
 
         public Empresa(string razonSocial, string cuit, string email,
-            string telefono, Direccion direccion, bool habilitada)
+            string telefono, Domicilio domicilio, bool habilitada)
         {
             RazonSocial = razonSocial;
             Cuit = cuit;
             Email = email;
             Telefono = telefono;
-            Direccion = direccion;
+            Domicilio = domicilio;
             Habilitada = habilitada;
         }
 
         public Empresa(string razonSocial, string cuit, string email, 
-            string telefono, Direccion direccion)
+            string telefono, Domicilio domicilio)
         {
             RazonSocial = razonSocial;
             Cuit = cuit;
             Email = email;
             Telefono = telefono;
-            Direccion = direccion;
+            Domicilio = domicilio;
             Habilitada = true;
         }
 

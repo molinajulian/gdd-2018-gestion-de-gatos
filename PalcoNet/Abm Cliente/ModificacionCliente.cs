@@ -4,15 +4,10 @@ using PalcoNet.Modelo;
 using PalcoNet.Repositorios;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using PalcoNet.AbmDomicilio;
 
 namespace PalcoNet.AbmCliente
 {
@@ -42,21 +37,15 @@ namespace PalcoNet.AbmCliente
                 if (cliente.Telefono == "0")
                 {   txtTel.Text = "";telNulo = true;}
                 else { txtTel.Text = cliente.Telefono; }
-                txtLoc.Text = cliente.Direccion.Localidad;
-                txtCp.Text = cliente.Direccion.CodPostal;
-                txtNum.Text = cliente.Direccion.Numero;
-                txtCalle.Text = cliente.Direccion.Calle;
-                txtDepto.Text = cliente.Direccion.Departamento;
-                txtPiso.Text = string.IsNullOrEmpty(cliente.Direccion.Piso) || cliente.Direccion.Piso.ToString() == "0" ? "" : cliente.Direccion.Piso.ToString();
                 datePickerFechaNac.Value = cliente.FechaDeNacimiento;
                 comboTiposDoc.SelectedIndex = comboTiposDoc.FindString(cliente.TipoDeDocumento.Descripcion);
                 // comboTiposDoc.Enabled = false;
                 //Validaciones debido a la migracion
                 if (string.IsNullOrEmpty(cliente.Cuil)) cuilNulo = true;
-                if (string.IsNullOrEmpty(cliente.Direccion.Departamento)) deptoNulo = true;
-                if (string.IsNullOrEmpty(cliente.Direccion.Piso)) pisoNulo = true;
+                if (string.IsNullOrEmpty(cliente.Domicilio.Departamento)) deptoNulo = true;
+                if (string.IsNullOrEmpty(cliente.Domicilio.Piso)) pisoNulo = true;
                 if (string.IsNullOrEmpty(cliente.Telefono)) telNulo = true;
-                if (string.IsNullOrEmpty(cliente.Direccion.Localidad)) localidadNulo = true;
+                if (string.IsNullOrEmpty(cliente.Domicilio.Localidad)) localidadNulo = true;
             }
             catch (Exception e)
             {
@@ -79,13 +68,19 @@ namespace PalcoNet.AbmCliente
                 comboTiposDoc.DisplayMember = "Descripcion";
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ModificarDomicilio modificarDomicilio = new ModificarDomicilio(cliente.Domicilio);
+            modificarDomicilio.ShowDialog();
+        }
+
         private void btnAlta_Click(object sender, EventArgs e)
         {
             TiposDocumento seleccionado = (TiposDocumento)comboTiposDoc.SelectedItem;
             Cliente clienteModificado = new Cliente();
             clienteModificado.TipoDeDocumento = new TiposDocumento();
             clienteModificado.TipoDeDocumento.Id = seleccionado.Id;
-            Direccion direccion = new Direccion();
             if (!Regex.IsMatch(txtNumDoc.Text, @"^[0-9]{1,8}$"))
             {
                 MessageBox.Show("Ingrese un DNI válido.");
@@ -136,43 +131,6 @@ namespace PalcoNet.AbmCliente
                 }
             }
             clienteModificado.Cuil = string.IsNullOrEmpty(txtCuil.Text) ? "" : txtCuil.Text; 
-            if (!localidadNulo && !Regex.IsMatch(txtLoc.Text, @"^[a-zA-Z0-9\s]{1,20}$"))
-            {
-                MessageBox.Show("Ingrese una localidad válida.");
-                return;
-            }
-            direccion.Localidad = string.IsNullOrEmpty(txtCuil.Text) ? "" :txtLoc.Text;
-            if (!Regex.IsMatch(txtCp.Text, @"^[0-9]{1,4}$"))
-            {
-                MessageBox.Show("Ingrese un código postal válido.");
-                return;
-            }
-            direccion.CodPostal = txtCp.Text;
-            if (!pisoNulo && !Regex.IsMatch(txtPiso.Text, @"^[0-9]{1,3}$") && !string.IsNullOrEmpty(txtPiso.Text))
-            {
-                MessageBox.Show("Ingrese un piso válido.");
-                return;
-            }
-            direccion.Piso = string.IsNullOrWhiteSpace(txtPiso.Text) ? ' '.ToString() : txtPiso.Text;
-            if (!deptoNulo && !Regex.IsMatch(txtDepto.Text, @"^[a-zA-Z]$") && !string.IsNullOrEmpty(txtDepto.Text))
-            {
-                MessageBox.Show("Ingrese un departamento válido.");
-                return;
-            }
-            direccion.Departamento = string.IsNullOrWhiteSpace(txtDepto.Text) ? ' '.ToString() : txtDepto.Text;
-            if (!Regex.IsMatch(txtCalle.Text, @"[a-zA-Z0-9\s]{1,50}$"))
-            {
-                MessageBox.Show("Ingrese una calle válida.");
-                return;
-            }
-            if (!Regex.IsMatch(txtNum.Text, @"^[0-9]{1,6}$"))
-            {
-                MessageBox.Show("Ingrese un número válido.");
-                return;
-            }
-            direccion.Calle = txtCalle.Text;
-            direccion.Numero = txtNum.Text;
-            clienteModificado.Direccion = direccion;
             clienteModificado.FechaDeCreacion = DateTime.Now;
             clienteModificado.NombreCliente = txtNombre.Text;
             clienteModificado.Habilitado = checkHabilitado.Checked;
@@ -195,11 +153,7 @@ namespace PalcoNet.AbmCliente
             var controles = groupBoxModifCli.Controls;
             foreach (Control control in controles)
             {
-                if (control == txtPiso || control == txtDepto)
-                {
-
-                }
-                else if (string.IsNullOrWhiteSpace(control.Text))
+                if (string.IsNullOrWhiteSpace(control.Text))
                 {
                     MessageBox.Show("Por favor complete todos los campos");
                     error = true;
@@ -216,41 +170,6 @@ namespace PalcoNet.AbmCliente
         private void button2_Click(object sender, EventArgs e)
         {
             this.Hide();
-        }
-
-        private void textBox7_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox10_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtNombre_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-
         }
     }
 }
