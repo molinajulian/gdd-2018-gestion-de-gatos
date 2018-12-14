@@ -16,7 +16,7 @@ namespace PalcoNet.GenerarPublicacion
 {
     public partial class GenerarPublicacion : MaterialForm
     {
-
+        List<Sector> sectoresRegistrados = new List<Sector>();
         public GenerarPublicacion()
         {
             InitializeComponent();
@@ -32,11 +32,7 @@ namespace PalcoNet.GenerarPublicacion
         {
             this.Hide();
         }
-
-        private void btn_alta_rol_Click(object sender, EventArgs e)
-        {
-            
-        }
+        
 
         private void limpiarVentana()
         {
@@ -52,6 +48,23 @@ namespace PalcoNet.GenerarPublicacion
         private void group_alta_rol_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            AltaSector altaSector = new AltaSector(sectoresRegistrados);
+            altaSector.ShowDialog();
+            this.Hide();
+        }
+
+        public Publicacion getPublicacionDeUi()
+        {
+            return null; //Publicacion publicacion = new Publicacion(txtDescripcion.Text, fechaYHoraEstablecidaPicker.Value.ToString(), Convert.ToInt32(cmbGrado.SelectedValue), Convert.ToInt32(cmbEstado.SelectedValue),);
+        }
+
+        private void btn_alta_publicacion_Click(object sender, EventArgs e)
+        {
+            Publicacion pulicacion = getPublicacionDeUi();
         }
     }
 }
