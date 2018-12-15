@@ -252,6 +252,20 @@ GO
 
 
 
+IF (OBJECT_ID('sp_modificar_cliente', 'P') IS NOT NULL) DROP PROCEDURE sp_modificar_cliente
+go
+CREATE procedure dbo.sp_modificar_cliente (@tipoDoc INT, @doc numeric(18), @cuil nvarchar(255), @nombre nvarchar(255),
+											@apellido nvarchar(255), @fechaNac datetime,
+											@mail nvarchar(255), @telefono numeric(20), @habilitado BIT)
+AS BEGIN
+	UPDATE [GESTION_DE_GATOS].Clientes
+		SET [Cli_Apellido] = @apellido, [Cli_Nombre] = @nombre
+      		,[Cli_Cuil] = @cuil, [Cli_Fecha_Nac] = @fechaNac, [Cli_Mail] = @mail, [Cli_Tel] = @telefono
+      		,[Cli_Habilitado] = @habilitado
+		WHERE [Cli_Tipo_Doc_Id] = @tipoDoc AND [Cli_Doc] = @doc;
+END
+GO
+
 
 IF EXISTS ( SELECT  *
             FROM    sys.objects
