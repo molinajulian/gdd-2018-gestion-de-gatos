@@ -14,7 +14,7 @@ namespace PalcoNet.Repositorios
     public class UsuarioRepositorio
     {
 
-        public void validarUsuario(String username, String contrasenia) 
+        public int validarUsuario(String username, String contrasenia, String tipoUsuario, int TipoDocumento) 
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
             int salida = 1;
@@ -23,13 +23,16 @@ namespace PalcoNet.Repositorios
             parametros.Add(output);
             parametros.Add(new SqlParameter("@user", username));
             parametros.Add(new SqlParameter("@password",contrasenia));
+            parametros.Add(new SqlParameter("@tipoUsuario", tipoUsuario));
+            parametros.Add(new SqlParameter("@tipoDocumento", TipoDocumento));
             DataBase.ejecutarSP("[dbo].[sp_autenticar_usuario]", parametros);
+            return Convert.ToInt32(output.Value);
         }
 
-        public Usuario buscarUsuario(String username)
+        public Usuario buscarUsuario(int idUsuario)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@username", username));
+            parametros.Add(new SqlParameter("@idUsuario", idUsuario));
             return Usuario.buildUsuario(DataBase.GetDataReader("[dbo].[sp_buscar_usuario]", "SP", parametros));
         }
 
@@ -66,6 +69,15 @@ namespace PalcoNet.Repositorios
                 lector.Close();
             }
             return roles;
+        }
+
+        internal static void cambiarContraseña(int idUsuario,string nuevaContraseña)
+        {
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@idUsuario", idUsuario));
+            parametros.Add(new SqlParameter("@contraseña", nuevaContraseña));
+            parametros.Add(new SqlParameter("@tamaño", nuevaContraseña.Length));
+            DataBase.GetDataReader("[dbo].[sp_cambiar_contraseña]", "SP", parametros);
         }
     }
 }

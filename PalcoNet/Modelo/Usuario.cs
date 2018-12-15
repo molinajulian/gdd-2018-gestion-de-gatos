@@ -15,12 +15,14 @@ namespace PalcoNet.Modelo
         public String username { get; set; }
         public Rol rol { get; set; }
         public Boolean isActive { get; set; }
+        public Boolean primerLogueo { get; set; }
 
-        public Usuario(int id, String username, Boolean isActive)
+        public Usuario(int id, String username, Boolean isActive, Boolean primerLogueo = true)
         {
             this.id = id;
             this.username = username;
             this.isActive = isActive;
+            this.primerLogueo = primerLogueo;
         }
 
         public static Usuario buildUsuario(SqlDataReader lector)
@@ -33,7 +35,8 @@ namespace PalcoNet.Modelo
                 return new Usuario(
                     lector.GetInt32(camposUsuario["id"]),
                     lector.GetString(camposUsuario["username"]),
-                    lector.GetBoolean(camposUsuario["estado"]));
+                    lector.GetBoolean(camposUsuario["estado"]),
+                    lector.GetBoolean(camposUsuario["primer_logueo"]));
             }
             return usuario;
         }

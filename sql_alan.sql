@@ -2,10 +2,7 @@
 USE GD2C2018;
 go
 
-sp_addmessage @msgnum = 50001,  
-              @severity = 10,  
-              @msgtext = 'Usuario no encontrado.',
-			  @lang = 'us_english';
+
 GO
 IF (OBJECT_ID('sp_autenticar_usuario', 'P') IS NOT NULL) DROP PROCEDURE sp_autenticar_usuario 
 GO
@@ -13,32 +10,60 @@ CREATE PROCEDURE sp_autenticar_usuario
 (
     @user VARCHAR(20),
 	@password VARCHAR(32),
+	@tipoUsuario char(2),
+	@tipoDocumento int,
 	@salida INT OUTPUT)
 AS
 BEGIN
-    SET @salida = (SELECT ISNULL((SELECT COUNT(1)
-		FROM [GD2C2018].[GESTION_DE_GATOS].Usuarios
-		WHERE [Usuario_Username] = @user AND [Usuario_Password] = HASHBYTES('SHA2_256', @password)
-		GROUP BY [Usuario_Estado]), 0));
+	if @tipoUsuario = 'C'
+		SET @salida = (SELECT ISNULL((SELECT TOP 1 u.Usuario_Id
+		FROM [GD2C2018].[GESTION_DE_GATOS].Clientes c
+		JOIN [GD2C2018].[GESTION_DE_GATOS].Usuarios u ON u.Usuario_Id = c.Cli_Usuario_Id 
+		WHERE u.Usuario_Password = HASHBYTES('SHA2_256', @password) AND c.Cli_Tipo_Doc_Id = @tipoDocumento AND c.Cli_Doc = convert(int,@user)
+		GROUP BY u.Usuario_Estado,u.Usuario_Id), 0));
+	if @tipoUsuario = 'E'
+		SET @salida = (SELECT ISNULL((SELECT u.Usuario_Id
+		FROM [GD2C2018].[GESTION_DE_GATOS].Empresas e
+		JOIN [GD2C2018].[GESTION_DE_GATOS].Usuarios u ON u.Usuario_Id = e.Emp_Usuario_Id 
+		WHERE u.Usuario_Password = HASHBYTES('SHA2_256', @password) AND  e.Emp_Cuit = @user
+		GROUP BY u.Usuario_Estado,u.Usuario_Id), 0));
+	if @tipoUsuario = 'O'
+		SET @salida = (SELECT ISNULL((SELECT u.Usuario_Id
+		FROM [GD2C2018].[GESTION_DE_GATOS].Usuarios u
+		WHERE u.Usuario_Password = HASHBYTES('SHA2_256', @password) AND  u.Usuario_Username = @user
+		GROUP BY u.Usuario_Estado,u.Usuario_Id), 0));
 	IF @salida = 0
 	BEGIN
-		RAISERROR (50001, 10, 1)
+		RAISERROR ('Usuario o contraseña incorrecta', 16, 0)
 		RETURN;
 	END
 END
 go
 
+IF (OBJECT_ID('sp_cambiar_contraseña', 'P') IS NOT NULL) DROP PROCEDURE sp_cambiar_contraseña 
+go
+CREATE PROCEDURE sp_cambiar_contraseña @idUsuario int,@contraseña nvarchar(20),@tamaño int
+AS 
+BEGIN
+		UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Username =  HASHBYTES('SHA2_256',@contraseña) WHERE Usuario_Id = @idUsuario
+		--UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Password =  HASHBYTES('SHA2_256',@contraseña) WHERE Usuario_Id = @idUsuario
+		--UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Primer_Logueo = 0 WHERE Usuario_Id = @idUsuario
+END
+go
+
+SELECT HASHBYTES('SHA2_256', convert(varchar(20),'hola1234'))
+SELECT HASHBYTES('SHA2_256', 'hola1234')
 IF (OBJECT_ID('sp_buscar_usuario', 'P') IS NOT NULL) DROP PROCEDURE sp_buscar_usuario 
 go
-CREATE PROCEDURE sp_buscar_usuario @username varchar(20)
+CREATE PROCEDURE sp_buscar_usuario @idUsuario int
 AS BEGIN
-		SELECT u.Usuario_Id, u.Usuario_Username, u.Usuario_Estado
+		SELECT u.Usuario_Id, u.Usuario_Username, u.Usuario_Estado, u.Usuario_Primer_Logueo
 		FROM GESTION_DE_GATOS.Usuarios u
 				JOIN  GESTION_DE_GATOS.Rol_Por_Usuario
 					ON GESTION_DE_GATOS.Rol_Por_Usuario.Usuario_Id = u.Usuario_Id
                 JOIN GESTION_DE_GATOS.Roles
 					ON GESTION_DE_GATOS.Roles.Rol_Id = GESTION_DE_GATOS.Rol_Por_Usuario.Rol_Id
-		WHERE u.Usuario_Username = @username
+		WHERE u.Usuario_Id = @idUsuario
 END
 go
 

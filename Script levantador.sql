@@ -148,17 +148,20 @@ ALTER TABLE [GESTION_DE_GATOS].[Rol_Por_Usuario]
 go
 CREATE TABLE [GESTION_DE_GATOS].[Usuarios]
 ( 
-	[Usuario_Id]			int identity(1,1)  NOT NULL ,
-	[Usuario_Username]		varchar(20) NOT NULL ,
+	[Usuario_Id]				int identity(1,1)  NOT NULL ,
+	[Usuario_Username]			varchar(20) NOT NULL ,
 	[Usuario_Password]			binary(32) NOT NULL ,
-	[Usuario_Estado]		bit NULL
+	[Usuario_Estado]			bit NULL,
+	[Usuario_Primer_Logueo]		bit not null,
 )
 go
 
 ALTER TABLE [GESTION_DE_GATOS].[Usuarios]
 	ADD CONSTRAINT [XPKUsuario] PRIMARY KEY  CLUSTERED ([Usuario_Id] ASC)
 go
-
+ALTER TABLE [GESTION_DE_GATOS].[Usuarios]
+	ADD CONSTRAINT DF_Primer_Logueo DEFAULT 1 FOR Usuario_Primer_Logueo;
+go
 --premios, premios adquiridos y tarjetas de credito
 CREATE TABLE [GESTION_DE_GATOS].[Premios_Adquiridos]
 ( 
