@@ -41,7 +41,8 @@ namespace PalcoNet.AbmCliente
             txtApellido.Text = cliente.Apellido;
             txtNumDoc.Text = cliente.NumeroDocumento.ToString();
             txtMail.Text = cliente.Email;
-            txtTel.Text = cliente.Telefono; 
+            txtTel.Text = cliente.Telefono;
+            txtCuil.Text = cliente.Cuil;
             datePickerFechaNac.Value = cliente.FechaDeNacimiento;
             llenarComboTiposDoc();
             comboTiposDoc.SelectedIndex = comboTiposDoc.FindString(cliente.TipoDeDocumento.Descripcion);

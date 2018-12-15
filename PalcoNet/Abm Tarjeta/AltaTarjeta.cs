@@ -59,7 +59,7 @@ namespace PalcoNet.AbmTarjeta
             }
             else
             {
-                cliente.Tarjeta.Add(new Tarjeta(txtNumero.Text, txtBanco.Text, datePickerFechaVenc.Value));
+                cliente.Tarjetas.Add(new Tarjeta(txtNumero.Text, txtBanco.Text, datePickerFechaVenc.Value));
                 MessageBox.Show("Tarjeta creada con exito.","", MessageBoxButtons.OK, MessageBoxIcon.None);
                 this.Hide();
             }
