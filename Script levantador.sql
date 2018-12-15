@@ -954,7 +954,7 @@ begin
 	-- inserto un usuario administrador
 	INSERT INTO GESTION_DE_GATOS.Usuarios (Usuario_Username,Usuario_Password,Usuario_Estado) VALUES ('admin',HASHBYTES('SHA2_256','admin'),1)
 	INSERT INTO GESTION_DE_GATOS.Rol_Por_Usuario (Usuario_Id,Rol_Id)
-		SELECT Usuario_Id,1 FROM GESTION_DE_GATOS.Usuarios
+		SELECT Usuario_Id,1 FROM GESTION_DE_GATOS.Usuarios where Usuario_Username='admin'
 end
 go
 
