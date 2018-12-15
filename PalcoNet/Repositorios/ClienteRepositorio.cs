@@ -49,12 +49,6 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@fechaNac", cliente.FechaDeNacimiento));
             parametros.Add(new SqlParameter("@mail", cliente.Email));
             parametros.Add(new SqlParameter("@telefono", Convert.ToDecimal(cliente.Telefono)));
-            parametros.Add(new SqlParameter("@calle", cliente.Domicilio.Calle));
-            parametros.Add(new SqlParameter("@nro", Convert.ToDecimal(cliente.Domicilio.Numero)));
-            parametros.Add(new SqlParameter("@depto", cliente.Domicilio.Departamento));
-            parametros.Add(new SqlParameter("@localidad", cliente.Domicilio.Localidad));
-            parametros.Add(new SqlParameter("@piso", Convert.ToDecimal(cliente.Domicilio.Piso)));
-            parametros.Add(new SqlParameter("@cp", cliente.Domicilio.CodPostal));
             parametros.Add(new SqlParameter("@habilitado", cliente.Habilitado));
             DataBase.ejecutarSP("[dbo].[sp_modificar_cliente]", parametros);
         }

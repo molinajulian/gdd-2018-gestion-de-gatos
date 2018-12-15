@@ -69,7 +69,7 @@ namespace PalcoNet.AbmCliente
         {
             if (!validarBusqueda()) { return; }
             tabla_clientes.Clear();
-            clientes = ClienteRepositorio.getClientes(tx_dni.Text, tx_nombre.Text, tx_apellido.Text,txEmail.Text);
+            clientes = ClienteRepositorio.getClientes(tx_nombre.Text, tx_apellido.Text, tx_dni.Text, txEmail.Text);
             foreach (Cliente c in clientes)
             {
                 string[] row = { c.TipoDeDocumento.Descripcion, c.NumeroDocumento.ToString(), c.Cuil,
@@ -79,12 +79,10 @@ namespace PalcoNet.AbmCliente
             }
             actualizarTabla();
             if(clientes.Count > 0) { 
-                btn_habilitacion.Enabled = true;
                 btn_modificar.Enabled = true;
             }
             else
             {
-                btn_habilitacion.Enabled = false;
                 btn_modificar.Enabled = false;
             }
         }
@@ -116,27 +114,6 @@ namespace PalcoNet.AbmCliente
                     new ModificacionCliente(clientes[data_clientes.SelectedRows[0].Index]).Show();
                     this.Hide();
                 }
-            }
-            else
-            {
-                MessageBox.Show("Busque y seleccione un cliente antes.");
-            }
-        }
-
-        private void switch_habilitacion_Click(object sender, EventArgs e)
-        {
-            if (this.data_clientes.RowCount > 0)
-            {
-                if (this.data_clientes.SelectedRows[0].Cells["Habilitado"].Value.ToString() == "Si")
-                {
-          
-                    ClienteRepositorio.eliminarCliente(this.data_clientes.SelectedRows[0].Cells["Tipo doc"].Value.ToString(), this.data_clientes.SelectedRows[0].Cells["Documento"].Value.ToString());
-                }
-                else
-                {
-                    ClienteRepositorio.habilitarCliente(Convert.ToInt32(this.data_clientes.SelectedRows[0].Cells["DNI"].Value.ToString()));
-                }
-                actualizarTabla();
             }
             else
             {

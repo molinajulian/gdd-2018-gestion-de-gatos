@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btn_atras = new System.Windows.Forms.Button();
             this.btn_limpiar = new System.Windows.Forms.Button();
             this.data_clientes = new System.Windows.Forms.DataGridView();
@@ -42,7 +42,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btn_habilitacion = new System.Windows.Forms.Button();
             this.btn_modificar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.data_clientes)).BeginInit();
             this.grupo_filtros.SuspendLayout();
@@ -77,15 +76,15 @@
             this.data_clientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.data_clientes.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.data_clientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.NullValue = "-";
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.data_clientes.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.NullValue = "-";
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.data_clientes.DefaultCellStyle = dataGridViewCellStyle1;
             this.data_clientes.Location = new System.Drawing.Point(11, 198);
             this.data_clientes.Name = "data_clientes";
             this.data_clientes.ReadOnly = true;
@@ -198,22 +197,10 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Nombre";
             // 
-            // btn_habilitacion
-            // 
-            this.btn_habilitacion.Enabled = false;
-            this.btn_habilitacion.Location = new System.Drawing.Point(267, 456);
-            this.btn_habilitacion.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_habilitacion.Name = "btn_habilitacion";
-            this.btn_habilitacion.Size = new System.Drawing.Size(74, 28);
-            this.btn_habilitacion.TabIndex = 26;
-            this.btn_habilitacion.Text = "Inhabilitar";
-            this.btn_habilitacion.UseVisualStyleBackColor = true;
-            this.btn_habilitacion.Click += new System.EventHandler(this.switch_habilitacion_Click);
-            // 
             // btn_modificar
             // 
             this.btn_modificar.Enabled = false;
-            this.btn_modificar.Location = new System.Drawing.Point(439, 456);
+            this.btn_modificar.Location = new System.Drawing.Point(327, 456);
             this.btn_modificar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_modificar.Name = "btn_modificar";
             this.btn_modificar.Size = new System.Drawing.Size(74, 28);
@@ -228,7 +215,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(775, 512);
             this.Controls.Add(this.btn_modificar);
-            this.Controls.Add(this.btn_habilitacion);
             this.Controls.Add(this.btn_atras);
             this.Controls.Add(this.btn_limpiar);
             this.Controls.Add(this.data_clientes);
@@ -255,7 +241,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btn_habilitacion;
         private System.Windows.Forms.Button btn_modificar;
         private System.Windows.Forms.TextBox txEmail;
         private System.Windows.Forms.Label labelEmail;

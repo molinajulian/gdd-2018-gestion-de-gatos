@@ -72,6 +72,7 @@
             // 
             // comboTiposDoc
             // 
+            this.comboTiposDoc.Enabled = false;
             this.comboTiposDoc.FormattingEnabled = true;
             this.comboTiposDoc.Location = new System.Drawing.Point(116, 88);
             this.comboTiposDoc.Name = "comboTiposDoc";
@@ -141,6 +142,7 @@
             // 
             // txtNumDoc
             // 
+            this.txtNumDoc.Enabled = false;
             this.txtNumDoc.Location = new System.Drawing.Point(364, 88);
             this.txtNumDoc.Name = "txtNumDoc";
             this.txtNumDoc.Size = new System.Drawing.Size(136, 20);
