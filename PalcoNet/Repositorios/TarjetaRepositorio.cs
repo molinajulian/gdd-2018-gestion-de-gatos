@@ -26,11 +26,11 @@ namespace PalcoNet.Repositorios
 
         }
 
-        public static void agregar(Cliente cliente,string clienteId)
+        public static void agregar(List<Tarjeta> tarjetas, string clienteId)
         {
             int tipoDoc = Convert.ToInt32(clienteId.Substring(0, 1));
             decimal doc = Convert.ToDecimal(clienteId.Substring(1, clienteId.Length-1));
-            foreach (Tarjeta tar in cliente.Tarjeta)
+            foreach (Tarjeta tar in tarjetas)
             {
                 List<SqlParameter> parametros = new List<SqlParameter>();
                 parametros.Add(new SqlParameter("@num", Convert.ToDecimal(tar.Numero)));
@@ -38,7 +38,7 @@ namespace PalcoNet.Repositorios
                 parametros.Add(new SqlParameter("@banco", tar.Banco));
                 parametros.Add(new SqlParameter("@tipoDoc", tipoDoc));
                 parametros.Add(new SqlParameter("@doc",doc));
-                DataBase.GetDataReader("[dbo].[sp_crear_tarjeta]", "SP", parametros);
+                DataBase.ejecutarSP("[dbo].[sp_crear_tarjeta]", parametros);
             }
 
         }

@@ -186,7 +186,7 @@ go
 CREATE TABLE [GESTION_DE_GATOS].[Tarjetas_Credito]
 ( 
 	[Tar_Cred_Id]				int identity(1,1)  NOT NULL ,
-	[Tar_Cred_Num]				numeric(16)  NOT NULL,
+	[Tar_Cred_Num]				BIGINT  NOT NULL,
 	[Tar_Cred_Venc]				smalldatetime NOT NULL,
 	[Tar_Cred_Banco]			varchar(50) NOT NULL,
 	[Tar_Cred_Cli_Tipo_Doc]		int NOT NULL,
@@ -651,13 +651,11 @@ IF EXISTS ( SELECT  *
 drop procedure sp_crear_cliente
 go
 create procedure sp_crear_cliente (@tipoDoc int,@doc numeric(18),@cuil nvarchar(255),@nombre nvarchar(255),
-								@apellido nvarchar(255),@fechaNac datetime,@fechaCreacion datetime,
-								@mail nvarchar(255),@telefono numeric(20),@calle nvarchar(50),@nro numeric(18),
-								@depto nvarchar(50),@localidad varchar(20),@piso nvarchar(18),@cp nvarchar(18),@salida int OUTPUT)
+								@apellido nvarchar(255), @fechaNac datetime, @dom_id INT,
+								@mail nvarchar(255), @telefono numeric(20), @cli_id int OUTPUT)
 as
 begin
 	declare @nuevoUsuario int
-	declare @nuevoDomicilio int
 	begin transaction
 		begin try
 			begin
@@ -666,22 +664,13 @@ begin
 			VALUES (convert(varchar,@tipoDoc)+convert(varchar,@doc),
 			HASHBYTES('SHA2_256','palconet2018'),
 			1)
-			if @depto = ''
-				set @depto=null;
-			else
-				set @depto=convert(numeric(18),@depto)
-			if @piso =''
-				set @piso= null;
-			else
-				set @piso = convert(numeric(18),@piso)
 			set  @nuevoUsuario = (SELECT TOP 1 Usuario_Id FROM GESTION_DE_GATOS.Usuarios ORDER BY Usuario_Id DESC)
-			INSERT INTO GESTION_DE_GATOS.Domicilios 
-				(Dom_Cod_Postal,Dom_Piso,Dom_Depto,Dom_Nro_Calle,Dom_Calle) VALUES (@cp,@piso,@depto,@nro,@calle)
-			set @nuevoDomicilio = (SELECT TOP 1 Dom_Id FROM GESTION_DE_GATOS.Domicilios ORDER BY Dom_Id DESC)
 			INSERT INTO GESTION_DE_GATOS.Clientes 
-			(Cli_Tipo_Doc_Id,Cli_Doc,Cli_Apellido,Cli_Nombre,Cli_Cuil,Cli_Fecha_Nac,Cli_Fecha_Creacion,Cli_Mail,Cli_Tel,Cli_Domicilio_Id,Cli_Usuario_Id,Cli_Habilitado)
-			VALUES (@tipoDoc,@doc,@apellido,@nombre,@cuil,@fechaNac,@fechaCreacion,@mail,@telefono,@nuevoDomicilio,@nuevoUsuario,1)
-			set @salida = (SELECT TOP 1 convert(int,convert(varchar,Cli_Tipo_Doc_Id)+convert(varchar,Cli_Doc)) FROM GESTION_DE_GATOS.Clientes ORDER BY Cli_Fecha_Creacion DESC)
+			(Cli_Tipo_Doc_Id,Cli_Doc,Cli_Apellido,Cli_Nombre,Cli_Cuil,Cli_Fecha_Nac,
+				Cli_Fecha_Creacion,Cli_Mail,Cli_Tel,Cli_Domicilio_Id,Cli_Usuario_Id,Cli_Habilitado)
+			VALUES (@tipoDoc,@doc,@apellido,@nombre,@cuil,@fechaNac,GETDATE(),@mail,@telefono,@dom_id,@nuevoUsuario,1)
+			set @cli_id = (SELECT TOP 1 convert(int,convert(varchar,Cli_Tipo_Doc_Id)+convert(varchar,Cli_Doc)) 
+				FROM GESTION_DE_GATOS.Clientes ORDER BY Cli_Fecha_Creacion DESC)
 			end
 		end try
 		begin catch
@@ -961,7 +950,7 @@ go
 GO
 IF (OBJECT_ID('sp_crear_tarjeta', 'P') IS NOT NULL) DROP PROCEDURE sp_crear_tarjeta 
 GO
-CREATE PROCEDURE sp_crear_tarjeta(@num numeric(16),@venc datetime,@banco nvarchar(50),@tipoDoc int,@doc numeric(18))
+CREATE PROCEDURE sp_crear_tarjeta(@num BIGINT,@venc datetime,@banco nvarchar(50),@tipoDoc int,@doc numeric(18))
 AS BEGIN
 	INSERT INTO GESTION_DE_GATOS.Tarjetas_Credito (Tar_Cred_Num,Tar_Cred_Venc,Tar_Cred_Banco,Tar_Cred_Cli_Tipo_Doc,Tar_Cred_Cli_Doc)
 	VALUES (@num,@venc,@banco,@tipoDoc,@doc)
@@ -1008,7 +997,7 @@ GO
 
 IF (OBJECT_ID('sp_existe_cliente', 'P') IS NOT NULL) DROP PROCEDURE sp_existe_cliente 
 GO
-CREATE PROCEDURE sp_existe_cliente (@tipoDoc int,@doc decimal,@cuil nvarchar, @existencias INT OUTPUT)
+CREATE PROCEDURE sp_existe_cliente (@tipoDoc int,@doc decimal,@cuil nvarchar(255), @existencias INT OUTPUT)
 AS BEGIN
 	
 	if(@cuil <> '') SET @existencias = (SELECT COUNT(*) FROM GESTION_DE_GATOS.Clientes WHERE Cli_Cuil = @cuil);

@@ -25,7 +25,7 @@ namespace PalcoNet.AbmCliente
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-            cliente.Tarjeta = new List<Tarjeta>();
+            cliente.Tarjetas = new List<Tarjeta>();
             getTiposDocumento();
         }
 
@@ -49,7 +49,7 @@ namespace PalcoNet.AbmCliente
             {
                 domicilio.Id = DomiciliosRepositorio.agregar(domicilio);
                 string clienteId = ClienteRepositorio.agregar(cliente);
-                TarjetaRepositorio.agregar(cliente, clienteId);
+                TarjetaRepositorio.agregar(cliente.Tarjetas, clienteId);
                 limpiarVentana();
                 MessageBox.Show("Cliente agregado correctamente con sus respectivas tarjetas y domicilio");
             }
@@ -123,7 +123,7 @@ namespace PalcoNet.AbmCliente
             }
             if (!Regex.IsMatch(txtCuil.Text, @"[0-9]{2}-[0-9]{5,9}-[0-9]{1,2}$"))
             {
-                MessageBox.Show("Ingrese un cuit valido.");
+                MessageBox.Show("Ingrese un cuil valido.");
                 return false;
             }
             if (ClienteRepositorio.esClienteExistente(0, 0, txtCuil.Text))
@@ -131,7 +131,7 @@ namespace PalcoNet.AbmCliente
                 MessageBox.Show("Ya existe un cliente con ese CUIL.");
                 return false;
             }
-            if (cliente.Tarjeta.Count == 0)
+            if (cliente.Tarjetas.Count == 0)
             {
                 MessageBox.Show("Debe registrar al menos una tarjeta para la plataforma.");
                 return false;
@@ -141,12 +141,12 @@ namespace PalcoNet.AbmCliente
 
         private bool validarIngreso()
         {
-            return validarCamposVaciosCliente() && validarTipos();
+            return validarFormularioCompleto() && validarTipos();
         }
 
-        private bool validarCamposVaciosCliente()
+        private bool validarFormularioCompleto()
         {
-            bool error = false;
+            bool completo = true;
             var controles = groupBox1.Controls;
             foreach (Control control in controles)
             {
@@ -154,11 +154,11 @@ namespace PalcoNet.AbmCliente
                 if(string.IsNullOrWhiteSpace(control.Text))
                 {
                     MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    error = true;
+                    completo = false;
                     break;
                 }
             }
-            return error;
+            return completo;
         }
 
         private void button1_Click(object sender, EventArgs e)

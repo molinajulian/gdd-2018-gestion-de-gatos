@@ -17,7 +17,7 @@ namespace PalcoNet.Modelo
         public Domicilio Domicilio { get; set; }
         public DateTime FechaDeNacimiento { get; set; }
         public DateTime FechaDeCreacion { get; set; }
-        public List<Tarjeta> Tarjeta { get; set; }
+        public List<Tarjeta> Tarjetas { get; set; }
         public Boolean Habilitado { get; set; }
 
         public Cliente(int tipoDeDocumento_id, int numeroDocumento, string cuil, string nombre, string apellido, 
