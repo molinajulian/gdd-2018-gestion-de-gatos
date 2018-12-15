@@ -47,6 +47,7 @@ namespace PalcoNet.AbmCliente
             actualizarInstanciaCliente();
             try
             {
+                domicilio.Id = DomiciliosRepositorio.agregar(domicilio);
                 string clienteId = ClienteRepositorio.agregar(cliente);
                 TarjetaRepositorio.agregar(cliente, clienteId);
                 limpiarVentana();
