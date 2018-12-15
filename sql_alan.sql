@@ -4,7 +4,8 @@ go
 
 sp_addmessage @msgnum = 50001,  
               @severity = 10,  
-              @msgtext = 'Usuario no encontrado.';
+              @msgtext = 'Usuario no encontrado.',
+			  @lang = 'us_english';
 GO
 IF (OBJECT_ID('sp_autenticar_usuario', 'P') IS NOT NULL) DROP PROCEDURE sp_autenticar_usuario 
 GO
@@ -69,7 +70,8 @@ go
 
 sp_addmessage @msgnum = 50004,  
               @severity = 10,  
-              @msgtext = 'Domicilio ya existente.';
+              @msgtext = 'Domicilio ya existente.',
+			  @lang = 'us_english';
 GO
 IF (OBJECT_ID('sp_agregar_domicilio', 'P') IS NOT NULL) DROP PROCEDURE sp_agregar_domicilio 
 GO
@@ -127,8 +129,45 @@ AS BEGIN
 		WHERE Dom_Id = @dom_id;
 END
 GO
+sp_addmessage @msgnum = 50002,  
+              @severity = 10,  
+              @msgtext = 'CUIT para empresa ya registrado.',
+			  @lang = 'us_english';
+GO
+sp_addmessage @msgnum = 50003,  
+              @severity = 10,  
+              @msgtext = 'Razon Social para empresa ya registrado.',
+			  @lang = 'us_english';
+GO
+IF (OBJECT_ID('sp_validar_empresa', 'P') IS NOT NULL) DROP PROCEDURE sp_validar_empresa 
+GO
+CREATE PROCEDURE sp_validar_empresa (@razon_social nvarchar(255), @cuit nvarchar(255))
+AS BEGIN
+	DECLARE @razon_encontrada INT = 0;
+	DECLARE @cuit_encontrado INT = 0;
+    SET @razon_encontrada = (SELECT ISNULL((SELECT COUNT(1)
+		FROM [GD2C2018].[GESTION_DE_GATOS].Empresas
+		WHERE [Emp_Razon_Social] = @razon_social), 0));
+    SET @cuit_encontrado = (SELECT ISNULL((SELECT COUNT(1)
+		FROM [GD2C2018].[GESTION_DE_GATOS].Empresas
+		WHERE [Emp_Cuit] = @cuit), 0));
+	IF @cuit_encontrado <> 0
+	BEGIN
+		RAISERROR (50002, 10, 1)
+		RETURN;
+	END
+	IF @razon_encontrada <> 0
+	BEGIN
+		RAISERROR (50003, 10, 1)
+		RETURN;
+	END
+END
+go
 
-IF (OBJECT_ID('sp_crear_empresa', 'P') IS NOT NULL) DROP PROCEDURE sp_crear_empresa
+IF EXISTS ( SELECT  *
+            FROM    sys.objects
+            WHERE   object_id = OBJECT_ID(N'sp_crear_empresa')
+            AND type IN ( N'P', N'PC' ) ) DROP PROCEDURE sp_crear_empresa
 go
 CREATE procedure dbo.sp_crear_empresa (@razon_social nvarchar(255), @cuit nvarchar(255), 
 									   @mail nvarchar(50), @telefono numeric(20), @dom_id INT)
@@ -163,42 +202,6 @@ begin
 end
 GO
 
-
-
-sp_addmessage @msgnum = 50002,  
-              @severity = 10,  
-              @msgtext = 'CUIT para empresa ya registrado.';
-GO
-sp_addmessage @msgnum = 50003,  
-              @severity = 10,  
-              @msgtext = 'Razon Social para empresa ya registrado.';
-GO
-IF (OBJECT_ID('sp_validar_empresa', 'P') IS NOT NULL) DROP PROCEDURE sp_validar_empresa 
-GO
-CREATE PROCEDURE sp_validar_empresa (@razon_social nvarchar(255), @cuit nvarchar(255))
-AS BEGIN
-	DECLARE @razon_encontrada INT = 0;
-	DECLARE @cuit_encontrado INT = 0;
-    SET @razon_encontrada = (SELECT ISNULL((SELECT COUNT(1)
-		FROM [GD2C2018].[GESTION_DE_GATOS].Empresas
-		WHERE [Emp_Razon_Social] = @razon_social), 0));
-    SET @cuit_encontrado = (SELECT ISNULL((SELECT COUNT(1)
-		FROM [GD2C2018].[GESTION_DE_GATOS].Empresas
-		WHERE [Emp_Cuit] = @cuit), 0));
-	IF @cuit_encontrado <> 0
-	BEGIN
-		RAISERROR (50002, 10, 1)
-		RETURN;
-	END
-	IF @razon_encontrada <> 0
-	BEGIN
-		RAISERROR (50003, 10, 1)
-		RETURN;
-	END
-END
-go
-
-
 IF (OBJECT_ID('sp_actualizar_empresa', 'P') IS NOT NULL) DROP PROCEDURE sp_actualizar_empresa
 go
 CREATE procedure dbo.sp_actualizar_empresa (@razon_social nvarchar(255), @cuit nvarchar(255),
@@ -218,17 +221,19 @@ GO
 CREATE procedure dbo.sp_cambiar_estado_empresa (@cuit nvarchar(255), @estado_final INT, @resultado INT OUTPUT)
 AS BEGIN
 	UPDATE GESTION_DE_GATOS.Empresas SET Emp_Habilitada = @estado_final WHERE Emp_Cuit = @cuit;
-	SELECT @resultado = Emp_Habilitada FROM GESTION_DE_GATOS.Empresas WHERE Emp_Cuit = @cuit);
+	SELECT @resultado = Emp_Habilitada FROM GESTION_DE_GATOS.Empresas WHERE Emp_Cuit = @cuit;
 END
 GO
 
 
-ALTER TABLE GESTION_DE_GATOS.Ubicaciones
- ADD CONSTRAINT DF_Ubic_Sin_Numerar DEFAULT 0 FOR Ubic_Sin_Numerar;
 
-IF (OBJECT_ID('sp_agregar_ubicacion', 'P') IS NOT NULL) DROP PROCEDURE sp_agregar_ubicacion
-GO
-CREATE procedure dbo.sp_agregar_ubicacion(@ubic_tipo INT, @ubic_precio NUMERIC(18), @ubic_espec_codigo NUMERIC(18)
+
+IF EXISTS ( SELECT  *
+            FROM    sys.objects
+            WHERE   object_id = OBJECT_ID(N'sp_agregar_ubicacion')
+            AND type IN ( N'P', N'PC' ) ) DROP PROCEDURE sp_agregar_ubicacion
+go
+CREATE procedure sp_agregar_ubicacion(@ubic_tipo INT, @ubic_precio NUMERIC(18), @ubic_espec_codigo NUMERIC(18),
 										  @cnt_filas INT, @cnt_asientos INT)
 AS BEGIN 
 	DECLARE @indice_fila INT = 0;
@@ -238,7 +243,7 @@ AS BEGIN
 		BEGIN
 		    WHILE @indice_asiento < @cnt_asientos
 			BEGIN
-				INSERT INTO Ubicacion(Ubic_Fila, Ubic_Asiento, Ubic_Precio
+				INSERT INTO GESTION_DE_GATOS.Ubicaciones(Ubic_Fila, Ubic_Asiento, Ubic_Precio,
 									  Ubic_Espec_Cod, Ubic_Tipo_Cod) 
 						VALUES(@indice_fila, @indice_asiento, @ubic_precio, @ubic_espec_codigo, @ubic_tipo);
 				SET @indice_asiento = @indice_asiento + 1;

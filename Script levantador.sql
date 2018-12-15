@@ -70,10 +70,8 @@ CREATE TABLE [GESTION_DE_GATOS].[Empresas]
 go
 
 ALTER TABLE [GESTION_DE_GATOS].[Empresas]
-	ADD CONSTRAINT [XPKEmpresa] PRIMARY KEY  CLUSTERED ([Emp_Cuit], [ASC)
+	ADD CONSTRAINT [XPKEmpresa] PRIMARY KEY  CLUSTERED ([Emp_Cuit] ASC)
 go
-
--- facturas e items facturas
 
 CREATE TABLE [GESTION_DE_GATOS].[Facturas]
 ( 
@@ -479,6 +477,9 @@ ALTER TABLE [GESTION_DE_GATOS].[Item_Facturas]
 		ON DELETE NO ACTION
 		ON UPDATE NO ACTION
 go
+
+ALTER TABLE GESTION_DE_GATOS.Ubicaciones
+ ADD CONSTRAINT DF_Ubic_Sin_Numerar DEFAULT 0 FOR Ubic_Sin_Numerar;
 
 -- creacion de indices
 CREATE INDEX In_Usuario_Username ON [GESTION_DE_GATOS].[Usuarios] (Usuario_Username)
@@ -950,7 +951,10 @@ begin
 	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('CARGADOR USB',2800)
 	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('SOMBRILLA',6800)
 	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('CARPA',17000)
-
+	-- inserto un usuario administrador
+	INSERT INTO GESTION_DE_GATOS.Usuarios (Usuario_Username,Usuario_Password,Usuario_Estado) VALUES ('admin',HASHBYTES('SHA2_256','admin'),1)
+	INSERT INTO GESTION_DE_GATOS.Rol_Por_Usuario (Usuario_Id,Rol_Id)
+		SELECT Usuario_Id,1 FROM GESTION_DE_GATOS.Usuarios
 end
 go
 

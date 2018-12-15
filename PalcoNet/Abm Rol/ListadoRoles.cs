@@ -65,7 +65,7 @@ namespace PalcoNet.AbmRol
 
         private void btn_buscar_Click(object sender, EventArgs e)
         {
-            tabla_roles.Rows.Clear();
+            /*tabla_roles.Rows.Clear();
             List<Rol> roles = RolRepositorio.getRoles(tx_nombre_rol.Text);
 
             foreach(Rol rol in roles)
@@ -74,7 +74,7 @@ namespace PalcoNet.AbmRol
                 tabla_roles.Rows.Add(row);
             }
 
-            refreshValues();
+            refreshValues();*/
         }
 
         private void btn_volver_Click(object sender, EventArgs e)

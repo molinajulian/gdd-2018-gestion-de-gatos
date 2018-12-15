@@ -70,6 +70,24 @@
     <Compile Include="Abm Cliente\ModificacionCliente.designer.cs">
       <DependentUpon>ModificacionCliente.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Domicilio\AltaDomicilio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Domicilio\AltaDomicilio.Designer.cs">
+      <DependentUpon>AltaDomicilio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Domicilio\ListadoDomicilios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Domicilio\ListadoDomicilios.Designer.cs">
+      <DependentUpon>ListadoDomicilios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Domicilio\ModificarDomicilio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Domicilio\ModificarDomicilio.Designer.cs">
+      <DependentUpon>ModificarDomicilio.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Empresa Espectaculo\AltaEmpresa.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +173,12 @@
     <Compile Include="Editar Publicacion\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Generar Publicacion\AltaSector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicacion\AltaSector.Designer.cs">
+      <DependentUpon>AltaSector.cs</DependentUpon>
+    </Compile>
     <Compile Include="Generar Publicacion\GenerarPublicacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -181,11 +205,12 @@
     </Compile>
     <Compile Include="Modelo\Cliente.cs" />
     <Compile Include="Modelo\Compra.cs" />
+    <Compile Include="Modelo\Domicilio.cs" />
     <Compile Include="Modelo\Factura.cs" />
     <Compile Include="Modelo\ItemFactura.cs" />
     <Compile Include="Modelo\Premio.cs" />
+    <Compile Include="Modelo\Sector.cs" />
     <Compile Include="Modelo\TiposDocumento.cs" />
-    <Compile Include="Modelo\Direccion.cs" />
     <Compile Include="Modelo\Empresa.cs" />
     <Compile Include="Modelo\Espectaculo.cs" />
     <Compile Include="Modelo\EstadoPublicacion.cs" />
@@ -227,6 +252,7 @@
     </Compile>
     <Compile Include="Repositorios\ClienteRepositorio.cs" />
     <Compile Include="Repositorios\CompraRepositorio.cs" />
+    <Compile Include="Repositorios\DomiciliosRepositorio.cs" />
     <Compile Include="Repositorios\EmpresasRepositorio.cs" />
     <Compile Include="Repositorios\EspectaculoRepositorio.cs" />
     <Compile Include="Repositorios\EstadoPublicacionRepositorio.cs" />
@@ -252,6 +278,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Cliente\ModificacionCliente.resx">
       <DependentUpon>ModificacionCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Domicilio\AltaDomicilio.resx">
+      <DependentUpon>AltaDomicilio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Domicilio\ListadoDomicilios.resx">
+      <DependentUpon>ListadoDomicilios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Domicilio\ModificarDomicilio.resx">
+      <DependentUpon>ModificarDomicilio.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Empresa Espectaculo\AltaEmpresa.resx">
       <DependentUpon>AltaEmpresa.cs</DependentUpon>
@@ -285,6 +320,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Tarjeta\ModificacionTarjeta.resx">
       <DependentUpon>ModificacionTarjeta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicacion\AltaSector.resx">
+      <DependentUpon>AltaSector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicacion\GenerarPublicacion.resx">
       <DependentUpon>GenerarPublicacion.cs</DependentUpon>

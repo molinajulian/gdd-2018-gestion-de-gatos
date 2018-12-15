@@ -61,16 +61,14 @@ namespace PalcoNet.Repositorios
             }
         }
 
-        public static List<Rol> getRoles(String nombre)
+        public static List<Rol> getRoles()
         {
-            List<SqlParameter> parametros = new List<SqlParameter>();
             List<Rol> roles = new List<Rol>();
-
-            if (String.IsNullOrWhiteSpace(nombre)) parametros.Add(new SqlParameter("@nombre", DBNull.Value));
-            else parametros.Add(new SqlParameter("@nombre", nombre));
-
-            SqlDataReader lector = DataBase.GetDataReader("404_NOT_FOUND.SP_BUSCAR_ROL", "SP", parametros);
-
+            StringBuilder stringBuilder = new StringBuilder();
+            String sql = stringBuilder
+                .Append("SELECT * FROM GESTION_DE_GATOS.ROLES WHERE (Rol_Nombre = 'CLIENTE' or Rol_nombre = 'EMPRESA') and Rol_Estado=1")
+                .ToString();
+            SqlDataReader lector = DataBase.GetDataReader(sql, "T", new List<SqlParameter>());
             if (lector.HasRows)
             {
                 while (lector.Read())

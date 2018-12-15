@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using PalcoNet.AbmCliente;
 using PalcoNet.AbmDomicilio;
 
 namespace PalcoNet.AbmCliente
