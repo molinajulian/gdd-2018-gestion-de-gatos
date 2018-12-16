@@ -42,17 +42,16 @@ go
 
 IF (OBJECT_ID('sp_cambiar_contraseña', 'P') IS NOT NULL) DROP PROCEDURE sp_cambiar_contraseña 
 go
-CREATE PROCEDURE sp_cambiar_contraseña @idUsuario int,@contraseña nvarchar(20),@tamaño int
+CREATE PROCEDURE sp_cambiar_contraseña @idUsuario int,@contraseña VARCHAR(32),@tamaño int
 AS 
 BEGIN
-		UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Username =  HASHBYTES('SHA2_256',@contraseña) WHERE Usuario_Id = @idUsuario
-		--UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Password =  HASHBYTES('SHA2_256',@contraseña) WHERE Usuario_Id = @idUsuario
-		--UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Primer_Logueo = 0 WHERE Usuario_Id = @idUsuario
+		--UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Username =  HASHBYTES('SHA2_256',@contraseña) WHERE Usuario_Id = @idUsuario
+		UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Password = HASHBYTES('SHA2_256',@contraseña) WHERE Usuario_Id = @idUsuario
+		UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Primer_Logueo = 0 WHERE Usuario_Id = @idUsuario
 END
 go
 
-SELECT HASHBYTES('SHA2_256', convert(varchar(20),'hola1234'))
-SELECT HASHBYTES('SHA2_256', 'hola1234')
+
 IF (OBJECT_ID('sp_buscar_usuario', 'P') IS NOT NULL) DROP PROCEDURE sp_buscar_usuario 
 go
 CREATE PROCEDURE sp_buscar_usuario @idUsuario int
@@ -117,7 +116,7 @@ AS BEGIN
 	END
 	ELSE
 	BEGIN
-		RAISERROR (50004, 10, 1)
+		RAISERROR ('Domicilio ya existente', 16, 0)
 		RETURN;
 	END	
 END
@@ -153,16 +152,7 @@ AS BEGIN
 			Dom_Depto = @depto, Dom_Nro_Calle = @nro, Dom_Calle = @calle
 		WHERE Dom_Id = @dom_id;
 END
-GO
-sp_addmessage @msgnum = 50002,  
-              @severity = 10,  
-              @msgtext = 'CUIT para empresa ya registrado.',
-			  @lang = 'us_english';
-GO
-sp_addmessage @msgnum = 50003,  
-              @severity = 10,  
-              @msgtext = 'Razon Social para empresa ya registrado.',
-			  @lang = 'us_english';
+
 GO
 IF (OBJECT_ID('sp_validar_empresa', 'P') IS NOT NULL) DROP PROCEDURE sp_validar_empresa 
 GO
@@ -178,12 +168,12 @@ AS BEGIN
 		WHERE [Emp_Cuit] = @cuit), 0));
 	IF @cuit_encontrado <> 0
 	BEGIN
-		RAISERROR (50002, 10, 1)
+		RAISERROR ('CUIT para empresa ya registrado', 16, 0)
 		RETURN;
 	END
 	IF @razon_encontrada <> 0
 	BEGIN
-		RAISERROR (50003, 10, 1)
+		RAISERROR ('Razon Social para empresa ya registrado.', 16, 0)
 		RETURN;
 	END
 END
@@ -218,9 +208,7 @@ begin
 		begin catch
 			IF @@TRANCOUNT > 0  
 				rollback transaction;
-			declare @mensajeError nvarchar(4000)
-			SELECT @mensajeError = ERROR_MESSAGE() 
-			RAISERROR('Hubo un error al crear la empresa, motivo: %s',11,1,@mensajeError)
+			RAISERROR('Hubo un error al crear la empresa, motivo: %s',16,0)
 		end catch
 		IF @@TRANCOUNT > 0  
         	commit transaction;
@@ -233,7 +221,7 @@ CREATE procedure dbo.sp_actualizar_empresa (@razon_social nvarchar(255), @cuit n
 								@mail nvarchar(50),@telefono numeric(20),
 								@domicilio_id INT, @habilitada INT)
 AS BEGIN
-	UPDATE [GESTION_DE_GATOS].Empresas
+	UPDATE GESTION_DE_GATOS.Empresas
 		SET Emp_Mail = @mail, Emp_Tel = @telefono, Emp_Habilitada = @habilitada, Emp_Razon_Social = @razon_social,
 			Emp_Dom_Id = @domicilio_id
 		WHERE Emp_Cuit = @cuit; 
