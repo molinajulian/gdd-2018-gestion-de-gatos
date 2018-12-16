@@ -49,12 +49,6 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@fechaNac", cliente.FechaDeNacimiento));
             parametros.Add(new SqlParameter("@mail", cliente.Email));
             parametros.Add(new SqlParameter("@telefono", Convert.ToDecimal(cliente.Telefono)));
-            parametros.Add(new SqlParameter("@calle", cliente.Domicilio.Calle));
-            parametros.Add(new SqlParameter("@nro", Convert.ToDecimal(cliente.Domicilio.Numero)));
-            parametros.Add(new SqlParameter("@depto", cliente.Domicilio.Departamento));
-            parametros.Add(new SqlParameter("@localidad", cliente.Domicilio.Localidad));
-            parametros.Add(new SqlParameter("@piso", Convert.ToDecimal(cliente.Domicilio.Piso)));
-            parametros.Add(new SqlParameter("@cp", cliente.Domicilio.CodPostal));
             parametros.Add(new SqlParameter("@habilitado", cliente.Habilitado));
             DataBase.ejecutarSP("[dbo].[sp_modificar_cliente]", parametros);
         }
@@ -68,20 +62,14 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@nombre", cliente.NombreCliente));
             parametros.Add(new SqlParameter("@apellido", cliente.Apellido));
             parametros.Add(new SqlParameter("@fechaNac", cliente.FechaDeNacimiento));
-            parametros.Add(new SqlParameter("@fechaCreacion", cliente.FechaDeCreacion));
+            parametros.Add(new SqlParameter("@dom_id", cliente.Domicilio.Id));
             parametros.Add(new SqlParameter("@mail", cliente.Email));
-            parametros.Add(new SqlParameter("@telefono", Convert.ToInt32(cliente.Telefono)));
-            parametros.Add(new SqlParameter("@calle", cliente.Domicilio.Calle));
-            parametros.Add(new SqlParameter("@nro", Convert.ToDecimal(cliente.Domicilio.Numero)));
-            parametros.Add(new SqlParameter("@depto", cliente.Domicilio.Departamento));
-            parametros.Add(new SqlParameter("@localidad", cliente.Domicilio.Localidad));
-            parametros.Add(new SqlParameter("@piso", cliente.Domicilio.Piso));
-            parametros.Add(new SqlParameter("@cp", cliente.Domicilio.CodPostal));
-            SqlParameter output = new SqlParameter("@id", -1);
+            parametros.Add(new SqlParameter("@telefono", cliente.Telefono));
+            SqlParameter output = new SqlParameter("@cli_id", -1);
             output.Direction = ParameterDirection.Output;
             parametros.Add(output);
             SqlCommand cmd = DataBase.ejecutarSP("[dbo].[sp_crear_cliente]", parametros);
-            return cmd.Parameters["@id"].ToString();
+            return cmd.Parameters["@cli_id"].Value.ToString();
         }
 
         public static List<Cliente> getClientes(String nombre, String apellido, String numero_documento, String email)

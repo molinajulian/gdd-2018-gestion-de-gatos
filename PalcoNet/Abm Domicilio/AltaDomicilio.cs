@@ -44,7 +44,6 @@ namespace PalcoNet.AbmDomicilio
             try
             {
                 setDomicilioDeUi();
-                domicilio.Id = DomiciliosRepositorio.agregar(domicilio);
                 MessageBox.Show("Domicilio Registrado Exitosamente", "Alta Domicilio", MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
                 this.Close();

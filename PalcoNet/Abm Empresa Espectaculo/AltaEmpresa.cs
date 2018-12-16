@@ -112,8 +112,11 @@ namespace PalcoNet.AbmEmpresa
                 grupo_empresa.Enabled = true;
                 return;
             }
-            try { 
-                EmpresasRepositorio.agregar(getEmpresaDeUi());
+            try
+            {
+                Empresa empresa = getEmpresaDeUi();
+                empresa.Domicilio.Id = DomiciliosRepositorio.agregar(domicilio);
+                EmpresasRepositorio.agregar(empresa);
                 limpiarVentana();
                 MessageBox.Show("La empresa ha sido dada de alta exitosamente", "Alta de empresa", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

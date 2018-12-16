@@ -56,6 +56,7 @@
             this.textUsuario.Text = "Nombre de Usuario";
             this.textUsuario.UseSystemPasswordChar = false;
             this.textUsuario.Click += new System.EventHandler(this.textUsuario_Click);
+            this.textUsuario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textUsuario_KeyPress);
             // 
             // textContrasena
             // 

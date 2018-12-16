@@ -2,10 +2,7 @@
 USE GD2C2018;
 go
 
-sp_addmessage @msgnum = 50001,  
-              @severity = 10,  
-              @msgtext = 'Usuario no encontrado.',
-			  @lang = 'us_english';
+
 GO
 IF (OBJECT_ID('sp_autenticar_usuario', 'P') IS NOT NULL) DROP PROCEDURE sp_autenticar_usuario 
 GO
@@ -13,32 +10,59 @@ CREATE PROCEDURE sp_autenticar_usuario
 (
     @user VARCHAR(20),
 	@password VARCHAR(32),
+	@tipoUsuario char(2),
+	@tipoDocumento int,
 	@salida INT OUTPUT)
 AS
 BEGIN
-    SET @salida = (SELECT ISNULL((SELECT COUNT(1)
-		FROM [GD2C2018].[GESTION_DE_GATOS].Usuarios
-		WHERE [Usuario_Username] = @user AND [Usuario_Password] = HASHBYTES('SHA2_256', @password)
-		GROUP BY [Usuario_Estado]), 0));
+	if @tipoUsuario = 'C'
+		SET @salida = (SELECT ISNULL((SELECT TOP 1 u.Usuario_Id
+		FROM [GD2C2018].[GESTION_DE_GATOS].Clientes c
+		JOIN [GD2C2018].[GESTION_DE_GATOS].Usuarios u ON u.Usuario_Id = c.Cli_Usuario_Id 
+		WHERE u.Usuario_Password = HASHBYTES('SHA2_256', @password) AND c.Cli_Tipo_Doc_Id = @tipoDocumento AND c.Cli_Doc = convert(int,@user)
+		GROUP BY u.Usuario_Estado,u.Usuario_Id), 0));
+	if @tipoUsuario = 'E'
+		SET @salida = (SELECT ISNULL((SELECT u.Usuario_Id
+		FROM [GD2C2018].[GESTION_DE_GATOS].Empresas e
+		JOIN [GD2C2018].[GESTION_DE_GATOS].Usuarios u ON u.Usuario_Id = e.Emp_Usuario_Id 
+		WHERE u.Usuario_Password = HASHBYTES('SHA2_256', @password) AND  e.Emp_Cuit = @user
+		GROUP BY u.Usuario_Estado,u.Usuario_Id), 0));
+	if @tipoUsuario = 'O'
+		SET @salida = (SELECT ISNULL((SELECT u.Usuario_Id
+		FROM [GD2C2018].[GESTION_DE_GATOS].Usuarios u
+		WHERE u.Usuario_Password = HASHBYTES('SHA2_256', @password) AND  u.Usuario_Username = @user
+		GROUP BY u.Usuario_Estado,u.Usuario_Id), 0));
 	IF @salida = 0
 	BEGIN
-		RAISERROR (50001, 10, 1)
+		RAISERROR ('Usuario o contraseña incorrecta', 16, 0)
 		RETURN;
 	END
 END
 go
 
+IF (OBJECT_ID('sp_cambiar_contraseña', 'P') IS NOT NULL) DROP PROCEDURE sp_cambiar_contraseña 
+go
+CREATE PROCEDURE sp_cambiar_contraseña @idUsuario int,@contraseña VARCHAR(32),@tamaño int
+AS 
+BEGIN
+		--UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Username =  HASHBYTES('SHA2_256',@contraseña) WHERE Usuario_Id = @idUsuario
+		UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Password = HASHBYTES('SHA2_256',@contraseña) WHERE Usuario_Id = @idUsuario
+		UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Primer_Logueo = 0 WHERE Usuario_Id = @idUsuario
+END
+go
+
+
 IF (OBJECT_ID('sp_buscar_usuario', 'P') IS NOT NULL) DROP PROCEDURE sp_buscar_usuario 
 go
-CREATE PROCEDURE sp_buscar_usuario @username varchar(20)
+CREATE PROCEDURE sp_buscar_usuario @idUsuario int
 AS BEGIN
-		SELECT u.Usuario_Id, u.Usuario_Username, u.Usuario_Estado
+		SELECT u.Usuario_Id, u.Usuario_Username, u.Usuario_Estado, u.Usuario_Primer_Logueo
 		FROM GESTION_DE_GATOS.Usuarios u
 				JOIN  GESTION_DE_GATOS.Rol_Por_Usuario
 					ON GESTION_DE_GATOS.Rol_Por_Usuario.Usuario_Id = u.Usuario_Id
                 JOIN GESTION_DE_GATOS.Roles
 					ON GESTION_DE_GATOS.Roles.Rol_Id = GESTION_DE_GATOS.Rol_Por_Usuario.Rol_Id
-		WHERE u.Usuario_Username = @username
+		WHERE u.Usuario_Id = @idUsuario
 END
 go
 
@@ -92,7 +116,7 @@ AS BEGIN
 	END
 	ELSE
 	BEGIN
-		RAISERROR (50004, 10, 1)
+		RAISERROR ('Domicilio ya existente', 16, 0)
 		RETURN;
 	END	
 END
@@ -128,16 +152,7 @@ AS BEGIN
 			Dom_Depto = @depto, Dom_Nro_Calle = @nro, Dom_Calle = @calle
 		WHERE Dom_Id = @dom_id;
 END
-GO
-sp_addmessage @msgnum = 50002,  
-              @severity = 10,  
-              @msgtext = 'CUIT para empresa ya registrado.',
-			  @lang = 'us_english';
-GO
-sp_addmessage @msgnum = 50003,  
-              @severity = 10,  
-              @msgtext = 'Razon Social para empresa ya registrado.',
-			  @lang = 'us_english';
+
 GO
 IF (OBJECT_ID('sp_validar_empresa', 'P') IS NOT NULL) DROP PROCEDURE sp_validar_empresa 
 GO
@@ -153,12 +168,12 @@ AS BEGIN
 		WHERE [Emp_Cuit] = @cuit), 0));
 	IF @cuit_encontrado <> 0
 	BEGIN
-		RAISERROR (50002, 10, 1)
+		RAISERROR ('CUIT para empresa ya registrado', 16, 0)
 		RETURN;
 	END
 	IF @razon_encontrada <> 0
 	BEGIN
-		RAISERROR (50003, 10, 1)
+		RAISERROR ('Razon Social para empresa ya registrado.', 16, 0)
 		RETURN;
 	END
 END
@@ -193,9 +208,7 @@ begin
 		begin catch
 			IF @@TRANCOUNT > 0  
 				rollback transaction;
-			declare @mensajeError nvarchar(4000)
-			SELECT @mensajeError = ERROR_MESSAGE() 
-			RAISERROR('Hubo un error al crear la empresa, motivo: %s',11,1,@mensajeError)
+			RAISERROR('Hubo un error al crear la empresa, motivo: %s',16,0)
 		end catch
 		IF @@TRANCOUNT > 0  
         	commit transaction;
@@ -208,7 +221,7 @@ CREATE procedure dbo.sp_actualizar_empresa (@razon_social nvarchar(255), @cuit n
 								@mail nvarchar(50),@telefono numeric(20),
 								@domicilio_id INT, @habilitada INT)
 AS BEGIN
-	UPDATE [GESTION_DE_GATOS].Empresas
+	UPDATE GESTION_DE_GATOS.Empresas
 		SET Emp_Mail = @mail, Emp_Tel = @telefono, Emp_Habilitada = @habilitada, Emp_Razon_Social = @razon_social,
 			Emp_Dom_Id = @domicilio_id
 		WHERE Emp_Cuit = @cuit; 
@@ -226,6 +239,20 @@ END
 GO
 
 
+
+IF (OBJECT_ID('sp_modificar_cliente', 'P') IS NOT NULL) DROP PROCEDURE sp_modificar_cliente
+go
+CREATE procedure dbo.sp_modificar_cliente (@tipoDoc INT, @doc numeric(18), @cuil nvarchar(255), @nombre nvarchar(255),
+											@apellido nvarchar(255), @fechaNac datetime,
+											@mail nvarchar(255), @telefono numeric(20), @habilitado BIT)
+AS BEGIN
+	UPDATE [GESTION_DE_GATOS].Clientes
+		SET [Cli_Apellido] = @apellido, [Cli_Nombre] = @nombre
+      		,[Cli_Cuil] = @cuil, [Cli_Fecha_Nac] = @fechaNac, [Cli_Mail] = @mail, [Cli_Tel] = @telefono
+      		,[Cli_Habilitado] = @habilitado
+		WHERE [Cli_Tipo_Doc_Id] = @tipoDoc AND [Cli_Doc] = @doc;
+END
+GO
 
 
 IF EXISTS ( SELECT  *
