@@ -91,7 +91,22 @@ namespace PalcoNet.Repositorios
             lector.Close();
             return clientes;
         }
-
+        public static Cliente getCliente( String tipoDocId, String doc)
+        {
+            var cliente = new Cliente();
+            string Id= tipoDocId+doc;
+            Cliente clientes = new Cliente();
+            var parametros= new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@id", Id));
+            var query=  DataBase.ejecutarFuncion("select  * from GESTION_DE_GATOS.Clientes c where concat(Convert(varchar(16),c.Cli_Tipo_Doc_Id) , Convert(varchar(11),c.Cli_Doc) ) = @id ",parametros);
+            SqlDataReader lector = query.ExecuteReader();
+            while (lector.Read())
+            {
+               cliente= Cliente.build(lector);
+            }
+            lector.Close();
+            return cliente;
+        }
 
         internal static List<TiposDocumento> getTiposDoc()
         {
