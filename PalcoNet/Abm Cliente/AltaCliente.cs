@@ -17,7 +17,8 @@ namespace PalcoNet.AbmCliente
     {
         Cliente cliente = new Cliente();
         Domicilio domicilio = new Domicilio();
-        public AltaCliente()
+        bool esRegistro;
+        public AltaCliente(bool registro=false)
         {
             InitializeComponent();
 
@@ -26,7 +27,17 @@ namespace PalcoNet.AbmCliente
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
             cliente.Tarjetas = new List<Tarjeta>();
+            esRegistro = registro;
             getTiposDocumento();
+            if (!registro)
+            {
+                labelAclaracion.Hide();
+                labelUsuario.Hide();
+                labelContraseña.Hide();
+                txtContraseña.Hide();
+                txtUsuario.Hide();
+                txtUsuario.Enabled = false;
+            }
         }
 
         public void getTiposDocumento()
@@ -150,13 +161,25 @@ namespace PalcoNet.AbmCliente
             var controles = groupBox1.Controls;
             foreach (Control control in controles)
             {
-                
-                if(string.IsNullOrWhiteSpace(control.Text))
+                if (((control.Name == "txtUsuario" || control.Name == "txtContraseña") && esRegistro))
                 {
-                    MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    completo = false;
-                    break;
+                    if (string.IsNullOrWhiteSpace(control.Text))
+                    {
+                        MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        completo = false;
+                        break;
+                    }
                 }
+                else
+                {
+                    if (string.IsNullOrWhiteSpace(control.Text))
+                    {
+                        MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        completo = false;
+                        break;
+                    }
+                }
+               
             }
             return completo;
         }
@@ -169,13 +192,47 @@ namespace PalcoNet.AbmCliente
 
         private void btnRegistrarDomicilio_Click(object sender, EventArgs e)
         {
-            AltaDomicilio altaDomicilio = new AltaDomicilio(domicilio);
+            AltaDomicilio altaDomicilio = new AltaDomicilio(ref domicilio);
             altaDomicilio.ShowDialog();
+            btnRegistrarDomicilio.Hide();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+        private void txDni_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (txtUsuario.Visible && !char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '-'))
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                if (e.KeyChar == '\b')
+                {
+                    if (txDni.Text.Length > 0)
+                    {
+                        txtUsuario.Text = txDni.Text.Substring(0, txDni.Text.Length - 1);
+                    }
+                }
+                else
+                {
+                    txtUsuario.Text += e.KeyChar.ToString();
+                }
+
+            }
+        }
+        private void txtContraseña_Click(object sender, EventArgs e)
+        {
+            txtContraseña.Clear();
+            txtContraseña.UseSystemPasswordChar = true;
+        }
+
+        private void txtContraseña_TextChanged(object sender, EventArgs e)
+        {
+            txtContraseña.UseSystemPasswordChar = true;
+        }
+
     }
 }

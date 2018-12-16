@@ -13,7 +13,7 @@ namespace PalcoNet.AbmDomicilio
     {
 
         private Domicilio domicilio = null;
-        public AltaDomicilio(Domicilio domicilio)
+        public AltaDomicilio(ref Domicilio domicilio)
         {
             InitializeComponent();
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -38,7 +38,7 @@ namespace PalcoNet.AbmDomicilio
             domicilio.CodPostal = txCp.Text;
             domicilio.Piso = txPiso.Text;
         }
-        private void btn_alta_rol_Click(object sender, EventArgs e)
+        private void btn_alta_domicilio_Click(object sender, EventArgs e)
         {
             if (!validarCamposDomicilio()) { return; }
             try

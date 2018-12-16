@@ -93,5 +93,10 @@ namespace PalcoNet.Registro_de_usuario
             txtRepetirContraseña.Clear();
             txtRepetirContraseña.UseSystemPasswordChar = true;
         }
+
+        private void CambiarContraseña_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

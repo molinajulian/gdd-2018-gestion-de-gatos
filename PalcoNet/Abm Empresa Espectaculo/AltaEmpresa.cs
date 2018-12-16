@@ -21,13 +21,24 @@ namespace PalcoNet.AbmEmpresa
     public partial class AltaEmpresa : MaterialForm
     {
         Domicilio domicilio = new Domicilio();
-        public AltaEmpresa()
+        bool esRegistro;
+        public AltaEmpresa(bool registro=false)
         {
             InitializeComponent();
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+            esRegistro = registro;
+            if (!registro)
+            {
+                labelAclaracion.Hide();
+                labelUsuario.Hide();
+                labelContraseña.Hide();
+                txtContraseña.Hide();
+                txtUsuario.Hide();
+                txtUsuario.Enabled = false;
+            }
         }
 
         private Empresa getEmpresaDeUi()
@@ -65,7 +76,7 @@ namespace PalcoNet.AbmEmpresa
                 MessageBox.Show("Ingrese un CUIT válido.");
                 return false;
             }
-            if (domicilio.Id == -1)
+            if (string.IsNullOrEmpty(domicilio.Calle))
             {
                 MessageBox.Show("Debe registrar un domicilio.");
                 return false;
@@ -76,11 +87,10 @@ namespace PalcoNet.AbmEmpresa
         private bool formularioCompleto()
         {
             bool verifica = true;
-
              var controles =grupo_empresa.Controls;
              foreach (Control control in controles)
              {
-                 if (string.IsNullOrWhiteSpace(control.Text))
+                 if (((control.Name == "txtUsuario" || control.Name == "txtContraseña") && esRegistro) && string.IsNullOrWhiteSpace(control.Text))
                  {
                      epProvider.SetError(control, "Por favor complete el campo");
                      verifica = false;
@@ -104,7 +114,7 @@ namespace PalcoNet.AbmEmpresa
         }
 
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btn_alta_empresa_Click(object sender, EventArgs e)
         {
             grupo_empresa.Enabled = false;
             if (!verificaValidaciones())
@@ -116,7 +126,7 @@ namespace PalcoNet.AbmEmpresa
             {
                 Empresa empresa = getEmpresaDeUi();
                 empresa.Domicilio.Id = DomiciliosRepositorio.agregar(domicilio);
-                EmpresasRepositorio.agregar(empresa);
+                EmpresasRepositorio.agregar(empresa,esRegistro ? txtContraseña.Text : "");
                 limpiarVentana();
                 MessageBox.Show("La empresa ha sido dada de alta exitosamente", "Alta de empresa", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -127,10 +137,44 @@ namespace PalcoNet.AbmEmpresa
             grupo_empresa.Enabled = true;
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void buttonAltaDomicilio_Click(object sender, EventArgs e)
         {
-            AltaDomicilio altaDomicilio = new AltaDomicilio(domicilio);
+            AltaDomicilio altaDomicilio = new AltaDomicilio(ref domicilio);
             altaDomicilio.ShowDialog();
+            buttonAltaDomicilio.Hide();
+        }
+
+        private void txtCuit_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (txtUsuario.Visible && !char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '-'))
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                if (e.KeyChar == '\b')
+                {
+                    if(txtCuit.Text.Length > 0)
+                    {
+                        txtUsuario.Text = txtCuit.Text.Substring(0,txtCuit.Text.Length-1);
+                    }
+                }
+                else
+                {
+                    txtUsuario.Text += e.KeyChar.ToString();
+                }
+                
+            }
+        }
+        private void txtContraseña_Click(object sender, EventArgs e)
+        {
+            txtContraseña.Clear();
+            txtContraseña.UseSystemPasswordChar = true;
+        }
+
+        private void grupo_empresa_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

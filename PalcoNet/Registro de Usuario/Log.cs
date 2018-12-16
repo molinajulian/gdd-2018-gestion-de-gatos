@@ -42,7 +42,7 @@ namespace PalcoNet.Registro_de_usuario
                     MessageBoxIcon.Error);
             }
         }
-        private void getRoles()
+        public void getRoles()
         {
             List<Rol> roles = new List<Rol>();
             combo_roles.Items.Clear();
@@ -54,7 +54,7 @@ namespace PalcoNet.Registro_de_usuario
             combo_roles.Items.Add(new Rol(0, "OTRO"));
             combo_roles.DisplayMember = "Nombre";
         }
-        private void getTiposDocumento()
+        public void getTiposDocumento()
         {
             List<TiposDocumento> tipos = new List<TiposDocumento>();
             comboTiposDoc.Items.Clear();
@@ -88,11 +88,11 @@ namespace PalcoNet.Registro_de_usuario
                     Usuario usuarioLogueado = usuarioRepositorio.buscarUsuario(idUsuario);
                     if (usuarioLogueado.primerLogueo)
                     {
-                        new CambiarContraseña(usuarioLogueado, this).Show();
+                        new CambiarContraseña(usuarioLogueado, this).ShowDialog();
                     }
                     else
                     {
-                        new ConfiguracionInicial(usuarioLogueado, this).Show();
+                        new ConfiguracionInicial(usuarioLogueado, this).ShowDialog();
                         textContrasena.Text = "Contraseña";
                         textUsuario.Text = "Nombre de Usuario";
                         textContrasena.UseSystemPasswordChar = false;
@@ -134,11 +134,6 @@ namespace PalcoNet.Registro_de_usuario
 
             textContrasena.UseSystemPasswordChar = true;
         }
-
-        private void Log_Load(object sender, EventArgs e)
-        {
-
-        }
         private void textUsuario_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (rolCliente && !char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
@@ -149,7 +144,12 @@ namespace PalcoNet.Registro_de_usuario
             {
                 if (rolEmpresa && !char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '-'))
                 {
-                    e.Handled=true;
+                    e.Handled = true;
+                }
+                else
+                {
+                    rolCliente = false;
+                    rolEmpresa = false;
                 }
             }
         }
@@ -170,9 +170,9 @@ namespace PalcoNet.Registro_de_usuario
             }
         }
 
-        private void label5_Click(object sender, EventArgs e)
+        private void btnNoTengoUsuario_Click(object sender, EventArgs e)
         {
-
+            new TipoDeRegistro().ShowDialog();
         }
 
     }

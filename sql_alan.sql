@@ -45,9 +45,8 @@ go
 CREATE PROCEDURE sp_cambiar_contraseña @idUsuario int,@contraseña VARCHAR(32),@tamaño int
 AS 
 BEGIN
-		--UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Username =  HASHBYTES('SHA2_256',@contraseña) WHERE Usuario_Id = @idUsuario
-		UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Password = HASHBYTES('SHA2_256',@contraseña) WHERE Usuario_Id = @idUsuario
-		UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Primer_Logueo = 0 WHERE Usuario_Id = @idUsuario
+	UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Password = HASHBYTES('SHA2_256',@contraseña) WHERE Usuario_Id = @idUsuario
+	UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Primer_Logueo = 0 WHERE Usuario_Id = @idUsuario
 END
 go
 
@@ -92,10 +91,6 @@ END
 go
 
 
-sp_addmessage @msgnum = 50004,  
-              @severity = 10,  
-              @msgtext = 'Domicilio ya existente.',
-			  @lang = 'us_english';
 GO
 IF (OBJECT_ID('sp_agregar_domicilio', 'P') IS NOT NULL) DROP PROCEDURE sp_agregar_domicilio 
 GO
@@ -104,6 +99,8 @@ CREATE PROCEDURE sp_agregar_domicilio (@calle nvarchar(50),@nro numeric(18), @de
 									   @dom_id INT OUTPUT)
 AS BEGIN
 	DECLARE @salida INT = 0;
+	if @piso = 0
+		set @piso=null
     SET @salida = (SELECT ISNULL((SELECT COUNT(1)
 		FROM [GD2C2018].[GESTION_DE_GATOS].Domicilios
 		WHERE Dom_Cod_Postal = @cp AND Dom_Localidad = @localidad AND Dom_Piso = @piso 
@@ -185,7 +182,7 @@ IF EXISTS ( SELECT  *
             AND type IN ( N'P', N'PC' ) ) DROP PROCEDURE sp_crear_empresa
 go
 CREATE procedure dbo.sp_crear_empresa (@razon_social nvarchar(255), @cuit nvarchar(255), 
-									   @mail nvarchar(50), @telefono numeric(20), @dom_id INT)
+									   @mail nvarchar(50), @telefono numeric(20), @dom_id INT, @contraseña varchar(32),@fecha_creacion datetime)
 as
 begin
 	declare @nuevoUsuario int
@@ -193,16 +190,19 @@ begin
 	begin transaction
 		begin try
 			begin
+				if @contraseña = ''
+					set @contraseña= convert(varchar(32),'palconet2018')
 				INSERT INTO GESTION_DE_GATOS.Usuarios 
 				(Usuario_Username,Usuario_Password,Usuario_Estado) 
 				VALUES (@cuit,
-					HASHBYTES('SHA2_256','palconet2018'),
+					HASHBYTES('SHA2_256',@contraseña),
 					1)
 				SET @nuevoUsuario = (SELECT TOP 1 Usuario_Id FROM GESTION_DE_GATOS.Usuarios ORDER BY Usuario_Id DESC)
 				INSERT INTO GESTION_DE_GATOS.Empresas 
 				(Emp_Razon_Social, Emp_Cuit, Emp_Fecha_Creacion, Emp_Mail, Emp_Dom_Id,
 					Emp_Usuario_Id, Emp_Tel)
-				VALUES (@razon_social, @cuit, GETDATE(), @mail, @dom_id, @nuevoUsuario, @telefono)
+				VALUES (@razon_social, @cuit, @fecha_creacion, @mail, @dom_id, @nuevoUsuario, @telefono)
+				INSERT INTO GESTION_DE_GATOS.Rol_Por_Usuario(Rol_Id,Usuario_Id) VALUES (2,@nuevoUsuario)
 			end
 		end try
 		begin catch
