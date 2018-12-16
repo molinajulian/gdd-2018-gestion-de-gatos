@@ -66,5 +66,26 @@ namespace PalcoNet.Repositorios
             return compra;
 
         }
+        public static List<Compra> GetHistorialCompra(int idcliente)
+        {
+            var historial = new List<Compra>();
+            var parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@idCliente", idcliente));
+            var query= DataBase.ejecutarFuncion("select  * from GESTION_DE_GATOS.Compras c < where concat(Convert(varchar(16),c.Compra_Cli_Doc) , Convert(varchar(11),c.Compra_Cli_Tipo_Doc) )= @idCliente",parametros);
+            SqlDataReader reader = query.ExecuteReader();
+            while (reader.Read())
+            {
+                historial.Add(new Compra()
+                {
+                    Id = (int)reader.GetValue(Ordinales.Compra["Compra_Id"]),
+                    Publicacion = PublicacionRepositorio.GetPublicacionById((int)Ordinales.Compra["Compra_Publicacion_Id"]),
+                    Cliente = ClienteRepositorio.getCliente(
+                    reader.GetValue(Ordinales.Compra["Compra_Cliente_Documento"]).ToString(), reader.GetValue(Ordinales.Compra["Compra_TipoDoc"]).ToString()),
+                    Fecha = (DateTime)reader.GetValue(Ordinales.Compra["Fecha_Id"])
+                });
+            }
+
+            return historial;
+        }
     }
 }
