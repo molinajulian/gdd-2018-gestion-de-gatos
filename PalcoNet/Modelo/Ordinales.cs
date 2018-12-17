@@ -22,6 +22,7 @@ namespace PalcoNet.Modelo
                                                     {"id", 0},
                                                     {"username", 1},
                                                     {"estado", 2},
+                                                    {"primer_logueo",3}
                                                 };
        public static Dictionary<string, int> campoClienteExistente = new Dictionary<string, int>
                                                 {

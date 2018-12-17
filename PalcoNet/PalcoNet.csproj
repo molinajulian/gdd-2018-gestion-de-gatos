@@ -94,7 +94,6 @@
     <Compile Include="Abm Empresa Espectaculo\AltaEmpresa.designer.cs">
       <DependentUpon>AltaEmpresa.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Empresa Espectaculo\EmpresaNoRendidaError.cs" />
     <Compile Include="Abm Empresa Espectaculo\ListadoEmpresas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -232,6 +231,18 @@
     <Compile Include="Registro de Usuario\ConfiguracionInicial.designer.cs">
       <DependentUpon>ConfiguracionInicial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Registro de Usuario\CambiarContraseña.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registro de Usuario\CambiarContraseña.designer.cs">
+      <DependentUpon>CambiarContraseña.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registro de Usuario\TipoDeRegistro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registro de Usuario\TipoDeRegistro.designer.cs">
+      <DependentUpon>TipoDeRegistro.cs</DependentUpon>
+    </Compile>
     <Compile Include="Registro de Usuario\MenuPpal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -338,6 +349,12 @@
     </Compile>
     <EmbeddedResource Include="Registro de Usuario\ConfiguracionInicial.resx">
       <DependentUpon>ConfiguracionInicial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registro de Usuario\CambiarContraseña.resx">
+      <DependentUpon>CambiarContraseña.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registro de Usuario\TipoDeRegistro.resx">
+      <DependentUpon>TipoDeRegistro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Registro de Usuario\MenuPpal.resx">
       <DependentUpon>MenuPpal.cs</DependentUpon>

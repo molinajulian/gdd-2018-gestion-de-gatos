@@ -13,7 +13,6 @@ using MaterialSkin.Controls;
 using MaterialSkin;
 using System.Text.RegularExpressions;
 using PalcoNet.AbmEmpresa;
-using PalcoNet.Abm_Empresa_Espectaculo;
 
 namespace PalcoNet.AbmEmpresa
 {

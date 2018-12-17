@@ -76,7 +76,6 @@ go
 CREATE TABLE [GESTION_DE_GATOS].[Facturas]
 ( 
 	[Fact_Num]				numeric(18)  NOT NULL ,
-	[Fact_Forma_Pago]		nvarchar(255)  NOT NULL ,
 	[Fact_Total]			numeric(18,2)  NOT NULL ,
 	[Fact_Fecha]			datetime  NOT NULL ,
 	[Fact_Emp_Cuit]			nvarchar(255)  NOT NULL 
@@ -148,17 +147,20 @@ ALTER TABLE [GESTION_DE_GATOS].[Rol_Por_Usuario]
 go
 CREATE TABLE [GESTION_DE_GATOS].[Usuarios]
 ( 
-	[Usuario_Id]			int identity(1,1)  NOT NULL ,
-	[Usuario_Username]		varchar(20) NOT NULL ,
+	[Usuario_Id]				int identity(1,1)  NOT NULL ,
+	[Usuario_Username]			varchar(20) NOT NULL ,
 	[Usuario_Password]			binary(32) NOT NULL ,
-	[Usuario_Estado]		bit NULL
+	[Usuario_Estado]			bit NULL,
+	[Usuario_Primer_Logueo]		bit not null,
 )
 go
 
 ALTER TABLE [GESTION_DE_GATOS].[Usuarios]
 	ADD CONSTRAINT [XPKUsuario] PRIMARY KEY  CLUSTERED ([Usuario_Id] ASC)
 go
-
+ALTER TABLE [GESTION_DE_GATOS].[Usuarios]
+	ADD CONSTRAINT DF_Primer_Logueo DEFAULT 1 FOR Usuario_Primer_Logueo;
+go
 --premios, premios adquiridos y tarjetas de credito
 CREATE TABLE [GESTION_DE_GATOS].[Premios_Adquiridos]
 ( 
@@ -176,7 +178,9 @@ CREATE TABLE [GESTION_DE_GATOS].[Premios]
 ( 
 	[Premio_Id]					int identity(1,1)  NOT NULL ,
 	[Premio_Desc]				varchar(50)  NOT NULL,
-	[Premio_Puntos]				int NOT NULL 
+	[Premio_Puntos]				int NOT NULL,
+	[Premio_FechaVencimiento]
+
 )
 go
 
@@ -263,10 +267,12 @@ go
 CREATE TABLE [GESTION_DE_GATOS].[Compras]
 ( 
 	[Compra_Id]					int identity(1,1)  NOT NULL ,
+	[Compra_Forma_Pago_Desc]	nvarchar(255)  NOT NULL ,
 	[Compra_Publicacion]		int  NOT NULL,
 	[Compra_Cli_Doc]			numeric(18) NOT NULL,
 	[Compra_Cli_Tipo_Doc]		int NOT NULL,
-	[Compra_Fecha]				smalldatetime NOT NULL
+	[Compra_Fecha]				smalldatetime NOT NULL,
+	[Compra_FueFacturada]		Bit
 )
 go
 
@@ -892,21 +898,23 @@ begin
 	INSERT INTO GESTION_DE_GATOS.Publicaciones_Estado (Public_Est_Descr,Public_Est_Posible_Cambio) VALUES ('PUBLICADA',1)
 	INSERT INTO GESTION_DE_GATOS.Publicaciones_Estado (Public_Est_Descr,Public_Est_Posible_Cambio) VALUES ('FINALIZADA',0)
 	-- inserto facturas
-	INSERT INTO GESTION_DE_GATOS.Facturas (Fact_Num,Fact_Forma_Pago,Fact_Total,Fact_Fecha,Fact_Emp_Cuit)
-		SELECT Factura_Nro,Forma_Pago_Desc,Factura_Total,Factura_Fecha,Espec_Empresa_Cuit FROM gd_esquema.Maestra
+	INSERT INTO GESTION_DE_GATOS.Facturas (Fact_Num,Fact_Total,Fact_Fecha,Fact_Emp_Cuit)
+		SELECT Factura_Nro,Factura_Total,Factura_Fecha,Espec_Empresa_Cuit FROM gd_esquema.Maestra
 		WHERE Factura_Nro is not null 
-		GROUP BY Espectaculo_Cod,Espectaculo_Fecha,Factura_Nro,Forma_Pago_Desc,Factura_Total,Factura_Fecha,Espec_Empresa_Cuit ORDER BY Factura_Nro
+		GROUP BY Espectaculo_Cod,Espectaculo_Fecha,Factura_Nro,Factura_Total,Factura_Fecha,Espec_Empresa_Cuit ORDER BY Factura_Nro
 	--inserto publicaciones
 	-- ACLARACION: como la fecha de hoy es mayor a la fecha de vencimiento del espectaculo, todas las publciaciones estan finalizadas
 	-- establezco que todas tiene un grado de publicacion bajo(10%), y que la fecha de creacion es dos dias antes de la fecha del espectaculo
 	INSERT INTO GESTION_DE_GATOS.Publicaciones (Public_Fecha_Creacion,Public_Grado_Cod,Public_Espec_Cod,Public_Estado_Id,Public_Fact_Num)
 		SELECT DATEADD(DAY,-2,Espectaculo_Fecha),3,Espectaculo_Cod,3,Factura_Nro FROM gd_esquema.Maestra GROUP BY Espectaculo_Cod,Espectaculo_Fecha,Factura_Nro
 	-- inserto las compras
-	INSERT INTO GESTION_DE_GATOS.Compras (Compra_Publicacion,Compra_Cli_Doc,Compra_Cli_Tipo_Doc,Compra_Fecha) 
+	INSERT INTO GESTION_DE_GATOS.Compras (Compra_Publicacion,Compra_Forma_Pago_Desc,Compra_Cli_Doc,Compra_Cli_Tipo_Doc,Compra_Fecha) 
 		SELECT (SELECT TOP 1 Public_Cod FROM GESTION_DE_GATOS.Publicaciones  WHERE Public_Espec_Cod = Espectaculo_Cod and Public_Cod is not null)
+			,Forma_Pago_Desc
 			,Cli_Dni
 			,1
 			,Compra_Fecha
+			,1
 		FROM gd_esquema.Maestra
 		WHERE Compra_Fecha is not null
 		GROUP BY Cli_Dni,Compra_Fecha,Espectaculo_Cod,Ubicacion_Tipo_Codigo,Ubicacion_Fila,Ubicacion_Asiento
@@ -932,14 +940,14 @@ begin
 		GROUP BY p.Public_Fact_Num,u.Ubic_Compra_Id,u.Ubic_Precio,u.Ubic_Asiento,u.Ubic_Fila
 		ORDER BY p.Public_Fact_Num
 	-- inserto premios
-	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('TAZA',300)
-	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('PLATO',400)
-	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('PAVA ELECTRICA',1300)
-	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('MESA DE LUZ',5500)
-	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('VIAJE A SAN PABLO',48000)
-	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('CARGADOR USB',2800)
-	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('SOMBRILLA',6800)
-	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('CARPA',17000)
+	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos,Premio_FechaVencimiento) VALUES ('TAZA',300,convert(date,dateadd(m,3,getdate())))
+	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos,Premio_FechaVencimiento) VALUES ('PLATO',400,convert(date,dateadd(m,3,getdate())))
+	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos,Premio_FechaVencimiento) VALUES ('PAVA ELECTRICA',1300,convert(date,dateadd(m,3,getdate())))
+	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos,Premio_FechaVencimiento) VALUES ('MESA DE LUZ',5500,convert(date,dateadd(m,3,getdate())))
+	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos,Premio_FechaVencimiento) VALUES ('VIAJE A SAN PABLO',48000,convert(date,dateadd(m,3,getdate())))
+	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos,Premio_FechaVencimiento) VALUES ('CARGADOR USB',2800,convert(date,dateadd(m,3,getdate())))
+	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos,Premio_FechaVencimiento) VALUES ('SOMBRILLA',6800,convert(date,dateadd(m,3,getdate())))
+	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos,Premio_FechaVencimiento) VALUES ('CARPA',17000,convert(date,dateadd(m,3,getdate())))
 	-- inserto un usuario administrador
 	INSERT INTO GESTION_DE_GATOS.Usuarios (Usuario_Username,Usuario_Password,Usuario_Estado) VALUES ('admin',HASHBYTES('SHA2_256','admin'),1)
 	INSERT INTO GESTION_DE_GATOS.Rol_Por_Usuario (Usuario_Id,Rol_Id)
@@ -1015,32 +1023,6 @@ AS BEGIN
 	WHERE td.Tipo_Doc_Descr = @tipoDocDescr AND c.Cli_Doc = @doc)
 END 
 go
-
-Create PROCEDURE [dbo].[sp.crear_ubicacion] (@fila CHAR(1),@asiento Numeric(11), @SinNumerar Binary(1),@Precio Float(11),@EspecCodigo Numeric(11),@UbicacionTipo Numeric(11),@username VARCHAR(128))
-
-as 
-begin
-		declare @tienePermisos char(3)
-		begin transaction
-		begin try
-		set @tienePermisos  = dbo.tienePermisos(@username,'CREAR UBICACION')
-		if @tienePermisos = 'SI'
-			begin
-			INSERT into  GESTION_DE_GATOS.Ubicaciones VALUES (@fila, @asiento,@SinNumerar,@Precio,@EspecCodigo,@UbicacionTipo,null)
-			end
-		else
-		throw 11,'El usuario no tiene permisos para esta acción',1
-		end try
-		begin catch
-		IF @@TRANCOUNT > 0  
-			rollback transaction;
-		declare @mensajeError nvarchar(4000)
-		SELECT @mensajeError = ERROR_MESSAGE() 
-		RAISERROR('Hubo un error al crear la ubicacion, motivo: %s',11,1,@mensajeError)
-		end catch
-		IF @@TRANCOUNT > 0  
-        commit transaction;
-end
 /*
 USE [GD2C2018]
 ALTER TABLE [GESTION_DE_GATOS].[Rol_Por_Usuario] DROP CONSTRAINT FK_Usuario_Id,FK_Rol_Id

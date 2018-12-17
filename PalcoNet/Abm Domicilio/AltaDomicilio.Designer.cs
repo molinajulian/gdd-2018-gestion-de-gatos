@@ -168,14 +168,14 @@
             // 
             // btn_alta_domicilio
             // 
-            this.btn_alta_domicilio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_alta_domicilio.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.btn_alta_domicilio.Location = new System.Drawing.Point(225, 120);
             this.btn_alta_domicilio.Name = "btn_alta_domicilio";
             this.btn_alta_domicilio.Size = new System.Drawing.Size(94, 45);
             this.btn_alta_domicilio.TabIndex = 0;
             this.btn_alta_domicilio.Text = "Dar de alta domicilio";
             this.btn_alta_domicilio.UseVisualStyleBackColor = true;
-            this.btn_alta_domicilio.Click += new System.EventHandler(this.btn_alta_rol_Click);
+            this.btn_alta_domicilio.Click += new System.EventHandler(this.btn_alta_domicilio_Click);
             // 
             // btn_volver
             // 

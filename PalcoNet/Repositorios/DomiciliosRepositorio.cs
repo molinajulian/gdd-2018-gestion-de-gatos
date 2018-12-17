@@ -13,9 +13,9 @@ namespace PalcoNet.Repositorios
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@localidad", domicilio.Localidad));
             parametros.Add(new SqlParameter("@calle", domicilio.Calle));
-            parametros.Add(new SqlParameter("@nro", domicilio.Numero));
+            parametros.Add(new SqlParameter("@nro", Convert.ToDecimal(domicilio.Numero)));
             parametros.Add(new SqlParameter("@depto", domicilio.Departamento));
-            parametros.Add(new SqlParameter("@piso", domicilio.Piso));
+            parametros.Add(new SqlParameter("@piso", string.IsNullOrEmpty(domicilio.Piso) ? Convert.ToDecimal(0) : Convert.ToDecimal(domicilio.Piso)));
             parametros.Add(new SqlParameter("@cp", domicilio.CodPostal));
             SqlParameter output = new SqlParameter("@dom_id", -1);
             output.Direction = ParameterDirection.Output;

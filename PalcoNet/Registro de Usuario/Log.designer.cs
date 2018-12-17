@@ -36,6 +36,7 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.combo_roles = new System.Windows.Forms.ComboBox();
             this.comboTiposDoc = new System.Windows.Forms.ComboBox();
+            this.btnNoTengoUsuario = new MaterialSkin.Controls.MaterialFlatButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -56,6 +57,7 @@
             this.textUsuario.Text = "Nombre de Usuario";
             this.textUsuario.UseSystemPasswordChar = false;
             this.textUsuario.Click += new System.EventHandler(this.textUsuario_Click);
+            this.textUsuario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textUsuario_KeyPress);
             // 
             // textContrasena
             // 
@@ -82,7 +84,7 @@
             this.btn_login.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btn_login.Depth = 0;
             this.btn_login.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btn_login.Location = new System.Drawing.Point(204, 276);
+            this.btn_login.Location = new System.Drawing.Point(277, 276);
             this.btn_login.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btn_login.MouseState = MaterialSkin.MouseState.HOVER;
             this.btn_login.Name = "btn_login";
@@ -134,11 +136,29 @@
             this.comboTiposDoc.Size = new System.Drawing.Size(139, 21);
             this.comboTiposDoc.TabIndex = 6;
             // 
+            // btnNoTengoUsuario
+            // 
+            this.btnNoTengoUsuario.AutoSize = true;
+            this.btnNoTengoUsuario.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnNoTengoUsuario.Depth = 0;
+            this.btnNoTengoUsuario.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnNoTengoUsuario.Location = new System.Drawing.Point(30, 276);
+            this.btnNoTengoUsuario.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnNoTengoUsuario.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnNoTengoUsuario.Name = "btnNoTengoUsuario";
+            this.btnNoTengoUsuario.Primary = false;
+            this.btnNoTengoUsuario.Size = new System.Drawing.Size(140, 36);
+            this.btnNoTengoUsuario.TabIndex = 7;
+            this.btnNoTengoUsuario.Text = "No tengo usuario";
+            this.btnNoTengoUsuario.UseVisualStyleBackColor = true;
+            this.btnNoTengoUsuario.Click += new System.EventHandler(this.btnNoTengoUsuario_Click);
+            // 
             // Log
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(436, 350);
+            this.Controls.Add(this.btnNoTengoUsuario);
             this.Controls.Add(this.comboTiposDoc);
             this.Controls.Add(this.combo_roles);
             this.Controls.Add(this.pictureBox2);
@@ -148,7 +168,6 @@
             this.Controls.Add(this.textUsuario);
             this.Name = "Log";
             this.Text = "Log";
-            this.Load += new System.EventHandler(this.Log_Load);
             this.Enter += new System.EventHandler(this.btn_login_Click);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -166,5 +185,6 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.ComboBox combo_roles;
         private System.Windows.Forms.ComboBox comboTiposDoc;
+        private MaterialSkin.Controls.MaterialFlatButton btnNoTengoUsuario;
     }
 }

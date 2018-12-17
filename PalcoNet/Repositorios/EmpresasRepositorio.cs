@@ -148,7 +148,7 @@ namespace PalcoNet.Repositorios
             DataBase.ejecutarSP("[dbo].[sp_actualizar_empresa]", parametros);
         }
 
-        internal static void agregar(Empresa empresa)
+        internal static void agregar(Empresa empresa,string contraseña)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@razon_social", empresa.RazonSocial));
@@ -156,6 +156,8 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@mail", empresa.Email));
             parametros.Add(new SqlParameter("@telefono", empresa.Telefono));
             parametros.Add(new SqlParameter("@dom_id", empresa.Domicilio.Id));
+            parametros.Add(new SqlParameter("@contraseña",contraseña));
+            parametros.Add(new SqlParameter("@fecha_creacion", DateTime.Now));
             DataBase.ejecutarSP("[dbo].[sp_crear_empresa]", parametros);
         }
 
