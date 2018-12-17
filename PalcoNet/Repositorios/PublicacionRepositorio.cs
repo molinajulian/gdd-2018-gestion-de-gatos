@@ -11,95 +11,43 @@ namespace PalcoNet.Repositorios
     class PublicacionRepositorio
     {
 
-        public static void generarPublicacion(Publicacion publicacion)
+        public static void darAltaPublicacion(Publicacion publicacion)
         {
-
+            EspectaculoRepositorio.agregarTodos(publicacion.Espectaculos);
+            agregarPublicacion(publicacion);
+            registrarSectoresPorEspectaculo(publicacion.Sectores, publicacion.Espectaculos);
         }
 
-
-        public static List<SqlParameter> GenerarParametrosPublicacion(Publicacion publicacion, string username)
-        {   
-            List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@Codigo", publicacion.Codigo));
-            parametros.Add(new SqlParameter("@Descripcion", publicacion.Descripcion));
-            parametros.Add(new SqlParameter("@FechaPublicacion", publicacion.FechaPublicacion));
-            parametros.Add(new SqlParameter("@GradoId", publicacion.Grado.Id));
-            
-            parametros.AddRange(EspectaculoRepositorio.GenerarParametrosEspectaculo(publicacion.Espectaculo, username));
-            parametros.AddRange(EstadoPublicacionRepositorio.GenerarParametrosEstadoPublicacion(publicacion.Estado));
-            parametros.Add(new SqlParameter("@username", username));
-            return parametros;
-        }
-        public static void CreatePublicacion(Publicacion publicacion, string username)
+        public static void registrarSectoresPorEspectaculo(List<Sector> sectores, List<Espectaculo> espectaculos)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@descripcion", publicacion.Descripcion));
-            parametros.Add(new SqlParameter("@fechaPublicacion", publicacion.FechaPublicacion));
-            parametros.Add(new SqlParameter("@gradoId", publicacion.Grado.Id));
-            parametros.Add(new SqlParameter("@espectaculoId", publicacion.Espectaculo.Id));
-           // parametros.Add(new SqlParameter("@fechaEspec", publicacion.Espectaculo.Fecha));
-            parametros.Add(new SqlParameter("@Estado", publicacion.Estado.Id));
-
-            parametros.Add(new SqlParameter("@Usuario", username));
-
-
-            DataBase.WriteInBase("[dbo].[sp.crear_publicacion]", "SP", parametros);
-
-        }
-
-
-        public static void UpdatePublicacion(Publicacion publicacion, string username)
-        {
-            List<SqlParameter> parametros = GenerarParametrosPublicacion(publicacion, username);
-            DataBase.WriteInBase("UpdatePubl", "SP", parametros);
-
-        }
-
-
-        public static void DeletePublicacion(Publicacion publicacion, string username)
-        {
-            List<SqlParameter> parametros = GenerarParametrosPublicacion(publicacion, username);
-            DataBase.WriteInBase("DeletePubl", "SP", parametros);
-
-        }
-
-        public static Publicacion ReadPublicacionFromDb(SqlDataReader reader)
-        {
-            return new Publicacion()
-            {   FechaPublicacion=(DateTime)reader.GetValue(Ordinales.Publicacion["fechaPublicacion"]),
-                Descripcion = reader.GetValue(Ordinales.Publicacion["descripcion"]).ToString(),
-                Codigo = (int)reader.GetValue(Ordinales.Publicacion["codigo"])
-                
-                //conseguir el estado de la publicacion
-                //conseguir el grado de la publicacion 
-                //consguir el rubro de la publicacion
-                
-
-            };
-        }
-        public static Publicacion GetPublicacionById(int id)
-        {
-            var publicacion = new Publicacion();
-            var parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@id", id));
-            var query = DataBase.ejecutarFuncion("Select top 1 * from publicacion r where r.Public_cod = @id", parametros);
-            SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read())
+            foreach (Espectaculo espectaculo in espectaculos)
             {
-                publicacion = new Publicacion()
+                foreach (Sector sector in sectores)
                 {
-                    Codigo = (int)reader.GetValue(Ordinales.Publicacion["publ_codigo"]),
-                    Descripcion = reader.GetValue(Ordinales.Publicacion["publ_descripcion"]).ToString(),
-                    FechaPublicacion = (DateTime)reader.GetValue(Ordinales.Publicacion["publ_fechaVencimiento"])
-
-                };
-                publicacion.Estado = EstadoPublicacionRepositorio.ReadEstadoPublicacionFromDb(publicacion.Codigo);
-                publicacion.Espectaculo = EspectaculoRepositorio.ReadEspectaculoFromDb(publicacion.Codigo);
-                publicacion.Grado = GradoRepositorio.ReadGradoFromDb(publicacion.Codigo);
-                
+                    parametros.Clear();
+                    parametros.Add(new SqlParameter("@ubic_tipo", sector.TipoUbicacion.Id));
+                    parametros.Add(new SqlParameter("@ubic_precio", sector.Precio));
+                    parametros.Add(new SqlParameter("@ubic_espec_codigo", espectaculo.Id));
+                    parametros.Add(new SqlParameter("@cnt_filas", sector.CantidadFilas));
+                    parametros.Add(new SqlParameter("@cnt_asientos", sector.CantidadAsientos));
+                    DataBase.ejecutarSP("sp_generar_ubicaciones", parametros);
+                }
             }
-            return publicacion;
         }
 
+        public static void agregarPublicacion(Publicacion publicacion)
+        {
+            foreach (Espectaculo espectaculo in publicacion.Espectaculos)
+            {
+                List<SqlParameter> parametros = new List<SqlParameter>();
+                parametros.Add(new SqlParameter("@pub_desc", publicacion.Descripcion));
+                parametros.Add(new SqlParameter("@pub_grado_cod", publicacion.Grado.Id));
+                parametros.Add(new SqlParameter("@pub_fecha_creacion", publicacion.FechaPublicacion));
+                parametros.Add(new SqlParameter("@espec_cod", espectaculo.Id));
+                DataBase.ejecutarSP("sp_agregar_publicacion", parametros);
+            }
+        }
+        
     }
 }

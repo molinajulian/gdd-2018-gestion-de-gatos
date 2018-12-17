@@ -7,15 +7,18 @@ namespace PalcoNet.Modelo
         public int CantidadFilas { get; set; }
         public int CantidadAsientos { get; set; }
         public String Detalle { get; set; }
-        public int TipoUbicacion { get; set; }
+        public TipoUbicacion TipoUbicacion { get; set; }
+        public double Precio { get; set; }
 
         public Sector(int cantidadFilas, int cantidadAsientos,
-            string detalle, int tipoUbicacion)
+            string detalle, TipoUbicacion tipoUbicacion, double precio)
         {
             CantidadFilas = cantidadFilas;
             CantidadAsientos = cantidadAsientos;
             Detalle = detalle;
             TipoUbicacion = tipoUbicacion;
+            Precio = precio;
         }
+        
     }
 }

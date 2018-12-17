@@ -241,14 +241,34 @@ AS BEGIN
 END
 GO
 
-
-IF EXISTS ( SELECT  *
-            FROM    sys.objects
-            WHERE   object_id = OBJECT_ID(N'sp_agregar_ubicacion')
-            AND type IN ( N'P', N'PC' ) ) DROP PROCEDURE sp_agregar_ubicacion
+IF (OBJECT_ID('sp_agregar_espectaculo', 'P') IS NOT NULL) DROP PROCEDURE sp_agregar_espectaculo
 go
-CREATE procedure sp_agregar_ubicacion(@ubic_tipo INT, @ubic_precio NUMERIC(18), @ubic_espec_codigo NUMERIC(18),
-										  @cnt_filas INT, @cnt_asientos INT)
+CREATE PROCEDURE sp_agregar_espectaculo(@espec_desc NVARCHAR(255), @espec_fecha DATETIME,
+										@espec_fecha_vencimiento DATETIME, @espec_rubro_codigo INT,
+										@espec_emp_cuit NVARCHAR(255), @espec_dom_id INT, @espec_cod INT OUTPUT)
+AS BEGIN
+INSERT INTO GESTION_DE_GATOS.Espectaculos ([Espec_Desc], [Espec_Fecha], [Espec_Fecha_Venc], [Espec_Rubro_Cod]
+			      							,[Espec_Emp_Cuit], [Espec_Dom_Id], [Espec_Estado])
+			VALUES(@espec_desc, @espec_fecha, @espec_fecha_vencimiento, @espec_rubro_codigo, @espec_emp_cuit, @espec_dom_id, 1);
+SET @espec_cod = (SELECT TOP 1 Espec_Cod FROM GESTION_DE_GATOS.Espectaculos ORDER BY Espec_Cod DESC);
+END
+GO
+
+IF (OBJECT_ID('sp_agregar_publicacion', 'P') IS NOT NULL) DROP PROCEDURE sp_agregar_publicacion
+GO
+CREATE PROCEDURE sp_agregar_publicacion(@pub_desc NVARCHAR(255), @pub_grado_cod INT, @pub_fecha_creacion DATETIME, 
+										@espec_cod INT)
+AS BEGIN
+INSERT INTO GESTION_DE_GATOS.Publicaciones ([Public_Desc], [Public_Fecha_Creacion], [Public_Grado_Cod]
+      										 , [Public_Espec_Cod], [Public_Estado_Id])
+	VALUES (@pub_desc, @pub_fecha_creacion, @pub_grado_cod, @espec_cod, 1);
+END
+GO
+
+IF (OBJECT_ID('sp_generar_ubicaciones', 'P') IS NOT NULL) DROP PROCEDURE sp_generar_ubicaciones
+go
+CREATE procedure sp_generar_ubicaciones(@ubic_tipo INT, @ubic_precio NUMERIC(18), @ubic_espec_codigo NUMERIC(18),
+								  		@cnt_filas INT, @cnt_asientos INT)
 AS BEGIN 
 	DECLARE @indice_fila INT = 0;
 	DECLARE @indice_asiento INT = 0;
@@ -267,3 +287,8 @@ AS BEGIN
 	END
 END
 GO
+
+EXEC sp_rename 'GESTION_DE_GATOS.Ubicaciones_Tipo.Ubic_Cod', 'Ubic_Tipo_Cod', 'COLUMN';
+EXEC sp_rename 'GESTION_DE_GATOS.Ubicaciones_Tipo.Ubic_Descr', 'Ubic_Tipo_Descr', 'COLUMN';
+ALTER TABLE GESTION_DE_GATOS.Espectaculos DROP COLUMN Espec_Hora;
+ALTER TABLE GESTION_DE_GATOS.Publicaciones DROP COLUMN Public_Fact_Num;

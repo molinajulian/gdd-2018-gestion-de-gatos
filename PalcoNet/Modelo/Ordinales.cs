@@ -132,14 +132,14 @@ namespace PalcoNet.Modelo
                                                     };
         public static Dictionary<string, int> TipoUbicacion = new Dictionary<string, int>
                                                     {
-                                                    {"TipoPubl_id",0},
-                                                    {"TipoPubl_descripcion",1}
+                                                    {"Ubic_Tipo_Cod",0},
+                                                    {"Ubic_Tipo_Descr",1}
                                                     };
         public static Dictionary<string, int> Grado = new Dictionary<string, int> 
                                                     {
-                                                    {"tipo",0},
+                                                    {"codigo",0},
                                                     {"comision",1},
-                                                    {"descuento",3}
+                                                    {"descripcion",2}
                                                     };
         public static Dictionary<string, int> ItemFactura = new Dictionary<string, int>
                                                     {
@@ -168,7 +168,7 @@ namespace PalcoNet.Modelo
                                                     {
                                                     {"id",0},
                                                     {"descripcion",1 },
-                                                    {"puedeCambiarDeEstado",2},
+                                                    {"editable",2},
                                                     };
        public static Dictionary<string, int> Espectaculo = new Dictionary<string, int> 
                                                     {

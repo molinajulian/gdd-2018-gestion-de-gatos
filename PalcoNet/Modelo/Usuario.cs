@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Data.SqlClient;
+using System.Runtime.CompilerServices;
 using PalcoNet.Repositorios;
 
 namespace PalcoNet.Modelo
@@ -15,6 +16,7 @@ namespace PalcoNet.Modelo
         public String username { get; set; }
         public Rol rol { get; set; }
         public Boolean isActive { get; set; }
+        public static Usuario Actual { get; set; }
 
         public Usuario(int id, String username, Boolean isActive)
         {
@@ -46,6 +48,11 @@ namespace PalcoNet.Modelo
         public List<Rol> obtenerRoles()
         {
             return UsuarioRepositorio.getRoles(this);
+        }
+
+        public static void inicializarUsuarioActual(Usuario usuario)
+        {
+            Actual = usuario;
         }
     }
 }

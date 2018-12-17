@@ -129,7 +129,8 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonGenerarPublicacion_Click(object sender, EventArgs e)
         {
-
+            GenerarPublicacion.GenerarPublicacion generarPublicacion = new GenerarPublicacion.GenerarPublicacion();
+            generarPublicacion.ShowDialog();
         }
 
         private void buttonEditarPublicacion_Click(object sender, EventArgs e)

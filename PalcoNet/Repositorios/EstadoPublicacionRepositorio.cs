@@ -10,61 +10,22 @@ namespace PalcoNet.Repositorios
 {
     public class EstadoPublicacionRepositorio
     {
-        public static List<SqlParameter> GenerarParametrosEstadoPublicacion(EstadoPublicacion estado)
+
+        public static List<EstadoPublicacion> getEstados()
         {
-            List<SqlParameter> parametros = new List<SqlParameter>();
-
-            parametros.Add(new SqlParameter("@Descripcion", estado.Descripcion));
-            parametros.Add(new SqlParameter("@esPosibleCambio", estado.Descripcion));
-
-            return parametros;
-        }
-        public static void CreateEstadoPublicacion(EstadoPublicacion estado)
-        {
-            List<SqlParameter> parametros = GenerarParametrosEstadoPublicacion(estado);
-            DataBase.WriteInBase("Ingresarestados", "SP", parametros);
-
-        }
-
-
-        public static void UpdateEstadoPublicacion(EstadoPublicacion estado)
-        {
-            List<SqlParameter> parametros = GenerarParametrosEstadoPublicacion(estado);
-            DataBase.WriteInBase("Updateestado", "SP", parametros);
-
-        }
-
-
-        public static void DeleteEstadoPublicacion(EstadoPublicacion estado)
-        {
-            List<SqlParameter> parametros = GenerarParametrosEstadoPublicacion(estado);
-            DataBase.WriteInBase("Deleteestado", "SP", parametros);
-
-        }
-
-        public static EstadoPublicacion ReadEstadoPublicacionFromDb(int id)
-        {
-            var estado = new EstadoPublicacion();
+            List<EstadoPublicacion> estados = new List<EstadoPublicacion>();
             var parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@id", id));
-            var query = DataBase.ejecutarFuncion("Select top 1 * from estadopublicacion e where e.Public_Est_Id = @id", parametros);
+            var query = DataBase.ejecutarFuncion("SELECT * FROM GESTION_DE_GATOS.Publicaciones_Estado", new List<SqlParameter>());
             SqlDataReader reader = query.ExecuteReader();
             while (reader.Read())
             {
-                estado = new EstadoPublicacion()
-                {
-                    Id = (int)reader.GetValue(Ordinales.EstadoPublicacion["id"]),
-                    Descripcion = reader.GetValue(Ordinales.Empresa["descripcion"]).ToString(),
-                    EsPosibleCambio= (bool)reader.GetValue(Ordinales.Empresa["esPosibleCambio"])
-
-
-                };
-
+                estados.Add(new EstadoPublicacion(
+                        Convert.ToInt32(reader[Ordinales.EstadoPublicacion["id"]]),
+                        reader[Ordinales.EstadoPublicacion["descripcion"]].ToString(),
+                        Convert.ToInt32(reader[Ordinales.EstadoPublicacion["editable"]]) == 1 ? true : false));
             }
-            return estado;
+            return estados;
         }
-
-
     }
 }
 

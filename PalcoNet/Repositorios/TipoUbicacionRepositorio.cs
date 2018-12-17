@@ -42,18 +42,15 @@ namespace PalcoNet.Repositorios
 
         public static TipoUbicacion ReadTipoUbicacionFromDb(int id)
         {
-            var tipoUbicacion = new TipoUbicacion();
+            TipoUbicacion tipoUbicacion = null ;
             var parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@id", id));
             var query = DataBase.ejecutarFuncion("Select top 1 * from tipoUbicacion t where t.Ubic_cod = @id", parametros);
             SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read())
+            if (reader.Read())
             {
-                tipoUbicacion = new TipoUbicacion()
-                {
-                    Id = (int)reader.GetValue(Ordinales.TipoUbicacion["TipoPubl_id"]),
-                    Descripcion = reader.GetValue(Ordinales.TipoUbicacion["TipoPubl_descripcion"]).ToString()
-                };
+                tipoUbicacion = new TipoUbicacion((int)reader.GetValue(Ordinales.TipoUbicacion["TipoPubl_id"]),
+                    reader.GetValue(Ordinales.TipoUbicacion["TipoPubl_descripcion"]).ToString());
 
             }
             return tipoUbicacion;
