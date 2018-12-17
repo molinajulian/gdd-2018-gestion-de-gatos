@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Data.SqlClient;
+using System.Runtime.CompilerServices;
 using PalcoNet.Repositorios;
 
 namespace PalcoNet.Modelo
@@ -15,6 +16,7 @@ namespace PalcoNet.Modelo
         public String username { get; set; }
         public Rol rol { get; set; }
         public Boolean isActive { get; set; }
+        public static Usuario Actual { get; set; }
         public Boolean primerLogueo { get; set; }
 
         public Usuario(int id, String username, Boolean isActive, Boolean primerLogueo = true)
@@ -29,15 +31,15 @@ namespace PalcoNet.Modelo
         {
             Usuario usuario = null;
             Dictionary<string, int> camposUsuario = Ordinales.camposUsuario;
-            if (lector.HasRows)
+            if (lector.HasRows && lector.Read())
             {
-                lector.Read();
-                return new Usuario(
+                usuario = new Usuario(
                     lector.GetInt32(camposUsuario["id"]),
                     lector.GetString(camposUsuario["username"]),
                     lector.GetBoolean(camposUsuario["estado"]),
-                    lector.GetBoolean(camposUsuario["primer_logueo"]));
+                    lector.GetInt32(camposUsuario["primer_logueo"]) == 1);
             }
+            lector.Close();
             return usuario;
         }
 
@@ -49,6 +51,11 @@ namespace PalcoNet.Modelo
         public List<Rol> obtenerRoles()
         {
             return UsuarioRepositorio.getRoles(this);
+        }
+
+        public static void inicializarUsuarioActual(Usuario usuario)
+        {
+            Actual = usuario;
         }
     }
 }

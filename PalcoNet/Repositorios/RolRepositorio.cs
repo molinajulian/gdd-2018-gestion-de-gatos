@@ -25,15 +25,17 @@ namespace PalcoNet.Repositorios
                 {
                     funcionalidades.Add(Funcionalidad.buildFuncionalidad(lector));
                 }
-                lector.Close();
             }
+            lector.Close();
             return funcionalidades;
         }
 
         public static bool esRolExistente(String nombre)
         {
             SqlDataReader lector = buscarFilasRol(nombre);
-            return lector.HasRows;
+            bool esRolExistente = lector.HasRows;
+            lector.Close();
+            return esRolExistente;
         }
 
         public static SqlDataReader buscarFilasRol(String nombre)
@@ -76,8 +78,8 @@ namespace PalcoNet.Repositorios
                     Rol rol = Rol.buildRol(lector);
                     roles.Add(rol);
                 }
-                lector.Close();
             }
+            lector.Close();
             return roles;
         }
 
@@ -128,7 +130,9 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@rol_nombre", rol_nombre));
             parametros.Add(new SqlParameter("@funcionalidad", funcionalidad));
             SqlDataReader lector = DataBase.GetDataReader("404_NOT_FOUND.SP_TIENE_FUNCIONALIDAD", "SP", parametros);
-            return lector.HasRows;
+            bool tieneFuncionalidad = lector.HasRows && lector.Read();
+            lector.Close();
+            return tieneFuncionalidad;
         }
     }
 }

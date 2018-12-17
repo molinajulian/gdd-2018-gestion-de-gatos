@@ -83,5 +83,18 @@ namespace PalcoNet.Repositorios
             return ubicaciones;
         }
 
+        public static List<Ubicacion> generarUbicaciones(List<Sector> sectoresRegistrados)
+        {
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            foreach (Sector sector in sectoresRegistrados)
+            {
+                parametros.Add(new SqlParameter("@ubic_tipo", sector.TipoUbicacion.Id));
+                parametros.Add(new SqlParameter("@ubic_precio", sector.Precio));
+                parametros.Add(new SqlParameter("@ubic_espec_codigo", sector.Precio));
+                //DataBase.ejecutarSP("dbo.sp_generar_ubicaciones", )
+                //generarUbicacionesPorSector(sector);
+            }
+            return null;
+        }
     }
 }

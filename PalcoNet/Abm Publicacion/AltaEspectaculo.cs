@@ -7,7 +7,7 @@ using MaterialSkin.Controls;
 using MaterialSkin;
 using PalcoNet.Repositorios;
 
-namespace PalcoNet.GenerarPublicacion
+namespace PalcoNet.AbmPublicaciones
 {
     public partial class AltaEspectaculo : MaterialForm
     {

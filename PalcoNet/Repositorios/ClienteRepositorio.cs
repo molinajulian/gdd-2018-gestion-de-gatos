@@ -17,7 +17,7 @@ namespace PalcoNet.Repositorios
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@tipoDocDescr", tipoDocDescr));
             parametros.Add(new SqlParameter("@doc", Convert.ToInt32(doc)));
-            DataBase.GetDataReader("[dbo].[sp_eliminar_cliente]", "SP", parametros);
+            DataBase.ejecutarSP("[dbo].[sp_eliminar_cliente]", parametros);
         }
 
         internal static void habilitarCliente(int p)
@@ -138,6 +138,7 @@ namespace PalcoNet.Repositorios
                 lector.Close();
                 return tipoDoc;
             }
+            lector.Close();
             throw new TipoDocNoEncontradoException(tipoDeDocumentoId);
         }
 

@@ -92,6 +92,20 @@ namespace PalcoNet.Repositorios
             reader.Close();
             return empresas;
         }
+
+        public static Empresa GetEmpresaByUserId(int id)
+        {
+            SqlDataReader lector = DataBase.GetDataReader("SELECT TOP 1 * FROM GESTION_DE_GATOS.Empresas WHERE Emp_Usuario_Id = " + id, "T", new List<SqlParameter>());
+            Empresa empresa;
+            if (lector.HasRows && lector.Read())
+            {
+                empresa = Empresa.buildEmrpesa(lector);
+                lector.Close();
+                return empresa;
+            }
+            lector.Close();
+            throw new Empresa.EmpresaNoEncontradaException();
+        }
         public static List<Empresa> GetEmpresasByEmail(string unEmail)
         {
             var empresas = new List<Empresa>();
