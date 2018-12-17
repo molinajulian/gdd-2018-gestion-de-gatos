@@ -179,7 +179,7 @@ CREATE TABLE [GESTION_DE_GATOS].[Premios]
 	[Premio_Id]					int identity(1,1)  NOT NULL ,
 	[Premio_Desc]				varchar(50)  NOT NULL,
 	[Premio_Puntos]				int NOT NULL,
-	[Premio_FechaVencimiento]
+	[Premio_FechaVencimiento]	date null
 
 )
 go
@@ -272,7 +272,7 @@ CREATE TABLE [GESTION_DE_GATOS].[Compras]
 	[Compra_Cli_Doc]			numeric(18) NOT NULL,
 	[Compra_Cli_Tipo_Doc]		int NOT NULL,
 	[Compra_Fecha]				smalldatetime NOT NULL,
-	[Compra_FueFacturada]		Bit
+	[Compra_FueFacturada]		Bit NULL
 )
 go
 
@@ -908,7 +908,7 @@ begin
 	INSERT INTO GESTION_DE_GATOS.Publicaciones (Public_Fecha_Creacion,Public_Grado_Cod,Public_Espec_Cod,Public_Estado_Id,Public_Fact_Num)
 		SELECT DATEADD(DAY,-2,Espectaculo_Fecha),3,Espectaculo_Cod,3,Factura_Nro FROM gd_esquema.Maestra GROUP BY Espectaculo_Cod,Espectaculo_Fecha,Factura_Nro
 	-- inserto las compras
-	INSERT INTO GESTION_DE_GATOS.Compras (Compra_Publicacion,Compra_Forma_Pago_Desc,Compra_Cli_Doc,Compra_Cli_Tipo_Doc,Compra_Fecha) 
+	INSERT INTO GESTION_DE_GATOS.Compras (Compra_Publicacion,Compra_Forma_Pago_Desc,Compra_Cli_Doc,Compra_Cli_Tipo_Doc,Compra_Fecha,Compra_FueFacturada) 
 		SELECT (SELECT TOP 1 Public_Cod FROM GESTION_DE_GATOS.Publicaciones  WHERE Public_Espec_Cod = Espectaculo_Cod and Public_Cod is not null)
 			,Forma_Pago_Desc
 			,Cli_Dni
@@ -917,7 +917,7 @@ begin
 			,1
 		FROM gd_esquema.Maestra
 		WHERE Compra_Fecha is not null
-		GROUP BY Cli_Dni,Compra_Fecha,Espectaculo_Cod,Ubicacion_Tipo_Codigo,Ubicacion_Fila,Ubicacion_Asiento
+		GROUP BY Cli_Dni,Compra_Fecha,Espectaculo_Cod,Ubicacion_Tipo_Codigo,Ubicacion_Fila,Ubicacion_Asiento, Forma_Pago_Desc
 		ORDER BY Espectaculo_Cod,Cli_Dni
 	-- inserto ubicaciones
 	INSERT INTO GESTION_DE_GATOS.Ubicaciones (Ubic_Fila,Ubic_Asiento,Ubic_Sin_Numerar,Ubic_Precio,Ubic_Espec_Cod,Ubic_Tipo_Cod,Ubic_Compra_Id)
@@ -1022,9 +1022,8 @@ AS BEGIN
 	(SELECT convert(nvarchar,c.Cli_Tipo_Doc_Id)+convert(nvarchar,c.Cli_Doc) FROM GESTION_DE_GATOS.Clientes c JOIN GESTION_DE_GATOS.Tipos_Doc td ON td.Tipo_Doc_Id = c.Cli_Tipo_Doc_Id
 	WHERE td.Tipo_Doc_Descr = @tipoDocDescr AND c.Cli_Doc = @doc)
 END 
-go
-/*
-USE [GD2C2018]
+/*go
+USE GD2C2018;
 ALTER TABLE [GESTION_DE_GATOS].[Rol_Por_Usuario] DROP CONSTRAINT FK_Usuario_Id,FK_Rol_Id
 ALTER TABLE [GESTION_DE_GATOS].[Funcionalidad_Por_Rol] DROP CONSTRAINT FK_Func_Rol_Id,FK_Func_Func_Id
 ALTER TABLE [GESTION_DE_GATOS].[Empresas] DROP CONSTRAINT FK_Dom_Id,FK_Emp_Usuario_Id
@@ -1037,6 +1036,7 @@ ALTER TABLE [GESTION_DE_GATOS].[Compras] DROP CONSTRAINT FK_Compra_Publicacion_I
 ALTER TABLE [GESTION_DE_GATOS].[Publicaciones] DROP CONSTRAINT FK_Public_Grado_Cod,FK_Public_Espec_Cod,FK_Public_Fact_Num,FK_Public_Estado_Id
 ALTER TABLE [GESTION_DE_GATOS].[Facturas] DROP CONSTRAINT FK_Fact_Empresa_Cuit
 ALTER TABLE [GESTION_DE_GATOS].[Item_Facturas] DROP CONSTRAINT FK_Item_Fact_Num
+ALTER TABLE [GESTION_DE_GATOS].[Espectaculos] DROP CONSTRAINT FK_Espec_Emp_Cuit,FK_Espec_Rubro_Cod,FK_Espec_Dom_Id
 DROP TABLE [GESTION_DE_GATOS].[Funcionalidad_Por_Rol]
 DROP TABLE [GESTION_DE_GATOS].[Rol_Por_Usuario]
 DROP TABLE [GESTION_DE_GATOS].[Premios_Adquiridos]
