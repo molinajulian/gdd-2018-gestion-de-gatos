@@ -41,7 +41,7 @@ namespace PalcoNet.AbmCliente
             txtApellido.Text = cliente.Apellido;
             txtNumDoc.Text = cliente.NumeroDocumento.ToString();
             txtMail.Text = cliente.Email;
-            txtTel.Text = cliente.Telefono;
+            txtTel.Text = cliente.Telefono == "0" ? "" : cliente.Telefono;
             txtCuil.Text = cliente.Cuil;
             datePickerFechaNac.Value = cliente.FechaDeNacimiento;
             llenarComboTiposDoc();
@@ -118,6 +118,16 @@ namespace PalcoNet.AbmCliente
                 MessageBox.Show("Ya existe un cliente con el dni ingresado");
                 return false;
             }
+            if (!txtCuil.Text.Equals("") && !Regex.IsMatch(txtCuil.Text, @"[0-9]{2}-[0-9]{5,9}-[0-9]{1,2}$"))
+            {
+                MessageBox.Show("Ingrese un cuil valido.");
+                return false;
+            }
+            if (cliente.Cuil != txtCuil.Text && ClienteRepositorio.esClienteExistente(0, 0, txtCuil.Text))
+            {
+                MessageBox.Show("Ya existe un cliente con ese CUIL.");
+                return false;
+            }
             if (!Regex.IsMatch(txtNombre.Text, @"^[a-zA-Z\s]{1,30}$"))
             {
                 MessageBox.Show("Ingrese un nombre válido.");
@@ -138,16 +148,7 @@ namespace PalcoNet.AbmCliente
                 MessageBox.Show("Ingrese un telefono válido.");
                 return false;
             }
-            if (!txtCuil.Text.Equals("") && !Regex.IsMatch(txtCuil.Text, @"[0-9]{2}-[0-9]{5,9}-[0-9]{1,2}$"))
-            {
-                MessageBox.Show("Ingrese un cuil valido.");
-                return false;
-            }
-            if (cliente.Cuil != txtCuil.Text && ClienteRepositorio.esClienteExistente(0, 0, txtCuil.Text))
-            {
-                MessageBox.Show("Ya existe un cliente con ese CUIL.");
-                return false;
-            }
+            
             return true;
         }
     }

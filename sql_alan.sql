@@ -45,9 +45,8 @@ go
 CREATE PROCEDURE sp_cambiar_contraseña @idUsuario int,@contraseña VARCHAR(32),@tamaño int
 AS 
 BEGIN
-		--UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Username =  HASHBYTES('SHA2_256',@contraseña) WHERE Usuario_Id = @idUsuario
-		UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Password = HASHBYTES('SHA2_256',@contraseña) WHERE Usuario_Id = @idUsuario
-		UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Primer_Logueo = 0 WHERE Usuario_Id = @idUsuario
+	UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Password = HASHBYTES('SHA2_256',@contraseña) WHERE Usuario_Id = @idUsuario
+	UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Primer_Logueo = 0 WHERE Usuario_Id = @idUsuario
 END
 go
 
@@ -92,10 +91,6 @@ END
 go
 
 
-sp_addmessage @msgnum = 50004,  
-              @severity = 10,  
-              @msgtext = 'Domicilio ya existente.',
-			  @lang = 'us_english';
 GO
 IF (OBJECT_ID('sp_agregar_domicilio', 'P') IS NOT NULL) DROP PROCEDURE sp_agregar_domicilio 
 GO
@@ -104,6 +99,8 @@ CREATE PROCEDURE sp_agregar_domicilio (@calle nvarchar(50),@nro numeric(18), @de
 									   @dom_id INT OUTPUT)
 AS BEGIN
 	DECLARE @salida INT = 0;
+	if @piso = 0
+		set @piso=null
     SET @salida = (SELECT ISNULL((SELECT COUNT(1)
 		FROM [GD2C2018].[GESTION_DE_GATOS].Domicilios
 		WHERE Dom_Cod_Postal = @cp AND Dom_Localidad = @localidad AND Dom_Piso = @piso 
@@ -185,7 +182,7 @@ IF EXISTS ( SELECT  *
             AND type IN ( N'P', N'PC' ) ) DROP PROCEDURE sp_crear_empresa
 go
 CREATE procedure dbo.sp_crear_empresa (@razon_social nvarchar(255), @cuit nvarchar(255), 
-									   @mail nvarchar(50), @telefono numeric(20), @dom_id INT)
+									   @mail nvarchar(50), @telefono numeric(20), @dom_id INT, @contraseña varchar(32),@fecha_creacion datetime)
 as
 begin
 	declare @nuevoUsuario int
@@ -193,16 +190,19 @@ begin
 	begin transaction
 		begin try
 			begin
+				if @contraseña = ''
+					set @contraseña= convert(varchar(32),'palconet2018')
 				INSERT INTO GESTION_DE_GATOS.Usuarios 
 				(Usuario_Username,Usuario_Password,Usuario_Estado) 
 				VALUES (@cuit,
-					HASHBYTES('SHA2_256','palconet2018'),
+					HASHBYTES('SHA2_256',@contraseña),
 					1)
 				SET @nuevoUsuario = (SELECT TOP 1 Usuario_Id FROM GESTION_DE_GATOS.Usuarios ORDER BY Usuario_Id DESC)
 				INSERT INTO GESTION_DE_GATOS.Empresas 
 				(Emp_Razon_Social, Emp_Cuit, Emp_Fecha_Creacion, Emp_Mail, Emp_Dom_Id,
 					Emp_Usuario_Id, Emp_Tel)
-				VALUES (@razon_social, @cuit, GETDATE(), @mail, @dom_id, @nuevoUsuario, @telefono)
+				VALUES (@razon_social, @cuit, @fecha_creacion, @mail, @dom_id, @nuevoUsuario, @telefono)
+				INSERT INTO GESTION_DE_GATOS.Rol_Por_Usuario(Rol_Id,Usuario_Id) VALUES (2,@nuevoUsuario)
 			end
 		end try
 		begin catch
@@ -254,14 +254,34 @@ AS BEGIN
 END
 GO
 
-
-IF EXISTS ( SELECT  *
-            FROM    sys.objects
-            WHERE   object_id = OBJECT_ID(N'sp_agregar_ubicacion')
-            AND type IN ( N'P', N'PC' ) ) DROP PROCEDURE sp_agregar_ubicacion
+IF (OBJECT_ID('sp_agregar_espectaculo', 'P') IS NOT NULL) DROP PROCEDURE sp_agregar_espectaculo
 go
-CREATE procedure sp_agregar_ubicacion(@ubic_tipo INT, @ubic_precio NUMERIC(18), @ubic_espec_codigo NUMERIC(18),
-										  @cnt_filas INT, @cnt_asientos INT)
+CREATE PROCEDURE sp_agregar_espectaculo(@espec_desc NVARCHAR(255), @espec_fecha DATETIME,
+										@espec_fecha_vencimiento DATETIME, @espec_rubro_codigo INT,
+										@espec_emp_cuit NVARCHAR(255), @espec_dom_id INT, @espec_cod INT OUTPUT)
+AS BEGIN
+INSERT INTO GESTION_DE_GATOS.Espectaculos ([Espec_Desc], [Espec_Fecha], [Espec_Fecha_Venc], [Espec_Rubro_Cod]
+			      							,[Espec_Emp_Cuit], [Espec_Dom_Id], [Espec_Estado])
+			VALUES(@espec_desc, @espec_fecha, @espec_fecha_vencimiento, @espec_rubro_codigo, @espec_emp_cuit, @espec_dom_id, 1);
+SET @espec_cod = (SELECT TOP 1 Espec_Cod FROM GESTION_DE_GATOS.Espectaculos ORDER BY Espec_Cod DESC);
+END
+GO
+
+IF (OBJECT_ID('sp_agregar_publicacion', 'P') IS NOT NULL) DROP PROCEDURE sp_agregar_publicacion
+GO
+CREATE PROCEDURE sp_agregar_publicacion(@pub_desc NVARCHAR(255), @pub_grado_cod INT, @pub_fecha_creacion DATETIME, 
+										@espec_cod INT)
+AS BEGIN
+INSERT INTO GESTION_DE_GATOS.Publicaciones ([Public_Desc], [Public_Fecha_Creacion], [Public_Grado_Cod]
+      										 , [Public_Espec_Cod], [Public_Estado_Id])
+	VALUES (@pub_desc, @pub_fecha_creacion, @pub_grado_cod, @espec_cod, 1);
+END
+GO
+
+IF (OBJECT_ID('sp_generar_ubicaciones', 'P') IS NOT NULL) DROP PROCEDURE sp_generar_ubicaciones
+go
+CREATE procedure sp_generar_ubicaciones(@ubic_tipo INT, @ubic_precio NUMERIC(18), @ubic_espec_codigo NUMERIC(18),
+								  		@cnt_filas INT, @cnt_asientos INT)
 AS BEGIN 
 	DECLARE @indice_fila INT = 0;
 	DECLARE @indice_asiento INT = 0;
@@ -280,3 +300,8 @@ AS BEGIN
 	END
 END
 GO
+
+EXEC sp_rename 'GESTION_DE_GATOS.Ubicaciones_Tipo.Ubic_Cod', 'Ubic_Tipo_Cod', 'COLUMN';
+EXEC sp_rename 'GESTION_DE_GATOS.Ubicaciones_Tipo.Ubic_Descr', 'Ubic_Tipo_Descr', 'COLUMN';
+ALTER TABLE GESTION_DE_GATOS.Espectaculos DROP COLUMN Espec_Hora;
+ALTER TABLE GESTION_DE_GATOS.Publicaciones DROP COLUMN Public_Fact_Num;

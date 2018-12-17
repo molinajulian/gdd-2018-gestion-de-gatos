@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text;
 using PalcoNet.Modelo;
 
 namespace PalcoNet.Repositorios
 {
+    
     public class DomiciliosRepositorio
     {
         public static int agregar(Domicilio domicilio)
@@ -13,9 +15,9 @@ namespace PalcoNet.Repositorios
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@localidad", domicilio.Localidad));
             parametros.Add(new SqlParameter("@calle", domicilio.Calle));
-            parametros.Add(new SqlParameter("@nro", domicilio.Numero));
+            parametros.Add(new SqlParameter("@nro", Convert.ToDecimal(domicilio.Numero)));
             parametros.Add(new SqlParameter("@depto", domicilio.Departamento));
-            parametros.Add(new SqlParameter("@piso", domicilio.Piso));
+            parametros.Add(new SqlParameter("@piso", string.IsNullOrEmpty(domicilio.Piso) ? Convert.ToDecimal(0) : Convert.ToDecimal(domicilio.Piso)));
             parametros.Add(new SqlParameter("@cp", domicilio.CodPostal));
             SqlParameter output = new SqlParameter("@dom_id", -1);
             output.Direction = ParameterDirection.Output;
@@ -28,9 +30,12 @@ namespace PalcoNet.Repositorios
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@calle", calle));
-            parametros.Add(new SqlParameter("@nro", numero));
-            DataBase.ejecutarSP("[dbo].[sp_buscar_domicilios]", parametros);
-            SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_get_domicilios]", "SP", parametros);
+            parametros.Add(new SqlParameter("@nro", !numero.Equals("") ? Convert.ToInt32(numero) : -1));
+            StringBuilder sb = new StringBuilder();
+            sb.Append("SELECT * FROM GESTION_DE_GATOS.Domicilios WHERE ");
+            sb.Append("Dom_Calle LIKE '%" + calle + "%' ");
+            sb.Append(!numero.Equals("") ? "AND Dom_Nro_Calle = " + numero : "");
+            SqlDataReader lector = DataBase.GetDataReader(sb.ToString(), "T", parametros);
             List<Domicilio> domicilios = new List<Domicilio>();
             if (lector.HasRows)
             {
@@ -38,8 +43,8 @@ namespace PalcoNet.Repositorios
                 {
                     domicilios.Add(Domicilio.buildDomicilio(lector));
                 }
-                lector.Close();
             }
+            lector.Close();
             return domicilios;
         }
 
@@ -59,7 +64,7 @@ namespace PalcoNet.Repositorios
         public static void actualizar(Domicilio domicilio)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@id", domicilio.Id));
+            parametros.Add(new SqlParameter("@dom_id", domicilio.Id));
             parametros.Add(new SqlParameter("@localidad", domicilio.Localidad));
             parametros.Add(new SqlParameter("@calle", domicilio.Calle));
             parametros.Add(new SqlParameter("@nro", domicilio.Numero));
@@ -73,11 +78,14 @@ namespace PalcoNet.Repositorios
         {
             String sql = "SELECT * FROM GESTION_DE_GATOS.Domicilios WHERE Dom_Id = " + dom_id;
             SqlDataReader lector = DataBase.GetDataReader(sql, "T", new List<SqlParameter>());
+            Domicilio domicilio = null;
             if (lector.HasRows && lector.Read())
             {
-                return Domicilio.buildDomicilio(lector);
+                domicilio = Domicilio.buildDomicilio(lector);
+                lector.Close();
+                return domicilio;
             }
-
+            lector.Close();
             throw new DomicilioNoEncontradoException(dom_id);
         }
 

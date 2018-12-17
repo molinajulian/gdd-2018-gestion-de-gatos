@@ -16,16 +16,14 @@ namespace PalcoNet.Repositorios
             List<SqlParameter> parametros = new List<SqlParameter>();
             List<Funcionalidad> funcionalidades = new List<Funcionalidad>();
             SqlDataReader lector = DataBase.GetDataReader("404_NOT_FOUND.", "SP", parametros);
-
             if (lector.HasRows)
             {
                 while (lector.Read())
                 {
-                    Funcionalidad funcionalidad = Funcionalidad.buildFuncionalidad(lector);
-                    funcionalidades.Add(funcionalidad);
+                    funcionalidades.Add(Funcionalidad.buildFuncionalidad(lector));
                 }
-                lector.Close();
             }
+            lector.Close();
             return funcionalidades;
         }
     }

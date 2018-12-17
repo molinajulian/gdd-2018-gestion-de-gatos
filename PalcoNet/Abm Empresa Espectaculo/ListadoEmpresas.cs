@@ -13,7 +13,6 @@ using MaterialSkin.Controls;
 using MaterialSkin;
 using System.Text.RegularExpressions;
 using PalcoNet.AbmEmpresa;
-using PalcoNet.Abm_Empresa_Espectaculo;
 
 namespace PalcoNet.AbmEmpresa
 {
@@ -30,19 +29,17 @@ namespace PalcoNet.AbmEmpresa
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-
-
             this.modo = modo;
-
             tabla_empresas.Columns.Add("Cuit", typeof(string));
             tabla_empresas.Columns.Add("Razon Social", typeof(string));
-            tabla_empresas.Columns.Add("Domicilio", typeof(string));
             tabla_empresas.Columns.Add("Email", typeof(string));
             tabla_empresas.Columns.Add("Telefono", typeof(string));
-            tabla_empresas.Columns.Add("Habilitada", typeof(string));
-            actualizarTablaEmpresas();
+            tabla_empresas.Columns.Add("Calle", typeof(string));
+            tabla_empresas.Columns.Add("Numero", typeof(string));
+            tabla_empresas.Columns.Add("Localidad", typeof(string));
+            tabla_empresas.Columns.Add("Codigo postal", typeof(string));
+            tabla_empresas.Columns.Add("Habilitado", typeof(string));
             this.cargarBotonLogico();
-
         }
 
 
@@ -70,14 +67,32 @@ namespace PalcoNet.AbmEmpresa
 
         private String[] generarFila(Empresa empresa)
         {
-            return new []{ empresa.Cuit, empresa.RazonSocial, empresa.Domicilio.ToString(),
-                empresa.Email, empresa.Telefono, Convert.ToString(empresa.Habilitada)};
+            return new []{ empresa.Cuit, empresa.RazonSocial,
+                empresa.Email, empresa.Telefono,  empresa.Domicilio.Calle, empresa.Domicilio.Numero,
+                    empresa.Domicilio.Localidad, empresa.Domicilio.CodPostal, empresa.Habilitada ? "Si" : "No" };
         }
-
+        private bool validarBusqueda()
+        {
+            if (!string.IsNullOrEmpty(txt_razon_social.Text))
+            {
+                MessageBox.Show("Ingrese una razon social válida.");
+                return false;
+            }
+            if (!string.IsNullOrEmpty(txt_cuit.Text) && !Regex.IsMatch(txt_cuit.Text, @"[0-9]{2}-[0-9]{5,9}-[0-9]{1,2}$"))
+            {
+                MessageBox.Show("Ingrese un cuit válido.");
+                return false;
+            }
+            if (!string.IsNullOrEmpty(txt_mail.Text) && !Regex.IsMatch(txt_mail.Text, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"))
+            {
+                MessageBox.Show("Ingrese un mail válido.");
+                return false;
+            }
+            return true;
+        }
         private void btn_buscar_Click(object sender, EventArgs e)
         {
-            if (!verificarAlgunIngreso()) return;
-            if (!verificaTiposDatos()) return;
+            if (!validarBusqueda()) { return; }
             tabla_empresas.Rows.Clear();
             try
             {
@@ -151,9 +166,13 @@ namespace PalcoNet.AbmEmpresa
         {
             try
             {
-               ModificacionEmpresa modificacionEmpresa = new ModificacionEmpresa(getEmpresaSeleccionada());
-               modificacionEmpresa.ShowDialog();
-               this.Hide();
+                Empresa seleccionada = getEmpresaSeleccionada();
+                if (seleccionada.Cuit != null)
+                {
+                    ModificacionEmpresa modificacionEmpresa = new ModificacionEmpresa(seleccionada);
+                    modificacionEmpresa.ShowDialog();
+                    this.Hide();
+                }
             }
             catch (Exception ex)
             {
@@ -163,11 +182,15 @@ namespace PalcoNet.AbmEmpresa
 
         private Empresa getEmpresaSeleccionada()
         {
-            if (data_empresas.SelectedRows.Count != 1)
+            if (data_empresas.SelectedRows.Count == 0)
             {
-                throw new EmpresaNoSeleccionadaException();
+                MessageBox.Show("Debe seleccionar una empresa", "Error al habilitar/deshabilitar una empresa", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new Empresa();
             }
-            return empresas[data_empresas.SelectedRows[0].Index];
+            else
+            {
+                return empresas[data_empresas.SelectedRows[0].Index];
+            }
         }
 
         private void btn_limpiar_Click_1(object sender, EventArgs e)
@@ -183,10 +206,13 @@ namespace PalcoNet.AbmEmpresa
         private void btn_cambiar_estado_Click(object sender, EventArgs e)
         {
             Empresa empresa = getEmpresaSeleccionada();
-            empresa.Habilitada = EmpresasRepositorio.cambiarEstado(empresa);
-            String detalleHabilitacion = empresa.Habilitada ? "HABILITADA" : "DESHABILITADA";
-            actualizarFilaSeleccionada(empresa);
-            MessageBox.Show("Estado de " + empresa.RazonSocial + " cambiado a : " + detalleHabilitacion, "Estado de Empresa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (empresa .Cuit != null)
+            {
+                empresa.Habilitada = EmpresasRepositorio.cambiarEstado(empresa);
+                String detalleHabilitacion = empresa.Habilitada ? "HABILITADA" : "DESHABILITADA";
+                actualizarFilaSeleccionada(empresa);
+                MessageBox.Show("Estado de " + empresa.RazonSocial + " cambiado a : " + detalleHabilitacion, "Estado de Empresa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         public void actualizarFilaSeleccionada(Empresa empresa)

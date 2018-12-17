@@ -92,6 +92,20 @@ namespace PalcoNet.Repositorios
             reader.Close();
             return empresas;
         }
+
+        public static Empresa GetEmpresaByUserId(int id)
+        {
+            SqlDataReader lector = DataBase.GetDataReader("SELECT TOP 1 * FROM GESTION_DE_GATOS.Empresas WHERE Emp_Usuario_Id = " + id, "T", new List<SqlParameter>());
+            Empresa empresa;
+            if (lector.HasRows && lector.Read())
+            {
+                empresa = Empresa.buildEmpresa(lector);
+                lector.Close();
+                return empresa;
+            }
+            lector.Close();
+            throw new Empresa.EmpresaNoEncontradaException();
+        }
         public static List<Empresa> GetEmpresasByEmail(string unEmail)
         {
             var empresas = new List<Empresa>();
@@ -138,7 +152,7 @@ namespace PalcoNet.Repositorios
             DataBase.ejecutarSP("[dbo].[sp_actualizar_empresa]", parametros);
         }
 
-        internal static void agregar(Empresa empresa)
+        internal static void agregar(Empresa empresa,string contraseña)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@razon_social", empresa.RazonSocial));
@@ -146,6 +160,8 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@mail", empresa.Email));
             parametros.Add(new SqlParameter("@telefono", empresa.Telefono));
             parametros.Add(new SqlParameter("@dom_id", empresa.Domicilio.Id));
+            parametros.Add(new SqlParameter("@contraseña",contraseña));
+            parametros.Add(new SqlParameter("@fecha_creacion", DateTime.Now));
             DataBase.ejecutarSP("[dbo].[sp_crear_empresa]", parametros);
         }
 
@@ -159,11 +175,10 @@ namespace PalcoNet.Repositorios
                 .Append("Emp_Cuit LIKE ('%" + cuit + "%')")
                 .ToString();
             List<Empresa> empresas = new List<Empresa>();
-            var camposEmpresa = Ordinales.Empresa;
             SqlDataReader lector = DataBase.GetDataReader(sql, "T", new List<SqlParameter>());
             while (lector.Read())
             {
-               empresas.Add(Empresa.buildEmrpesa(lector));
+               empresas.Add(Empresa.buildEmpresa(lector));
             }
             lector.Close();
             return empresas;

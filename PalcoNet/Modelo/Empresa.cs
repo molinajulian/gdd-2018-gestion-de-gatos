@@ -17,6 +17,7 @@ namespace PalcoNet.Modelo
         public string Telefono { get; set; }
         public Domicilio Domicilio { get; set; }
         public bool Habilitada { get; set; }
+        public static Empresa EmpresaActual { get; set; }
 
         public Empresa()
         {
@@ -46,9 +47,8 @@ namespace PalcoNet.Modelo
             Habilitada = true;
         }
 
-        public static Empresa buildEmrpesa(SqlDataReader lector)
+        public static Empresa buildEmpresa(SqlDataReader lector)
         {
-            Usuario usuario = null;
             Dictionary<string, int> camposEmpresa = Ordinales.Empresa;
                 return new Empresa(
                     lector[camposEmpresa["razonSocial"]].ToString(),
@@ -57,7 +57,7 @@ namespace PalcoNet.Modelo
                     lector[camposEmpresa["telefono"]].ToString(),
                     DireccionRepositorio.ReadDireccionFromDb(
                         Convert.ToString(lector.GetInt32(camposEmpresa["domicilioId"]))),
-                    ((int) lector[camposEmpresa["habilitada"]]) == 1 ? true : false);
+                    Convert.ToInt32(lector[camposEmpresa["habilitada"]]) == 1);
         }
 
         public class EmpresaNoEncontradaException : Exception

@@ -49,12 +49,22 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txNombre = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
+            this.labelAclaracion = new System.Windows.Forms.Label();
+            this.txtUsuario = new System.Windows.Forms.TextBox();
+            this.txtContraseña = new System.Windows.Forms.TextBox();
+            this.labelContraseña = new System.Windows.Forms.Label();
+            this.labelUsuario = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.White;
+            this.groupBox1.Controls.Add(this.labelAclaracion);
+            this.groupBox1.Controls.Add(this.txtUsuario);
+            this.groupBox1.Controls.Add(this.txtContraseña);
+            this.groupBox1.Controls.Add(this.labelContraseña);
+            this.groupBox1.Controls.Add(this.labelUsuario);
             this.groupBox1.Controls.Add(this.btnRegistrarDomicilio);
             this.groupBox1.Controls.Add(this.txtCuil);
             this.groupBox1.Controls.Add(this.label14);
@@ -76,14 +86,14 @@
             this.groupBox1.Controls.Add(this.txNombre);
             this.groupBox1.Location = new System.Drawing.Point(12, 81);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(513, 353);
+            this.groupBox1.Size = new System.Drawing.Size(513, 400);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos del Nuevo Cliente";
             // 
             // btnRegistrarDomicilio
             // 
-            this.btnRegistrarDomicilio.Location = new System.Drawing.Point(297, 217);
+            this.btnRegistrarDomicilio.Location = new System.Drawing.Point(297, 284);
             this.btnRegistrarDomicilio.Name = "btnRegistrarDomicilio";
             this.btnRegistrarDomicilio.Size = new System.Drawing.Size(178, 40);
             this.btnRegistrarDomicilio.TabIndex = 38;
@@ -93,9 +103,9 @@
             // 
             // txtCuil
             // 
-            this.txtCuil.Location = new System.Drawing.Point(297, 169);
+            this.txtCuil.Location = new System.Drawing.Point(315, 169);
             this.txtCuil.Name = "txtCuil";
-            this.txtCuil.Size = new System.Drawing.Size(203, 20);
+            this.txtCuil.Size = new System.Drawing.Size(185, 20);
             this.txtCuil.TabIndex = 36;
             // 
             // label14
@@ -109,7 +119,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(26, 217);
+            this.button1.Location = new System.Drawing.Point(21, 284);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(178, 40);
             this.button1.TabIndex = 35;
@@ -137,7 +147,7 @@
             // btnAlta
             // 
             this.btnAlta.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.btnAlta.Location = new System.Drawing.Point(297, 296);
+            this.btnAlta.Location = new System.Drawing.Point(297, 354);
             this.btnAlta.Name = "btnAlta";
             this.btnAlta.Size = new System.Drawing.Size(178, 40);
             this.btnAlta.TabIndex = 13;
@@ -192,12 +202,13 @@
             this.txDni.Name = "txDni";
             this.txDni.Size = new System.Drawing.Size(136, 20);
             this.txDni.TabIndex = 3;
+            this.txDni.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txDni_KeyPress);
             // 
             // txApellido
             // 
-            this.txApellido.Location = new System.Drawing.Point(306, 44);
+            this.txApellido.Location = new System.Drawing.Point(315, 44);
             this.txApellido.Name = "txApellido";
-            this.txApellido.Size = new System.Drawing.Size(194, 20);
+            this.txApellido.Size = new System.Drawing.Size(185, 20);
             this.txApellido.TabIndex = 2;
             // 
             // label5
@@ -220,9 +231,9 @@
             // 
             // txMail
             // 
-            this.txMail.Location = new System.Drawing.Point(62, 130);
+            this.txMail.Location = new System.Drawing.Point(64, 130);
             this.txMail.Name = "txMail";
-            this.txMail.Size = new System.Drawing.Size(175, 20);
+            this.txMail.Size = new System.Drawing.Size(173, 20);
             this.txMail.TabIndex = 4;
             // 
             // label1
@@ -243,7 +254,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(38, 449);
+            this.button2.Location = new System.Drawing.Point(12, 487);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(178, 40);
             this.button2.TabIndex = 39;
@@ -251,11 +262,60 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // labelAclaracion
+            // 
+            this.labelAclaracion.AutoSize = true;
+            this.labelAclaracion.Location = new System.Drawing.Point(18, 254);
+            this.labelAclaracion.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelAclaracion.Name = "labelAclaracion";
+            this.labelAclaracion.Size = new System.Drawing.Size(263, 13);
+            this.labelAclaracion.TabIndex = 58;
+            this.labelAclaracion.Text = "* Su nombre de usuario será su número de documento";
+            // 
+            // txtUsuario
+            // 
+            this.txtUsuario.Enabled = false;
+            this.txtUsuario.Location = new System.Drawing.Point(64, 206);
+            this.txtUsuario.Margin = new System.Windows.Forms.Padding(2);
+            this.txtUsuario.Name = "txtUsuario";
+            this.txtUsuario.Size = new System.Drawing.Size(173, 20);
+            this.txtUsuario.TabIndex = 57;
+            // 
+            // txtContraseña
+            // 
+            this.txtContraseña.Location = new System.Drawing.Point(315, 206);
+            this.txtContraseña.Margin = new System.Windows.Forms.Padding(2);
+            this.txtContraseña.Name = "txtContraseña";
+            this.txtContraseña.Size = new System.Drawing.Size(171, 20);
+            this.txtContraseña.TabIndex = 56;
+            this.txtContraseña.Click += new System.EventHandler(this.txtContraseña_Click);
+            this.txtContraseña.TextChanged += new System.EventHandler(this.txtContraseña_TextChanged);
+            // 
+            // labelContraseña
+            // 
+            this.labelContraseña.AutoSize = true;
+            this.labelContraseña.Location = new System.Drawing.Point(247, 209);
+            this.labelContraseña.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelContraseña.Name = "labelContraseña";
+            this.labelContraseña.Size = new System.Drawing.Size(61, 13);
+            this.labelContraseña.TabIndex = 55;
+            this.labelContraseña.Text = "Contraseña";
+            // 
+            // labelUsuario
+            // 
+            this.labelUsuario.AutoSize = true;
+            this.labelUsuario.Location = new System.Drawing.Point(12, 209);
+            this.labelUsuario.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelUsuario.Name = "labelUsuario";
+            this.labelUsuario.Size = new System.Drawing.Size(43, 13);
+            this.labelUsuario.TabIndex = 54;
+            this.labelUsuario.Text = "Usuario";
+            // 
             // AltaCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(535, 499);
+            this.ClientSize = new System.Drawing.Size(558, 552);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox1);
             this.Name = "AltaCliente";
@@ -289,5 +349,10 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btnRegistrarDomicilio;
+        private System.Windows.Forms.Label labelAclaracion;
+        private System.Windows.Forms.TextBox txtUsuario;
+        private System.Windows.Forms.TextBox txtContraseña;
+        private System.Windows.Forms.Label labelContraseña;
+        private System.Windows.Forms.Label labelUsuario;
     }
 }

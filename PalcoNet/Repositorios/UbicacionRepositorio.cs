@@ -21,12 +21,6 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@EspecCodigo", ubicacion.EspectaculoId));
             parametros.Add(new SqlParameter("@TipoId", ubicacion.TipoUbicacion.Id));
             parametros.Add(new SqlParameter("@CompraId", ubicacion.CompraID));  
-
-            
-            
-
-
-
             return parametros;
         }
         public static void CreateUbicacion(Ubicacion ubicacion)
@@ -83,5 +77,17 @@ namespace PalcoNet.Repositorios
             return ubicaciones;
         }
 
+        public static List<Ubicacion> generarUbicaciones(List<Sector> sectoresRegistrados)
+        {
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            foreach (Sector sector in sectoresRegistrados)
+            {
+                parametros.Add(new SqlParameter("@ubic_tipo", sector.TipoUbicacion.Id));
+                parametros.Add(new SqlParameter("@ubic_precio", sector.Precio));
+                parametros.Add(new SqlParameter("@ubic_espec_codigo", sector.Precio));
+                DataBase.ejecutarSP("dbo.sp_generar_ubicaciones", parametros);
+            }
+            return null;
+        }
     }
 }

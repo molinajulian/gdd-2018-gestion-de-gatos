@@ -38,14 +38,16 @@
             this.btn_volver = new System.Windows.Forms.Button();
             this.btn_limpiar = new System.Windows.Forms.Button();
             this.btn_eliminar = new System.Windows.Forms.Button();
+            this.btn_agregar = new System.Windows.Forms.Button();
             this.btn_editar = new System.Windows.Forms.Button();
+            this.btn_seleccionar = new System.Windows.Forms.Button();
             this.group_filtros_domicilio.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.data_listado_domicilios)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_buscar
             // 
-            this.btn_buscar.Location = new System.Drawing.Point(377, 23);
+            this.btn_buscar.Location = new System.Drawing.Point(433, 23);
             this.btn_buscar.Name = "btn_buscar";
             this.btn_buscar.Size = new System.Drawing.Size(81, 29);
             this.btn_buscar.TabIndex = 2;
@@ -63,7 +65,7 @@
             this.group_filtros_domicilio.Controls.Add(this.btn_buscar);
             this.group_filtros_domicilio.Location = new System.Drawing.Point(28, 82);
             this.group_filtros_domicilio.Name = "group_filtros_domicilio";
-            this.group_filtros_domicilio.Size = new System.Drawing.Size(489, 75);
+            this.group_filtros_domicilio.Size = new System.Drawing.Size(545, 75);
             this.group_filtros_domicilio.TabIndex = 3;
             this.group_filtros_domicilio.TabStop = false;
             this.group_filtros_domicilio.Text = "Filtros de búsqueda";
@@ -71,7 +73,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(243, 30);
+            this.label11.Location = new System.Drawing.Point(270, 30);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(44, 13);
             this.label11.TabIndex = 56;
@@ -79,9 +81,9 @@
             // 
             // txNumero
             // 
-            this.txNumero.Location = new System.Drawing.Point(293, 27);
+            this.txNumero.Location = new System.Drawing.Point(320, 27);
             this.txNumero.Name = "txNumero";
-            this.txNumero.Size = new System.Drawing.Size(43, 20);
+            this.txNumero.Size = new System.Drawing.Size(72, 20);
             this.txNumero.TabIndex = 54;
             // 
             // label3
@@ -107,8 +109,9 @@
             this.data_listado_domicilios.Location = new System.Drawing.Point(28, 163);
             this.data_listado_domicilios.Name = "data_listado_domicilios";
             this.data_listado_domicilios.ReadOnly = true;
-            this.data_listado_domicilios.Size = new System.Drawing.Size(489, 150);
+            this.data_listado_domicilios.Size = new System.Drawing.Size(545, 150);
             this.data_listado_domicilios.TabIndex = 4;
+            this.data_listado_domicilios.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.data_listado_domicilios_RowStateChanged);
             // 
             // btn_volver
             // 
@@ -122,7 +125,7 @@
             // 
             // btn_limpiar
             // 
-            this.btn_limpiar.Location = new System.Drawing.Point(436, 319);
+            this.btn_limpiar.Location = new System.Drawing.Point(492, 318);
             this.btn_limpiar.Name = "btn_limpiar";
             this.btn_limpiar.Size = new System.Drawing.Size(81, 28);
             this.btn_limpiar.TabIndex = 6;
@@ -134,35 +137,62 @@
             // 
             this.btn_eliminar.Enabled = false;
             this.btn_eliminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_eliminar.Location = new System.Drawing.Point(263, 318);
+            this.btn_eliminar.Location = new System.Drawing.Point(376, 318);
             this.btn_eliminar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_eliminar.Name = "btn_eliminar";
-            this.btn_eliminar.Size = new System.Drawing.Size(157, 28);
+            this.btn_eliminar.Size = new System.Drawing.Size(83, 28);
             this.btn_eliminar.TabIndex = 16;
             this.btn_eliminar.Text = "Eliminar";
             this.btn_eliminar.UseVisualStyleBackColor = true;
             this.btn_eliminar.Click += new System.EventHandler(this.btn_eliminar_Click);
             // 
+            // btn_agregar
+            // 
+            this.btn_agregar.Enabled = false;
+            this.btn_agregar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_agregar.Location = new System.Drawing.Point(152, 318);
+            this.btn_agregar.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_agregar.Name = "btn_agregar";
+            this.btn_agregar.Size = new System.Drawing.Size(74, 28);
+            this.btn_agregar.TabIndex = 15;
+            this.btn_agregar.Text = "Nuevo";
+            this.btn_agregar.UseVisualStyleBackColor = true;
+            this.btn_agregar.Click += new System.EventHandler(this.btn_agregar_Click);
+            // 
             // btn_editar
             // 
             this.btn_editar.Enabled = false;
             this.btn_editar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_editar.Location = new System.Drawing.Point(152, 318);
+            this.btn_editar.Location = new System.Drawing.Point(268, 318);
             this.btn_editar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_editar.Name = "btn_editar";
             this.btn_editar.Size = new System.Drawing.Size(74, 28);
-            this.btn_editar.TabIndex = 15;
+            this.btn_editar.TabIndex = 17;
             this.btn_editar.Text = "Editar";
             this.btn_editar.UseVisualStyleBackColor = true;
-            this.btn_editar.Click += new System.EventHandler(this.btn_editar_Click);
+            this.btn_editar.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btn_seleccionar
+            // 
+            this.btn_seleccionar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_seleccionar.Location = new System.Drawing.Point(592, 204);
+            this.btn_seleccionar.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_seleccionar.Name = "btn_seleccionar";
+            this.btn_seleccionar.Size = new System.Drawing.Size(89, 66);
+            this.btn_seleccionar.TabIndex = 18;
+            this.btn_seleccionar.Text = "Seleccionar";
+            this.btn_seleccionar.UseVisualStyleBackColor = true;
+            this.btn_seleccionar.Click += new System.EventHandler(this.button2_Click);
             // 
             // ListadoDomicilios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(557, 366);
-            this.Controls.Add(this.btn_eliminar);
+            this.ClientSize = new System.Drawing.Size(704, 377);
+            this.Controls.Add(this.btn_seleccionar);
             this.Controls.Add(this.btn_editar);
+            this.Controls.Add(this.btn_eliminar);
+            this.Controls.Add(this.btn_agregar);
             this.Controls.Add(this.btn_limpiar);
             this.Controls.Add(this.btn_volver);
             this.Controls.Add(this.data_listado_domicilios);
@@ -187,6 +217,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txCalle;
         private System.Windows.Forms.Button btn_eliminar;
+        private System.Windows.Forms.Button btn_agregar;
         private System.Windows.Forms.Button btn_editar;
+        private System.Windows.Forms.Button btn_seleccionar;
     }
 }

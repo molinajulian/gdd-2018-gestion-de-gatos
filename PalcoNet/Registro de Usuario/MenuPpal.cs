@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using MaterialSkin.Controls;
 using MaterialSkin;
+using PalcoNet.AbmPublicaciones;
 using PalcoNet.Modelo;
 using PalcoNet.Registro_de_usuario;
 using PalcoNet.Repositorios;
@@ -104,16 +105,13 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void MenuPpal_Load(object sender, EventArgs e)
         {
-           /* if (!user.isAdmin())
-            {
-                buttonABMs.Hide();
-            }*/
         }
 
         private void logout_Click(object sender, EventArgs e)
         {
+            
             this.Hide();
-            login.ShowDialog();
+            login.Show();
             this.Close();
         }
         
@@ -129,7 +127,8 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonGenerarPublicacion_Click(object sender, EventArgs e)
         {
-
+            GenerarPublicacion generarPublicacion = new GenerarPublicacion();
+            generarPublicacion.ShowDialog();
         }
 
         private void buttonEditarPublicacion_Click(object sender, EventArgs e)

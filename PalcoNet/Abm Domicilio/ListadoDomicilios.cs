@@ -16,7 +16,8 @@ namespace PalcoNet.AbmDomicilio
         Rol rol_actual;
         Menu menu;
         private List<Domicilio> domicilios;
-        public ListadoDomicilios()
+        private Domicilio domicilioElegido;
+        public ListadoDomicilios(Domicilio domicilioAElegir)
         {
             InitializeComponent();
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -30,11 +31,17 @@ namespace PalcoNet.AbmDomicilio
             tabla_domicilios.Columns.Add("Departamento");
             tabla_domicilios.Columns.Add("Localidad");
             tabla_domicilios.Columns.Add("Codigo Postal");
+            domicilioElegido = domicilioAElegir;
         }
 
         public void actualizarListado()
         {
             data_listado_domicilios.DataSource = tabla_domicilios;
+        }
+
+        private void limpiarTabla()
+        {
+            tabla_domicilios.Rows.Clear();
         }
 
         private void btn_buscar_Click(object sender, EventArgs e)
@@ -55,27 +62,21 @@ namespace PalcoNet.AbmDomicilio
 
         private void btn_volver_Click(object sender, EventArgs e)
         {
-            this.Hide();
-        }
-
-        private void limpiarRoles()
-        {
-            tabla_domicilios.Rows.Clear();
-            actualizarListado();
+            this.Close();
         }
 
         private void btn_limpiar_Click(object sender, EventArgs e)
         {
-            this.limpiarRoles();
+            txCalle.Clear();
+            txNumero.Clear();
+            limpiarTabla();
         }
 
         private void modificarDomicilio(Domicilio domicilio)
         {
-            this.Hide();
             new ModificarDomicilio(domicilio).ShowDialog();
-            tabla_domicilios.Rows.Clear();
+            limpiarTabla();
             actualizarListado();
-            this.Show();
         }
 
         private void eliminarDomicilio()
@@ -85,20 +86,6 @@ namespace PalcoNet.AbmDomicilio
                 DomiciliosRepositorio.eliminar(getDomicilioSeleccionado());
                 tabla_domicilios.Rows[data_listado_domicilios.SelectedRows[0].Index].Delete();
                 actualizarListado();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btn_editar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                ModificarDomicilio modificarDomicilio = new ModificarDomicilio(getDomicilioSeleccionado());
-                modificarDomicilio.ShowDialog();
-                this.Hide();
             }
             catch (Exception ex)
             {
@@ -126,6 +113,49 @@ namespace PalcoNet.AbmDomicilio
         private void btn_eliminar_Click(object sender, EventArgs e)
         {
             eliminarDomicilio();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if(data_listado_domicilios.SelectedRows.Count == 1) { 
+                domicilioElegido = domicilios[data_listado_domicilios.SelectedRows[0].Index];
+                MessageBox.Show("Domicilio seleccionado exitosamente", "Seleccion de domicilio", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar 1, y solo 1 fila para marcar la seleccion", "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            modificarDomicilio(getDomicilioSeleccionado());
+        }
+
+        private void btn_agregar_Click(object sender, EventArgs e)
+        {
+            AltaDomicilio alta = new AltaDomicilio(ref domicilioElegido);
+            alta.ShowDialog();
+        }
+        
+
+        private void data_listado_domicilios_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            if (e.StateChanged != DataGridViewElementStates.Selected)
+            {
+                btn_editar.Enabled = false;
+                btn_eliminar.Enabled = false;
+                btn_seleccionar.Enabled = false;
+            }
+            else
+            {
+                btn_editar.Enabled = true;
+                btn_eliminar.Enabled = true;
+                btn_seleccionar.Enabled = true;
+            }
         }
     }
 }

@@ -96,6 +96,7 @@
             this.Controls.Add(this.txtContraseña);
             this.Name = "CambiarContraseña";
             this.Text = "Cambiar contraseña";
+            this.Load += new System.EventHandler(this.CambiarContraseña_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

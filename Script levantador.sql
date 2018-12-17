@@ -658,33 +658,35 @@ drop procedure sp_crear_cliente
 go
 create procedure sp_crear_cliente (@tipoDoc int,@doc numeric(18),@cuil nvarchar(255),@nombre nvarchar(255),
 								@apellido nvarchar(255), @fechaNac datetime, @dom_id INT,
-								@mail nvarchar(255), @telefono numeric(20), @cli_id int OUTPUT)
+								@mail nvarchar(255), @telefono numeric(20), @cli_id int OUTPUT,
+								@contraseña varchar(32),@fecha_creacion datetime)
 as
 begin
 	declare @nuevoUsuario int
 	begin transaction
 		begin try
 			begin
+			if @contraseña = ''
+				set @contraseña= convert(varchar(32),'palconet2018')
 			INSERT INTO GESTION_DE_GATOS.Usuarios 
 			(Usuario_Username,Usuario_Password,Usuario_Estado) 
 			VALUES (convert(varchar,@tipoDoc)+convert(varchar,@doc),
-			HASHBYTES('SHA2_256','palconet2018'),
+			HASHBYTES('SHA2_256',@contraseña),
 			1)
 			set  @nuevoUsuario = (SELECT TOP 1 Usuario_Id FROM GESTION_DE_GATOS.Usuarios ORDER BY Usuario_Id DESC)
 			INSERT INTO GESTION_DE_GATOS.Clientes 
 			(Cli_Tipo_Doc_Id,Cli_Doc,Cli_Apellido,Cli_Nombre,Cli_Cuil,Cli_Fecha_Nac,
 				Cli_Fecha_Creacion,Cli_Mail,Cli_Tel,Cli_Domicilio_Id,Cli_Usuario_Id,Cli_Habilitado)
-			VALUES (@tipoDoc,@doc,@apellido,@nombre,@cuil,@fechaNac,GETDATE(),@mail,@telefono,@dom_id,@nuevoUsuario,1)
+			VALUES (@tipoDoc,@doc,@apellido,@nombre,@cuil,@fechaNac,@fecha_creacion,@mail,@telefono,@dom_id,@nuevoUsuario,1)
 			set @cli_id = (SELECT TOP 1 convert(int,convert(varchar,Cli_Tipo_Doc_Id)+convert(varchar,Cli_Doc)) 
-				FROM GESTION_DE_GATOS.Clientes ORDER BY Cli_Fecha_Creacion DESC)
+					FROM GESTION_DE_GATOS.Clientes ORDER BY Cli_Fecha_Creacion DESC)
+			INSERT INTO GESTION_DE_GATOS.Rol_Por_Usuario (Rol_Id,Usuario_Id) VALUES (3,@nuevoUsuario)
 			end
 		end try
 		begin catch
 		IF @@TRANCOUNT > 0  
 			rollback transaction;
-		declare @mensajeError nvarchar(4000)
-		SELECT @mensajeError = ERROR_MESSAGE() 
-		RAISERROR('Hubo un error al crear el cliente, motivo: %s',11,1,@mensajeError)
+		RAISERROR('Hubo un error al crear el cliente',16,0)
 		end catch
 	IF @@TRANCOUNT > 0  
         commit transaction;

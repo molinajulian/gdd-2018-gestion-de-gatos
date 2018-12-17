@@ -66,8 +66,8 @@ namespace PalcoNet.Repositorios
                     Rol rol = Rol.buildRol(lector);
                     roles.Add(rol);
                 }
-                lector.Close();
             }
+            lector.Close();
             return roles;
         }
 
@@ -77,7 +77,7 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@idUsuario", idUsuario));
             parametros.Add(new SqlParameter("@contraseña", nuevaContraseña));
             parametros.Add(new SqlParameter("@tamaño", nuevaContraseña.Length));
-            DataBase.GetDataReader("[dbo].[sp_cambiar_contraseña]", "SP", parametros);
+            DataBase.ejecutarSP("[dbo].[sp_cambiar_contraseña]", parametros);
         }
     }
 }

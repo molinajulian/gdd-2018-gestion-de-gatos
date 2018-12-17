@@ -77,6 +77,7 @@ namespace PalcoNet.Registro_de_usuario
         private void avanzarAMenuPpal()
         {
             this.Hide();
+            Usuario.inicializarUsuarioActual(this.user);
             MenuPpal menu = new MenuPpal(this.user, this.login);
             menu.ShowDialog();
             this.Close();

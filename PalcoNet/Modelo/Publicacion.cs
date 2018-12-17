@@ -13,22 +13,22 @@ namespace PalcoNet.Modelo
         public DateTime FechaPublicacion { get; set; }
         public Grado Grado { get; set; }
         public EstadoPublicacion Estado { get; set; }
-        public Espectaculo Espectaculo { get; set; }
-        public List<Sector> sectores { get; set; }
+        public List<Espectaculo> Espectaculos { get; set; }
+        public List<Sector> Sectores { get; set; }
 
         public Publicacion()
         {
 
         }
-        public Publicacion(string descripcion, DateTime fechaPublicacion, Grado grado,
-            EstadoPublicacion estado, Espectaculo espectaculo, List<Sector> sectores)
+        public Publicacion(string descripcion, Grado grado,
+            EstadoPublicacion estado, List<Espectaculo> espectaculos, List<Sector> sectores)
         {
             Descripcion = descripcion;
-            FechaPublicacion = fechaPublicacion;
+            FechaPublicacion = DateTime.Now;
             Grado = grado;
             Estado = estado;
-            Espectaculo = espectaculo;
-            this.sectores = sectores;
+            Espectaculos = espectaculos;
+            Sectores = sectores;
         }
     }
 }
