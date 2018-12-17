@@ -57,7 +57,7 @@ namespace PalcoNet.Modelo
                     lector[camposEmpresa["telefono"]].ToString(),
                     DireccionRepositorio.ReadDireccionFromDb(
                         Convert.ToString(lector.GetInt32(camposEmpresa["domicilioId"]))),
-                    ((int) lector[camposEmpresa["habilitada"]]) == 1 ? true : false);
+                    Convert.ToInt32(lector[camposEmpresa["habilitada"]]) == 1);
         }
 
         public class EmpresaNoEncontradaException : Exception

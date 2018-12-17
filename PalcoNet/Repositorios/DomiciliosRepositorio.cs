@@ -28,7 +28,7 @@ namespace PalcoNet.Repositorios
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@calle", calle));
-            parametros.Add(new SqlParameter("@nro", numero));
+            parametros.Add(new SqlParameter("@nro", !numero.Equals("") ? Convert.ToInt32(numero) : 0));
             SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_get_domicilios]", "SP", parametros);
             List<Domicilio> domicilios = new List<Domicilio>();
             if (lector.HasRows)

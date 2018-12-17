@@ -99,7 +99,7 @@ namespace PalcoNet.Repositorios
             Empresa empresa;
             if (lector.HasRows && lector.Read())
             {
-                empresa = Empresa.buildEmrpesa(lector);
+                empresa = Empresa.buildEmpresa(lector);
                 lector.Close();
                 return empresa;
             }
