@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text;
 using PalcoNet.Modelo;
 
 namespace PalcoNet.Repositorios
 {
+    
     public class DomiciliosRepositorio
     {
         public static int agregar(Domicilio domicilio)
@@ -28,8 +30,12 @@ namespace PalcoNet.Repositorios
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@calle", calle));
-            parametros.Add(new SqlParameter("@nro", !numero.Equals("") ? Convert.ToInt32(numero) : 0));
-            SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_get_domicilios]", "SP", parametros);
+            parametros.Add(new SqlParameter("@nro", !numero.Equals("") ? Convert.ToInt32(numero) : -1));
+            StringBuilder sb = new StringBuilder();
+            sb.Append("SELECT * FROM GESTION_DE_GATOS.Domicilios WHERE ");
+            sb.Append("Dom_Calle LIKE '%" + calle + "%' ");
+            sb.Append(!numero.Equals("") ? "AND Dom_Nro_Calle = " + numero : "");
+            SqlDataReader lector = DataBase.GetDataReader(sb.ToString(), "T", parametros);
             List<Domicilio> domicilios = new List<Domicilio>();
             if (lector.HasRows)
             {
