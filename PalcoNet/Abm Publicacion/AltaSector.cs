@@ -34,6 +34,7 @@ namespace PalcoNet.AbmPublicaciones
             tabla_sectores.Columns.Add("Cantidad de Filas");
             tabla_sectores.Columns.Add("Cantidad de Asientos");
             tabla_sectores.Columns.Add("Tipo de ubicacion");
+            tabla_sectores.Columns.Add("Precio");
         }
 
         private void inicializarTiposDeUbicacion()
@@ -98,12 +99,13 @@ namespace PalcoNet.AbmPublicaciones
 
         private void actualizarListado()
         {
+            tabla_sectores.Rows.Clear();
             foreach (Sector sector in sectoresRegistrados)
             {
-                String[] sectorRow = new String[]
+                String[] sectorRow = 
                 {
                     sector.Detalle, sector.CantidadFilas.ToString(), sector.CantidadAsientos.ToString(),
-                    sector.TipoUbicacion.Descripcion
+                    sector.TipoUbicacion.Descripcion, sector.Precio.ToString()
                 };
                 tabla_sectores.Rows.Add(sectorRow);
             }
@@ -113,13 +115,19 @@ namespace PalcoNet.AbmPublicaciones
         private Sector getSectorDeUi()
         {
             return new Sector(Convert.ToInt32(txtFilas.Text),
-                Convert.ToInt32(txtAsientos.Text), txtDetalle.ToString(),
+                Convert.ToInt32(txtAsientos.Text), txtDetalle.Text,
                 (TipoUbicacion) cmbTipo.SelectedItem, 
                 Convert.ToDouble(txtPrecio.Text));
         }
 
         private void btn_volver_Click(object sender, EventArgs e)
         {
+            this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Sectores Agregados", "Alta Sectores", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
         }
     }

@@ -75,7 +75,6 @@ namespace PalcoNet.AbmPublicaciones
         {
             AltaSector altaSector = new AltaSector(sectoresRegistrados);
             altaSector.ShowDialog();
-            this.Hide();
         }
 
         public Publicacion getPublicacionDeUi()
@@ -92,7 +91,7 @@ namespace PalcoNet.AbmPublicaciones
             List<Espectaculo> espectaculos = new List<Espectaculo>();
             foreach (DateTime fechaElegida in fechasElegidas)
             {
-                new Espectaculo(UbicacionRepositorio.generarUbicaciones(sectoresRegistrados),
+                new Espectaculo(
                     txtEspectTitulo.Text,
                     fechaElegida,
                     dtpFechaVencimiento.Value,
@@ -119,7 +118,7 @@ namespace PalcoNet.AbmPublicaciones
             List<DateTime> fechasAComparar = new List<DateTime>(fechasElegidas);
             fechasAComparar.Add(dtpFechaVencimiento.Value);
 
-            if (!dtpFechaVencimiento.Value.Equals(fechasAComparar))
+            if (!dtpFechaVencimiento.Value.Equals(fechaMaxima(fechasAComparar)))
             {
                 MessageBox.Show(
                     "La fecha de vencimiento de la publicacion es anterior a alguna de las funciones planificadas.");

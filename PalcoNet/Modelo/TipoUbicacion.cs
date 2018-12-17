@@ -18,7 +18,7 @@ namespace PalcoNet.Modelo
         public static TipoUbicacion build(SqlDataReader lector)
         {
             Dictionary<string, int> camposTipo = Ordinales.TipoUbicacion;
-            return new TipoUbicacion(Convert.ToInt32(lector[camposTipo["Ubic_Tipo_Codigo"]]), 
+            return new TipoUbicacion(Convert.ToInt32(lector[camposTipo["Ubic_Tipo_Cod"]]), 
                 lector[camposTipo["Ubic_Tipo_Descr"]].ToString());
         }
     }

@@ -44,6 +44,7 @@
             this.btn_alta_sector = new System.Windows.Forms.Button();
             this.txtDetalle = new System.Windows.Forms.TextBox();
             this.lbl_nombre_rol = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.epProvider)).BeginInit();
             this.group_alta_rol.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.data_listado_sectores)).BeginInit();
@@ -55,7 +56,7 @@
             // 
             // btn_volver
             // 
-            this.btn_volver.Location = new System.Drawing.Point(456, 399);
+            this.btn_volver.Location = new System.Drawing.Point(55, 399);
             this.btn_volver.Name = "btn_volver";
             this.btn_volver.Size = new System.Drawing.Size(83, 44);
             this.btn_volver.TabIndex = 10;
@@ -186,11 +187,23 @@
             this.lbl_nombre_rol.TabIndex = 0;
             this.lbl_nombre_rol.Text = "Detalle";
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(375, 399);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(150, 44);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "Confirmar Sectores";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // AltaSector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(581, 452);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_volver);
             this.Controls.Add(this.group_alta_rol);
             this.Name = "AltaSector";
@@ -219,5 +232,6 @@
         private System.Windows.Forms.Button btn_alta_sector;
         private System.Windows.Forms.TextBox txtDetalle;
         private System.Windows.Forms.Label lbl_nombre_rol;
+        private System.Windows.Forms.Button button1;
     }
 }

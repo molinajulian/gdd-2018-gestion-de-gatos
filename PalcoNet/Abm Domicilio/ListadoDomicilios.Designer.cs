@@ -40,7 +40,7 @@
             this.btn_eliminar = new System.Windows.Forms.Button();
             this.btn_agregar = new System.Windows.Forms.Button();
             this.btn_editar = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btn_seleccionar = new System.Windows.Forms.Button();
             this.group_filtros_domicilio.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.data_listado_domicilios)).BeginInit();
             this.SuspendLayout();
@@ -111,6 +111,7 @@
             this.data_listado_domicilios.ReadOnly = true;
             this.data_listado_domicilios.Size = new System.Drawing.Size(545, 150);
             this.data_listado_domicilios.TabIndex = 4;
+            this.data_listado_domicilios.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.data_listado_domicilios_RowStateChanged);
             // 
             // btn_volver
             // 
@@ -171,25 +172,24 @@
             this.btn_editar.UseVisualStyleBackColor = true;
             this.btn_editar.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // btn_seleccionar
             // 
-            this.button2.Enabled = false;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(592, 204);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(89, 66);
-            this.button2.TabIndex = 18;
-            this.button2.Text = "Seleccionar";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btn_seleccionar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_seleccionar.Location = new System.Drawing.Point(592, 204);
+            this.btn_seleccionar.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_seleccionar.Name = "btn_seleccionar";
+            this.btn_seleccionar.Size = new System.Drawing.Size(89, 66);
+            this.btn_seleccionar.TabIndex = 18;
+            this.btn_seleccionar.Text = "Seleccionar";
+            this.btn_seleccionar.UseVisualStyleBackColor = true;
+            this.btn_seleccionar.Click += new System.EventHandler(this.button2_Click);
             // 
             // ListadoDomicilios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(704, 377);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btn_seleccionar);
             this.Controls.Add(this.btn_editar);
             this.Controls.Add(this.btn_eliminar);
             this.Controls.Add(this.btn_agregar);
@@ -219,6 +219,6 @@
         private System.Windows.Forms.Button btn_eliminar;
         private System.Windows.Forms.Button btn_agregar;
         private System.Windows.Forms.Button btn_editar;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btn_seleccionar;
     }
 }

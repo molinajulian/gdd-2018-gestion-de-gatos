@@ -117,8 +117,17 @@ namespace PalcoNet.AbmDomicilio
 
         private void button2_Click(object sender, EventArgs e)
         {
-            domicilioElegido = domicilios[data_listado_domicilios.SelectedRows[0].Index];
-            this.Close();
+            if(data_listado_domicilios.SelectedRows.Count == 1) { 
+                domicilioElegido = domicilios[data_listado_domicilios.SelectedRows[0].Index];
+                MessageBox.Show("Domicilio seleccionado exitosamente", "Seleccion de domicilio", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar 1, y solo 1 fila para marcar la seleccion", "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -130,6 +139,23 @@ namespace PalcoNet.AbmDomicilio
         {
             AltaDomicilio alta = new AltaDomicilio(ref domicilioElegido);
             alta.ShowDialog();
+        }
+        
+
+        private void data_listado_domicilios_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            if (e.StateChanged != DataGridViewElementStates.Selected)
+            {
+                btn_editar.Enabled = false;
+                btn_eliminar.Enabled = false;
+                btn_seleccionar.Enabled = false;
+            }
+            else
+            {
+                btn_editar.Enabled = true;
+                btn_eliminar.Enabled = true;
+                btn_seleccionar.Enabled = true;
+            }
         }
     }
 }

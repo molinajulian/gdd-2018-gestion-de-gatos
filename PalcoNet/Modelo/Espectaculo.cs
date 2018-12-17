@@ -13,10 +13,10 @@ namespace PalcoNet.Modelo
         public Empresa Empresa { get; set; }
         public DateTime FechaOcurrencia;
 
-        public Espectaculo(List<Ubicacion> ubicaciones, string descripcion,
+        public Espectaculo(string descripcion,
                             DateTime fechaOcurrencia, DateTime fechaVencimiento, Rubro rubro, Empresa empresa)
         {
-            Ubicaciones = ubicaciones;
+            Ubicaciones = new List<Ubicacion>();
             Descripcion = descripcion;
             FechaOcurrencia = fechaOcurrencia;
             FechaVencimiento = fechaVencimiento;
