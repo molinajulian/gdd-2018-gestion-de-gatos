@@ -16,7 +16,8 @@ namespace PalcoNet.AbmDomicilio
         Rol rol_actual;
         Menu menu;
         private List<Domicilio> domicilios;
-        public ListadoDomicilios()
+        private Domicilio domicilioElegido;
+        public ListadoDomicilios(Domicilio domicilioAElegir)
         {
             InitializeComponent();
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -30,6 +31,7 @@ namespace PalcoNet.AbmDomicilio
             tabla_domicilios.Columns.Add("Departamento");
             tabla_domicilios.Columns.Add("Localidad");
             tabla_domicilios.Columns.Add("Codigo Postal");
+            domicilioElegido = domicilioAElegir;
         }
 
         public void actualizarListado()
@@ -96,9 +98,8 @@ namespace PalcoNet.AbmDomicilio
         {
             try
             {
-                ModificarDomicilio modificarDomicilio = new ModificarDomicilio(getDomicilioSeleccionado());
-                modificarDomicilio.ShowDialog();
-                this.Hide();
+                AltaDomicilio altaDomicilio = new AltaDomicilio(new Domicilio());
+                altaDomicilio.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -126,6 +127,12 @@ namespace PalcoNet.AbmDomicilio
         private void btn_eliminar_Click(object sender, EventArgs e)
         {
             eliminarDomicilio();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            domicilioElegido = domicilios[data_listado_domicilios.SelectedRows[0].Index];
+            this.Close();
         }
     }
 }
