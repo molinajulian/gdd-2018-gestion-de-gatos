@@ -37,8 +37,8 @@ namespace PalcoNet.Repositorios
                 {
                     domicilios.Add(Domicilio.buildDomicilio(lector));
                 }
-                lector.Close();
             }
+            lector.Close();
             return domicilios;
         }
 
@@ -72,11 +72,14 @@ namespace PalcoNet.Repositorios
         {
             String sql = "SELECT * FROM GESTION_DE_GATOS.Domicilios WHERE Dom_Id = " + dom_id;
             SqlDataReader lector = DataBase.GetDataReader(sql, "T", new List<SqlParameter>());
+            Domicilio domicilio = null;
             if (lector.HasRows && lector.Read())
             {
-                return Domicilio.buildDomicilio(lector);
+                domicilio = Domicilio.buildDomicilio(lector);
+                lector.Close();
+                return domicilio;
             }
-
+            lector.Close();
             throw new DomicilioNoEncontradoException(dom_id);
         }
 

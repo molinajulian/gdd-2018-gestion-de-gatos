@@ -18,6 +18,7 @@ namespace PalcoNet.Repositorios
                                     Convert.ToInt32(lector[camposRubro["codigo"]]),
                                     lector[camposRubro["descripcion"]].ToString()));
             }
+            lector.Close();
             return rubros;
         }
     }

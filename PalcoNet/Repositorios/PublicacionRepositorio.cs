@@ -48,6 +48,28 @@ namespace PalcoNet.Repositorios
                 DataBase.ejecutarSP("sp_agregar_publicacion", parametros);
             }
         }
-        
+
+        public static Publicacion GetPublicacionById(int id)
+        {
+            var publicacion = new Publicacion();
+            var parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@id", id));
+            var query = DataBase.ejecutarFuncion("Select top 1 * from publicacion r where r.Public_cod = @id", parametros);
+            SqlDataReader reader = query.ExecuteReader();
+            while (reader.Read())
+            {
+                publicacion = new Publicacion()
+                {
+                    Codigo = (int)reader.GetValue(Ordinales.Publicacion["publ_codigo"]),
+                    Descripcion = reader.GetValue(Ordinales.Publicacion["publ_descripcion"]).ToString(),
+                    FechaPublicacion = (DateTime)reader.GetValue(Ordinales.Publicacion["publ_fechaVencimiento"])
+
+                };
+                publicacion.Estado = EstadoPublicacionRepositorio.ReadEstadoPublicacionFromDb(publicacion.Codigo);
+                publicacion.Espectaculos = EspectaculoRepositorio.ReadEspectaculoFromDb(publicacion.Codigo);
+                publicacion.Grado = GradoRepositorio.ReadGradoFromDb(publicacion.Codigo);
+            }
+            return publicacion;
+        }
     }
 }

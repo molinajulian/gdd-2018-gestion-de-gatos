@@ -6,7 +6,7 @@ using MaterialSkin;
 using PalcoNet.AbmDomicilio;
 using PalcoNet.Repositorios;
 
-namespace PalcoNet.GenerarPublicacion
+namespace PalcoNet.AbmPublicaciones
 {
     public partial class EditarPublicacion : MaterialForm
     {

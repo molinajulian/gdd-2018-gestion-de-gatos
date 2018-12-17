@@ -9,7 +9,7 @@ using MaterialSkin.Controls;
 using MaterialSkin;
 using PalcoNet.Repositorios;
 
-namespace PalcoNet.GenerarPublicacion
+namespace PalcoNet.AbmPublicaciones
 {
     public partial class AltaSector : MaterialForm
     {
@@ -48,6 +48,7 @@ namespace PalcoNet.GenerarPublicacion
                     cmbTipo.Items.Add(tipoUbicacion);
                 }
             }
+            lector.Close();
             cmbTipo.DisplayMember = "Descripcion";
             cmbTipo.ValueMember = "Id";
         }

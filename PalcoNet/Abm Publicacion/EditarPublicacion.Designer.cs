@@ -1,4 +1,4 @@
-﻿namespace PalcoNet.GenerarPublicacion
+﻿namespace PalcoNet.AbmPublicaciones
 {
     partial class EditarPublicacion
     {

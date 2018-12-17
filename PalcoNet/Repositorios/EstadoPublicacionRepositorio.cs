@@ -26,6 +26,22 @@ namespace PalcoNet.Repositorios
             }
             return estados;
         }
+
+        public static EstadoPublicacion ReadEstadoPublicacionFromDb(int id)
+        {
+            var parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@id", id));
+            var query = DataBase.ejecutarFuncion("Select top 1 * from estadopublicacion e where e.Public_Est_Id = @id", parametros);
+            SqlDataReader reader = query.ExecuteReader();
+            if (reader.Read())
+            {
+                return new EstadoPublicacion(
+                    Convert.ToInt32(reader[Ordinales.EstadoPublicacion["id"]]),
+                    reader[Ordinales.EstadoPublicacion["descripcion"]].ToString(),
+                    Convert.ToInt32(reader[Ordinales.EstadoPublicacion["editable"]]) == 1 ? true : false);
+            }
+            return null;
+        }
     }
 }
 

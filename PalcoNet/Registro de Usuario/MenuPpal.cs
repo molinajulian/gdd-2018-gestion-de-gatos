@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using MaterialSkin.Controls;
 using MaterialSkin;
+using PalcoNet.AbmPublicaciones;
 using PalcoNet.Modelo;
 using PalcoNet.Registro_de_usuario;
 using PalcoNet.Repositorios;
@@ -129,7 +130,7 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonGenerarPublicacion_Click(object sender, EventArgs e)
         {
-            GenerarPublicacion.GenerarPublicacion generarPublicacion = new GenerarPublicacion.GenerarPublicacion();
+            GenerarPublicacion generarPublicacion = new GenerarPublicacion();
             generarPublicacion.ShowDialog();
         }
 

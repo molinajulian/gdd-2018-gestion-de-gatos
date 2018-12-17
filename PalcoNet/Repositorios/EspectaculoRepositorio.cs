@@ -46,7 +46,7 @@ namespace PalcoNet.Repositorios
 
         }
 
-        public static Espectaculo ReadEspectaculoFromDb(int id)
+        public static List<Espectaculo> ReadEspectaculoFromDb(int id)
         {
             /*
             var espectaculo = new Espectaculo();

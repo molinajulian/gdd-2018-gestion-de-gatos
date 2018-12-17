@@ -5,7 +5,7 @@ using PalcoNet.Modelo;
 using MaterialSkin.Controls;
 using MaterialSkin;
 
-namespace PalcoNet.GenerarPublicacion
+namespace PalcoNet.AbmPublicaciones
 {
     public partial class AltaFechas : MaterialForm
     {

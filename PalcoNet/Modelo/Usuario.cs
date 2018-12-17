@@ -31,15 +31,15 @@ namespace PalcoNet.Modelo
         {
             Usuario usuario = null;
             Dictionary<string, int> camposUsuario = Ordinales.camposUsuario;
-            if (lector.HasRows)
+            if (lector.HasRows && lector.Read())
             {
-                lector.Read();
-                return new Usuario(
+                usuario = new Usuario(
                     lector.GetInt32(camposUsuario["id"]),
                     lector.GetString(camposUsuario["username"]),
                     lector.GetBoolean(camposUsuario["estado"]),
-                    lector.GetBoolean(camposUsuario["primer_logueo"]));
+                    lector.GetInt32(camposUsuario["primer_logueo"]) == 1);
             }
+            lector.Close();
             return usuario;
         }
 

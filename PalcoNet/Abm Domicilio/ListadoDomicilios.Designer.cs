@@ -39,7 +39,7 @@
             this.btn_limpiar = new System.Windows.Forms.Button();
             this.btn_eliminar = new System.Windows.Forms.Button();
             this.btn_agregar = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_editar = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.group_filtros_domicilio.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.data_listado_domicilios)).BeginInit();
@@ -156,19 +156,20 @@
             this.btn_agregar.TabIndex = 15;
             this.btn_agregar.Text = "Nuevo";
             this.btn_agregar.UseVisualStyleBackColor = true;
-            this.btn_agregar.Click += new System.EventHandler(this.btn_editar_Click);
+            this.btn_agregar.Click += new System.EventHandler(this.btn_agregar_Click);
             // 
-            // button1
+            // btn_editar
             // 
-            this.button1.Enabled = false;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(268, 318);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(74, 28);
-            this.button1.TabIndex = 17;
-            this.button1.Text = "Editar";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btn_editar.Enabled = false;
+            this.btn_editar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_editar.Location = new System.Drawing.Point(268, 318);
+            this.btn_editar.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_editar.Name = "btn_editar";
+            this.btn_editar.Size = new System.Drawing.Size(74, 28);
+            this.btn_editar.TabIndex = 17;
+            this.btn_editar.Text = "Editar";
+            this.btn_editar.UseVisualStyleBackColor = true;
+            this.btn_editar.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -189,7 +190,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(704, 377);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_editar);
             this.Controls.Add(this.btn_eliminar);
             this.Controls.Add(this.btn_agregar);
             this.Controls.Add(this.btn_limpiar);
@@ -217,7 +218,7 @@
         private System.Windows.Forms.TextBox txCalle;
         private System.Windows.Forms.Button btn_eliminar;
         private System.Windows.Forms.Button btn_agregar;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_editar;
         private System.Windows.Forms.Button button2;
     }
 }

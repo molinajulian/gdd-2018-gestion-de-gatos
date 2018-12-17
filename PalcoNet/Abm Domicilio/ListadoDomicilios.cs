@@ -39,6 +39,11 @@ namespace PalcoNet.AbmDomicilio
             data_listado_domicilios.DataSource = tabla_domicilios;
         }
 
+        private void limpiarTabla()
+        {
+            tabla_domicilios.Rows.Clear();
+        }
+
         private void btn_buscar_Click(object sender, EventArgs e)
         {
             tabla_domicilios.Rows.Clear();
@@ -57,27 +62,21 @@ namespace PalcoNet.AbmDomicilio
 
         private void btn_volver_Click(object sender, EventArgs e)
         {
-            this.Hide();
-        }
-
-        private void limpiarRoles()
-        {
-            tabla_domicilios.Rows.Clear();
-            actualizarListado();
+            this.Close();
         }
 
         private void btn_limpiar_Click(object sender, EventArgs e)
         {
-            this.limpiarRoles();
+            txCalle.Clear();
+            txNumero.Clear();
+            limpiarTabla();
         }
 
         private void modificarDomicilio(Domicilio domicilio)
         {
-            this.Hide();
             new ModificarDomicilio(domicilio).ShowDialog();
-            tabla_domicilios.Rows.Clear();
+            limpiarTabla();
             actualizarListado();
-            this.Show();
         }
 
         private void eliminarDomicilio()
@@ -87,19 +86,6 @@ namespace PalcoNet.AbmDomicilio
                 DomiciliosRepositorio.eliminar(getDomicilioSeleccionado());
                 tabla_domicilios.Rows[data_listado_domicilios.SelectedRows[0].Index].Delete();
                 actualizarListado();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btn_editar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                AltaDomicilio altaDomicilio = new AltaDomicilio(new Domicilio());
-                altaDomicilio.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -133,6 +119,17 @@ namespace PalcoNet.AbmDomicilio
         {
             domicilioElegido = domicilios[data_listado_domicilios.SelectedRows[0].Index];
             this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            modificarDomicilio(getDomicilioSeleccionado());
+        }
+
+        private void btn_agregar_Click(object sender, EventArgs e)
+        {
+            AltaDomicilio alta = new AltaDomicilio(ref domicilioElegido);
+            alta.ShowDialog();
         }
     }
 }
