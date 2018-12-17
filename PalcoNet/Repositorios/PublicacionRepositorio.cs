@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace PalcoNet.Repositorios
 {
@@ -13,12 +14,14 @@ namespace PalcoNet.Repositorios
 
         public static void darAltaPublicacion(Publicacion publicacion)
         {
-            EspectaculoRepositorio.agregarTodos(publicacion.Espectaculos);
-            agregarPublicacion(publicacion);
-            registrarSectoresPorEspectaculo(publicacion.Sectores, publicacion.Espectaculos);
+            EspectaculoRepositorio.crearTodos(publicacion.Espectaculos);
+            crearPublicacion(publicacion);
+            crearUbicacionesPorEspectaculo(publicacion.Sectores, publicacion.Espectaculos);
+            MessageBox.Show("Publicacion generada exitosamente", "Alta Publicacion", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
 
-        public static void registrarSectoresPorEspectaculo(List<Sector> sectores, List<Espectaculo> espectaculos)
+        public static void crearUbicacionesPorEspectaculo(List<Sector> sectores, List<Espectaculo> espectaculos)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
             foreach (Espectaculo espectaculo in espectaculos)
@@ -31,12 +34,12 @@ namespace PalcoNet.Repositorios
                     parametros.Add(new SqlParameter("@ubic_espec_codigo", espectaculo.Id));
                     parametros.Add(new SqlParameter("@cnt_filas", sector.CantidadFilas));
                     parametros.Add(new SqlParameter("@cnt_asientos", sector.CantidadAsientos));
-                    DataBase.ejecutarSP("sp_generar_ubicaciones", parametros);
+                    DataBase.ejecutarSP("sp_crear_ubicaciones", parametros);
                 }
             }
         }
 
-        public static void agregarPublicacion(Publicacion publicacion)
+        public static void crearPublicacion(Publicacion publicacion)
         {
             foreach (Espectaculo espectaculo in publicacion.Espectaculos)
             {
@@ -45,7 +48,7 @@ namespace PalcoNet.Repositorios
                 parametros.Add(new SqlParameter("@pub_grado_cod", publicacion.Grado.Id));
                 parametros.Add(new SqlParameter("@pub_fecha_creacion", publicacion.FechaPublicacion));
                 parametros.Add(new SqlParameter("@espec_cod", espectaculo.Id));
-                DataBase.ejecutarSP("sp_agregar_publicacion", parametros);
+                DataBase.ejecutarSP("sp_crear_publicacion", parametros);
             }
         }
 

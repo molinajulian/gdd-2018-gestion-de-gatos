@@ -34,18 +34,18 @@ BEGIN
 		GROUP BY u.Usuario_Estado,u.Usuario_Id), 0));
 	IF @salida = 0
 	BEGIN
-		RAISERROR ('Usuario o contraseña incorrecta', 16, 0)
+		RAISERROR ('Usuario o contraseÃ±a incorrecta', 16, 0)
 		RETURN;
 	END
 END
 go
 
-IF (OBJECT_ID('sp_cambiar_contraseña', 'P') IS NOT NULL) DROP PROCEDURE sp_cambiar_contraseña 
+IF (OBJECT_ID('sp_cambiar_contraseÃ±a', 'P') IS NOT NULL) DROP PROCEDURE sp_cambiar_contraseÃ±a 
 go
-CREATE PROCEDURE sp_cambiar_contraseña @idUsuario int,@contraseña VARCHAR(32),@tamaño int
+CREATE PROCEDURE sp_cambiar_contraseÃ±a @idUsuario int,@contraseÃ±a VARCHAR(32),@tamaÃ±o int
 AS 
 BEGIN
-	UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Password = HASHBYTES('SHA2_256',@contraseña) WHERE Usuario_Id = @idUsuario
+	UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Password = HASHBYTES('SHA2_256',@contraseÃ±a) WHERE Usuario_Id = @idUsuario
 	UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Primer_Logueo = 0 WHERE Usuario_Id = @idUsuario
 END
 go
@@ -55,7 +55,7 @@ IF (OBJECT_ID('sp_buscar_usuario', 'P') IS NOT NULL) DROP PROCEDURE sp_buscar_us
 go
 CREATE PROCEDURE sp_buscar_usuario @idUsuario int
 AS BEGIN
-		SELECT u.Usuario_Id, u.Usuario_Username, u.Usuario_Estado, u.Usuario_Primer_Logueo
+		SELECT u.Usuario_Id, u.Usuario_Username, u.Usuario_Estado, ISNULL(u.Usuario_Primer_Logueo, 0)
 		FROM GESTION_DE_GATOS.Usuarios u
 				JOIN  GESTION_DE_GATOS.Rol_Por_Usuario
 					ON GESTION_DE_GATOS.Rol_Por_Usuario.Usuario_Id = u.Usuario_Id
@@ -124,7 +124,7 @@ GO
 CREATE PROCEDURE sp_get_domicilios (@calle nvarchar(50), @nro numeric(18))
 AS BEGIN
 	SELECT * FROM GESTION_DE_GATOS.Domicilios
-		WHERE Dom_Calle = @calle AND Dom_Nro_Calle = @nro;
+		WHERE Dom_Calle LIKE calle AND Dom_Nro_Calle = @nro;
 END 
 go
 
@@ -182,7 +182,7 @@ IF EXISTS ( SELECT  *
             AND type IN ( N'P', N'PC' ) ) DROP PROCEDURE sp_crear_empresa
 go
 CREATE procedure dbo.sp_crear_empresa (@razon_social nvarchar(255), @cuit nvarchar(255), 
-									   @mail nvarchar(50), @telefono numeric(20), @dom_id INT, @contraseña varchar(32),@fecha_creacion datetime)
+									   @mail nvarchar(50), @telefono numeric(20), @dom_id INT, @contraseÃ±a varchar(32),@fecha_creacion datetime)
 as
 begin
 	declare @nuevoUsuario int
@@ -190,12 +190,12 @@ begin
 	begin transaction
 		begin try
 			begin
-				if @contraseña = ''
-					set @contraseña= convert(varchar(32),'palconet2018')
+				if @contraseÃ±a = ''
+					set @contraseÃ±a= convert(varchar(32),'palconet2018')
 				INSERT INTO GESTION_DE_GATOS.Usuarios 
 				(Usuario_Username,Usuario_Password,Usuario_Estado) 
 				VALUES (@cuit,
-					HASHBYTES('SHA2_256',@contraseña),
+					HASHBYTES('SHA2_256',@contraseÃ±a),
 					1)
 				SET @nuevoUsuario = (SELECT TOP 1 Usuario_Id FROM GESTION_DE_GATOS.Usuarios ORDER BY Usuario_Id DESC)
 				INSERT INTO GESTION_DE_GATOS.Empresas 
@@ -254,9 +254,9 @@ AS BEGIN
 END
 GO
 
-IF (OBJECT_ID('sp_agregar_espectaculo', 'P') IS NOT NULL) DROP PROCEDURE sp_agregar_espectaculo
+IF (OBJECT_ID('sp_crear_espectaculo', 'P') IS NOT NULL) DROP PROCEDURE sp_crear_espectaculo
 go
-CREATE PROCEDURE sp_agregar_espectaculo(@espec_desc NVARCHAR(255), @espec_fecha DATETIME,
+CREATE PROCEDURE sp_crear_espectaculo(@espec_desc NVARCHAR(255), @espec_fecha DATETIME,
 										@espec_fecha_vencimiento DATETIME, @espec_rubro_codigo INT,
 										@espec_emp_cuit NVARCHAR(255), @espec_dom_id INT, @espec_cod INT OUTPUT)
 AS BEGIN
@@ -267,9 +267,9 @@ SET @espec_cod = (SELECT TOP 1 Espec_Cod FROM GESTION_DE_GATOS.Espectaculos ORDE
 END
 GO
 
-IF (OBJECT_ID('sp_agregar_publicacion', 'P') IS NOT NULL) DROP PROCEDURE sp_agregar_publicacion
+IF (OBJECT_ID('sp_crear_publicacion', 'P') IS NOT NULL) DROP PROCEDURE sp_crear_publicacion
 GO
-CREATE PROCEDURE sp_agregar_publicacion(@pub_desc NVARCHAR(255), @pub_grado_cod INT, @pub_fecha_creacion DATETIME, 
+CREATE PROCEDURE sp_crear_publicacion(@pub_desc NVARCHAR(255), @pub_grado_cod INT, @pub_fecha_creacion DATETIME, 
 										@espec_cod INT)
 AS BEGIN
 INSERT INTO GESTION_DE_GATOS.Publicaciones ([Public_Desc], [Public_Fecha_Creacion], [Public_Grado_Cod]
@@ -278,9 +278,9 @@ INSERT INTO GESTION_DE_GATOS.Publicaciones ([Public_Desc], [Public_Fecha_Creacio
 END
 GO
 
-IF (OBJECT_ID('sp_generar_ubicaciones', 'P') IS NOT NULL) DROP PROCEDURE sp_generar_ubicaciones
+IF (OBJECT_ID('sp_crear_ubicaciones', 'P') IS NOT NULL) DROP PROCEDURE sp_crear_ubicaciones
 go
-CREATE procedure sp_generar_ubicaciones(@ubic_tipo INT, @ubic_precio NUMERIC(18), @ubic_espec_codigo NUMERIC(18),
+CREATE procedure sp_crear_ubicaciones(@ubic_tipo INT, @ubic_precio NUMERIC(18), @ubic_espec_codigo NUMERIC(18),
 								  		@cnt_filas INT, @cnt_asientos INT)
 AS BEGIN 
 	DECLARE @indice_fila INT = 0;
@@ -291,8 +291,8 @@ AS BEGIN
 		    WHILE @indice_asiento < @cnt_asientos
 			BEGIN
 				INSERT INTO GESTION_DE_GATOS.Ubicaciones(Ubic_Fila, Ubic_Asiento, Ubic_Precio,
-									  Ubic_Espec_Cod, Ubic_Tipo_Cod) 
-						VALUES(@indice_fila, @indice_asiento, @ubic_precio, @ubic_espec_codigo, @ubic_tipo);
+									  Ubic_Espec_Cod, Ubic_Tipo_Cod, Ubic_Sin_Numerar) 
+						VALUES(@indice_fila, @indice_asiento, @ubic_precio, @ubic_espec_codigo, @ubic_tipo, 0);
 				SET @indice_asiento = @indice_asiento + 1;
 			END;
 		   SET @indice_fila = @indice_fila + 1;
