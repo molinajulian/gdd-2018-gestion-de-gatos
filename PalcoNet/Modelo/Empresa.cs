@@ -46,9 +46,8 @@ namespace PalcoNet.Modelo
             Habilitada = true;
         }
 
-        public static Empresa buildEmrpesa(SqlDataReader lector)
+        public static Empresa buildEmpresa(SqlDataReader lector)
         {
-            Usuario usuario = null;
             Dictionary<string, int> camposEmpresa = Ordinales.Empresa;
                 return new Empresa(
                     lector[camposEmpresa["razonSocial"]].ToString(),

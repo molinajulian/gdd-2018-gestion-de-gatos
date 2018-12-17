@@ -59,7 +59,7 @@ namespace PalcoNet.Repositorios
         public static void actualizar(Domicilio domicilio)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@id", domicilio.Id));
+            parametros.Add(new SqlParameter("@dom_id", domicilio.Id));
             parametros.Add(new SqlParameter("@localidad", domicilio.Localidad));
             parametros.Add(new SqlParameter("@calle", domicilio.Calle));
             parametros.Add(new SqlParameter("@nro", domicilio.Numero));

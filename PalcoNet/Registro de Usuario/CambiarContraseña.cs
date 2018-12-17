@@ -66,8 +66,8 @@ namespace PalcoNet.Registro_de_usuario
                         try
                         {
                             UsuarioRepositorio.cambiarContraseña(user.id, txtContraseña.Text);
+                            this.Hide();
                             new ConfiguracionInicial(user, login).Show();
-
                         }
                         catch (SqlException ex)
                         {

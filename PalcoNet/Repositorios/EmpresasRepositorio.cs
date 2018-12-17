@@ -161,11 +161,10 @@ namespace PalcoNet.Repositorios
                 .Append("Emp_Cuit LIKE ('%" + cuit + "%')")
                 .ToString();
             List<Empresa> empresas = new List<Empresa>();
-            var camposEmpresa = Ordinales.Empresa;
             SqlDataReader lector = DataBase.GetDataReader(sql, "T", new List<SqlParameter>());
             while (lector.Read())
             {
-               empresas.Add(Empresa.buildEmrpesa(lector));
+               empresas.Add(Empresa.buildEmpresa(lector));
             }
             lector.Close();
             return empresas;

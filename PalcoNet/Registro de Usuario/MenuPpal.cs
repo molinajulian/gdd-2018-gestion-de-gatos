@@ -104,16 +104,13 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void MenuPpal_Load(object sender, EventArgs e)
         {
-           /* if (!user.isAdmin())
-            {
-                buttonABMs.Hide();
-            }*/
         }
 
         private void logout_Click(object sender, EventArgs e)
         {
+            
             this.Hide();
-            login.ShowDialog();
+            login.Show();
             this.Close();
         }
         

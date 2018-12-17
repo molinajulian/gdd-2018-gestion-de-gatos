@@ -59,7 +59,7 @@ namespace PalcoNet.AbmCliente
             try
             {
                 domicilio.Id = DomiciliosRepositorio.agregar(domicilio);
-                string clienteId = ClienteRepositorio.agregar(cliente);
+                string clienteId = ClienteRepositorio.agregar(cliente, esRegistro ? txtContraseña.Text : "");
                 TarjetaRepositorio.agregar(cliente.Tarjetas, clienteId);
                 limpiarVentana();
                 MessageBox.Show("Cliente agregado correctamente con sus respectivas tarjetas y domicilio");
@@ -107,6 +107,16 @@ namespace PalcoNet.AbmCliente
                 MessageBox.Show("Ya existe un cliente con el dni ingresado");
                 return false;
             }
+            if (!Regex.IsMatch(txtCuil.Text, @"[0-9]{2}-[0-9]{5,9}-[0-9]{1,2}$"))
+            {
+                MessageBox.Show("Ingrese un cuil valido.");
+                return false;
+            }
+            if (ClienteRepositorio.esClienteExistente(0, 0, txtCuil.Text))
+            {
+                MessageBox.Show("Ya existe un cliente con ese CUIL.");
+                return false;
+            }
             if (!Regex.IsMatch(txNombre.Text, @"^[a-zA-Z\s]{1,30}$"))
             {
                 MessageBox.Show("Ingrese un nombre válido.");
@@ -132,16 +142,6 @@ namespace PalcoNet.AbmCliente
                 MessageBox.Show("Ingrese un telefono válido.");
                 return false;
             }
-            if (!Regex.IsMatch(txtCuil.Text, @"[0-9]{2}-[0-9]{5,9}-[0-9]{1,2}$"))
-            {
-                MessageBox.Show("Ingrese un cuil valido.");
-                return false;
-            }
-            if (ClienteRepositorio.esClienteExistente(0, 0, txtCuil.Text))
-            {
-                MessageBox.Show("Ya existe un cliente con ese CUIL.");
-                return false;
-            }
             if (cliente.Tarjetas.Count == 0)
             {
                 MessageBox.Show("Debe registrar al menos una tarjeta para la plataforma.");
@@ -161,23 +161,11 @@ namespace PalcoNet.AbmCliente
             var controles = groupBox1.Controls;
             foreach (Control control in controles)
             {
-                if (((control.Name == "txtUsuario" || control.Name == "txtContraseña") && esRegistro))
+                if (((control.Name == "txtUsuario" || control.Name == "txtContraseña") && esRegistro) && string.IsNullOrWhiteSpace(control.Text))
                 {
-                    if (string.IsNullOrWhiteSpace(control.Text))
-                    {
-                        MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        completo = false;
-                        break;
-                    }
-                }
-                else
-                {
-                    if (string.IsNullOrWhiteSpace(control.Text))
-                    {
-                        MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        completo = false;
-                        break;
-                    }
+                    MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    completo = false;
+                    break;
                 }
                
             }
@@ -194,7 +182,11 @@ namespace PalcoNet.AbmCliente
         {
             AltaDomicilio altaDomicilio = new AltaDomicilio(ref domicilio);
             altaDomicilio.ShowDialog();
-            btnRegistrarDomicilio.Hide();
+            if (!string.IsNullOrEmpty(domicilio.Calle))
+            {
+                btnRegistrarDomicilio.Enabled = false;
+            }
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
