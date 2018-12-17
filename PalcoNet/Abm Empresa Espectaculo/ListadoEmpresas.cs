@@ -73,11 +73,6 @@ namespace PalcoNet.AbmEmpresa
         }
         private bool validarBusqueda()
         {
-            if (!string.IsNullOrEmpty(txt_razon_social.Text))
-            {
-                MessageBox.Show("Ingrese una razon social válida.");
-                return false;
-            }
             if (!string.IsNullOrEmpty(txt_cuit.Text) && !Regex.IsMatch(txt_cuit.Text, @"[0-9]{2}-[0-9]{5,9}-[0-9]{1,2}$"))
             {
                 MessageBox.Show("Ingrese un cuit válido.");

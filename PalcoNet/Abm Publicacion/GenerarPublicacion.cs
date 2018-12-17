@@ -91,12 +91,12 @@ namespace PalcoNet.AbmPublicaciones
             List<Espectaculo> espectaculos = new List<Espectaculo>();
             foreach (DateTime fechaElegida in fechasElegidas)
             {
-                new Espectaculo(
+                espectaculos.Add(new Espectaculo(
                     txtEspectTitulo.Text,
                     fechaElegida,
                     dtpFechaVencimiento.Value,
                     (Rubro)cmbRubro.SelectedItem,
-                    EmpresasRepositorio.GetEmpresaByUserId(Usuario.Actual.id));
+                    EmpresasRepositorio.GetEmpresaByUserId(Usuario.Actual.id)));
             }
             return espectaculos;
         }

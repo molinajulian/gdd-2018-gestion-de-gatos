@@ -72,7 +72,7 @@ namespace PalcoNet.Repositorios
             return null;
         }
 
-        public static void agregarTodos(List<Espectaculo> espectaculos)
+        public static void crearTodos(List<Espectaculo> espectaculos)
         {
             foreach (Espectaculo espectaculo in espectaculos)
             {
@@ -82,12 +82,12 @@ namespace PalcoNet.Repositorios
                 parametros.Add(new SqlParameter("@espec_fecha_vencimiento", espectaculo.FechaVencimiento));
                 parametros.Add(new SqlParameter("@espec_rubro_codigo", espectaculo.Rubro.Codigo));
                 parametros.Add(new SqlParameter("@espec_emp_cuit", espectaculo.Empresa.Cuit));
-                parametros.Add(new SqlParameter("@emp_domi_id", espectaculo.Empresa.Domicilio.Id));
+                parametros.Add(new SqlParameter("@espec_dom_id", espectaculo.Empresa.Domicilio.Id));
                 SqlParameter output = new SqlParameter("@espec_cod", 0);
                 output.Direction = ParameterDirection.Output;
                 parametros.Add(output);
-                SqlCommand sqlCommand = DataBase.ejecutarSP("[dbo].[sp.crear_espectaculo]", parametros);
-                espectaculo.Id = Convert.ToInt32(sqlCommand.Parameters["@espec_codigo"].Value);
+                SqlCommand sqlCommand = DataBase.ejecutarSP("[dbo].[sp_crear_espectaculo]", parametros);
+                espectaculo.Id = Convert.ToInt32(output.Value);
             }
         }
     }
