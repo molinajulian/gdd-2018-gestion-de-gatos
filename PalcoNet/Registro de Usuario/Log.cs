@@ -88,16 +88,20 @@ namespace PalcoNet.Registro_de_usuario
                     Usuario usuarioLogueado = usuarioRepositorio.buscarUsuario(idUsuario);
                     if (usuarioLogueado.primerLogueo)
                     {
-                        new CambiarContraseña(usuarioLogueado, this).ShowDialog();
+                        new CambiarContraseña(usuarioLogueado).ShowDialog();
+                        textContrasena.Text = "Contraseña";
+                        textUsuario.Text = "Nombre de Usuario";
+                        textContrasena.UseSystemPasswordChar = false;
+                        this.Show();
                     }
                     else
                     {
-                        new ConfiguracionInicial(usuarioLogueado, this).ShowDialog();
+                        ConfiguracionInicial ci = new ConfiguracionInicial(usuarioLogueado);
+                        if (ci.IsDisposed) this.Show(); ;
                         textContrasena.Text = "Contraseña";
                         textUsuario.Text = "Nombre de Usuario";
                         textContrasena.UseSystemPasswordChar = false;
                     }
-                    this.Hide();
                 }
                 catch (SqlException ex)
                 {
@@ -131,7 +135,6 @@ namespace PalcoNet.Registro_de_usuario
 
         private void textContrasena_KeyPress(object sender, KeyPressEventArgs e)
         {
-
             textContrasena.UseSystemPasswordChar = true;
         }
         private void textUsuario_KeyPress(object sender, KeyPressEventArgs e)

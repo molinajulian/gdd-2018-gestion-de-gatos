@@ -50,6 +50,7 @@
             this.txtContraseña.Text = "Nueva contraseña";
             this.txtContraseña.UseSystemPasswordChar = false;
             this.txtContraseña.Click += new System.EventHandler(this.txtContraseña_Click);
+            this.txtContraseña.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textContrasena_KeyPress);
             // 
             // txtRepetirContraseña
             // 
@@ -68,6 +69,7 @@
             this.txtRepetirContraseña.Text = "Repita su nueva contraseña";
             this.txtRepetirContraseña.UseSystemPasswordChar = false;
             this.txtRepetirContraseña.Click += new System.EventHandler(this.txtRepetirContraseña_Click);
+            this.txtRepetirContraseña.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRepetirContraseña_KeyPress);
             // 
             // btn_Cambiar
             // 
@@ -96,7 +98,6 @@
             this.Controls.Add(this.txtContraseña);
             this.Name = "CambiarContraseña";
             this.Text = "Cambiar contraseña";
-            this.Load += new System.EventHandler(this.CambiarContraseña_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -21,12 +21,10 @@ namespace PalcoNet.Registro_de_usuario
     {
         Usuario user;
         private List<Rol> rolesDeUsuario;
-        Log login;
-        public ConfiguracionInicial(Usuario user, Log login)
+        public ConfiguracionInicial(Usuario user)
         {
             InitializeComponent();
             this.user = user;
-            this.login=login;
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
@@ -78,7 +76,7 @@ namespace PalcoNet.Registro_de_usuario
         {
             this.Hide();
             Usuario.inicializarUsuarioActual(this.user);
-            MenuPpal menu = new MenuPpal(this.user, this.login);
+            MenuPpal menu = new MenuPpal(this.user);
             menu.ShowDialog();
             this.Close();
         }
@@ -98,7 +96,7 @@ namespace PalcoNet.Registro_de_usuario
 
         private void ConfiguracionInicial_FormClosing(object sender, FormClosingEventArgs e)
         {
-            login.Close();
+           
         }
 
         private void ConfiguracionInicial_Load(object sender, EventArgs e)

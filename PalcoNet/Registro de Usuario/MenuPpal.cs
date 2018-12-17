@@ -20,14 +20,12 @@ namespace PalcoNet.Registro_de_Usuario
     public partial class MenuPpal : MaterialForm
     {
         Usuario user;
-        Log login;
         private List<Funcionalidad> funcionalidadesPorRol;
 
-        public MenuPpal(Usuario user,Log login)
+        public MenuPpal(Usuario user)
         {
             InitializeComponent();
             this.user = user;
-            this.login = login;
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
@@ -109,9 +107,7 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void logout_Click(object sender, EventArgs e)
         {
-            
             this.Hide();
-            login.Show();
             this.Close();
         }
         
