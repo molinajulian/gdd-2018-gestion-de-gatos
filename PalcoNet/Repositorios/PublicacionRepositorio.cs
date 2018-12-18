@@ -52,35 +52,34 @@ namespace PalcoNet.Repositorios
             }
         }
 
-        public static Publicacion GetPublicacionById(int id)
-        {
-            var publicacion = new Publicacion();
-            var parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@id", id));
-            var query = DataBase.ejecutarFuncion("Select top 1 * from publicacion r where r.Public_cod = @id", parametros);
-            SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read())
-            {
-                publicacion = new Publicacion()
-                {
-                    Codigo = (int)reader.GetValue(Ordinales.Publicacion["publ_codigo"]),
-                    Descripcion = reader.GetValue(Ordinales.Publicacion["publ_descripcion"]).ToString(),
-                    FechaPublicacion = (DateTime)reader.GetValue(Ordinales.Publicacion["publ_fechaVencimiento"])
 
-                };
-                publicacion.Estado = EstadoPublicacionRepositorio.ReadEstadoPublicacionFromDb(publicacion.Codigo);
-                publicacion.Espectaculos = EspectaculoRepositorio.ReadEspectaculoFromDb(publicacion.Codigo);
-                publicacion.Grado = GradoRepositorio.ReadGradoFromDb(publicacion.Codigo);
-            }
-            return publicacion;
-        }
-
-        public static List<PublicacionPuntual> getPublicaciones(string tituloPub, DateTime fechaPub)
+        public static PublicacionPuntual GetPublicacionById(int id)
         {
             Dictionary<string, int> camposPublicacion = Ordinales.Publicacion;
+            SqlDataReader lector = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Publicaciones"
+                                                          + " WHERE Public_Cod = " + id, "T", new List<SqlParameter>());
+            while (lector.HasRows && lector.Read())
+            {
+                return new PublicacionPuntual(
+                    Convert.ToInt32(lector[camposPublicacion["codigo"]]),
+                    lector[camposPublicacion["descripcion"]].ToString(),
+                    GradoRepositorio.ReadGradoFromDb(camposPublicacion["gradoCodigo"]),
+                    EstadoPublicacionRepositorio.ReadEstadoPublicacionFromDb(camposPublicacion["estadoId"]),
+                    EspectaculoRepositorio.ReadEspectaculoFromDb(Convert.ToInt32(lector[camposPublicacion["especCodigo"]])),
+                    UsuarioRepositorio.buscarUsuario(lector[camposPublicacion["editor"]].ToString()));
+            }
+            return null;
+        }
+
+        public static List<PublicacionPuntual> getPublicacionesEditables(string tituloPub)
+        {
+            Dictionary<string, int> camposPublicacion = Ordinales.Publicacion;
+            EstadoPublicacion estadoBorrador = EstadoPublicacionRepositorio.getEstados()
+                .Find(publicacion => publicacion.Descripcion.Equals("BORRADOR"));
             List<PublicacionPuntual> publicaciones = new List<PublicacionPuntual>();
             SqlDataReader lector = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Publicaciones"
-                                        +" WHERE Public_Desc LIKE '%" + tituloPub + "%'", "T", new List<SqlParameter>());
+                                                          + " WHERE Public_Desc LIKE '%" + tituloPub + "%'" 
+                                                          + " AND Public_Estado_Id = " + estadoBorrador.Id, "T", new List<SqlParameter>());
             while (lector.HasRows && lector.Read())
             {
                 publicaciones.Add(new PublicacionPuntual(
@@ -88,9 +87,16 @@ namespace PalcoNet.Repositorios
                     lector[camposPublicacion["descripcion"]].ToString(),
                     GradoRepositorio.ReadGradoFromDb(camposPublicacion["gradoCodigo"]),
                     EstadoPublicacionRepositorio.ReadEstadoPublicacionFromDb(camposPublicacion["estadoId"]),
-                    EspectaculoRepositorio.getEspectaculoDePublicacion(Convert.ToInt32(lector[camposPublicacion["codigo"]]))));
+                    EspectaculoRepositorio.ReadEspectaculoFromDb(Convert.ToInt32(lector[camposPublicacion["codigo"]])),
+                    UsuarioRepositorio.buscarUsuario(lector[camposPublicacion["editor"]].ToString())));
             }
             return publicaciones;
+        }
+
+        public static void actualizar(PublicacionPuntual publicacionPuntual)
+        {
+            
+
         }
     }
 }

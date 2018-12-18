@@ -12,16 +12,23 @@ namespace PalcoNet.Modelo
         public Rubro Rubro { get; set; }
         public Empresa Empresa { get; set; }
         public DateTime FechaOcurrencia;
+        public Domicilio Domicilio { get; set; }
+        public Boolean Finalizado { get; set; }
 
-        public Espectaculo(string descripcion,
-                            DateTime fechaOcurrencia, DateTime fechaVencimiento, Rubro rubro, Empresa empresa)
+        public Espectaculo(int id, string descripcion, 
+                           DateTime fechaOcurrencia, DateTime fechaVencimiento,
+                           Rubro rubro, Empresa empresa,
+                           Domicilio domicilio, Boolean finalizado)
         {
+            Id = id;
             Ubicaciones = new List<Ubicacion>();
             Descripcion = descripcion;
             FechaOcurrencia = fechaOcurrencia;
             FechaVencimiento = fechaVencimiento;
             Rubro = rubro;
             Empresa = empresa;
+            Domicilio = domicilio;
+            Finalizado = finalizado;
         }
     }
 }

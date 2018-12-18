@@ -31,9 +31,10 @@
             this.lbl_nombre_rol = new System.Windows.Forms.Label();
             this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.group_alta_rol = new System.Windows.Forms.GroupBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.dtpRealizacion = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
-            this.dtpFechaVencimiento = new System.Windows.Forms.DateTimePicker();
+            this.dtpVencimiento = new System.Windows.Forms.DateTimePicker();
             this.txtEspectTitulo = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -70,9 +71,10 @@
             // group_alta_rol
             // 
             this.group_alta_rol.BackColor = System.Drawing.Color.White;
-            this.group_alta_rol.Controls.Add(this.button3);
+            this.group_alta_rol.Controls.Add(this.label1);
+            this.group_alta_rol.Controls.Add(this.dtpRealizacion);
             this.group_alta_rol.Controls.Add(this.label4);
-            this.group_alta_rol.Controls.Add(this.dtpFechaVencimiento);
+            this.group_alta_rol.Controls.Add(this.dtpVencimiento);
             this.group_alta_rol.Controls.Add(this.txtEspectTitulo);
             this.group_alta_rol.Controls.Add(this.label3);
             this.group_alta_rol.Controls.Add(this.label2);
@@ -96,32 +98,37 @@
             this.group_alta_rol.Text = "Datos de Publicacion";
             this.group_alta_rol.Enter += new System.EventHandler(this.group_alta_rol_Enter);
             // 
-            // button3
+            // label1
             // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(170, 201);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(198, 39);
-            this.button3.TabIndex = 68;
-            this.button3.Text = "Editar Fechas";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(78, 206);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(105, 13);
+            this.label1.TabIndex = 69;
+            this.label1.Text = "Fecha de realizacion";
+            // 
+            // dtpRealizacion
+            // 
+            this.dtpRealizacion.Location = new System.Drawing.Point(220, 200);
+            this.dtpRealizacion.Name = "dtpRealizacion";
+            this.dtpRealizacion.Size = new System.Drawing.Size(213, 20);
+            this.dtpRealizacion.TabIndex = 68;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(78, 269);
+            this.label4.Location = new System.Drawing.Point(78, 244);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(112, 13);
             this.label4.TabIndex = 67;
             this.label4.Text = "Fecha de vencimiento";
             // 
-            // dtpFechaVencimiento
+            // dtpVencimiento
             // 
-            this.dtpFechaVencimiento.Location = new System.Drawing.Point(196, 263);
-            this.dtpFechaVencimiento.Name = "dtpFechaVencimiento";
-            this.dtpFechaVencimiento.Size = new System.Drawing.Size(213, 20);
-            this.dtpFechaVencimiento.TabIndex = 66;
+            this.dtpVencimiento.Location = new System.Drawing.Point(220, 238);
+            this.dtpVencimiento.Name = "dtpVencimiento";
+            this.dtpVencimiento.Size = new System.Drawing.Size(213, 20);
+            this.dtpVencimiento.TabIndex = 66;
             // 
             // txtEspectTitulo
             // 
@@ -284,7 +291,8 @@
         private System.Windows.Forms.TextBox txtEspectTitulo;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DateTimePicker dtpFechaVencimiento;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.DateTimePicker dtpVencimiento;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DateTimePicker dtpRealizacion;
     }
 }

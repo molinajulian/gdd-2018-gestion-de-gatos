@@ -79,11 +79,12 @@ namespace PalcoNet.AbmPublicaciones
 
         public Publicacion getPublicacionDeUi()
         {
-            return new Publicacion(txtDescripcion.Text,
+            return new Publicacion(-1, txtDescripcion.Text,
                                     (Grado) cmbGrado.SelectedItem,
                                     (EstadoPublicacion) cmbEstado.SelectedItem,
                                     getEspectaculosPorFechaElegida(),
-                                    sectoresRegistrados);
+                                    sectoresRegistrados,
+                                    UsuarioRepositorio.buscarUsuario(txtUsername.Text));
         }
 
         private List<Espectaculo> getEspectaculosPorFechaElegida()
@@ -92,11 +93,14 @@ namespace PalcoNet.AbmPublicaciones
             foreach (DateTime fechaElegida in fechasElegidas)
             {
                 espectaculos.Add(new Espectaculo(
+                    -1,
                     txtEspectTitulo.Text,
                     fechaElegida,
                     dtpFechaVencimiento.Value,
                     (Rubro)cmbRubro.SelectedItem,
-                    EmpresasRepositorio.GetEmpresaByUserId(Usuario.Actual.id)));
+                    EmpresasRepositorio.GetEmpresaByUserId(Usuario.Actual.id),
+                    domicilioElegido,
+                    false));
             }
             return espectaculos;
         }
