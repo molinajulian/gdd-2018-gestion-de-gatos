@@ -21,13 +21,11 @@ namespace PalcoNet.Registro_de_usuario
     {
         Usuario user;
         private List<Rol> rolesDeUsuario;
-        Log login;
         string errorAlCambiar = "Ha ocurrido un error al cambiar la contraseña";
-        public CambiarContraseña(Usuario user, Log login)
+        public CambiarContraseña(Usuario user)
         {
             InitializeComponent();
             this.user = user;
-            this.login=login;
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
@@ -36,7 +34,7 @@ namespace PalcoNet.Registro_de_usuario
         private void avanzarAMenuPpal()
         {
             this.Hide();
-            MenuPpal menu = new MenuPpal(this.user, this.login);
+            MenuPpal menu = new MenuPpal(this.user);
             menu.ShowDialog();
             this.Close();
         }
@@ -67,7 +65,8 @@ namespace PalcoNet.Registro_de_usuario
                         {
                             UsuarioRepositorio.cambiarContraseña(user.id, txtContraseña.Text);
                             this.Hide();
-                            new ConfiguracionInicial(user, login).Show();
+                            ConfiguracionInicial ci = new ConfiguracionInicial(user);
+                            if (!ci.IsDisposed) ci.Show();
                         }
                         catch (SqlException ex)
                         {
@@ -85,18 +84,19 @@ namespace PalcoNet.Registro_de_usuario
         private void txtContraseña_Click(object sender, EventArgs e)
         {
             txtContraseña.Clear();
-            txtContraseña.UseSystemPasswordChar = true;
         }
 
         private void txtRepetirContraseña_Click(object sender, EventArgs e)
         {
             txtRepetirContraseña.Clear();
-            txtRepetirContraseña.UseSystemPasswordChar = true;
         }
-
-        private void CambiarContraseña_Load(object sender, EventArgs e)
+        private void textContrasena_KeyPress(object sender, KeyPressEventArgs e)
         {
-
+            txtContraseña.UseSystemPasswordChar = true;
+        }
+        private void txtRepetirContraseña_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            txtRepetirContraseña.UseSystemPasswordChar = true;
         }
     }
 }
