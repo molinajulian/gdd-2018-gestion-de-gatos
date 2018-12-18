@@ -13,7 +13,7 @@ namespace PalcoNet.AbmPublicaciones
     {
         List<Sector> sectoresRegistrados = new List<Sector>();
         private Domicilio domicilioElegido = null;
-        private List<DateTime> fechasElegidas = new List<DateTime>();
+        private DateTime fechaElegidas;
         private PublicacionPuntual PublicacionPuntual;
         public EditarPublicacion(PublicacionPuntual publicacionPuntual)
         {
@@ -23,43 +23,61 @@ namespace PalcoNet.AbmPublicaciones
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-
             PublicacionPuntual = publicacionPuntual;
-            inicializarGrados();
-            inicializarRubros();
-            inicializarEstados();
+            inicializarUi();
         }
 
-        private void inicializarEstados()
+        private void inicializarUi()
         {
-            foreach (EstadoPublicacion estadoPublicacion in EstadoPublicacionRepositorio.getEstados())
+            txtDescripcion.Text = PublicacionPuntual.Descripcion;
+            txtEspectTitulo.Text = PublicacionPuntual.Espectaculo.Descripcion;
+            txtUsername.Text = PublicacionPuntual.Editor.username;
+            dtpRealizacion.Value = PublicacionPuntual.Espectaculo.FechaOcurrencia;
+            dtpVencimiento.Value = PublicacionPuntual.Espectaculo.FechaVencimiento;
+            inicializarGrados(PublicacionPuntual.Grado);
+            inicializarRubros(PublicacionPuntual.Espectaculo.Rubro);
+            inicializarEstados(PublicacionPuntual.Estado);
+        }
+
+        private void inicializarEstados(EstadoPublicacion estadoPublicacion)
+        {
+            List<EstadoPublicacion> estados = EstadoPublicacionRepositorio.getEstados();
+            EstadoPublicacion estadoInicial = estados.Find(estado => estado.Id == estadoPublicacion.Id);
+            foreach (EstadoPublicacion estado in estados)
             {
                 if (estadoPublicacion.Editable)
                 {
-                    cmbEstado.Items.Add(estadoPublicacion);
+                    cmbEstado.Items.Add(estado);
                 }
             }
             cmbEstado.DisplayMember = "Descripcion";
             cmbEstado.ValueMember = "Id";
+            cmbEstado.SelectedItem = estadoInicial;
         }
-        private void inicializarRubros()
+        private void inicializarRubros(Rubro rubroPublicacion)
         {
-            foreach (Rubro rubro in RubroRepositorio.getRubros())
+            List<Rubro> rubros = RubroRepositorio.getRubros();
+            Rubro rubroInicial = rubros.Find(rubro => rubro.Codigo == rubroPublicacion.Codigo);
+            foreach (Rubro rubro in rubros)
             {
                 cmbRubro.Items.Add(rubro);
             }
             cmbRubro.DisplayMember = "Descripcion";
             cmbRubro.ValueMember = "Codigo";
+            cmbRubro.SelectedItem = rubroInicial;
         }
 
-        private void inicializarGrados()
+        private void inicializarGrados(Grado gradoPublicacion)
         {
-            foreach (Grado grado in GradoRepositorio.getGrados())
+            List<Grado> grados = GradoRepositorio.getGrados();
+            Grado gradoInicial = grados.Find(grado => grado.Id == gradoPublicacion.Id);
+            foreach (Grado grado in grados)
             {
                 cmbGrado.Items.Add(grado);
             }
             cmbGrado.DisplayMember = "Descripcion";
             cmbGrado.ValueMember = "Id";
+            cmbGrado.SelectedItem = gradoInicial;
         }
 
         private void btn_volver_Click(object sender, EventArgs e)
@@ -75,32 +93,33 @@ namespace PalcoNet.AbmPublicaciones
 
         private void button1_Click(object sender, EventArgs e)
         {
-            /*ListaSector altaSector = new ListaSector(UbicacionRepositorio.getSectores(PublicacionPuntual.Espectaculo));
-            altaSector.ShowDialog();*/
+            ListaSector altaSector = new ListaSector(PublicacionPuntual.getSectores());
+            altaSector.ShowDialog();
         }
 
-        public Publicacion getPublicacionDeUi()
+        public PublicacionPuntual getPublicacionDeUi()
         {
-            return new Publicacion(txtDescripcion.Text,
+            return new PublicacionPuntual(
+                                    PublicacionPuntual.Codigo,
+                                    txtDescripcion.Text,
                                     (Grado) cmbGrado.SelectedItem,
                                     (EstadoPublicacion) cmbEstado.SelectedItem,
-                                    getEspectaculosPorFechaElegida(),
+                                    getEspectaculoDeUi(PublicacionPuntual.Espectaculo),
+                                    UsuarioRepositorio.buscarUsuario(txtUsername.Text),
                                     sectoresRegistrados);
         }
 
-        private List<Espectaculo> getEspectaculosPorFechaElegida()
+        private Espectaculo getEspectaculoDeUi(Espectaculo espectaculoOriginal)
         {
-            List<Espectaculo> espectaculos = new List<Espectaculo>();
-            foreach (DateTime fechaElegida in fechasElegidas)
-            {
-                espectaculos.Add(new Espectaculo(
-                    txtEspectTitulo.Text,
-                    fechaElegida,
-                    dtpFechaVencimiento.Value,
-                    (Rubro)cmbRubro.SelectedItem,
-                    EmpresasRepositorio.GetEmpresaByUserId(Usuario.Actual.id)));
-            }
-            return espectaculos;
+            return new Espectaculo(
+                        espectaculoOriginal.Id,
+                        txtEspectTitulo.Text,
+                        dtpRealizacion.Value,
+                        dtpVencimiento.Value,
+                        (Rubro)cmbRubro.SelectedItem,
+                        espectaculoOriginal.Empresa,
+                        domicilioElegido,
+                        false);
         }
 
         private void btn_alta_publicacion_Click(object sender, EventArgs e)
@@ -109,7 +128,7 @@ namespace PalcoNet.AbmPublicaciones
             {
                 return;
             }
-            PublicacionRepositorio.darAltaPublicacion(getPublicacionDeUi());
+            PublicacionRepositorio.actualizarPublicacionPuntual(getPublicacionDeUi());
         }
 
         private bool validarIngresos()
@@ -117,27 +136,13 @@ namespace PalcoNet.AbmPublicaciones
             if(camposIngresadosInsuficientes()){
                 return false;
             }
-            List<DateTime> fechasAComparar = new List<DateTime>(fechasElegidas);
-            fechasAComparar.Add(dtpFechaVencimiento.Value);
-
-            if (!dtpFechaVencimiento.Value.Equals(fechaMaxima(fechasAComparar)))
+            if (!(dtpVencimiento.Value.CompareTo(dtpRealizacion) > 1))
             {
                 MessageBox.Show(
                     "La fecha de vencimiento de la publicacion es anterior a alguna de las funciones planificadas.");
                 return false;
             }
             return true;
-        }
-
-        private DateTime fechaMaxima(List<DateTime> fechasAComparar)
-        {
-            DateTime max = DateTime.MinValue; // Start with the lowest value possible...
-            foreach (DateTime fecha in fechasAComparar)
-            {
-                if (DateTime.Compare(fecha, max) == 1)
-                    max = fecha;
-            }
-            return max;
         }
 
         private bool camposIngresadosInsuficientes()
@@ -147,14 +152,8 @@ namespace PalcoNet.AbmPublicaciones
 
         private void button2_Click(object sender, EventArgs e)
         {
-            ListadoDomicilios listadoDomicilios = new ListadoDomicilios(domicilioElegido);
+            ListadoDomicilios listadoDomicilios = new ListadoDomicilios(PublicacionPuntual.Espectaculo.Domicilio);
             listadoDomicilios.ShowDialog();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            AltaFechas altaFechas = new AltaFechas(fechasElegidas);
-            altaFechas.ShowDialog();
         }
     }
 }

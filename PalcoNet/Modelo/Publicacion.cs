@@ -16,35 +16,27 @@ namespace PalcoNet.Modelo
         public EstadoPublicacion Estado { get; set; }
         public List<Espectaculo> Espectaculos { get; set; }
         public List<Sector> Sectores { get; set; }
-
+        public Usuario Editor { get; set; }
         public Publicacion()
         {
 
         }
-        public Publicacion(int codigo, string descripcion, Grado grado, EstadoPublicacion estado, List<Espectaculo> espectaculos)
+        public Publicacion(int codigo, string descripcion, Grado grado, 
+                           EstadoPublicacion estado, 
+                           List<Espectaculo> espectaculos, List<Sector> sectoresRegistrados, Usuario editor)
         {
             Codigo = codigo;
             Descripcion = descripcion;
             Grado = grado;
             Estado = estado;
             Espectaculos = espectaculos;
-            Sectores = getSectores();
+            Sectores = sectoresRegistrados;
+            Editor = editor;
         }
 
         private List<Sector> getSectores()
         {
             return SectoresRepositorio.getSectoresDeEspectaculo(Espectaculos.First());
-        }
-
-        public Publicacion(string descripcion, Grado grado,
-            EstadoPublicacion estado, List<Espectaculo> espectaculos, List<Sector> sectores)
-        {
-            Descripcion = descripcion;
-            FechaPublicacion = DateTime.Now;
-            Grado = grado;
-            Estado = estado;
-            Espectaculos = espectaculos;
-            Sectores = sectores;
         }
     }
 }

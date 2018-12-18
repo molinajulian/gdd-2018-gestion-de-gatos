@@ -36,6 +36,16 @@ namespace PalcoNet.Repositorios
             return Usuario.buildUsuario(DataBase.GetDataReader("[dbo].[sp_buscar_usuario]", "SP", parametros));
         }
 
+        public static Usuario buscarUsuario(string username)
+        {
+            return Usuario.buildUsuario(
+                DataBase.GetDataReader(
+                    "SELECT * FROM GESTION_DE_GATOS.Usuarios WHERE [Usuario_Username] = " + username,
+                    "T",
+                    new List<SqlParameter>()
+                    )
+                );
+        }
 
         public class LoginException : Exception {
             public LoginException(): base() { }

@@ -119,14 +119,17 @@ namespace PalcoNet.Modelo
                                                     {"descripcion",1}
                                                     
                                                     };
-       public static Dictionary<string, int> Publicacion = new Dictionary<string, int> 
+
+        public static Dictionary<string, int> Publicacion = new Dictionary<string, int> 
                                                     {
                                                     {"codigo",0},
                                                     {"descripcion",1},
                                                     {"fechaCreacion",2},
                                                     {"gradoCodigo",3},
                                                     {"especCodigo",4},
-                                                    {"estadoId",5}
+                                                    {"factNum",5},
+                                                    {"estadoId",6},
+                                                    {"editor",7},
                                                     };
        public static Dictionary<string, int> Ubicacion = new Dictionary<string, int> 
                                                     {
@@ -180,11 +183,11 @@ namespace PalcoNet.Modelo
                                                     {"id",0},
                                                     {"descripcion",1 },
                                                     {"fecha",2},
-                                                    {"hora",3},
-                                                    {"fechaVencimiento",4},
-                                                    {"idRubro",5},
-                                                    {"idEmpresa",6},
-                                                    {"idDomicilio",7}
+                                                    {"fechaVencimiento",3},
+                                                    {"idRubro",4},
+                                                    {"idEmpresa",5},
+                                                    {"idDomicilio",6},
+                                                    {"estado",7}
                                                     };
         public static Dictionary<string, int> Premio = new Dictionary<string, int>
                                                     {
