@@ -12,19 +12,33 @@ namespace PalcoNet.Modelo
         public Grado Grado { get; set; }
         public EstadoPublicacion Estado { get; set; }
         public Espectaculo Espectaculo { get; set; }
-        public List<Sector> Sectores { get; set; }
+        private List<Sector> Sectores { get; set; }
+        public Usuario Editor { get; set; }
+        public Boolean Finalizada { get; set; }
+
         public PublicacionPuntual(int codigo, string descripcion, Grado grado, 
-                                    EstadoPublicacion estado, Espectaculo espectaculo)
+                                    EstadoPublicacion estado, Espectaculo espectaculo,
+                                    Usuario editor, List<Sector> sectores=null)
         {
             Codigo = codigo;
             Descripcion = descripcion;
             Grado = grado;
             Estado = estado;
             Espectaculo = espectaculo;
-            Sectores = getSectores();
+            Editor = editor;
+            Sectores = sectores;
         }
 
-        private List<Sector> getSectores()
+        public List<Sector> getSectores()
+        {
+            if (this.Sectores == null)
+            {
+                Sectores = getSectoresDeBDD();
+            }
+            return Sectores;
+        }
+
+        private List<Sector> getSectoresDeBDD()
         {
             return SectoresRepositorio.getSectoresDeEspectaculo(Espectaculo);
         }

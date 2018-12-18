@@ -125,5 +125,10 @@ namespace PalcoNet.AbmCliente
         {
 
         }
+
+        private void data_clientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

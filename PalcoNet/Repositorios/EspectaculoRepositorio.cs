@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PalcoNet.Registro_de_usuario;
 
 namespace PalcoNet.Repositorios
 {
@@ -46,30 +47,32 @@ namespace PalcoNet.Repositorios
 
         }
 
-        public static List<Espectaculo> ReadEspectaculoFromDb(int id)
+        public static Espectaculo ReadEspectaculoFromDb(int especId)
         {
-            /*
-            var espectaculo = new Espectaculo();
-            var parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@id", id));
-            var query = DataBase.ejecutarFuncion("Select top 1 * from espectaculo r where r.Espectaculo_Cod = @id", parametros);
-            SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read())
+            SqlDataReader lector = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Espectaculos WHERE Espec_Cod = " + especId, "T", new List<SqlParameter>());
+            Dictionary<string, int> camposEspec = Ordinales.Espectaculo;
+            if (lector.HasRows && lector.Read())
             {
-                espectaculo = new Espectaculo()
-                {
-                    Id = (int)reader.GetValue(Ordinales.Espectaculo["codigo"]),
-                    Descripcion = reader.GetValue(Ordinales.Espectaculo["descripcion"]).ToString(),
-                    Hora = (TimeSpan)reader.GetValue(Ordinales.Espectaculo["descripcion"]),
-                    Empresa= EmpresasRepositorio.GetempresaByCuit(reader.GetValue(Ordinales.Espectaculo["idEmpresa"]).ToString()).First(),
-                    Rubro= RubroRepositorio.ReadRubroFromDb((int)reader.GetValue(Ordinales.Espectaculo["idRubro"])),
-                    Ubicaciones=UbicacionRepositorio.ReadUbicacionesFromDb(espectaculo.Id)
-
-                };
+                return new Espectaculo(
+                    Convert.ToInt32(lector[camposEspec["id"]]),
+                    lector[camposEspec["descripcion"]].ToString(),
+                    Convert.ToDateTime(lector[camposEspec["fecha"]]),
+                    Convert.ToDateTime(lector[camposEspec["fechaVencimiento"]]),
+                    RubroRepositorio.ReadRubroFromDb(Convert.ToInt32(lector[camposEspec["idRubro"]])),
+                    EmpresasRepositorio.getEmpresa(lector[camposEspec["idEmpresa"]].ToString()),
+                    DomiciliosRepositorio.getDomicilio(lector[camposEspec["idDomicilio"]].ToString()),
+                    Convert.ToBoolean(lector[camposEspec["estado"]]));
 
             }
-            return espectaculo;*/
-            return null;
+            throw new EspectaculoNoEncontradoException(especId);
+        }
+
+        public class EspectaculoNoEncontradoException : Exception
+        {
+            public EspectaculoNoEncontradoException(int id) : base("No se encontro un espectaculo con el id " + id)
+            {
+
+            }
         }
 
         public static void crearTodos(List<Espectaculo> espectaculos)
@@ -83,6 +86,7 @@ namespace PalcoNet.Repositorios
                 parametros.Add(new SqlParameter("@espec_rubro_codigo", espectaculo.Rubro.Codigo));
                 parametros.Add(new SqlParameter("@espec_emp_cuit", espectaculo.Empresa.Cuit));
                 parametros.Add(new SqlParameter("@espec_dom_id", espectaculo.Empresa.Domicilio.Id));
+                parametros.Add(new SqlParameter("@espec_estado", espectaculo.Finalizado ? 1 : 0));
                 SqlParameter output = new SqlParameter("@espec_cod", 0);
                 output.Direction = ParameterDirection.Output;
                 parametros.Add(output);
@@ -91,18 +95,18 @@ namespace PalcoNet.Repositorios
             }
         }
 
-       /* public static Espectaculo getEspectaculoDePublicacion(int publiId)
+        public static void actualizar(Espectaculo espectaculo)
         {
-            //Obtiene el espectaculo para la publicacion elegida
-           /List<SqlParameter> parametros = new List<SqlParameter>();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@espec_cod", espectaculo.Id));
             parametros.Add(new SqlParameter("@espec_desc", espectaculo.Descripcion));
-            SqlCommand sqlCommand = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Espectaculos" +
-                                                           " JOIN ", "T", parametros);
-        }*/
-
-        internal static Espectaculo getEspectaculoDePublicacion(int p)
-        {
-            throw new NotImplementedException();
+            parametros.Add(new SqlParameter("@espec_fecha", espectaculo.FechaOcurrencia));
+            parametros.Add(new SqlParameter("@espec_fecha_vencimiento", espectaculo.FechaVencimiento));
+            parametros.Add(new SqlParameter("@espec_rubro_codigo", espectaculo.Rubro.Codigo));
+            parametros.Add(new SqlParameter("@espec_emp_cuit", espectaculo.Empresa.Cuit));
+            parametros.Add(new SqlParameter("@espec_dom_id", espectaculo.Empresa.Domicilio.Id));
+            parametros.Add(new SqlParameter("@espec_estado", espectaculo.Finalizado ? 1 : 0));
+            DataBase.ejecutarSP("[dbo].[sp_actualizar_espectaculo]", parametros);
         }
     }
 }

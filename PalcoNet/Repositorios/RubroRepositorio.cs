@@ -21,5 +21,18 @@ namespace PalcoNet.Repositorios
             lector.Close();
             return rubros;
         }
+
+        public static Rubro ReadRubroFromDb(int idRubro)
+        {
+            SqlDataReader lector = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Rubros WHERE Rubro_Cod = " + idRubro, "T", new List<SqlParameter>());
+            Dictionary<string, int> camposRubro = Ordinales.Rubro;
+            if (lector.HasRows && lector.Read())
+            {
+                return new Rubro(
+                    Convert.ToInt32(lector[camposRubro["codigo"]]),
+                    lector[camposRubro["descripcion"]].ToString());
+            }
+            return null;
+        }
     }
 }

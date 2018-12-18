@@ -1036,7 +1036,29 @@ AS BEGIN
 	else
 		INSERT INTO GESTION_DE_GATOS.Grados (Grado_Comision,Grado_Descr) VALUES (round(@grado,2),@descripcion)
 END 
-go 
+go
+
+GO
+IF (OBJECT_ID('sp_modificar_grado', 'P') IS NOT NULL) DROP PROCEDURE sp_modificar_grado 
+GO
+CREATE PROCEDURE sp_modificar_grado(@id int,@comision float,@descripcion varchar(50),@habilitado bit)
+AS BEGIN
+	declare @cantidad int
+	set @cantidad = (SELECT isnull(COUNT(*),0) FROM GESTION_DE_GATOS.Grados WHERE (@descripcion = Grado_Descr or @comision = Grado_Comision) and Grado_Cod <> @id)
+	if @cantidad > 0
+		raiserror('Ya existe un grado con esa descripcion y/o esa comision',16,0)
+	else
+		UPDATE GESTION_DE_GATOS.Grados SET Grado_Comision = @comision, Grado_Descr = @descripcion, Grado_Habilitado = @habilitado WHERE Grado_Cod = @id
+END 
+go
+
+IF (OBJECT_ID('sp_cambiar_estado_grado', 'P') IS NOT NULL) DROP PROCEDURE sp_cambiar_estado_grado
+GO
+CREATE procedure dbo.sp_cambiar_estado_grado (@id int,@estado_final bit)
+AS BEGIN
+	UPDATE GESTION_DE_GATOS.Grados SET Grado_Habilitado = @estado_final WHERE Grado_Cod = @id
+END
+GO 
 /*go
 USE GD2C2018;
 ALTER TABLE [GESTION_DE_GATOS].[Rol_Por_Usuario] DROP CONSTRAINT FK_Usuario_Id,FK_Rol_Id

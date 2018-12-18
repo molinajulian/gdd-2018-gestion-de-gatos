@@ -35,19 +35,18 @@ namespace PalcoNet.AbmPublicaciones
             else
             {
                 new EditarPublicacion(publicaciones[data_publicaciones.SelectedRows[0].Index]).Show();
-                this.Hide();
             }
         }
 
         private void btn_buscar_Click(object sender, EventArgs e)
         {
-           // actualizarListado(PublicacionRepositorio.getPublicaciones(txt_titulo_pub.Text,dtpFechaPub.Value));
+           actualizarListado(PublicacionRepositorio.getPublicacionesEditables(txt_titulo_pub.Text));
         }
 
-        private void actualizarListado(List<Publicacion> publicaciones)
+        private void actualizarListado(List<PublicacionPuntual> publicaciones)
         {
             tabla_publicaciones.Rows.Clear();
-            foreach (Publicacion publicacion in publicaciones)
+            foreach (PublicacionPuntual publicacion in publicaciones)
             {
                 String[] publicacionRow =
                 {

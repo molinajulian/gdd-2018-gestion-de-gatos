@@ -16,71 +16,54 @@ namespace PalcoNet.Repositorios
         {
             EspectaculoRepositorio.crearTodos(publicacion.Espectaculos);
             crearPublicacion(publicacion);
-            crearUbicacionesPorEspectaculo(publicacion.Sectores, publicacion.Espectaculos);
+            UbicacionRepositorio.crearUbicacionesPorEspectaculo(publicacion.Sectores, publicacion.Espectaculos);
             MessageBox.Show("Publicacion generada exitosamente", "Alta Publicacion", MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
         }
 
-        public static void crearUbicacionesPorEspectaculo(List<Sector> sectores, List<Espectaculo> espectaculos)
-        {
-            List<SqlParameter> parametros = new List<SqlParameter>();
-            foreach (Espectaculo espectaculo in espectaculos)
-            {
-                foreach (Sector sector in sectores)
-                {
-                    parametros.Clear();
-                    parametros.Add(new SqlParameter("@ubic_tipo", sector.TipoUbicacion.Id));
-                    parametros.Add(new SqlParameter("@ubic_precio", sector.Precio));
-                    parametros.Add(new SqlParameter("@ubic_espec_codigo", espectaculo.Id));
-                    parametros.Add(new SqlParameter("@cnt_filas", sector.CantidadFilas));
-                    parametros.Add(new SqlParameter("@cnt_asientos", sector.CantidadAsientos));
-                    DataBase.ejecutarSP("sp_crear_ubicaciones", parametros);
-                }
-            }
-        }
-
         public static void crearPublicacion(Publicacion publicacion)
         {
+            List<SqlParameter> parametros = new List<SqlParameter>();
+
             foreach (Espectaculo espectaculo in publicacion.Espectaculos)
             {
-                List<SqlParameter> parametros = new List<SqlParameter>();
                 parametros.Add(new SqlParameter("@pub_desc", publicacion.Descripcion));
                 parametros.Add(new SqlParameter("@pub_grado_cod", publicacion.Grado.Id));
                 parametros.Add(new SqlParameter("@pub_fecha_creacion", publicacion.FechaPublicacion));
                 parametros.Add(new SqlParameter("@espec_cod", espectaculo.Id));
                 DataBase.ejecutarSP("sp_crear_publicacion", parametros);
+                parametros.Clear();
             }
         }
 
-        public static Publicacion GetPublicacionById(int id)
-        {
-            var publicacion = new Publicacion();
-            var parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@id", id));
-            var query = DataBase.ejecutarFuncion("Select top 1 * from publicacion r where r.Public_cod = @id", parametros);
-            SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read())
-            {
-                publicacion = new Publicacion()
-                {
-                    Codigo = (int)reader.GetValue(Ordinales.Publicacion["publ_codigo"]),
-                    Descripcion = reader.GetValue(Ordinales.Publicacion["publ_descripcion"]).ToString(),
-                    FechaPublicacion = (DateTime)reader.GetValue(Ordinales.Publicacion["publ_fechaVencimiento"])
 
-                };
-                publicacion.Estado = EstadoPublicacionRepositorio.ReadEstadoPublicacionFromDb(publicacion.Codigo);
-                publicacion.Espectaculos = EspectaculoRepositorio.ReadEspectaculoFromDb(publicacion.Codigo);
-                publicacion.Grado = GradoRepositorio.ReadGradoFromDb(publicacion.Codigo);
-            }
-            return publicacion;
-        }
-
-        public static List<PublicacionPuntual> getPublicaciones(string tituloPub, DateTime fechaPub)
+        public static PublicacionPuntual GetPublicacionById(int id)
         {
             Dictionary<string, int> camposPublicacion = Ordinales.Publicacion;
+            SqlDataReader lector = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Publicaciones"
+                                                          + " WHERE Public_Cod = " + id, "T", new List<SqlParameter>());
+            while (lector.HasRows && lector.Read())
+            {
+                return new PublicacionPuntual(
+                    Convert.ToInt32(lector[camposPublicacion["codigo"]]),
+                    lector[camposPublicacion["descripcion"]].ToString(),
+                    GradoRepositorio.ReadGradoFromDb(camposPublicacion["gradoCodigo"]),
+                    EstadoPublicacionRepositorio.ReadEstadoPublicacionFromDb(camposPublicacion["estadoId"]),
+                    EspectaculoRepositorio.ReadEspectaculoFromDb(Convert.ToInt32(lector[camposPublicacion["especCodigo"]])),
+                    UsuarioRepositorio.buscarUsuario(lector[camposPublicacion["editor"]].ToString()));
+            }
+            return null;
+        }
+
+        public static List<PublicacionPuntual> getPublicacionesEditables(string tituloPub)
+        {
+            Dictionary<string, int> camposPublicacion = Ordinales.Publicacion;
+            EstadoPublicacion estadoBorrador = EstadoPublicacionRepositorio.getEstados()
+                .Find(publicacion => publicacion.Descripcion.Equals("BORRADOR"));
             List<PublicacionPuntual> publicaciones = new List<PublicacionPuntual>();
             SqlDataReader lector = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Publicaciones"
-                                        +" WHERE Public_Desc LIKE '%" + tituloPub + "%'", "T", new List<SqlParameter>());
+                                                          + " WHERE Public_Desc LIKE '%" + tituloPub + "%'" 
+                                                          + " AND Public_Estado_Id = " + estadoBorrador.Id, "T", new List<SqlParameter>());
             while (lector.HasRows && lector.Read())
             {
                 publicaciones.Add(new PublicacionPuntual(
@@ -88,9 +71,28 @@ namespace PalcoNet.Repositorios
                     lector[camposPublicacion["descripcion"]].ToString(),
                     GradoRepositorio.ReadGradoFromDb(camposPublicacion["gradoCodigo"]),
                     EstadoPublicacionRepositorio.ReadEstadoPublicacionFromDb(camposPublicacion["estadoId"]),
-                    EspectaculoRepositorio.getEspectaculoDePublicacion(Convert.ToInt32(lector[camposPublicacion["codigo"]]))));
+                    EspectaculoRepositorio.ReadEspectaculoFromDb(Convert.ToInt32(lector[camposPublicacion["codigo"]])),
+                    UsuarioRepositorio.buscarUsuario(lector[camposPublicacion["editor"]].ToString())));
             }
             return publicaciones;
+        }
+
+        public static void actualizarPublicacionPuntual(PublicacionPuntual publicacion)
+        {
+            actualizarPublicacion(publicacion);
+            EspectaculoRepositorio.actualizar(publicacion.Espectaculo);
+            UbicacionRepositorio.actualizarSectores(publicacion.getSectores(), publicacion.Espectaculo);
+        }
+
+        public static void actualizarPublicacion(PublicacionPuntual publicacion)
+        {
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@pub_desc", publicacion.Descripcion));
+            parametros.Add(new SqlParameter("@pub_grado_cod", publicacion.Grado.Id));
+            parametros.Add(new SqlParameter("@pub_estado", publicacion.Estado.Id));
+            parametros.Add(new SqlParameter("@pub_editor", publicacion.Editor.username));
+            DataBase.ejecutarSP("sp_actualizar_publicacion", parametros);
+
         }
     }
 }
