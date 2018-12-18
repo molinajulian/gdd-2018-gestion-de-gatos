@@ -15,6 +15,7 @@ namespace PalcoNet.Listado_Estadistico
     public partial class ListadoEstadistico : MaterialForm
 
     {
+        
         public ListadoEstadistico()
         {
             InitializeComponent();
