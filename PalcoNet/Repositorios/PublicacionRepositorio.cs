@@ -31,6 +31,7 @@ namespace PalcoNet.Repositorios
                 parametros.Add(new SqlParameter("@pub_grado_cod", publicacion.Grado.Id));
                 parametros.Add(new SqlParameter("@pub_fecha_creacion", publicacion.FechaPublicacion));
                 parametros.Add(new SqlParameter("@espec_cod", espectaculo.Id));
+                parametros.Add(new SqlParameter("@pub_estado_id", publicacion.Estado.Id));
                 parametros.Add(new SqlParameter("@editor_id", publicacion.Editor.id));
                 DataBase.ejecutarSP("sp_crear_publicacion", parametros);
                 parametros.Clear();
@@ -90,7 +91,7 @@ namespace PalcoNet.Repositorios
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@pub_desc", publicacion.Descripcion));
             parametros.Add(new SqlParameter("@pub_grado_cod", publicacion.Grado.Id));
-            parametros.Add(new SqlParameter("@pub_estado", publicacion.Estado.Id));
+            parametros.Add(new SqlParameter("@pub_estado_id", publicacion.Estado.Id));
             parametros.Add(new SqlParameter("@pub_editor", publicacion.Editor.id));
             DataBase.ejecutarSP("sp_actualizar_publicacion", parametros);
 

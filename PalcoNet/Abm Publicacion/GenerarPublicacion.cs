@@ -100,7 +100,7 @@ namespace PalcoNet.AbmPublicaciones
                     (Rubro)cmbRubro.SelectedItem,
                     EmpresasRepositorio.GetEmpresaByUserId(Usuario.Actual.id),
                     domicilioElegido,
-                    false));
+                    true));
             }
             return espectaculos;
         }

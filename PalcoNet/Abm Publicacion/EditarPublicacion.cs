@@ -119,7 +119,7 @@ namespace PalcoNet.AbmPublicaciones
                         (Rubro)cmbRubro.SelectedItem,
                         espectaculoOriginal.Empresa,
                         domicilioElegido,
-                        false);
+                        !chkEspecDeshabilitado.Checked);
         }
 
         private void btn_alta_publicacion_Click(object sender, EventArgs e)

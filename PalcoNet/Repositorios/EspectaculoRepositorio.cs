@@ -86,7 +86,7 @@ namespace PalcoNet.Repositorios
                 parametros.Add(new SqlParameter("@espec_rubro_codigo", espectaculo.Rubro.Codigo));
                 parametros.Add(new SqlParameter("@espec_emp_cuit", espectaculo.Empresa.Cuit));
                 parametros.Add(new SqlParameter("@espec_dom_id", espectaculo.Empresa.Domicilio.Id));
-                parametros.Add(new SqlParameter("@espec_estado", espectaculo.Finalizado ? 1 : 0));
+                parametros.Add(new SqlParameter("@espec_estado", espectaculo.Habilitado ? 1 : 0));
                 SqlParameter output = new SqlParameter("@espec_cod", 0);
                 output.Direction = ParameterDirection.Output;
                 parametros.Add(output);
@@ -105,7 +105,7 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@espec_rubro_codigo", espectaculo.Rubro.Codigo));
             parametros.Add(new SqlParameter("@espec_emp_cuit", espectaculo.Empresa.Cuit));
             parametros.Add(new SqlParameter("@espec_dom_id", espectaculo.Empresa.Domicilio.Id));
-            parametros.Add(new SqlParameter("@espec_estado", espectaculo.Finalizado ? 1 : 0));
+            parametros.Add(new SqlParameter("@espec_estado", espectaculo.Habilitado ? 1 : 0));
             DataBase.ejecutarSP("[dbo].[sp_actualizar_espectaculo]", parametros);
         }
     }
