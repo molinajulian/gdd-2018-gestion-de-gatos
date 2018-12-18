@@ -32,11 +32,10 @@
             this.tx_nombre_rol = new System.Windows.Forms.TextBox();
             this.btn_buscar = new System.Windows.Forms.Button();
             this.group_filtros_rol = new System.Windows.Forms.GroupBox();
-            this.data_listado_roles = new System.Windows.Forms.DataGridView();
-            this.btn_volver = new System.Windows.Forms.Button();
+            this.data_listado_grados = new System.Windows.Forms.DataGridView();
             this.btn_limpiar = new System.Windows.Forms.Button();
             this.group_filtros_rol.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.data_listado_roles)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.data_listado_grados)).BeginInit();
             this.SuspendLayout();
             // 
             // lbl_nombre_rol
@@ -78,26 +77,16 @@
             this.group_filtros_rol.TabStop = false;
             this.group_filtros_rol.Text = "Filtros de búsqueda";
             // 
-            // data_listado_roles
+            // data_listado_grados
             // 
-            this.data_listado_roles.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
-            this.data_listado_roles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.data_listado_roles.Location = new System.Drawing.Point(28, 163);
-            this.data_listado_roles.Name = "data_listado_roles";
-            this.data_listado_roles.ReadOnly = true;
-            this.data_listado_roles.Size = new System.Drawing.Size(489, 150);
-            this.data_listado_roles.TabIndex = 4;
-            this.data_listado_roles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.data_listado_roles_CellContentClick);
-            // 
-            // btn_volver
-            // 
-            this.btn_volver.Location = new System.Drawing.Point(28, 319);
-            this.btn_volver.Name = "btn_volver";
-            this.btn_volver.Size = new System.Drawing.Size(80, 29);
-            this.btn_volver.TabIndex = 5;
-            this.btn_volver.Text = "Volver";
-            this.btn_volver.UseVisualStyleBackColor = true;
-            this.btn_volver.Click += new System.EventHandler(this.btn_volver_Click);
+            this.data_listado_grados.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.data_listado_grados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.data_listado_grados.Location = new System.Drawing.Point(28, 163);
+            this.data_listado_grados.Name = "data_listado_grados";
+            this.data_listado_grados.ReadOnly = true;
+            this.data_listado_grados.Size = new System.Drawing.Size(489, 150);
+            this.data_listado_grados.TabIndex = 4;
+            this.data_listado_grados.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.data_listado_roles_CellContentClick);
             // 
             // btn_limpiar
             // 
@@ -109,20 +98,19 @@
             this.btn_limpiar.UseVisualStyleBackColor = true;
             this.btn_limpiar.Click += new System.EventHandler(this.btn_limpiar_Click);
             // 
-            // ListadoRoles
+            // ListadoGrados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(557, 375);
             this.Controls.Add(this.btn_limpiar);
-            this.Controls.Add(this.btn_volver);
-            this.Controls.Add(this.data_listado_roles);
+            this.Controls.Add(this.data_listado_grados);
             this.Controls.Add(this.group_filtros_rol);
-            this.Name = "ListadoRoles";
+            this.Name = "ListadoGrados";
             this.Text = "ListadoGrados";
             this.group_filtros_rol.ResumeLayout(false);
             this.group_filtros_rol.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.data_listado_roles)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.data_listado_grados)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -133,8 +121,7 @@
         private System.Windows.Forms.TextBox tx_nombre_rol;
         private System.Windows.Forms.Button btn_buscar;
         private System.Windows.Forms.GroupBox group_filtros_rol;
-        private System.Windows.Forms.DataGridView data_listado_roles;
-        private System.Windows.Forms.Button btn_volver;
+        private System.Windows.Forms.DataGridView data_listado_grados;
         private System.Windows.Forms.Button btn_limpiar;
     }
 }

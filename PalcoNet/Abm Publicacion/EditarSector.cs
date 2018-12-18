@@ -28,6 +28,11 @@ namespace PalcoNet.AbmPublicaciones
             agregarEncabezadosTabla();
         }
 
+        public EditarSector()
+        {
+            // TODO: Complete member initialization
+        }
+
         private void agregarEncabezadosTabla()
         {
             tabla_sectores.Columns.Add("Tipo de ubicacion");
@@ -80,19 +85,19 @@ namespace PalcoNet.AbmPublicaciones
 
         private void actualizarTablaSectores()
         {
-            data_listado_sectores.DataSource = tabla_sectores;
+            //data_listado_sectores.DataSource = tabla_sectores;
         }
 
         private void btn_alta_sector_Click_1(object sender, EventArgs e)
         {
             epProvider.Clear();
             if (validarCamposSector()) { return; }
-            if (sectoresRegistrados.Any(sector => sector.Detalle.Equals(txtDetalle.Text)))
+            /*if (sectoresRegistrados.Any(sector => sector.Detalle.Equals(txtDetalle.Text)))
             {
                 MessageBox.Show("Ya existe un Sector con el nombre ingresado", "ERROR",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-            }
+            }*/
             agregarSector(getSectorDeUi());
         }
 

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btn_atras = new System.Windows.Forms.Button();
             this.btn_limpiar = new System.Windows.Forms.Button();
             this.data_clientes = new System.Windows.Forms.DataGridView();
@@ -43,13 +43,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btn_modificar = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.data_clientes)).BeginInit();
             this.grupo_filtros.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_atras
             // 
-            this.btn_atras.Location = new System.Drawing.Point(87, 456);
+            this.btn_atras.Location = new System.Drawing.Point(56, 456);
             this.btn_atras.Margin = new System.Windows.Forms.Padding(2);
             this.btn_atras.Name = "btn_atras";
             this.btn_atras.Size = new System.Drawing.Size(74, 28);
@@ -60,7 +61,7 @@
             // 
             // btn_limpiar
             // 
-            this.btn_limpiar.Location = new System.Drawing.Point(594, 456);
+            this.btn_limpiar.Location = new System.Drawing.Point(626, 456);
             this.btn_limpiar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_limpiar.Name = "btn_limpiar";
             this.btn_limpiar.Size = new System.Drawing.Size(74, 28);
@@ -76,15 +77,15 @@
             this.data_clientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.data_clientes.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.data_clientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.NullValue = "-";
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.data_clientes.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.NullValue = "-";
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.data_clientes.DefaultCellStyle = dataGridViewCellStyle2;
             this.data_clientes.Location = new System.Drawing.Point(11, 198);
             this.data_clientes.Name = "data_clientes";
             this.data_clientes.ReadOnly = true;
@@ -200,7 +201,7 @@
             // btn_modificar
             // 
             this.btn_modificar.Enabled = false;
-            this.btn_modificar.Location = new System.Drawing.Point(327, 456);
+            this.btn_modificar.Location = new System.Drawing.Point(257, 456);
             this.btn_modificar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_modificar.Name = "btn_modificar";
             this.btn_modificar.Size = new System.Drawing.Size(74, 28);
@@ -209,11 +210,23 @@
             this.btn_modificar.UseVisualStyleBackColor = true;
             this.btn_modificar.Click += new System.EventHandler(this.btn_modificar_Click);
             // 
+            // button1
+            // 
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point(432, 456);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(144, 28);
+            this.button1.TabIndex = 29;
+            this.button1.Text = "Habilitar/Deshabilitar";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // ListadoCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(775, 512);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_modificar);
             this.Controls.Add(this.btn_atras);
             this.Controls.Add(this.btn_limpiar);
@@ -221,6 +234,7 @@
             this.Controls.Add(this.grupo_filtros);
             this.Name = "ListadoCliente";
             this.Text = "Listado de clientes";
+            this.Load += new System.EventHandler(this.ListadoCliente_Load);
             ((System.ComponentModel.ISupportInitialize)(this.data_clientes)).EndInit();
             this.grupo_filtros.ResumeLayout(false);
             this.grupo_filtros.PerformLayout();
@@ -244,5 +258,6 @@
         private System.Windows.Forms.Button btn_modificar;
         private System.Windows.Forms.TextBox txEmail;
         private System.Windows.Forms.Label labelEmail;
+        private System.Windows.Forms.Button button1;
     }
 }

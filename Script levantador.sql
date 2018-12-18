@@ -206,7 +206,6 @@ CREATE TABLE [GESTION_DE_GATOS].[Espectaculos]
 	[Espec_Cod]				numeric(18) identity(1,1)  NOT NULL ,
 	[Espec_Desc]            nvarchar(255)  NOT NULL,
 	[Espec_Fecha]			datetime NOT NULL,
-	[Espec_Hora]			time NOT NULL,
 	[Espec_Fecha_Venc]		datetime NOT NULL,
 	[Espec_Rubro_Cod]		int NOT NULL,
 	[Espec_Emp_Cuit]		nvarchar(255) NOT NULL,
@@ -255,13 +254,13 @@ go
 
 CREATE TABLE [GESTION_DE_GATOS].[Ubicaciones_Tipo]
 ( 
-	[Ubic_Cod]				int  identity(1,1) NOT NULL ,
-	[Ubic_Descr]			varchar(50)  NOT NULL
+	[Ubic_Tipo_Cod]			int  identity(1,1) NOT NULL ,
+	[Ubic_Tipo_Descr]			varchar(50)  NOT NULL
 )
 go
 
 ALTER TABLE [GESTION_DE_GATOS].[Ubicaciones_Tipo]
-	ADD CONSTRAINT [XPKUbicaciones_Tipo] PRIMARY KEY  CLUSTERED ([Ubic_Cod] ASC)
+	ADD CONSTRAINT [XPKUbicaciones_Tipo] PRIMARY KEY  CLUSTERED ([Ubic_Tipo_Cod] ASC)
 go
 
 CREATE TABLE [GESTION_DE_GATOS].[Compras]
@@ -313,7 +312,8 @@ CREATE TABLE [GESTION_DE_GATOS].[Grados]
 ( 
 	[Grado_Cod]				int identity(1,1)  NOT NULL ,
 	[Grado_Comision]		float  NOT NULL,
-	[Grado_Descr]			varchar(50) NOT NULL
+	[Grado_Descr]			varchar(50) NOT NULL,
+	[Grado_Habilitado]		bit NOT NULL
 )
 go
 
@@ -421,7 +421,7 @@ ALTER TABLE [GESTION_DE_GATOS].[Ubicaciones]
 go
 
 ALTER TABLE [GESTION_DE_GATOS].[Ubicaciones]
-	ADD CONSTRAINT [FK_Ubic_Tipo_Cod] FOREIGN KEY ([Ubic_Tipo_Cod]) REFERENCES [GESTION_DE_GATOS].[Ubicaciones_Tipo]([Ubic_Cod])
+	ADD CONSTRAINT [FK_Ubic_Tipo_Cod] FOREIGN KEY ([Ubic_Tipo_Cod]) REFERENCES [GESTION_DE_GATOS].[Ubicaciones_Tipo]([Ubic_Tipo_Cod])
 		ON DELETE NO ACTION
 		ON UPDATE NO ACTION
 go
@@ -487,6 +487,8 @@ go
 ALTER TABLE GESTION_DE_GATOS.Ubicaciones
  ADD CONSTRAINT DF_Ubic_Sin_Numerar DEFAULT 0 FOR Ubic_Sin_Numerar;
 
+ALTER TABLE GESTION_DE_GATOS.Compras
+ ADD CONSTRAINT DF_Forma_Pago DEFAULT 'EFECTIVO' FOR Compra_Forma_Pago_Desc
 -- creacion de indices
 CREATE INDEX In_Usuario_Username ON [GESTION_DE_GATOS].[Usuarios] (Usuario_Username)
 go
@@ -603,12 +605,10 @@ begin
 end
 
 
-IF EXISTS ( SELECT  *
-            FROM    sys.objects
-            WHERE   object_id = OBJECT_ID(N'crearEmpresa')
-            AND type IN ( N'P', N'PC' ) )
-drop procedure crearEmpresa
-go
+
+GO
+IF (OBJECT_ID('crearEmpresa', 'P') IS NOT NULL) DROP PROCEDURE crearEmpresa
+GO
 create procedure crearEmpresa (@cuit nvarchar(255),@nombre nvarchar(255),@creacion datetime,@mail nvarchar(50),
 								@codPostal nvarchar(50),@localidad varchar(20),@piso numeric(18),
 								@depto nvarchar(50),@nro numeric(18),@calle nvarchar(50),@usuario int)
@@ -650,12 +650,10 @@ begin
 end
 
 
-IF EXISTS ( SELECT  *
-            FROM    sys.objects
-            WHERE   object_id = OBJECT_ID(N'sp_crear_cliente')
-            AND type IN ( N'P', N'PC' ) )
-drop procedure sp_crear_cliente
-go
+
+GO
+IF (OBJECT_ID('sp_crear_cliente', 'P') IS NOT NULL) DROP PROCEDURE sp_crear_cliente
+GO
 create procedure sp_crear_cliente (@tipoDoc int,@doc numeric(18),@cuil nvarchar(255),@nombre nvarchar(255),
 								@apellido nvarchar(255), @fechaNac datetime, @dom_id INT,
 								@mail nvarchar(255), @telefono numeric(20), @cli_id int OUTPUT,
@@ -692,12 +690,10 @@ begin
         commit transaction;
 end
 
-IF EXISTS ( SELECT  *
-            FROM    sys.objects
-            WHERE   object_id = OBJECT_ID(N'canjearPuntos')
-            AND type IN ( N'P', N'PC' ) )
-drop procedure canjearPuntos
-go
+
+GO
+IF (OBJECT_ID('canjearPuntos', 'P') IS NOT NULL) DROP PROCEDURE canjearPuntos
+GO
 create procedure canjearPuntos (@clienteTipoDoc int,@ClienteDoc numeric(18),@PremioId int)
 as
 begin
@@ -878,23 +874,25 @@ begin
 		JOIN GESTION_DE_GATOS.Domicilios d ON d.Dom_Calle+convert(varchar,d.Dom_Nro_Calle) = Cli_Dom_Calle+convert(varchar,Cli_Nro_Calle)
 		GROUP BY Cli_Dni,Cli_Apeliido,Cli_Nombre,Cli_Fecha_Nac,Cli_Mail,u.Usuario_Id,d.Dom_Id
 	-- inserto rubros
-	INSERT INTO GESTION_DE_GATOS.Rubros (Rubro_Descr) SELECT Espectaculo_Rubro_Descripcion from gd_esquema.Maestra GROUP BY Espectaculo_Rubro_Descripcion
+	INSERT INTO GESTION_DE_GATOS.Rubros (Rubro_Descr) VALUES ('Teatro')
+	INSERT INTO GESTION_DE_GATOS.Rubros (Rubro_Descr) VALUES ('Cine')
+	INSERT INTO GESTION_DE_GATOS.Rubros (Rubro_Descr) VALUES ('Concierto')
 	-- inserto espectaculos
 	SET IDENTITY_INSERT GESTION_DE_GATOS.Espectaculos ON;
-	INSERT INTO GESTION_DE_GATOS.Espectaculos (Espec_Cod,Espec_Desc,Espec_Fecha,Espec_Hora,Espec_Fecha_Venc,Espec_Rubro_Cod,Espec_Emp_Cuit,Espec_Estado)
-		SELECT Espectaculo_Cod,Espectaculo_Descripcion,Espectaculo_Fecha,convert(char(5), Espectaculo_Fecha, 108) [time],Espectaculo_Fecha_Venc,1,Espec_Empresa_Cuit,1 FROM gd_esquema.Maestra
+	INSERT INTO GESTION_DE_GATOS.Espectaculos (Espec_Cod,Espec_Desc,Espec_Fecha,Espec_Fecha_Venc,Espec_Rubro_Cod,Espec_Emp_Cuit,Espec_Estado)
+		SELECT Espectaculo_Cod,Espectaculo_Descripcion,Espectaculo_Fecha,Espectaculo_Fecha_Venc,1,Espec_Empresa_Cuit,1 FROM gd_esquema.Maestra
 		GROUP BY Espectaculo_Cod,Espectaculo_Descripcion,Espectaculo_Fecha,Espectaculo_Fecha_Venc,Espec_Empresa_Cuit
 	SET IDENTITY_INSERT GESTION_DE_GATOS.Espectaculos OFF;
 	-- inserto ubicaciones_tipo
 	SET IDENTITY_INSERT GESTION_DE_GATOS.Ubicaciones_Tipo  ON;
-	INSERT INTO GESTION_DE_GATOS.Ubicaciones_Tipo (Ubic_Cod,Ubic_Descr) 
+	INSERT INTO GESTION_DE_GATOS.Ubicaciones_Tipo (Ubic_Tipo_Cod,Ubic_Tipo_Descr) 
 		SELECT Ubicacion_Tipo_Codigo,Ubicacion_Tipo_Descripcion FROM gd_esquema.Maestra
 		GROUP BY Ubicacion_Tipo_Codigo,Ubicacion_Tipo_Descripcion
 	SET IDENTITY_INSERT GESTION_DE_GATOS.Ubicaciones_Tipo  OFF;
 	-- inserto grados 
-	INSERT INTO GESTION_DE_GATOS.Grados (Grado_Descr,Grado_Comision) VALUES ('ALTA',0.5)
-	INSERT INTO GESTION_DE_GATOS.Grados (Grado_Descr,Grado_Comision) VALUES ('MEDIA',0.3)
-	INSERT INTO GESTION_DE_GATOS.Grados (Grado_Descr,Grado_Comision) VALUES ('BAJA',0.1)
+	INSERT INTO GESTION_DE_GATOS.Grados (Grado_Descr,Grado_Comision,Grado_Habilitado) VALUES ('ALTA',0.5,1)
+	INSERT INTO GESTION_DE_GATOS.Grados (Grado_Descr,Grado_Comision,Grado_Habilitado) VALUES ('MEDIA',0.3,1)
+	INSERT INTO GESTION_DE_GATOS.Grados (Grado_Descr,Grado_Comision,Grado_Habilitado) VALUES ('BAJA',0.1,1)
 	-- inserto estados de publicaciones
 	INSERT INTO GESTION_DE_GATOS.Publicaciones_Estado(Public_Est_Descr,Public_Est_Posible_Cambio) VALUES ('BORRADOR',1)
 	INSERT INTO GESTION_DE_GATOS.Publicaciones_Estado (Public_Est_Descr,Public_Est_Posible_Cambio) VALUES ('PUBLICADA',1)
@@ -912,7 +910,7 @@ begin
 	-- inserto las compras
 	INSERT INTO GESTION_DE_GATOS.Compras (Compra_Publicacion,Compra_Forma_Pago_Desc,Compra_Cli_Doc,Compra_Cli_Tipo_Doc,Compra_Fecha,Compra_FueFacturada) 
 		SELECT (SELECT TOP 1 Public_Cod FROM GESTION_DE_GATOS.Publicaciones  WHERE Public_Espec_Cod = Espectaculo_Cod and Public_Cod is not null)
-			,Forma_Pago_Desc
+			,isnull(Forma_Pago_Desc,'Tarjeta')
 			,Cli_Dni
 			,1
 			,Compra_Fecha
@@ -1023,7 +1021,22 @@ AS BEGIN
 	UPDATE GESTION_DE_GATOS.Clientes SET Cli_Habilitado = 0 WHERE convert(nvarchar,Cli_Tipo_Doc_Id)+convert(nvarchar,Cli_Doc) = 
 	(SELECT convert(nvarchar,c.Cli_Tipo_Doc_Id)+convert(nvarchar,c.Cli_Doc) FROM GESTION_DE_GATOS.Clientes c JOIN GESTION_DE_GATOS.Tipos_Doc td ON td.Tipo_Doc_Id = c.Cli_Tipo_Doc_Id
 	WHERE td.Tipo_Doc_Descr = @tipoDocDescr AND c.Cli_Doc = @doc)
+END
+
+
+GO
+IF (OBJECT_ID('sp_crear_grado', 'P') IS NOT NULL) DROP PROCEDURE sp_crear_grado 
+GO
+CREATE PROCEDURE sp_crear_grado(@grado float,@descripcion varchar(50))
+AS BEGIN
+	declare @cantidad int
+	set @cantidad = (SELECT isnull(COUNT(*),0) FROM GESTION_DE_GATOS.Grados WHERE @descripcion = Grado_Descr or @grado = Grado_Comision)
+	if @cantidad > 0
+		raiserror('Ya existe un grado con esa descripcion y/o esa comision',16,0)
+	else
+		INSERT INTO GESTION_DE_GATOS.Grados (Grado_Comision,Grado_Descr) VALUES (round(@grado,2),@descripcion)
 END 
+go 
 /*go
 USE GD2C2018;
 ALTER TABLE [GESTION_DE_GATOS].[Rol_Por_Usuario] DROP CONSTRAINT FK_Usuario_Id,FK_Rol_Id
@@ -1038,7 +1051,6 @@ ALTER TABLE [GESTION_DE_GATOS].[Compras] DROP CONSTRAINT FK_Compra_Publicacion_I
 ALTER TABLE [GESTION_DE_GATOS].[Publicaciones] DROP CONSTRAINT FK_Public_Grado_Cod,FK_Public_Espec_Cod,FK_Public_Fact_Num,FK_Public_Estado_Id
 ALTER TABLE [GESTION_DE_GATOS].[Facturas] DROP CONSTRAINT FK_Fact_Empresa_Cuit
 ALTER TABLE [GESTION_DE_GATOS].[Item_Facturas] DROP CONSTRAINT FK_Item_Fact_Num
-ALTER TABLE [GESTION_DE_GATOS].[Espectaculos] DROP CONSTRAINT FK_Espec_Emp_Cuit,FK_Espec_Rubro_Cod,FK_Espec_Dom_Id
 DROP TABLE [GESTION_DE_GATOS].[Funcionalidad_Por_Rol]
 DROP TABLE [GESTION_DE_GATOS].[Rol_Por_Usuario]
 DROP TABLE [GESTION_DE_GATOS].[Premios_Adquiridos]

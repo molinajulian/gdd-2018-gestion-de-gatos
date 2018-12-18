@@ -75,8 +75,8 @@ namespace PalcoNet.AbmPublicaciones
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ListaSector altaSector = new ListaSector(UbicacionRepositorio.getSectores(PublicacionPuntual.Espectaculo));
-            altaSector.ShowDialog();
+            /*ListaSector altaSector = new ListaSector(UbicacionRepositorio.getSectores(PublicacionPuntual.Espectaculo));
+            altaSector.ShowDialog();*/
         }
 
         public Publicacion getPublicacionDeUi()

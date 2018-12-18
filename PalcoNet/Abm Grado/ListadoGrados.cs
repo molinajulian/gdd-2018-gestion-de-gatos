@@ -56,7 +56,7 @@ namespace PalcoNet.AbmGrado
             }
 
             refreshValues();
-            data_listado_roles.Columns.Add(btn_accion);
+            data_listado_grados.Columns.Add(btn_accion);
         }
 
         public ListadoGrados()
@@ -66,7 +66,7 @@ namespace PalcoNet.AbmGrado
 
         public void refreshValues()
         {
-            data_listado_roles.DataSource = tabla_roles;
+            data_listado_grados.DataSource = tabla_roles;
         }
 
         private void btn_buscar_Click(object sender, EventArgs e)
@@ -88,7 +88,7 @@ namespace PalcoNet.AbmGrado
             this.Hide();
         }
 
-        private void limpiarRoles()
+        private void limpiarGrados()
         {
             tabla_roles.Rows.Clear();
             refreshValues();
@@ -96,7 +96,7 @@ namespace PalcoNet.AbmGrado
 
         private void btn_limpiar_Click(object sender, EventArgs e)
         {
-            this.limpiarRoles();
+            this.limpiarGrados();
         }
         
         private void data_listado_roles_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -108,7 +108,7 @@ namespace PalcoNet.AbmGrado
             if(senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
                 int indice = e.RowIndex;
-                DataGridViewRow row = data_listado_roles.Rows[indice];
+                DataGridViewRow row = data_listado_grados.Rows[indice];
                 Rol rol = new Rol(Convert.ToInt32(row.Cells["Id"].Value), row.Cells["Nombre"].Value.ToString());
                 rol.Habilitado = Convert.ToBoolean(row.Cells["Inhabilitado"].Value);
                 if (modo.Equals('M')) modificarRol(rol);

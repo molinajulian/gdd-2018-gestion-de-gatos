@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuABMs));
             this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
             this.buttonSidebarClientes = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.buttonSidebarCategorias = new MaterialSkin.Controls.MaterialRaisedButton();
             this.buttonSidebarEmpresas = new MaterialSkin.Controls.MaterialRaisedButton();
             this.buttonSidebarGradoPublicacion = new MaterialSkin.Controls.MaterialRaisedButton();
             this.buttonModificacionRol = new MaterialSkin.Controls.MaterialRaisedButton();
@@ -82,20 +81,6 @@
             this.buttonSidebarClientes.Visible = false;
             this.buttonSidebarClientes.Click += new System.EventHandler(this.buttonSidebarClientes_Click);
             // 
-            // buttonSidebarCategorias
-            // 
-            this.buttonSidebarCategorias.Depth = 0;
-            this.buttonSidebarCategorias.Location = new System.Drawing.Point(0, 303);
-            this.buttonSidebarCategorias.MouseState = MaterialSkin.MouseState.HOVER;
-            this.buttonSidebarCategorias.Name = "buttonSidebarCategorias";
-            this.buttonSidebarCategorias.Primary = true;
-            this.buttonSidebarCategorias.Size = new System.Drawing.Size(213, 67);
-            this.buttonSidebarCategorias.TabIndex = 4;
-            this.buttonSidebarCategorias.Text = "Categorias";
-            this.buttonSidebarCategorias.UseVisualStyleBackColor = true;
-            this.buttonSidebarCategorias.Visible = false;
-            this.buttonSidebarCategorias.Click += new System.EventHandler(this.buttonSidebarCategorias_Click);
-            // 
             // buttonSidebarEmpresas
             // 
             this.buttonSidebarEmpresas.Depth = 0;
@@ -113,13 +98,13 @@
             // buttonSidebarGradoPublicacion
             // 
             this.buttonSidebarGradoPublicacion.Depth = 0;
-            this.buttonSidebarGradoPublicacion.Location = new System.Drawing.Point(0, 376);
+            this.buttonSidebarGradoPublicacion.Location = new System.Drawing.Point(0, 303);
             this.buttonSidebarGradoPublicacion.MouseState = MaterialSkin.MouseState.HOVER;
             this.buttonSidebarGradoPublicacion.Name = "buttonSidebarGradoPublicacion";
             this.buttonSidebarGradoPublicacion.Primary = true;
             this.buttonSidebarGradoPublicacion.Size = new System.Drawing.Size(213, 67);
             this.buttonSidebarGradoPublicacion.TabIndex = 59;
-            this.buttonSidebarGradoPublicacion.Text = "Grado de publicacion";
+            this.buttonSidebarGradoPublicacion.Text = "Grados";
             this.buttonSidebarGradoPublicacion.UseVisualStyleBackColor = true;
             this.buttonSidebarGradoPublicacion.Visible = false;
             this.buttonSidebarGradoPublicacion.Click += new System.EventHandler(this.buttonSidebarGradoPublicacion_Click);
@@ -379,7 +364,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(662, 468);
+            this.ClientSize = new System.Drawing.Size(662, 385);
             this.Controls.Add(this.buttonModificacionCliente);
             this.Controls.Add(this.buttonModificacionGrado);
             this.Controls.Add(this.buttonModificacionEmpresa);
@@ -394,7 +379,6 @@
             this.Controls.Add(this.iconModificacion);
             this.Controls.Add(this.iconAlta);
             this.Controls.Add(this.buttonSidebarEmpresas);
-            this.Controls.Add(this.buttonSidebarCategorias);
             this.Controls.Add(this.buttonSidebarClientes);
             this.Controls.Add(this.iconBaja);
             this.Controls.Add(this.buttonAltaCliente);
@@ -417,7 +401,6 @@
 
         private MaterialSkin.Controls.MaterialDivider materialDivider1;
         private MaterialSkin.Controls.MaterialRaisedButton buttonSidebarClientes;
-        private MaterialSkin.Controls.MaterialRaisedButton buttonSidebarCategorias;
         private MaterialSkin.Controls.MaterialRaisedButton buttonSidebarEmpresas;
         private MaterialSkin.Controls.MaterialRaisedButton buttonSidebarRoles;
         private MaterialSkin.Controls.MaterialRaisedButton buttonSidebarGradoPublicacion;

@@ -91,13 +91,18 @@ namespace PalcoNet.Repositorios
             }
         }
 
-        public static Espectaculo getEspectaculoDePublicacion(int publiId)
+       /* public static Espectaculo getEspectaculoDePublicacion(int publiId)
         {
             //Obtiene el espectaculo para la publicacion elegida
-           /* List<SqlParameter> parametros = new List<SqlParameter>();
+           /List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@espec_desc", espectaculo.Descripcion));
             SqlCommand sqlCommand = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Espectaculos" +
-                                                           " JOIN ", "T", parametros);*/
+                                                           " JOIN ", "T", parametros);
+        }*/
+
+        internal static Espectaculo getEspectaculoDePublicacion(int p)
+        {
+            throw new NotImplementedException();
         }
     }
 }

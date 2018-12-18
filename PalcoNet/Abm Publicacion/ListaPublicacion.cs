@@ -41,7 +41,7 @@ namespace PalcoNet.AbmPublicaciones
 
         private void btn_buscar_Click(object sender, EventArgs e)
         {
-            actualizarListado(PublicacionRepositorio.getPublicaciones(txt_titulo_pub.Text,dtpFechaPub.Value));
+           // actualizarListado(PublicacionRepositorio.getPublicaciones(txt_titulo_pub.Text,dtpFechaPub.Value));
         }
 
         private void actualizarListado(List<Publicacion> publicaciones)

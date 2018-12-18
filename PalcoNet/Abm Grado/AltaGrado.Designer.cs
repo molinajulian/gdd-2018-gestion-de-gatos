@@ -31,16 +31,14 @@
             this.components = new System.ComponentModel.Container();
             this.epProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.lbl_nombre_rol = new System.Windows.Forms.Label();
-            this.tx_nombre_rol = new System.Windows.Forms.TextBox();
-            this.btn_alta_rol = new System.Windows.Forms.Button();
-            this.data_listado_funcionalidades = new System.Windows.Forms.DataGridView();
+            this.txtNombre = new System.Windows.Forms.TextBox();
+            this.btnAltaGrado = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.group_alta_rol = new System.Windows.Forms.GroupBox();
-            this.btn_volver = new System.Windows.Forms.Button();
+            this.txtGrado = new System.Windows.Forms.TextBox();
+            this.group_alta_grado = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.epProvider)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.data_listado_funcionalidades)).BeginInit();
-            this.group_alta_rol.SuspendLayout();
+            this.group_alta_grado.SuspendLayout();
             this.SuspendLayout();
             // 
             // epProvider
@@ -50,106 +48,94 @@
             // lbl_nombre_rol
             // 
             this.lbl_nombre_rol.AutoSize = true;
-            this.lbl_nombre_rol.Location = new System.Drawing.Point(62, 26);
+            this.lbl_nombre_rol.Location = new System.Drawing.Point(33, 30);
             this.lbl_nombre_rol.Name = "lbl_nombre_rol";
-            this.lbl_nombre_rol.Size = new System.Drawing.Size(40, 13);
+            this.lbl_nombre_rol.Size = new System.Drawing.Size(63, 13);
             this.lbl_nombre_rol.TabIndex = 0;
-            this.lbl_nombre_rol.Text = "Detalle";
+            this.lbl_nombre_rol.Text = "Descripción";
             // 
-            // tx_nombre_rol
+            // txtNombre
             // 
-            this.tx_nombre_rol.Location = new System.Drawing.Point(115, 23);
-            this.tx_nombre_rol.Name = "tx_nombre_rol";
-            this.tx_nombre_rol.Size = new System.Drawing.Size(100, 20);
-            this.tx_nombre_rol.TabIndex = 1;
+            this.txtNombre.Location = new System.Drawing.Point(115, 23);
+            this.txtNombre.Name = "txtNombre";
+            this.txtNombre.Size = new System.Drawing.Size(100, 20);
+            this.txtNombre.TabIndex = 1;
             // 
-            // btn_alta_rol
+            // btnAltaGrado
             // 
-            this.btn_alta_rol.Location = new System.Drawing.Point(221, 228);
-            this.btn_alta_rol.Name = "btn_alta_rol";
-            this.btn_alta_rol.Size = new System.Drawing.Size(97, 39);
-            this.btn_alta_rol.TabIndex = 0;
-            this.btn_alta_rol.Text = "Dar de alta grado";
-            this.btn_alta_rol.UseVisualStyleBackColor = true;
-            this.btn_alta_rol.Click += new System.EventHandler(this.btn_alta_rol_Click);
-            // 
-            // data_listado_funcionalidades
-            // 
-            this.data_listado_funcionalidades.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
-            this.data_listado_funcionalidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.data_listado_funcionalidades.Location = new System.Drawing.Point(21, 59);
-            this.data_listado_funcionalidades.Name = "data_listado_funcionalidades";
-            this.data_listado_funcionalidades.Size = new System.Drawing.Size(495, 150);
-            this.data_listado_funcionalidades.TabIndex = 2;
+            this.btnAltaGrado.Location = new System.Drawing.Point(287, 39);
+            this.btnAltaGrado.Name = "btnAltaGrado";
+            this.btnAltaGrado.Size = new System.Drawing.Size(97, 39);
+            this.btnAltaGrado.TabIndex = 0;
+            this.btnAltaGrado.Text = "Dar de alta grado";
+            this.btnAltaGrado.UseVisualStyleBackColor = true;
+            this.btnAltaGrado.Click += new System.EventHandler(this.btn_alta_grado_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(269, 26);
+            this.label1.Location = new System.Drawing.Point(6, 81);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(81, 13);
+            this.label1.Size = new System.Drawing.Size(94, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Grado Comision";
+            this.label1.Text = "Grado Comisión (*)";
             // 
-            // textBox1
+            // txtGrado
             // 
-            this.textBox1.Location = new System.Drawing.Point(356, 23);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 4;
+            this.txtGrado.Location = new System.Drawing.Point(115, 78);
+            this.txtGrado.Name = "txtGrado";
+            this.txtGrado.Size = new System.Drawing.Size(100, 20);
+            this.txtGrado.TabIndex = 4;
+            this.txtGrado.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtGrado_KeyPress);
             // 
-            // group_alta_rol
+            // group_alta_grado
             // 
-            this.group_alta_rol.BackColor = System.Drawing.Color.White;
-            this.group_alta_rol.Controls.Add(this.textBox1);
-            this.group_alta_rol.Controls.Add(this.label1);
-            this.group_alta_rol.Controls.Add(this.data_listado_funcionalidades);
-            this.group_alta_rol.Controls.Add(this.btn_alta_rol);
-            this.group_alta_rol.Controls.Add(this.tx_nombre_rol);
-            this.group_alta_rol.Controls.Add(this.lbl_nombre_rol);
-            this.group_alta_rol.Location = new System.Drawing.Point(22, 79);
-            this.group_alta_rol.Name = "group_alta_rol";
-            this.group_alta_rol.Size = new System.Drawing.Size(538, 273);
-            this.group_alta_rol.TabIndex = 3;
-            this.group_alta_rol.TabStop = false;
-            this.group_alta_rol.Text = "Datos del grado";
+            this.group_alta_grado.BackColor = System.Drawing.Color.White;
+            this.group_alta_grado.Controls.Add(this.label2);
+            this.group_alta_grado.Controls.Add(this.txtGrado);
+            this.group_alta_grado.Controls.Add(this.label1);
+            this.group_alta_grado.Controls.Add(this.btnAltaGrado);
+            this.group_alta_grado.Controls.Add(this.txtNombre);
+            this.group_alta_grado.Controls.Add(this.lbl_nombre_rol);
+            this.group_alta_grado.Location = new System.Drawing.Point(12, 79);
+            this.group_alta_grado.Name = "group_alta_grado";
+            this.group_alta_grado.Size = new System.Drawing.Size(412, 157);
+            this.group_alta_grado.TabIndex = 3;
+            this.group_alta_grado.TabStop = false;
+            this.group_alta_grado.Text = "Datos del grado";
             // 
-            // btn_volver
+            // label2
             // 
-            this.btn_volver.Location = new System.Drawing.Point(455, 366);
-            this.btn_volver.Name = "btn_volver";
-            this.btn_volver.Size = new System.Drawing.Size(83, 28);
-            this.btn_volver.TabIndex = 4;
-            this.btn_volver.Text = "Volver";
-            this.btn_volver.UseVisualStyleBackColor = true;
-            this.btn_volver.Click += new System.EventHandler(this.btn_volver_Click);
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(33, 127);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(119, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "* Número en porcentaje";
             // 
             // AltaGrado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(574, 406);
-            this.Controls.Add(this.btn_volver);
-            this.Controls.Add(this.group_alta_rol);
+            this.ClientSize = new System.Drawing.Size(446, 262);
+            this.Controls.Add(this.group_alta_grado);
             this.Name = "AltaGrado";
-            this.Text = "AltaGradoPublicacion";
+            this.Text = "Alta grado de publicación";
             ((System.ComponentModel.ISupportInitialize)(this.epProvider)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.data_listado_funcionalidades)).EndInit();
-            this.group_alta_rol.ResumeLayout(false);
-            this.group_alta_rol.PerformLayout();
+            this.group_alta_grado.ResumeLayout(false);
+            this.group_alta_grado.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.ErrorProvider epProvider;
-        private System.Windows.Forms.Button btn_volver;
-        private System.Windows.Forms.GroupBox group_alta_rol;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.GroupBox group_alta_grado;
+        private System.Windows.Forms.TextBox txtGrado;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridView data_listado_funcionalidades;
-        private System.Windows.Forms.Button btn_alta_rol;
-        private System.Windows.Forms.TextBox tx_nombre_rol;
+        private System.Windows.Forms.Button btnAltaGrado;
+        private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.Label lbl_nombre_rol;
+        private System.Windows.Forms.Label label2;
     }
 }

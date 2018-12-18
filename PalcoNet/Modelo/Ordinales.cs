@@ -119,13 +119,6 @@ namespace PalcoNet.Modelo
                                                     {"descripcion",1}
                                                     
                                                     };
-
-        [Public_Cod]
-        ,[Public_Desc]
-        ,[Public_Fecha_Creacion]
-        ,[Public_Grado_Cod]
-        ,[Public_Espec_Cod]
-        ,[Public_Estado_Id
        public static Dictionary<string, int> Publicacion = new Dictionary<string, int> 
                                                     {
                                                     {"codigo",0},

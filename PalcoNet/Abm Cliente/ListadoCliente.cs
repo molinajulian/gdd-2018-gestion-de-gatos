@@ -120,5 +120,10 @@ namespace PalcoNet.AbmCliente
                 MessageBox.Show("Busque y seleccione un cliente antes.");
             }
         }
+
+        private void ListadoCliente_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

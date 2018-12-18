@@ -23,24 +23,12 @@ namespace PalcoNet.Repositorios
             lector.Close();
             return grados;
         }
-
-        public static Grado ReadGradoFromDb(int id)
+        public static void agregar(float grado,string descripcion)
         {
-            var parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@id", id));
-            Dictionary<string, int> camposGrado = Ordinales.Grado;
-            var query = DataBase.ejecutarFuncion("Select top 1 * from grado g where g.grado_cod = @id", parametros);
-            SqlDataReader lector = query.ExecuteReader();
-            if (lector.Read())
-            {
-                return new Grado(
-                    Convert.ToInt32(lector[camposGrado["codigo"]].ToString()),
-                    Convert.ToDouble(lector[camposGrado["comision"]]),
-                    lector[camposGrado["descripcion"]].ToString());
-
-            }
-            return null;
-
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@grado", grado));
+            parametros.Add(new SqlParameter("@descripcion", descripcion.ToUpper()));
+            DataBase.ejecutarSP("[dbo].[sp_crear_grado]", parametros);
         }
     }
 }

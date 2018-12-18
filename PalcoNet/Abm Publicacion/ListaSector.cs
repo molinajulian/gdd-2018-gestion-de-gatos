@@ -64,16 +64,16 @@ namespace PalcoNet.AbmPublicaciones
         private void button1_Click(object sender, EventArgs e)
         {
 
-            EditarSector editarSector = new EditarSector();
-            this.Close();
+            /*EditarSector editarSector = new EditarSector();
+            this.Close();*/
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            SqlDataReader lector = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Ubicaciones WHERE Ubic_Espec_Cod = " + espectaculo.Id, "T", new List<SqlParameter>());
+            /*SqlDataReader lector = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Ubicaciones WHERE Ubic_Espec_Cod = " + espectaculo.Id, "T", new List<SqlParameter>());
             while (lector.HasRows && lector.Read())
             {
-            }
+            }*/
         }
     }
 }

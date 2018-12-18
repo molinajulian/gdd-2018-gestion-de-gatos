@@ -124,7 +124,7 @@ GO
 CREATE PROCEDURE sp_get_domicilios (@calle nvarchar(50), @nro numeric(18))
 AS BEGIN
 	SELECT * FROM GESTION_DE_GATOS.Domicilios
-		WHERE Dom_Calle LIKE calle AND Dom_Nro_Calle = @nro;
+		WHERE Dom_Calle LIKE Dom_Calle AND Dom_Nro_Calle = @nro;
 END 
 go
 
@@ -300,8 +300,3 @@ AS BEGIN
 	END
 END
 GO
-
-EXEC sp_rename 'GESTION_DE_GATOS.Ubicaciones_Tipo.Ubic_Cod', 'Ubic_Tipo_Cod', 'COLUMN';
-EXEC sp_rename 'GESTION_DE_GATOS.Ubicaciones_Tipo.Ubic_Descr', 'Ubic_Tipo_Descr', 'COLUMN';
-ALTER TABLE GESTION_DE_GATOS.Espectaculos DROP COLUMN Espec_Hora;
-ALTER TABLE GESTION_DE_GATOS.Publicaciones DROP COLUMN Public_Fact_Num;

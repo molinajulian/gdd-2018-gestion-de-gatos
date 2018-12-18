@@ -10,113 +10,74 @@ using System.Windows.Forms;
 using PalcoNet.Modelo;
 using MaterialSkin.Controls;
 using MaterialSkin;
+using System.Data.SqlClient;
 using PalcoNet.Repositorios;
 
 namespace PalcoNet.AbmGrado
 {
     public partial class AltaGrado : MaterialForm
     {
-        Rol rol = new Rol();
-        DataTable tabla_funcionalidades = new DataTable();
-        List<String> funcionalidades = new List<String>();
         public AltaGrado()
         {
             InitializeComponent();
-
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-
-
-            DataGridViewCheckBoxColumn check_funcionalidad = new DataGridViewCheckBoxColumn();
-            tabla_funcionalidades.Columns.Add("Descripcion");
-            data_listado_funcionalidades.Columns.Add(check_funcionalidad);
-            List<Funcionalidad> funcionalidades = FuncionalidadesRepositorio.getFuncionalidades();
-
-            foreach (Funcionalidad funcionalidad in funcionalidades)
-            {
-                String[] row = new String[] { funcionalidad.detalle };
-                tabla_funcionalidades.Rows.Add(row);
-            }
-            data_listado_funcionalidades.DataSource = tabla_funcionalidades;
         }
-
-        private void btn_volver_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-        }
-
-        private void btn_alta_rol_Click(object sender, EventArgs e)
+        private void btn_alta_grado_Click(object sender, EventArgs e)
         {
             epProvider.Clear();
-            if (validarCamposRol()) { return; }
-
-            if (RolRepositorio.esRolExistente(tx_nombre_rol.Text))
+            if (validarCamposGrado()) { return; }
+            try  
             {
-                MessageBox.Show("Ya existe un rol con el nombre ingresado", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                GradoRepositorio.agregar((float)Convert.ToInt32(txtGrado.Text) / 100, txtNombre.Text);
+                limpiarVentana();
             }
-
-            rol.nombre = tx_nombre_rol.Text;
-            rol.Habilitado = false;
-            listarFuncionalidades();
-            RolRepositorio.agregar(rol, funcionalidades);
-            funcionalidades.Clear();
-            limpiarVentana();
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message, "Error al intentar crear el grado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void limpiarVentana()
         {
-            var textBoxes = group_alta_rol.Controls.OfType<TextBox>();
+            var textBoxes = group_alta_grado.Controls.OfType<TextBox>();
             foreach(TextBox textbox in textBoxes)
             {
                 textbox.Clear();
             }
 
-            foreach (DataGridViewRow row in data_listado_funcionalidades.Rows)
-            {
-                row.Cells[0].Value = false;
-            }
-
         }
 
-        private bool validarCamposRol()
+        private bool validarCamposGrado()
         {
             bool error = false;
-            bool tildoAlgunCheckBox = false;
-            if (String.IsNullOrWhiteSpace(tx_nombre_rol.Text))
+            if (String.IsNullOrWhiteSpace(txtNombre.Text))
             {
-                epProvider.SetError(tx_nombre_rol, "Por favor complete el campo");
+                epProvider.SetError(txtNombre, "Por favor complete el campo");
                 error = true;
             }
-            foreach(DataGridViewRow row in data_listado_funcionalidades.Rows)
+            if (String.IsNullOrWhiteSpace(txtGrado.Text))
             {
-                if (Convert.ToBoolean(row.Cells[0].Value)) { tildoAlgunCheckBox = true; } 
+                epProvider.SetError(txtGrado, "Por favor complete el campo");
+                error = true;
             }
-
-            if (!tildoAlgunCheckBox)
+            if (!String.IsNullOrWhiteSpace(txtGrado.Text) && Convert.ToInt32(txtGrado.Text) >=100)
             {
-                epProvider.SetError(data_listado_funcionalidades, "Por favor seleccione alguna funcionalidad");
+                epProvider.SetError(txtGrado, "No se puede crear un grado que gane más o igual que el 100%");
                 error = true;
             }
             return error;
         }
 
-        private void listarFuncionalidades()
+        private void txtGrado_KeyPress(object sender, KeyPressEventArgs e)
         {
-            foreach(DataGridViewRow row in data_listado_funcionalidades.Rows)
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
-                if (Convert.ToBoolean(row.Cells[0].Value))
-                {
-                    funcionalidades.Add(Convert.ToString(row.Cells[1].Value));
-                }
+                e.Handled = true;
             }
         }
 
-        private void AltaRol_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
