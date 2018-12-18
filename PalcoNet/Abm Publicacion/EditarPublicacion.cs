@@ -128,7 +128,7 @@ namespace PalcoNet.AbmPublicaciones
             {
                 return;
             }
-            PublicacionRepositorio.actualizar(getPublicacionDeUi());
+            PublicacionRepositorio.actualizarPublicacionPuntual(getPublicacionDeUi());
         }
 
         private bool validarIngresos()
@@ -154,12 +154,6 @@ namespace PalcoNet.AbmPublicaciones
         {
             ListadoDomicilios listadoDomicilios = new ListadoDomicilios(PublicacionPuntual.Espectaculo.Domicilio);
             listadoDomicilios.ShowDialog();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            AltaFechas altaFechas = new AltaFechas(fechasElegidas);
-            altaFechas.ShowDialog();
         }
     }
 }

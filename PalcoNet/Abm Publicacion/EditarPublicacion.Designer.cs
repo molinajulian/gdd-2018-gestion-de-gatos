@@ -151,7 +151,7 @@
             this.cmbRubro.FormattingEnabled = true;
             this.cmbRubro.Location = new System.Drawing.Point(193, 63);
             this.cmbRubro.Name = "cmbRubro";
-            this.cmbRubro.Size = new System.Drawing.Size(121, 21);
+            this.cmbRubro.Size = new System.Drawing.Size(165, 21);
             this.cmbRubro.TabIndex = 62;
             // 
             // button2

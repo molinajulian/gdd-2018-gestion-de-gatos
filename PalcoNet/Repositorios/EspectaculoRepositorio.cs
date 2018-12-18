@@ -94,5 +94,19 @@ namespace PalcoNet.Repositorios
                 espectaculo.Id = Convert.ToInt32(output.Value);
             }
         }
+
+        public static void actualizar(Espectaculo espectaculo)
+        {
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@espec_cod", espectaculo.Id));
+            parametros.Add(new SqlParameter("@espec_desc", espectaculo.Descripcion));
+            parametros.Add(new SqlParameter("@espec_fecha", espectaculo.FechaOcurrencia));
+            parametros.Add(new SqlParameter("@espec_fecha_vencimiento", espectaculo.FechaVencimiento));
+            parametros.Add(new SqlParameter("@espec_rubro_codigo", espectaculo.Rubro.Codigo));
+            parametros.Add(new SqlParameter("@espec_emp_cuit", espectaculo.Empresa.Cuit));
+            parametros.Add(new SqlParameter("@espec_dom_id", espectaculo.Empresa.Domicilio.Id));
+            parametros.Add(new SqlParameter("@espec_estado", espectaculo.Finalizado ? 1 : 0));
+            DataBase.ejecutarSP("[dbo].[sp_actualizar_espectaculo]", parametros);
+        }
     }
 }

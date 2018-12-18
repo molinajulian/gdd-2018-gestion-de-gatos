@@ -16,39 +16,23 @@ namespace PalcoNet.Repositorios
         {
             EspectaculoRepositorio.crearTodos(publicacion.Espectaculos);
             crearPublicacion(publicacion);
-            crearUbicacionesPorEspectaculo(publicacion.Sectores, publicacion.Espectaculos);
+            UbicacionRepositorio.crearUbicacionesPorEspectaculo(publicacion.Sectores, publicacion.Espectaculos);
             MessageBox.Show("Publicacion generada exitosamente", "Alta Publicacion", MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
         }
 
-        public static void crearUbicacionesPorEspectaculo(List<Sector> sectores, List<Espectaculo> espectaculos)
-        {
-            List<SqlParameter> parametros = new List<SqlParameter>();
-            foreach (Espectaculo espectaculo in espectaculos)
-            {
-                foreach (Sector sector in sectores)
-                {
-                    parametros.Clear();
-                    parametros.Add(new SqlParameter("@ubic_tipo", sector.TipoUbicacion.Id));
-                    parametros.Add(new SqlParameter("@ubic_precio", sector.Precio));
-                    parametros.Add(new SqlParameter("@ubic_espec_codigo", espectaculo.Id));
-                    parametros.Add(new SqlParameter("@cnt_filas", sector.CantidadFilas));
-                    parametros.Add(new SqlParameter("@cnt_asientos", sector.CantidadAsientos));
-                    DataBase.ejecutarSP("sp_crear_ubicaciones", parametros);
-                }
-            }
-        }
-
         public static void crearPublicacion(Publicacion publicacion)
         {
+            List<SqlParameter> parametros = new List<SqlParameter>();
+
             foreach (Espectaculo espectaculo in publicacion.Espectaculos)
             {
-                List<SqlParameter> parametros = new List<SqlParameter>();
                 parametros.Add(new SqlParameter("@pub_desc", publicacion.Descripcion));
                 parametros.Add(new SqlParameter("@pub_grado_cod", publicacion.Grado.Id));
                 parametros.Add(new SqlParameter("@pub_fecha_creacion", publicacion.FechaPublicacion));
                 parametros.Add(new SqlParameter("@espec_cod", espectaculo.Id));
                 DataBase.ejecutarSP("sp_crear_publicacion", parametros);
+                parametros.Clear();
             }
         }
 
@@ -93,9 +77,21 @@ namespace PalcoNet.Repositorios
             return publicaciones;
         }
 
-        public static void actualizar(PublicacionPuntual publicacionPuntual)
+        public static void actualizarPublicacionPuntual(PublicacionPuntual publicacion)
         {
-            
+            actualizarPublicacion(publicacion);
+            EspectaculoRepositorio.actualizar(publicacion.Espectaculo);
+            UbicacionRepositorio.actualizarSectores(publicacion.getSectores(), publicacion.Espectaculo);
+        }
+
+        public static void actualizarPublicacion(PublicacionPuntual publicacion)
+        {
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@pub_desc", publicacion.Descripcion));
+            parametros.Add(new SqlParameter("@pub_grado_cod", publicacion.Grado.Id));
+            parametros.Add(new SqlParameter("@pub_estado", publicacion.Estado.Id));
+            parametros.Add(new SqlParameter("@pub_editor", publicacion.Editor.username));
+            DataBase.ejecutarSP("sp_actualizar_publicacion", parametros);
 
         }
     }
