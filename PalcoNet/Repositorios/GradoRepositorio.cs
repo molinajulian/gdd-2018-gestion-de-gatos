@@ -84,10 +84,6 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@descripcion", grado.Descripcion));
             DataBase.ejecutarSP("[dbo].[sp_modificar_grado]", parametros);
         }
-        internal static Grado ReadGradoFromDb(int p)
-        {
-            throw new NotImplementedException();
-        }
 
     }
 }

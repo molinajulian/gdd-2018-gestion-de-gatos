@@ -144,9 +144,6 @@ namespace PalcoNet.Registro_de_Usuario
                 {7, buttonAltaRol}, //CREAR ROL
                 {8, buttonModificacionRol}, //EDITAR ROL
                 {9, buttonBajaRol}, //ELIMINAR ROL
-                // {10  , buttonAltaC}, //CREAR CATEGORIA
-                // {11  , btn}, //EDITAR CATEGORIA
-                // {12  , btn}, //ELIMINAR CATEGORIA
                 {13, buttonAltaGrado}, //CREAR GRADO PUBLICACION
                 {14, buttonModificacionGrado}, //EDITAR GRADO PUBLICACION
                 {15, buttonBajaGrado} //ELIMINAR GRADO PUBLICACION

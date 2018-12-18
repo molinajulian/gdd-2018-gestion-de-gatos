@@ -2,6 +2,7 @@
 using PalcoNet.Repositorios;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -45,21 +46,20 @@ namespace PalcoNet.Repositorios
             return DataBase.GetDataReader("404_NOT_FOUND.SP_BUSCAR_ROL", "SP", parametros);
         }
 
-        public static void agregar(Rol rol, List<String> funcionalidades)
+        public static void agregar(Rol rol, List<Funcionalidad> funcionalidades)
         {
             List<SqlParameter> parametros_rol = new List<SqlParameter>();
-            List<SqlParameter> parametros_funcionalidades_rol = new List<SqlParameter>();
 
-            parametros_rol.Add(new SqlParameter("@nombre", rol.nombre));
-            parametros_rol.Add(new SqlParameter("@habilitado", rol.Habilitado));
-            DataBase.WriteInBase("404_NOT_FOUND.SP_AGREGAR_ROL", "SP", parametros_rol);
-            
-            foreach (String funcionalidad in funcionalidades)
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@nombre", rol.nombre));
+            SqlParameter output = new SqlParameter("@id", -1);
+            output.Direction = ParameterDirection.Output;
+            parametros.Add(output);
+            SqlCommand sqlCommand = DataBase.ejecutarSP("[dbo].[sp_crear_rol]", parametros);
+            int idRol = Convert.ToInt32(sqlCommand.Parameters["@id"].Value);
+            foreach (Funcionalidad fun in funcionalidades)
             {
-                parametros_funcionalidades_rol.Add(new SqlParameter("@rol", rol.nombre));
-                parametros_funcionalidades_rol.Add(new SqlParameter("@funcionalidad", funcionalidad));
-                DataBase.WriteInBase("404_NOT_FOUND.SP_AGREGAR_ROL_FUNCIONALIDAD", "SP", parametros_funcionalidades_rol);
-                parametros_funcionalidades_rol.Clear();
+                DataBase.GetDataReader("INSERT INTO GESTION_DE_GATOS.Funcionalidad_Por_Rol (Rol_Id,Func_Id) VALUES("+idRol+","+fun.id+")", "T", new List<SqlParameter>());
             }
         }
 
