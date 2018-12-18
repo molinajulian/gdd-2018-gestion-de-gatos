@@ -143,7 +143,8 @@ namespace PalcoNet.Modelo
                                                     {
                                                     {"codigo",0},
                                                     {"comision",1},
-                                                    {"descripcion",2}
+                                                    {"descripcion",2},
+                                                    {"habilitado",3}
                                                     };
         public static Dictionary<string, int> ItemFactura = new Dictionary<string, int>
                                                     {

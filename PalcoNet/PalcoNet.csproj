@@ -112,6 +112,12 @@
     <Compile Include="Abm Grado\AltaGrado.Designer.cs">
       <DependentUpon>AltaGrado.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Grado\ModificacionGrado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Grado\ModificacionGrado.Designer.cs">
+      <DependentUpon>ModificacionGrado.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Grado\ListadoGrados.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -336,6 +342,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Grado\AltaGrado.resx">
       <DependentUpon>AltaGrado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Grado\ModificacionGrado.resx">
+      <DependentUpon>ModificacionGrado.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Grado\ListadoGrados.resx">
       <DependentUpon>ListadoGrados.cs</DependentUpon>

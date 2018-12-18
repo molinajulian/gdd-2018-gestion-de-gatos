@@ -213,7 +213,7 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonModificacionGrado_Click(object sender, EventArgs e)
         {
-            ListadoGrados lg = new ListadoGrados();
+            ListadoGrados lg = new ListadoGrados('M');
             lg.ShowDialog();
         }
 
@@ -231,7 +231,7 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonBajaGrado_Click(object sender, EventArgs e)
         {
-            ListadoGrados lg = new ListadoGrados();
+            ListadoGrados lg = new ListadoGrados('B');
             lg.ShowDialog();
         }
 
