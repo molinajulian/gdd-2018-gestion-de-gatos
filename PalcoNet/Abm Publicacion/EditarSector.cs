@@ -11,11 +11,11 @@ using PalcoNet.Repositorios;
 
 namespace PalcoNet.AbmPublicaciones
 {
-    public partial class AltaSector : MaterialForm
+    public partial class EditarSector : MaterialForm
     {
         DataTable tabla_sectores = new DataTable();
         private List<Sector> sectoresRegistrados;
-        public AltaSector(List<Sector> sectoresRegistrados)
+        public EditarSector(List<Sector> sectoresRegistrados)
         {
             InitializeComponent();
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -55,48 +55,20 @@ namespace PalcoNet.AbmPublicaciones
 
         private void limpiarVentana()
         {
+           txtDetalle.Clear();
            txtAsientos.Clear();
            txtFilas.Clear();
         }
 
         private bool validarCamposSector()
         {
-            return validarFormularioCompleto() && validarTipos();
-        }
-
-        private bool validarTipos()
-        {
-            try
+            bool error = false;
+            if (String.IsNullOrWhiteSpace(txtDetalle.Text))
             {
-                Convert.ToInt32(txtAsientos.Text);
-                Convert.ToDouble(txtPrecio.Text);
-                Convert.ToInt32(txtFilas.Text);
+                epProvider.SetError(txtDetalle, "Por favor complete el campo");
+                error = true;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "Ingrese un valor numerico entero para Filas y Asientos, Precio puede ser con decimales");
-                return false;
-            }
-            return true;
-
-        }
-
-        private bool validarFormularioCompleto()
-        {
-            bool completo = true;
-            var controles = group_alta_rol.Controls;
-            foreach (Control control in controles)
-            {
-                if ((control.Name == "txtFilas" || control.Name == "txtFilas" || control.Name == "txtPrecio") && string.IsNullOrWhiteSpace(control.Text))
-                {
-                    MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    completo = false;
-                    break;
-                }
-
-            }
-            return completo;
+            return error;
         }
 
         public void agregarSector(Sector sector)
@@ -115,6 +87,12 @@ namespace PalcoNet.AbmPublicaciones
         {
             epProvider.Clear();
             if (validarCamposSector()) { return; }
+            if (sectoresRegistrados.Any(sector => sector.Detalle.Equals(txtDetalle.Text)))
+            {
+                MessageBox.Show("Ya existe un Sector con el nombre ingresado", "ERROR",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             agregarSector(getSectorDeUi());
         }
 
@@ -125,8 +103,8 @@ namespace PalcoNet.AbmPublicaciones
             {
                 String[] sectorRow = 
                 {
-                    sector.TipoUbicacion.Descripcion, sector.CantidadFilas.ToString(), sector.CantidadAsientos.ToString()
-                    , sector.Precio.ToString()
+                    sector.CantidadFilas.ToString(), sector.CantidadAsientos.ToString(),
+                    sector.TipoUbicacion.Descripcion, sector.Precio.ToString()
                 };
                 tabla_sectores.Rows.Add(sectorRow);
             }
@@ -135,7 +113,8 @@ namespace PalcoNet.AbmPublicaciones
 
         private Sector getSectorDeUi()
         {
-            return new Sector(Convert.ToInt32(txtFilas.Text), Convert.ToInt32(txtAsientos.Text),
+            return new Sector(Convert.ToInt32(txtFilas.Text),
+                Convert.ToInt32(txtAsientos.Text), txtDetalle.Text,
                 (TipoUbicacion) cmbTipo.SelectedItem, 
                 Convert.ToDouble(txtPrecio.Text));
         }

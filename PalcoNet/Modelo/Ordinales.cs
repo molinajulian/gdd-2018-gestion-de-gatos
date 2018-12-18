@@ -119,11 +119,21 @@ namespace PalcoNet.Modelo
                                                     {"descripcion",1}
                                                     
                                                     };
+
+        [Public_Cod]
+        ,[Public_Desc]
+        ,[Public_Fecha_Creacion]
+        ,[Public_Grado_Cod]
+        ,[Public_Espec_Cod]
+        ,[Public_Estado_Id
        public static Dictionary<string, int> Publicacion = new Dictionary<string, int> 
                                                     {
                                                     {"codigo",0},
                                                     {"descripcion",1},
-                                                    {"fechaPublicacion",2}
+                                                    {"fechaCreacion",2},
+                                                    {"gradoCodigo",3},
+                                                    {"especCodigo",4},
+                                                    {"estadoId",5}
                                                     };
        public static Dictionary<string, int> Ubicacion = new Dictionary<string, int> 
                                                     {

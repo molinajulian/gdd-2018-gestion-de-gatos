@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PalcoNet.Repositorios;
 
 namespace PalcoNet.Modelo
 {
@@ -20,6 +21,21 @@ namespace PalcoNet.Modelo
         {
 
         }
+        public Publicacion(int codigo, string descripcion, Grado grado, EstadoPublicacion estado, List<Espectaculo> espectaculos)
+        {
+            Codigo = codigo;
+            Descripcion = descripcion;
+            Grado = grado;
+            Estado = estado;
+            Espectaculos = espectaculos;
+            Sectores = getSectores();
+        }
+
+        private List<Sector> getSectores()
+        {
+            return SectoresRepositorio.getSectoresDeEspectaculo(Espectaculos.First());
+        }
+
         public Publicacion(string descripcion, Grado grado,
             EstadoPublicacion estado, List<Espectaculo> espectaculos, List<Sector> sectores)
         {

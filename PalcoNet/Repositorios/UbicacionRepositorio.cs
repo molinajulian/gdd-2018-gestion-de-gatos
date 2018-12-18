@@ -53,7 +53,7 @@ namespace PalcoNet.Repositorios
             DataBase.WriteInBase("Deleteubicacion", "SP", parametros);
 
         }
-
+        
         public static List<Ubicacion> ReadUbicacionesFromDb(int id)
         {
             var ubicaciones = new List<Ubicacion>();
