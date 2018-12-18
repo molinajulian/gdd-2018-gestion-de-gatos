@@ -124,7 +124,7 @@ GO
 CREATE PROCEDURE sp_get_domicilios (@calle nvarchar(50), @nro numeric(18))
 AS BEGIN
 	SELECT * FROM GESTION_DE_GATOS.Domicilios
-		WHERE Dom_Calle LIKE Dom_Calle AND Dom_Nro_Calle = @nro;
+		WHERE Dom_Calle LIKE calle AND Dom_Nro_Calle = @nro;
 END 
 go
 
@@ -270,13 +270,34 @@ GO
 IF (OBJECT_ID('sp_crear_publicacion', 'P') IS NOT NULL) DROP PROCEDURE sp_crear_publicacion
 GO
 CREATE PROCEDURE sp_crear_publicacion(@pub_desc NVARCHAR(255), @pub_grado_cod INT, @pub_fecha_creacion DATETIME, 
-										@espec_cod INT)
+										@espec_cod INT, @editor_id INT)
 AS BEGIN
-INSERT INTO GESTION_DE_GATOS.Publicaciones ([Public_Desc], [Public_Fecha_Creacion], [Public_Grado_Cod]
-      										 , [Public_Espec_Cod], [Public_Estado_Id])
-	VALUES (@pub_desc, @pub_fecha_creacion, @pub_grado_cod, @espec_cod, 1);
+	DECLARE @pub_id INT
+	INSERT INTO GESTION_DE_GATOS.Publicaciones ([Public_Desc], [Public_Fecha_Creacion], [Public_Grado_Cod]
+	      										 , [Public_Espec_Cod], [Public_Estado_Id], Public_Editor)
+		VALUES (@pub_desc, @pub_fecha_creacion, @pub_grado_cod, @espec_cod, 1, @editor_id);
+	SET @pub_id = (SELECT TOP 1 Public_Cod FROM GESTION_DE_GATOS.Publicaciones ORDER BY Public_Cod DESC);
+	EXEC dbo.sp_actualizar_rol_editor( @editor_id)
 END
 GO
+
+
+IF (OBJECT_ID('sp_actualizar_rol_editor', 'P') IS NOT NULL) DROP PROCEDURE sp_actualizar_rol_editor
+GO
+CREATE PROCEDURE sp_actualizar_rol_editor(@editor_id INT)
+AS BEGIN
+	DECLARE @esEditor INT = 0;
+	SET @esEditor = (SELECT COUNT(1) FROM GESTION_DE_GATOS.Rol_Por_Usuario 
+						WHERE Usuario_Id = @editor_id AND Rol_Id = 4)
+	IF(@esEditor = 0)
+		BEGIN
+			INSERT INTO GESTION_DE_GATOS.Rol_Por_Usuario (Usuario_Id, Rol_Id)
+						VALUES(@editor_id, 4);
+		END
+END
+GO
+
+
 
 IF (OBJECT_ID('sp_crear_ubicaciones', 'P') IS NOT NULL) DROP PROCEDURE sp_crear_ubicaciones
 go
@@ -296,7 +317,32 @@ AS BEGIN
 				SET @indice_asiento = @indice_asiento + 1;
 			END;
 		   SET @indice_fila = @indice_fila + 1;
+		   SET @indice_asiento = 0;
 		END;
 	END
 END
 GO
+
+
+
+IF (OBJECT_ID('sp_get_sectores', 'P') IS NOT NULL) DROP PROCEDURE sp_get_sectores
+go
+CREATE procedure sp_get_sectores(@ubic_espec_codigo NUMERIC(18))
+AS BEGIN 
+	SELECT COUNT(distinct [Ubic_Fila]) filas, COUNT(distinct [Ubic_Asiento]) asientos, 
+			[Ubic_Precio], Ubicaciones.Ubic_Tipo_Cod, Ubic_Tipo_Descr
+  		FROM [GD2C2018].[GESTION_DE_GATOS].[Ubicaciones]
+  		JOIN [GD2C2018].[GESTION_DE_GATOS].[Ubicaciones_Tipo] ON Ubicaciones.Ubic_Tipo_Cod = Ubicaciones_Tipo.Ubic_Tipo_Cod
+  		WHERE Ubic_Espec_Cod = @ubic_espec_codigo
+  		GROUP BY Ubic_Precio, Ubicaciones.Ubic_Tipo_Cod, Ubic_Tipo_Descr
+END
+GO
+
+
+
+EXEC sp_rename 'GESTION_DE_GATOS.Ubicaciones_Tipo.Ubic_Cod', 'Ubic_Tipo_Cod', 'COLUMN';
+EXEC sp_rename 'GESTION_DE_GATOS.Ubicaciones_Tipo.Ubic_Descr', 'Ubic_Tipo_Descr', 'COLUMN';
+ALTER TABLE GESTION_DE_GATOS.Espectaculos DROP COLUMN Espec_Hora;
+ALTER TABLE GESTION_DE_GATOS.Publicaciones DROP COLUMN Public_Fact_Num;
+
+

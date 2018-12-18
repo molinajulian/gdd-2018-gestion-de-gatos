@@ -287,7 +287,8 @@ CREATE TABLE [GESTION_DE_GATOS].[Publicaciones]
 	[Public_Grado_Cod]			int NOT NULL,
 	[Public_Espec_Cod]			numeric(18) NOT NULL,
 	[Public_Fact_Num]			numeric(18) NULL,
-	[Public_Estado_Id]			int NOT NULL
+	[Public_Estado_Id]			int NOT NULL,
+	[Public_Editor]				int NOT NULL,
 )
 go
 
@@ -471,6 +472,9 @@ ALTER TABLE [GESTION_DE_GATOS].[Publicaciones]
 		ON UPDATE NO ACTION
 go
 
+ALTER TABLE GESTION_DE_GATOS.Publicaciones 
+	ADD CONSTRAINT FK_Public_Editor FOREIGN KEY (Public_Editor) REFERENCES GESTION_DE_GATOS.Usuarios(Usuario_Id); 
+go
 
 ALTER TABLE [GESTION_DE_GATOS].[Facturas]
 	ADD CONSTRAINT [FK_Fact_Empresa_Cuit] FOREIGN KEY ([Fact_Emp_Cuit]) REFERENCES [GESTION_DE_GATOS].[Empresas]([Emp_Cuit])
@@ -739,6 +743,7 @@ begin
 	INSERT INTO GESTION_DE_GATOS.Roles (Rol_Nombre,Rol_Estado) VALUES ('ADMINISTRATIVO',1)
 	INSERT INTO GESTION_DE_GATOS.Roles (Rol_Nombre,Rol_Estado) VALUES ('EMPRESA',1)
 	INSERT INTO GESTION_DE_GATOS.Roles (Rol_Nombre,Rol_Estado) VALUES ('CLIENTE',1)
+	INSERT INTO GESTION_DE_GATOS.Roles (Rol_Nombre, Rol_Estado) VALUES('EDITOR', 1);
 	-- Inserto funcionalidades
 	INSERT INTO GESTION_DE_GATOS.Funcionalidades (Func_Descr) VALUES ('CREAR CLIENTE')
 	INSERT INTO GESTION_DE_GATOS.Funcionalidades (Func_Descr) VALUES ('EDITAR CLIENTE')
