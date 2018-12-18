@@ -63,19 +63,20 @@ namespace PalcoNet.Repositorios
             }
         }
 
-        public static List<Rol> getRoles()
+        public static List<Rol> getRoles(int modo=0)
         {
             List<Rol> roles = new List<Rol>();
             StringBuilder stringBuilder = new StringBuilder();
             String sql = stringBuilder
                 .Append("SELECT * FROM GESTION_DE_GATOS.ROLES WHERE (Rol_Nombre = 'CLIENTE' or Rol_nombre = 'EMPRESA') and Rol_Estado=1")
                 .ToString();
+            if (modo == 1) sql = sql.Replace(" WHERE (Rol_Nombre = 'CLIENTE' or Rol_nombre = 'EMPRESA') and Rol_Estado=1", "");
             SqlDataReader lector = DataBase.GetDataReader(sql, "T", new List<SqlParameter>());
             if (lector.HasRows)
             {
                 while (lector.Read())
                 {
-                    Rol rol = Rol.buildRol(lector);
+                    Rol rol = modo == 0 ? Rol.buildRol(lector) : Rol.buildRolListado(lector);
                     roles.Add(rol);
                 }
             }
@@ -133,6 +134,21 @@ namespace PalcoNet.Repositorios
             bool tieneFuncionalidad = lector.HasRows && lector.Read();
             lector.Close();
             return tieneFuncionalidad;
+        }
+        public static List<Rol> getRoles(string descripcion)
+        {
+            List<Rol> roles = new List<Rol>();
+            SqlDataReader lector = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Roles WHERE Rol_Nombre LIKE ('%" + descripcion + "%')", "T", new List<SqlParameter>());
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    Rol rol =Rol.buildRolListado(lector);
+                    roles.Add(rol);
+                }
+            }
+            lector.Close();
+            return roles;
         }
     }
 }

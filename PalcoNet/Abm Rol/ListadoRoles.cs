@@ -19,11 +19,9 @@ namespace PalcoNet.AbmRol
         DataTable tabla_roles = new DataTable();
         Char modo;
         Rol rol_actual;
-        Menu menu;
-        public ListadoRoles(char modo, Menu menu, Rol rol_actual)
+        public ListadoRoles(char modo)
         {
             this.rol_actual = rol_actual;
-            this.menu = menu;
             InitializeComponent();
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
@@ -32,30 +30,18 @@ namespace PalcoNet.AbmRol
 
 
             this.modo = modo;
-
-            tabla_roles.Columns.Add("Id");
             tabla_roles.Columns.Add("Nombre");
-            tabla_roles.Columns.Add("Inhabilitado");
-
-            DataGridViewButtonColumn btn_accion = new DataGridViewButtonColumn();
-
+            tabla_roles.Columns.Add("Habilitado");
             if (modo.Equals('B'))
             {
-                btn_accion.HeaderText = "Baja";
-                btn_accion.Text = "Inhabilitar";
-                btn_accion.Name = "btn_baja";
-                btn_accion.UseColumnTextForButtonValue = true;
+                buttonModificar.Hide();
             }
             else
             {
-                btn_accion.HeaderText = "Modificación";
-                btn_accion.Text = "Modificar";
-                btn_accion.Name = "btn_modificacion";
-                btn_accion.UseColumnTextForButtonValue = true;
+                buttonHabilitar.Hide();
             }
-
+            getRoles();
             refreshValues();
-            data_listado_roles.Columns.Add(btn_accion);
         }
 
         public void refreshValues()
@@ -65,32 +51,32 @@ namespace PalcoNet.AbmRol
 
         private void btn_buscar_Click(object sender, EventArgs e)
         {
-            /*tabla_roles.Rows.Clear();
+            tabla_roles.Rows.Clear();
             List<Rol> roles = RolRepositorio.getRoles(tx_nombre_rol.Text);
 
             foreach(Rol rol in roles)
             {
-                String[] row = new String[] { Convert.ToString(rol.id), Convert.ToString(rol.nombre), Convert.ToString(!rol.Habilitado) };
+                string[] row = { rol.nombre, rol.Habilitado ? "Si" : "No" };
                 tabla_roles.Rows.Add(row);
             }
 
-            refreshValues();*/
-        }
-
-        private void btn_volver_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-        }
-
-        private void limpiarRoles()
-        {
-            tabla_roles.Rows.Clear();
             refreshValues();
+        }
+
+        private void getRoles()
+        {
+            List <Rol> roles = RolRepositorio.getRoles(1);
+            foreach (Rol r in roles)
+            {
+                string[] row = { r.nombre, r.Habilitado ? "Si" : "No" };
+                tabla_roles.Rows.Add(row);
+            }
         }
 
         private void btn_limpiar_Click(object sender, EventArgs e)
         {
-            this.limpiarRoles();
+            tabla_roles.Rows.Clear();
+            refreshValues();
         }
         
         private void data_listado_roles_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -113,7 +99,7 @@ namespace PalcoNet.AbmRol
         private void modificarRol(Rol rol)
         {
             this.Hide();
-            new ModificacionRol(rol,this.menu).ShowDialog();
+            // new ModificacionRol(rol,this.menu).ShowDialog();
             tabla_roles.Rows.Clear();
             refreshValues();
             this.Show();

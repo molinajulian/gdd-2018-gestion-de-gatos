@@ -152,7 +152,7 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonModificacionRol_Click(object sender, EventArgs e)
         {
-
+            new ListadoRoles('M').ShowDialog();
         }
 
         private void buttonRoles_Click(object sender, EventArgs e)
@@ -222,8 +222,7 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonBajaRol_Click(object sender, EventArgs e)
         {
-            //ListadoRoles lr = new ListadoRoles();
-            // lr.ShowDialog();
+            new ListadoRoles('B').ShowDialog();
         }
 
         private void buttonBajaGrado_Click(object sender, EventArgs e)

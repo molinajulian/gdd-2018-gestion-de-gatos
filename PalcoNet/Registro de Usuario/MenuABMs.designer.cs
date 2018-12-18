@@ -116,7 +116,7 @@
             this.buttonModificacionRol.MouseState = MaterialSkin.MouseState.HOVER;
             this.buttonModificacionRol.Name = "buttonModificacionRol";
             this.buttonModificacionRol.Primary = true;
-            this.buttonModificacionRol.Size = new System.Drawing.Size(195, 67);
+            this.buttonModificacionRol.Size = new System.Drawing.Size(195, 66);
             this.buttonModificacionRol.TabIndex = 53;
             this.buttonModificacionRol.Text = "Modificacion";
             this.buttonModificacionRol.UseVisualStyleBackColor = true;
@@ -127,7 +127,7 @@
             // 
             this.buttonBajaRol.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonBajaRol.Depth = 0;
-            this.buttonBajaRol.Location = new System.Drawing.Point(400, 186);
+            this.buttonBajaRol.Location = new System.Drawing.Point(400, 187);
             this.buttonBajaRol.MouseState = MaterialSkin.MouseState.HOVER;
             this.buttonBajaRol.Name = "buttonBajaRol";
             this.buttonBajaRol.Primary = true;
@@ -321,7 +321,7 @@
             // buttonModificacionEmpresa
             // 
             this.buttonModificacionEmpresa.Depth = 0;
-            this.buttonModificacionEmpresa.Location = new System.Drawing.Point(400, 260);
+            this.buttonModificacionEmpresa.Location = new System.Drawing.Point(400, 259);
             this.buttonModificacionEmpresa.MouseState = MaterialSkin.MouseState.HOVER;
             this.buttonModificacionEmpresa.Name = "buttonModificacionEmpresa";
             this.buttonModificacionEmpresa.Primary = true;

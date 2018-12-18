@@ -175,5 +175,10 @@ namespace PalcoNet.AbmGrado
                 }
             }            
         }
+
+        private void data_listado_grados_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
