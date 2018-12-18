@@ -1,0 +1,449 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5592804B-A900-40F6-830F-018BBBFEFAA1}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PalcoNet</RootNamespace>
+    <AssemblyName>PalcoNet</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>PalcoNet.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MaterialSkin">
+      <HintPath>packages\MaterialSkin.0.2.1\lib\MaterialSkin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abm Cliente\AltaCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Cliente\AltaCliente.Designer.cs">
+      <DependentUpon>AltaCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Cliente\ListadoCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Cliente\ListadoCliente.designer.cs">
+      <DependentUpon>ListadoCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Cliente\ModificacionCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Cliente\ModificacionCliente.designer.cs">
+      <DependentUpon>ModificacionCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Domicilio\AltaDomicilio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Domicilio\AltaDomicilio.Designer.cs">
+      <DependentUpon>AltaDomicilio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Domicilio\ListadoDomicilios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Domicilio\ListadoDomicilios.Designer.cs">
+      <DependentUpon>ListadoDomicilios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Domicilio\ModificarDomicilio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Domicilio\ModificarDomicilio.Designer.cs">
+      <DependentUpon>ModificarDomicilio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\AltaEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\AltaEmpresa.designer.cs">
+      <DependentUpon>AltaEmpresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\ListadoEmpresas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\ListadoEmpresas.designer.cs">
+      <DependentUpon>ListadoEmpresas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\ModificacionEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Empresa Espectaculo\ModificacionEmpresa.designer.cs">
+      <DependentUpon>ModificacionEmpresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Grado\AltaGrado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Grado\AltaGrado.Designer.cs">
+      <DependentUpon>AltaGrado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Grado\ModificacionGrado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Grado\ModificacionGrado.Designer.cs">
+      <DependentUpon>ModificacionGrado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Grado\ListadoGrados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Grado\ListadoGrados.Designer.cs">
+      <DependentUpon>ListadoGrados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Publicacion\AltaEspectaculo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Publicacion\AltaEspectaculo.Designer.cs">
+      <DependentUpon>AltaEspectaculo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Publicacion\AltaFechas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Publicacion\AltaFechas.Designer.cs">
+      <DependentUpon>AltaFechas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Publicacion\AltaSector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Publicacion\AltaSector.Designer.cs">
+      <DependentUpon>AltaSector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Publicacion\EditarPublicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Publicacion\EditarPublicacion.Designer.cs">
+      <DependentUpon>EditarPublicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Publicacion\EditarSector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Publicacion\EditarSector.Designer.cs">
+      <DependentUpon>EditarSector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Publicacion\GenerarPublicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Publicacion\GenerarPublicacion.Designer.cs">
+      <DependentUpon>GenerarPublicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Publicacion\ListaPublicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Publicacion\ListaPublicacion.Designer.cs">
+      <DependentUpon>ListaPublicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Publicacion\ListaSector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Publicacion\ListaSector.Designer.cs">
+      <DependentUpon>ListaSector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Tarjeta\AltaTarjeta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Tarjeta\AltaTarjeta.Designer.cs">
+      <DependentUpon>AltaTarjeta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Rol\AltaRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\AltaRol.designer.cs">
+      <DependentUpon>AltaRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Rol\ListadoRoles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\ListadoRoles.designer.cs">
+      <DependentUpon>ListadoRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Rol\ModificacionRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\ModificacionRol.designer.cs">
+      <DependentUpon>ModificacionRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Rubro\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rubro\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Tarjeta\ModificacionTarjeta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Tarjeta\ModificacionTarjeta.Designer.cs">
+      <DependentUpon>ModificacionTarjeta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Comprar\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Comprar\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Rendicion Comisiones\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Rendicion Comisiones\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Historial Cliente\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Historial Cliente\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modelo\Cliente.cs" />
+    <Compile Include="Modelo\Compra.cs" />
+    <Compile Include="Modelo\Domicilio.cs" />
+    <Compile Include="Modelo\Factura.cs" />
+    <Compile Include="Modelo\ItemFactura.cs" />
+    <Compile Include="Modelo\Premio.cs" />
+    <Compile Include="Modelo\PublicacionPuntual.cs" />
+    <Compile Include="Modelo\Sector.cs" />
+    <Compile Include="Modelo\TiposDocumento.cs" />
+    <Compile Include="Modelo\Empresa.cs" />
+    <Compile Include="Modelo\Espectaculo.cs" />
+    <Compile Include="Modelo\EstadoPublicacion.cs" />
+    <Compile Include="Modelo\Funcionalidad.cs" />
+    <Compile Include="Modelo\Grado.cs" />
+    <Compile Include="Modelo\Ordinales.cs" />
+    <Compile Include="Modelo\Publicacion.cs" />
+    <Compile Include="Modelo\Rol.cs" />
+    <Compile Include="Modelo\Rubro.cs" />
+    <Compile Include="Modelo\Tarjeta.cs" />
+    <Compile Include="Modelo\TipoUbicacion.cs" />
+    <Compile Include="Modelo\Ubicacion.cs" />
+    <Compile Include="Modelo\Usuario.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registro de Usuario\ConfiguracionInicial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registro de Usuario\ConfiguracionInicial.designer.cs">
+      <DependentUpon>ConfiguracionInicial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registro de Usuario\CambiarContraseña.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registro de Usuario\CambiarContraseña.designer.cs">
+      <DependentUpon>CambiarContraseña.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registro de Usuario\TipoDeRegistro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registro de Usuario\TipoDeRegistro.designer.cs">
+      <DependentUpon>TipoDeRegistro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registro de Usuario\MenuPpal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registro de Usuario\MenuPpal.designer.cs">
+      <DependentUpon>MenuPpal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registro de Usuario\Log.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registro de Usuario\Log.designer.cs">
+      <DependentUpon>Log.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registro de Usuario\MenuABMs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registro de Usuario\MenuABMs.designer.cs">
+      <DependentUpon>MenuABMs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\ClienteRepositorio.cs" />
+    <Compile Include="Repositorios\CompraRepositorio.cs" />
+    <Compile Include="Repositorios\DomiciliosRepositorio.cs" />
+    <Compile Include="Repositorios\EmpresasRepositorio.cs" />
+    <Compile Include="Repositorios\EspectaculoRepositorio.cs" />
+    <Compile Include="Repositorios\EstadoPublicacionRepositorio.cs" />
+    <Compile Include="Repositorios\FacturaRepositorio.cs" />
+    <Compile Include="Repositorios\ItemFacturaRepositorio.cs" />
+    <Compile Include="Repositorios\PremioRepositorio.cs" />
+    <Compile Include="Repositorios\RolRepositorio.cs" />
+    <Compile Include="Repositorios\FuncionalidadesRepositorio.cs" />
+    <Compile Include="Repositorios\DataBase.cs" />
+    <Compile Include="Repositorios\DireccionRepositorio.cs" />
+    <Compile Include="Repositorios\GradoRepositorio.cs" />
+    <Compile Include="Repositorios\PublicacionRepositorio.cs" />
+    <Compile Include="Repositorios\RubroRepositorio.cs" />
+    <Compile Include="Repositorios\TarjetaRepositorio.cs" />
+    <Compile Include="Repositorios\UbicacionRepositorio.cs" />
+    <Compile Include="Repositorios\TipoUbicacionRepositorio.cs" />
+    <Compile Include="Repositorios\UsuarioRepositorio.cs" />
+    <Compile Include="UserControls\EslabonFecha.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\EslabonFecha.Designer.cs">
+      <DependentUpon>EslabonFecha.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Abm Cliente\AltaCliente.resx">
+      <DependentUpon>AltaCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Cliente\ListadoCliente.resx">
+      <DependentUpon>ListadoCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Cliente\ModificacionCliente.resx">
+      <DependentUpon>ModificacionCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Domicilio\AltaDomicilio.resx">
+      <DependentUpon>AltaDomicilio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Domicilio\ListadoDomicilios.resx">
+      <DependentUpon>ListadoDomicilios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Domicilio\ModificarDomicilio.resx">
+      <DependentUpon>ModificarDomicilio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Empresa Espectaculo\AltaEmpresa.resx">
+      <DependentUpon>AltaEmpresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Empresa Espectaculo\ListadoEmpresas.resx">
+      <DependentUpon>ListadoEmpresas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Empresa Espectaculo\ModificacionEmpresa.resx">
+      <DependentUpon>ModificacionEmpresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Grado\AltaGrado.resx">
+      <DependentUpon>AltaGrado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Grado\ModificacionGrado.resx">
+      <DependentUpon>ModificacionGrado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Grado\ListadoGrados.resx">
+      <DependentUpon>ListadoGrados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Publicacion\AltaEspectaculo.resx">
+      <DependentUpon>AltaEspectaculo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Publicacion\AltaFechas.resx">
+      <DependentUpon>AltaFechas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Publicacion\AltaSector.resx">
+      <DependentUpon>AltaSector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Publicacion\EditarPublicacion.resx">
+      <DependentUpon>EditarPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Publicacion\EditarSector.resx">
+      <DependentUpon>EditarSector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Publicacion\GenerarPublicacion.resx">
+      <DependentUpon>GenerarPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Publicacion\ListaPublicacion.resx">
+      <DependentUpon>ListaPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Publicacion\ListaSector.resx">
+      <DependentUpon>ListaSector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rubro\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Tarjeta\AltaTarjeta.resx">
+      <DependentUpon>AltaTarjeta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\AltaRol.resx">
+      <DependentUpon>AltaRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\ListadoRoles.resx">
+      <DependentUpon>ListadoRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\ModificacionRol.resx">
+      <DependentUpon>ModificacionRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Tarjeta\ModificacionTarjeta.resx">
+      <DependentUpon>ModificacionTarjeta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Registro de Usuario\ConfiguracionInicial.resx">
+      <DependentUpon>ConfiguracionInicial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registro de Usuario\CambiarContraseña.resx">
+      <DependentUpon>CambiarContraseña.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registro de Usuario\TipoDeRegistro.resx">
+      <DependentUpon>TipoDeRegistro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registro de Usuario\MenuPpal.resx">
+      <DependentUpon>MenuPpal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registro de Usuario\Log.resx">
+      <DependentUpon>Log.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registro de Usuario\MenuABMs.resx">
+      <DependentUpon>MenuABMs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\EslabonFecha.resx">
+      <DependentUpon>EslabonFecha.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Canje Puntos\" />
+    <Folder Include="Listado Estadistico\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

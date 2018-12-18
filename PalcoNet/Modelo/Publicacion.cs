@@ -36,7 +36,8 @@ namespace PalcoNet.Modelo
 
         private List<Sector> getSectores()
         {
-            return SectoresRepositorio.getSectoresDeEspectaculo(Espectaculos.First());
+            //return SectoresRepositorio.getSectoresDeEspectaculo(Espectaculos.First());
+            return new List<Sector>();
         }
     }
 }

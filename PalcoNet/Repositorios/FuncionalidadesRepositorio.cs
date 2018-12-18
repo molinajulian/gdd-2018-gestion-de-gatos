@@ -13,9 +13,9 @@ namespace PalcoNet.Repositorios
     {
         public static List<Funcionalidad> getFuncionalidades()
         {
-            List<SqlParameter> parametros = new List<SqlParameter>();
             List<Funcionalidad> funcionalidades = new List<Funcionalidad>();
-            SqlDataReader lector = DataBase.GetDataReader("404_NOT_FOUND.", "SP", parametros);
+            string sql = "SELECT * FROM GESTION_DE_GATOS.Funcionalidades";
+            SqlDataReader lector = DataBase.GetDataReader(sql, "T", new List<SqlParameter>());
             if (lector.HasRows)
             {
                 while (lector.Read())

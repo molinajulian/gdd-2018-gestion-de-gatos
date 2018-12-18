@@ -88,6 +88,7 @@
             this.data_listado_grados.ReadOnly = true;
             this.data_listado_grados.Size = new System.Drawing.Size(324, 150);
             this.data_listado_grados.TabIndex = 4;
+            this.data_listado_grados.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.data_listado_grados_CellContentClick);
             // 
             // btn_limpiar
             // 

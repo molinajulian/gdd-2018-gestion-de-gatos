@@ -40,7 +40,8 @@ namespace PalcoNet.Modelo
 
         private List<Sector> getSectoresDeBDD()
         {
-            return SectoresRepositorio.getSectoresDeEspectaculo(Espectaculo);
+            // return SectoresRepositorio.getSectoresDeEspectaculo(Espectaculo);
+            return new List<Sector>();
         }
     }
 }
