@@ -90,5 +90,14 @@ namespace PalcoNet.Repositorios
                 espectaculo.Id = Convert.ToInt32(output.Value);
             }
         }
+
+        public static Espectaculo getEspectaculoDePublicacion(int publiId)
+        {
+            //Obtiene el espectaculo para la publicacion elegida
+           /* List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@espec_desc", espectaculo.Descripcion));
+            SqlCommand sqlCommand = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Espectaculos" +
+                                                           " JOIN ", "T", parametros);*/
+        }
     }
 }

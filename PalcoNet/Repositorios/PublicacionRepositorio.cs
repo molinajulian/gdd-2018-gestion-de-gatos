@@ -74,5 +74,23 @@ namespace PalcoNet.Repositorios
             }
             return publicacion;
         }
+
+        public static List<PublicacionPuntual> getPublicaciones(string tituloPub, DateTime fechaPub)
+        {
+            Dictionary<string, int> camposPublicacion = Ordinales.Publicacion;
+            List<PublicacionPuntual> publicaciones = new List<PublicacionPuntual>();
+            SqlDataReader lector = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Publicaciones"
+                                        +" WHERE Public_Desc LIKE '%" + tituloPub + "%'", "T", new List<SqlParameter>());
+            while (lector.HasRows && lector.Read())
+            {
+                publicaciones.Add(new PublicacionPuntual(
+                    Convert.ToInt32(lector[camposPublicacion["codigo"]]),
+                    lector[camposPublicacion["descripcion"]].ToString(),
+                    GradoRepositorio.ReadGradoFromDb(camposPublicacion["gradoCodigo"]),
+                    EstadoPublicacionRepositorio.ReadEstadoPublicacionFromDb(camposPublicacion["estadoId"]),
+                    EspectaculoRepositorio.getEspectaculoDePublicacion(Convert.ToInt32(lector[camposPublicacion["codigo"]]))));
+            }
+            return publicaciones;
+        }
     }
 }
