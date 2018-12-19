@@ -33,6 +33,12 @@ namespace PalcoNet.Modelo
                                                     {"id", 0},
                                                     {"nombre", 1}
                                                 };
+       public static Dictionary<string, int> camposRolListado = new Dictionary<string, int>
+                                                {
+                                                    {"id", 0},
+                                                    {"nombre", 1},
+                                                    {"habilitado",2}
+                                                };
        public static Dictionary<string, int> camposGetClientes = new Dictionary<string, int>
                                                 {
                                                     {"tipo_doc_descr", 0},
@@ -145,7 +151,8 @@ namespace PalcoNet.Modelo
                                                     {
                                                     {"codigo",0},
                                                     {"comision",1},
-                                                    {"descripcion",2}
+                                                    {"descripcion",2},
+                                                    {"habilitado",3}
                                                     };
         public static Dictionary<string, int> ItemFactura = new Dictionary<string, int>
                                                     {

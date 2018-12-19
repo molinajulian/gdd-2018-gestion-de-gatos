@@ -144,9 +144,6 @@ namespace PalcoNet.Registro_de_Usuario
                 {7, buttonAltaRol}, //CREAR ROL
                 {8, buttonModificacionRol}, //EDITAR ROL
                 {9, buttonBajaRol}, //ELIMINAR ROL
-                // {10  , buttonAltaC}, //CREAR CATEGORIA
-                // {11  , btn}, //EDITAR CATEGORIA
-                // {12  , btn}, //ELIMINAR CATEGORIA
                 {13, buttonAltaGrado}, //CREAR GRADO PUBLICACION
                 {14, buttonModificacionGrado}, //EDITAR GRADO PUBLICACION
                 {15, buttonBajaGrado} //ELIMINAR GRADO PUBLICACION
@@ -155,7 +152,7 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonModificacionRol_Click(object sender, EventArgs e)
         {
-
+            new ListadoRoles('M').ShowDialog();
         }
 
         private void buttonRoles_Click(object sender, EventArgs e)
@@ -213,7 +210,7 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonModificacionGrado_Click(object sender, EventArgs e)
         {
-            ListadoGrados lg = new ListadoGrados();
+            ListadoGrados lg = new ListadoGrados('M');
             lg.ShowDialog();
         }
 
@@ -225,13 +222,12 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonBajaRol_Click(object sender, EventArgs e)
         {
-            //ListadoRoles lr = new ListadoRoles();
-            // lr.ShowDialog();
+            new ListadoRoles('B').ShowDialog();
         }
 
         private void buttonBajaGrado_Click(object sender, EventArgs e)
         {
-            ListadoGrados lg = new ListadoGrados();
+            ListadoGrados lg = new ListadoGrados('B');
             lg.ShowDialog();
         }
 

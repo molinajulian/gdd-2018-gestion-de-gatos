@@ -178,12 +178,25 @@ CREATE TABLE [GESTION_DE_GATOS].[Premios]
 ( 
 	[Premio_Id]					int identity(1,1)  NOT NULL ,
 	[Premio_Desc]				varchar(50)  NOT NULL,
-	[Premio_Puntos]				int NOT NULL,
-	[Premio_FechaVencimiento]	date null
+	[Premio_Puntos]				int NOT NULL
 
 )
+CREATE TABLE [GESTION_DE_GATOS].[Puntos]
+(
+	[Puntos_Id] int identity (1,1) NOT NULL,
+	[Cli_Tipo_Doc]	  int NOT NULL,
+	[Cli_Doc]         numeric(18)  NOT NULL ,
+	[Puntos_FechaVencimiento] datetime NOT NULL,
+	[Puntos_Cantidad] int NULL
+)
 go
-
+ALTER TABLE [GESTION_DE_GATOS].[Puntos]
+ADD CONSTRAINT [XPKPuntos] PRIMARY KEY CLUSTERED ([Puntos_Id] ASC)
+go
+ALTER TABLE [GESTION_DE_GATOS].[Puntos]
+  ADD CONSTRAINT [FK_Puntos_Cliente]
+  FOREIGN KEY(Cli_Tipo_Doc,Cli_Doc) REFERENCES [GESTION_DE_GATOS].[Clientes](Cli_Tipo_Doc_Id,Cli_Doc)
+go
 ALTER TABLE [GESTION_DE_GATOS].[Premios]
 	ADD CONSTRAINT [XPKPremios] PRIMARY KEY  CLUSTERED ([Premio_Id] ASC)
 go
@@ -947,14 +960,14 @@ begin
 		GROUP BY p.Public_Fact_Num,u.Ubic_Compra_Id,u.Ubic_Precio,u.Ubic_Asiento,u.Ubic_Fila
 		ORDER BY p.Public_Fact_Num
 	-- inserto premios
-	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos,Premio_FechaVencimiento) VALUES ('TAZA',300,convert(date,dateadd(m,3,getdate())))
-	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos,Premio_FechaVencimiento) VALUES ('PLATO',400,convert(date,dateadd(m,3,getdate())))
-	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos,Premio_FechaVencimiento) VALUES ('PAVA ELECTRICA',1300,convert(date,dateadd(m,3,getdate())))
-	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos,Premio_FechaVencimiento) VALUES ('MESA DE LUZ',5500,convert(date,dateadd(m,3,getdate())))
-	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos,Premio_FechaVencimiento) VALUES ('VIAJE A SAN PABLO',48000,convert(date,dateadd(m,3,getdate())))
-	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos,Premio_FechaVencimiento) VALUES ('CARGADOR USB',2800,convert(date,dateadd(m,3,getdate())))
-	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos,Premio_FechaVencimiento) VALUES ('SOMBRILLA',6800,convert(date,dateadd(m,3,getdate())))
-	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos,Premio_FechaVencimiento) VALUES ('CARPA',17000,convert(date,dateadd(m,3,getdate())))
+	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('TAZA',300)
+	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('PLATO',400)
+	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('PAVA ELECTRICA',1300)
+	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('MESA DE LUZ',5500)
+	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('VIAJE A SAN PABLO',48000)
+	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('CARGADOR USB',2800)
+	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('SOMBRILLA',6800)
+	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('CARPA',17000)
 	-- inserto un usuario administrador
 	INSERT INTO GESTION_DE_GATOS.Usuarios (Usuario_Username,Usuario_Password,Usuario_Estado) VALUES ('admin',HASHBYTES('SHA2_256','admin'),1)
 	INSERT INTO GESTION_DE_GATOS.Rol_Por_Usuario (Usuario_Id,Rol_Id)
@@ -1043,7 +1056,29 @@ AS BEGIN
 	else
 		INSERT INTO GESTION_DE_GATOS.Grados (Grado_Comision,Grado_Descr) VALUES (round(@grado,2),@descripcion)
 END 
-go 
+go
+
+GO
+IF (OBJECT_ID('sp_modificar_grado', 'P') IS NOT NULL) DROP PROCEDURE sp_modificar_grado 
+GO
+CREATE PROCEDURE sp_modificar_grado(@id int,@comision float,@descripcion varchar(50),@habilitado bit)
+AS BEGIN
+	declare @cantidad int
+	set @cantidad = (SELECT isnull(COUNT(*),0) FROM GESTION_DE_GATOS.Grados WHERE (@descripcion = Grado_Descr or @comision = Grado_Comision) and Grado_Cod <> @id)
+	if @cantidad > 0
+		raiserror('Ya existe un grado con esa descripcion y/o esa comision',16,0)
+	else
+		UPDATE GESTION_DE_GATOS.Grados SET Grado_Comision = @comision, Grado_Descr = @descripcion, Grado_Habilitado = @habilitado WHERE Grado_Cod = @id
+END 
+go
+
+IF (OBJECT_ID('sp_cambiar_estado_grado', 'P') IS NOT NULL) DROP PROCEDURE sp_cambiar_estado_grado
+GO
+CREATE procedure dbo.sp_cambiar_estado_grado (@id int,@estado_final bit)
+AS BEGIN
+	UPDATE GESTION_DE_GATOS.Grados SET Grado_Habilitado = @estado_final WHERE Grado_Cod = @id
+END
+GO 
 /*go
 USE GD2C2018;
 ALTER TABLE [GESTION_DE_GATOS].[Rol_Por_Usuario] DROP CONSTRAINT FK_Usuario_Id,FK_Rol_Id
@@ -1058,6 +1093,7 @@ ALTER TABLE [GESTION_DE_GATOS].[Compras] DROP CONSTRAINT FK_Compra_Publicacion_I
 ALTER TABLE [GESTION_DE_GATOS].[Publicaciones] DROP CONSTRAINT FK_Public_Grado_Cod,FK_Public_Espec_Cod,FK_Public_Fact_Num,FK_Public_Estado_Id
 ALTER TABLE [GESTION_DE_GATOS].[Facturas] DROP CONSTRAINT FK_Fact_Empresa_Cuit
 ALTER TABLE [GESTION_DE_GATOS].[Item_Facturas] DROP CONSTRAINT FK_Item_Fact_Num
+ALTER TABLE [GESTION_DE_GATOS].[Puntos] DROP CONSTRAINT FK_Puntos_Cliente
 DROP TABLE [GESTION_DE_GATOS].[Funcionalidad_Por_Rol]
 DROP TABLE [GESTION_DE_GATOS].[Rol_Por_Usuario]
 DROP TABLE [GESTION_DE_GATOS].[Premios_Adquiridos]
@@ -1080,6 +1116,8 @@ DROP TABLE [GESTION_DE_GATOS].[Espectaculos]
 DROP TABLE [GESTION_DE_GATOS].[Facturas]
 DROP TABLE [GESTION_DE_GATOS].[Empresas]
 DROP TABLE [GESTION_DE_GATOS].[Tipos_Doc]
+DROP TABLE [GESTION_DE_GATOS].[Puntos]
+
 GO
 DROP SCHEMA [GESTION_DE_GATOS]
 */

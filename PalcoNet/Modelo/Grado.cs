@@ -8,15 +8,22 @@ namespace PalcoNet.Modelo
 {
     public class Grado
     {
-        public Grado(int codigo, double comision, string descripcion)
+        public Grado(int codigo, double comision, string descripcion, bool habilitado)
         {
             Id = codigo;
-            Comision = codigo;
+            Comision = comision;
             Descripcion = descripcion;
+            Habilitado = habilitado;
         }
-
+        public Grado(int codigo, double comision, string descripcion)
+        {
+            this.Id = codigo;
+            this.Comision = comision;
+            this.Descripcion = descripcion;
+        }
         public int Id { get; set; }
-        public int Comision { get; set; }
+        public double Comision { get; set; }
         public string Descripcion { get; set; }
+        public bool Habilitado { get; set; }
     }
 }

@@ -78,6 +78,15 @@ AS BEGIN
 END
 go
 
+IF (OBJECT_ID('sp_crear_rol', 'P') IS NOT NULL) DROP PROCEDURE sp_crear_rol
+go
+CREATE PROCEDURE sp_crear_rol @nombre varchar(20),@id int OUTPUT
+AS BEGIN
+		INSERT INTO GESTION_DE_GATOS.Roles (Rol_Nombre,Rol_Estado) VALUES (@nombre,1)
+		set @id = (SELECT TOP 1 Rol_Id FROM GESTION_DE_GATOS.Roles ORDER BY Rol_Id DESC)
+END
+go
+
 IF (OBJECT_ID('sp_funcionalidades_por_rol', 'P') IS NOT NULL) DROP PROCEDURE sp_funcionalidades_por_rol
 go
 CREATE PROCEDURE sp_funcionalidades_por_rol @rol_id INT
@@ -352,6 +361,12 @@ AS BEGIN
 END
 GO
 
+IF (OBJECT_ID('sp_eliminar_ubicaciones', 'P') IS NOT NULL) DROP PROCEDURE sp_eliminar_ubicaciones
+go
+CREATE procedure sp_eliminar_ubicaciones(@ubic_espec_codigo NUMERIC(18))
+AS BEGIN 
+	DELETE FROM GESTION_DE_GATOS.Ubicaciones WHERE Ubic_Espec_Cod = @ubic_espec_codigo;
+END
 
 
 IF (OBJECT_ID('sp_get_sectores', 'P') IS NOT NULL) DROP PROCEDURE sp_get_sectores
