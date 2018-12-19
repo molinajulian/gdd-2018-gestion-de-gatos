@@ -24,7 +24,6 @@ namespace PalcoNet.Repositorios
         public static void crearPublicacion(Publicacion publicacion)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
-
             foreach (Espectaculo espectaculo in publicacion.Espectaculos)
             {
                 parametros.Add(new SqlParameter("@pub_desc", publicacion.Descripcion));
@@ -37,7 +36,6 @@ namespace PalcoNet.Repositorios
                 parametros.Clear();
             }
         }
-
 
         public static PublicacionPuntual GetPublicacionById(int id)
         {
@@ -65,16 +63,16 @@ namespace PalcoNet.Repositorios
             List<PublicacionPuntual> publicaciones = new List<PublicacionPuntual>();
             SqlDataReader lector = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Publicaciones"
                                                           + " WHERE Public_Desc LIKE '%" + tituloPub + "%'" 
-                                                          + " AND Public_Estado_Id = " + estadoBorrador.Id, "T", new List<SqlParameter>());
+                                                          + " AND Public_Editor IS NOT NULL AND Public_Estado_Id = " + estadoBorrador.Id, "T", new List<SqlParameter>());
             while (lector.HasRows && lector.Read())
             {
                 publicaciones.Add(new PublicacionPuntual(
                     Convert.ToInt32(lector[camposPublicacion["codigo"]]),
                     lector[camposPublicacion["descripcion"]].ToString(),
-                    GradoRepositorio.ReadGradoFromDb(camposPublicacion["gradoCodigo"]),
-                    EstadoPublicacionRepositorio.ReadEstadoPublicacionFromDb(camposPublicacion["estadoId"]),
-                    EspectaculoRepositorio.ReadEspectaculoFromDb(Convert.ToInt32(lector[camposPublicacion["codigo"]])),
-                    UsuarioRepositorio.buscarUsuario(lector[camposPublicacion["editor"]].ToString())));
+                    GradoRepositorio.ReadGradoFromDb(Convert.ToInt32(lector[camposPublicacion["gradoCodigo"]])),
+                    EstadoPublicacionRepositorio.ReadEstadoPublicacionFromDb(Convert.ToInt32(lector[camposPublicacion["estadoId"]])),
+                    EspectaculoRepositorio.ReadEspectaculoFromDb(Convert.ToInt32(lector[camposPublicacion["especCodigo"]])),
+                    UsuarioRepositorio.buscarUsuario(Convert.ToInt32(lector[camposPublicacion["editor"]]))));
             }
             return publicaciones;
         }
@@ -84,15 +82,18 @@ namespace PalcoNet.Repositorios
             actualizarPublicacion(publicacion);
             EspectaculoRepositorio.actualizar(publicacion.Espectaculo);
             UbicacionRepositorio.actualizarSectores(publicacion.getSectores(), publicacion.Espectaculo);
+            MessageBox.Show("Publicacion y Espectaculos actualizados exitosamente", "Modificacion Publicacion Puntual", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public static void actualizarPublicacion(PublicacionPuntual publicacion)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@pub_cod", publicacion.Codigo));
             parametros.Add(new SqlParameter("@pub_desc", publicacion.Descripcion));
             parametros.Add(new SqlParameter("@pub_grado_cod", publicacion.Grado.Id));
             parametros.Add(new SqlParameter("@pub_estado_id", publicacion.Estado.Id));
-            parametros.Add(new SqlParameter("@pub_editor", publicacion.Editor.id));
+            parametros.Add(new SqlParameter("@editor_id", publicacion.Editor.id));
+            parametros.Add(new SqlParameter("@espec_cod", publicacion.Espectaculo.Id));
             DataBase.ejecutarSP("sp_actualizar_publicacion", parametros);
 
         }

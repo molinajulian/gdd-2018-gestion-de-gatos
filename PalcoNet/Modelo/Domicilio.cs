@@ -60,5 +60,16 @@ namespace PalcoNet.Modelo
                 lector[camposDomicilio["piso"]].ToString()
             );
         }
+
+        public void reemplazar(Domicilio domicilio)
+        {
+            Id = domicilio.Id;
+            Calle = domicilio.Calle;
+            Numero = domicilio.Numero;
+            Departamento = domicilio.Departamento;
+            CodPostal = domicilio.CodPostal;
+            Piso = domicilio.Piso;
+            Localidad = domicilio.Localidad;
+        }
     }
 }

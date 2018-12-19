@@ -118,7 +118,7 @@ namespace PalcoNet.AbmDomicilio
         private void button2_Click(object sender, EventArgs e)
         {
             if(data_listado_domicilios.SelectedRows.Count == 1) { 
-                domicilioElegido = domicilios[data_listado_domicilios.SelectedRows[0].Index];
+                domicilioElegido.reemplazar(domicilios[data_listado_domicilios.SelectedRows[0].Index]);
                 MessageBox.Show("Domicilio seleccionado exitosamente", "Seleccion de domicilio", MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
                 this.Close();

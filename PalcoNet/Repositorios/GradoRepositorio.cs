@@ -28,7 +28,7 @@ namespace PalcoNet.Repositorios
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@id", id));
             Dictionary<string, int> camposGrado = Ordinales.Grado;
-            SqlCommand cmb = DataBase.ejecutarFuncion("SLECT * FROM GESTION_DE_GATOS.Grados WHERE Grado_Cod = @id", parametros);
+            SqlCommand cmb = DataBase.ejecutarFuncion("SELECT * FROM GESTION_DE_GATOS.Grados WHERE Grado_Cod = @id", parametros);
             SqlDataReader lector = cmb.ExecuteReader();
             if (lector.Read())
             {

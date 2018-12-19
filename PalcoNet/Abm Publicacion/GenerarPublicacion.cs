@@ -12,7 +12,7 @@ namespace PalcoNet.AbmPublicaciones
     public partial class GenerarPublicacion : MaterialForm
     {
         List<Sector> sectoresRegistrados = new List<Sector>();
-        private Domicilio domicilioElegido = null;
+        private Domicilio domicilioElegido = new Domicilio();
         private List<DateTime> fechasElegidas = new List<DateTime>();
         public GenerarPublicacion()
         {

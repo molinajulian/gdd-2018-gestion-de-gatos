@@ -43,7 +43,6 @@
             // 
             // btn_cambiar_estado
             // 
-            this.btn_cambiar_estado.Enabled = false;
             this.btn_cambiar_estado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_cambiar_estado.Location = new System.Drawing.Point(335, 421);
             this.btn_cambiar_estado.Margin = new System.Windows.Forms.Padding(2);
@@ -55,7 +54,6 @@
             // 
             // btn_editar
             // 
-            this.btn_editar.Enabled = false;
             this.btn_editar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_editar.Location = new System.Drawing.Point(211, 421);
             this.btn_editar.Margin = new System.Windows.Forms.Padding(2);

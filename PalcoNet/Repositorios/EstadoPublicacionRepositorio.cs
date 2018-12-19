@@ -31,7 +31,7 @@ namespace PalcoNet.Repositorios
         {
             var parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@id", id));
-            var query = DataBase.ejecutarFuncion("Select top 1 * from estadopublicacion e where e.Public_Est_Id = @id", parametros);
+            var query = DataBase.ejecutarFuncion("Select top 1 * from GESTION_DE_GATOS.Publicaciones_Estado e where e.Public_Est_Id = @id", parametros);
             SqlDataReader reader = query.ExecuteReader();
             if (reader.Read())
             {

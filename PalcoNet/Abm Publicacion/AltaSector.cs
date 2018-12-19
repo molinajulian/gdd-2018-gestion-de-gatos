@@ -57,6 +57,7 @@ namespace PalcoNet.AbmPublicaciones
         {
            txtAsientos.Clear();
            txtFilas.Clear();
+           txtPrecio.Clear();
         }
 
         private bool validarCamposSector()
@@ -113,8 +114,7 @@ namespace PalcoNet.AbmPublicaciones
 
         private void btn_alta_sector_Click_1(object sender, EventArgs e)
         {
-            epProvider.Clear();
-            if (validarCamposSector()) { return; }
+            if (!validarCamposSector()) { return; }
             agregarSector(getSectorDeUi());
         }
 

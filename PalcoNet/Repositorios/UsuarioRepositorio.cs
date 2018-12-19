@@ -29,7 +29,7 @@ namespace PalcoNet.Repositorios
             return Convert.ToInt32(output.Value);
         }
 
-        public Usuario buscarUsuario(int idUsuario)
+        public static Usuario buscarUsuario(int idUsuario)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@idUsuario", idUsuario));
@@ -40,7 +40,8 @@ namespace PalcoNet.Repositorios
         {
             return Usuario.buildUsuario(
                 DataBase.GetDataReader(
-                    "SELECT * FROM GESTION_DE_GATOS.Usuarios WHERE [Usuario_Username] = " + username,
+                    "SELECT [Usuario_Id],[Usuario_Username],[Usuario_Estado], [Usuario_Primer_Logueo] " +
+                    "FROM GESTION_DE_GATOS.Usuarios WHERE [Usuario_Username] = '" + username + "'",
                     "T",
                     new List<SqlParameter>()
                     )

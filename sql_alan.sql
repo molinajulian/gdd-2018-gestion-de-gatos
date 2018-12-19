@@ -270,17 +270,16 @@ GO
 IF (OBJECT_ID('sp_crear_publicacion', 'P') IS NOT NULL) DROP PROCEDURE sp_crear_publicacion
 GO
 CREATE PROCEDURE sp_crear_publicacion(@pub_desc NVARCHAR(255), @pub_grado_cod INT, @pub_fecha_creacion DATETIME, 
-										@espec_cod INT, @pub_estado_id @editor_id INT)
+										@espec_cod NUMERIC(18,0), @pub_estado_id INT, @editor_id INT)
 AS BEGIN
 	DECLARE @pub_id INT
 	INSERT INTO GESTION_DE_GATOS.Publicaciones ([Public_Desc], [Public_Fecha_Creacion], [Public_Grado_Cod]
 	      										 , [Public_Espec_Cod], [Public_Estado_Id], Public_Editor)
 		VALUES (@pub_desc, @pub_fecha_creacion, @pub_grado_cod, @espec_cod, @pub_estado_id, @editor_id);
 	SET @pub_id = (SELECT TOP 1 Public_Cod FROM GESTION_DE_GATOS.Publicaciones ORDER BY Public_Cod DESC);
-	EXEC dbo.sp_actualizar_rol_editor(@editor_id)
+	EXEC dbo.sp_actualizar_rol_editor @editor_id;
 END
 GO
-
 
 IF (OBJECT_ID('sp_actualizar_rol_editor', 'P') IS NOT NULL) DROP PROCEDURE sp_actualizar_rol_editor
 GO
@@ -300,20 +299,21 @@ GO
 
 IF (OBJECT_ID('sp_actualizar_publicacion', 'P') IS NOT NULL) DROP PROCEDURE sp_actualizar_publicacion
 GO
-CREATE PROCEDURE sp_actualizar_publicacion(@pub_desc NVARCHAR(255), @pub_grado_cod INT, 
+CREATE PROCEDURE sp_actualizar_publicacion(@pub_cod INT, @pub_desc NVARCHAR(255), @pub_grado_cod INT, 
 											@espec_cod INT, @pub_estado_id INT, @editor_id INT)
 AS BEGIN
 	DECLARE @pub_id INT
 	UPDATE GESTION_DE_GATOS.Publicaciones
 		SET [Public_Desc] = @pub_desc, [Public_Grado_Cod] = @pub_grado_cod, 
-			[Public_Espec_Cod] = @espec_cod, [Public_Estado_Id] = @pub_estado_id, Public_Editor = @editor_id;
+			[Public_Espec_Cod] = @espec_cod, [Public_Estado_Id] = @pub_estado_id, Public_Editor = @editor_id
+		WHERE Public_Cod = @pub_cod;
 	EXEC dbo.sp_actualizar_rol_editor @editor_id;
 END
 GO
 
 IF (OBJECT_ID('sp_actualizar_espectaculo', 'P') IS NOT NULL) DROP PROCEDURE sp_actualizar_espectaculo
 GO
-CREATE PROCEDURE sp_actualizar_espectaculo(@espec_desc NVARCHAR(255), @espec_fecha DATETIME,
+CREATE PROCEDURE sp_actualizar_espectaculo(@espec_cod INT, @espec_desc NVARCHAR(255), @espec_fecha DATETIME,
 										@espec_fecha_vencimiento DATETIME, @espec_rubro_codigo INT,
 										@espec_emp_cuit NVARCHAR(255), @espec_dom_id INT, 
 										@espec_estado BIT)
@@ -321,7 +321,8 @@ AS BEGIN
 	UPDATE GESTION_DE_GATOS.Espectaculos 
 		SET [Espec_Desc] = @espec_desc, [Espec_Fecha] = @espec_fecha, [Espec_Fecha_Venc] = @espec_fecha_vencimiento,
 			[Espec_Rubro_Cod] = @espec_rubro_codigo, [Espec_Emp_Cuit] = @espec_emp_cuit, [Espec_Dom_Id] = @espec_dom_id,
-			[Espec_Estado] = @espec_estado;
+			[Espec_Estado] = @espec_estado
+		WHERE Espec_Cod = @espec_cod;
 END
 GO
 

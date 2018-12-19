@@ -93,16 +93,14 @@ namespace PalcoNet.Repositorios
         public static List<Sector> getSectoresDeEspectaculo(Espectaculo espectaculo)
         {
             List<Sector> sectores = new List<Sector>();
-            List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@ubic_espec_codigo", espectaculo.Id));
             string sql = "SELECT COUNT(distinct [Ubic_Fila]) filas, COUNT(distinct [Ubic_Asiento]) asientos, " +
                          "[Ubic_Precio], Ubicaciones.Ubic_Tipo_Cod, Ubic_Tipo_Descr " +
                          "FROM [GD2C2018].[GESTION_DE_GATOS].[Ubicaciones] " +
                          "JOIN [GD2C2018].[GESTION_DE_GATOS].[Ubicaciones_Tipo] " +
                          "ON Ubicaciones.Ubic_Tipo_Cod = Ubicaciones_Tipo.Ubic_Tipo_Cod " +
                          "WHERE Ubic_Espec_Cod = " + espectaculo.Id +
-                         " GROUP BY Ubic_Precio, Ubicaciones.Ubic_Tipo_Cod, Ubic_Tipo_Descr";
-            SqlDataReader lector = DataBase.GetDataReader(sql, "T", parametros);
+                         "GROUP BY Ubic_Precio, Ubicaciones.Ubic_Tipo_Cod, Ubic_Tipo_Descr";
+            SqlDataReader lector = DataBase.GetDataReader(sql, "T", new List<SqlParameter>());
             if (lector.HasRows)
             {
                 while (lector.Read())
@@ -143,13 +141,15 @@ namespace PalcoNet.Repositorios
         public static void eliminarSectoresDePublicacion(Espectaculo espectaculo)
         {
             string sql = "DELETE FROM GESTION_DE_GATOS.Ubicaciones WHERE Ubic_Espec_Cod = " + espectaculo.Id;
-            DataBase.ejecutarFuncion(sql, new List<SqlParameter>());
+            List<SqlParameter> parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@ubic_espec_codigo", espectaculo.Id));
+            DataBase.ejecutarSP("sp_eliminar_ubicaciones", parameters);
         }
 
-        public static void actualizarSectores(List<Sector> getSectores, Espectaculo espectaculo)
+        public static void actualizarSectores(List<Sector> sectores, Espectaculo espectaculo)
         {
             eliminarSectoresDePublicacion(espectaculo);
-            crearUbicacionesPorEspectaculo(getSectores, espectaculo);
+            crearUbicacionesPorEspectaculo(sectores, espectaculo);
         }
     }
 }

@@ -78,7 +78,7 @@ namespace PalcoNet.Repositorios
                 historial.Add(new Compra()
                 {
                     Id = (int)reader.GetValue(Ordinales.Compra["Compra_Id"]),
-                    Publicacion = PublicacionRepositorio.GetPublicacionById((int)Ordinales.Compra["Compra_Publicacion_Id"]),
+                    //Publicacion = PublicacionRepositorio.GetPublicacionById((int)Ordinales.Compra["Compra_Publicacion_Id"]),
                     Cliente = ClienteRepositorio.getCliente(
                     reader.GetValue(Ordinales.Compra["Compra_Cliente_Documento"]).ToString(), reader.GetValue(Ordinales.Compra["Compra_TipoDoc"]).ToString()),
                     Fecha = (DateTime)reader.GetValue(Ordinales.Compra["Fecha_Id"])

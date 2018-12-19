@@ -52,14 +52,14 @@ namespace PalcoNet.Repositorios
         
         public static Empresa ReadEmpresaFromDb(SqlDataReader reader)
         {
-            return new Empresa()
-                         {
-                        RazonSocial=reader.GetValue(Ordinales.Empresa["razonSocial"]).ToString(),
-                        Cuit=reader.GetValue(Ordinales.Empresa["cuit"]).ToString(),
-                        Email = reader.GetValue(Ordinales.Empresa["email"]).ToString(),
-                        Telefono = reader.GetValue(Ordinales.Empresa["telefono"]).ToString(),
-                        Domicilio = DireccionRepositorio.ReadDireccionFromDb(reader.GetValue(Ordinales.Empresa["cuit"]).ToString())
-                         };
+            Dictionary<string, int> camposEmpresa = Ordinales.Empresa;
+            return new Empresa(
+                reader[camposEmpresa["razonSocial"]].ToString(),
+                reader[camposEmpresa["cuit"]].ToString(),
+                reader[camposEmpresa["email"]].ToString(),
+                reader[camposEmpresa["telefono"]].ToString(),
+                DomiciliosRepositorio.getDomicilio(reader[camposEmpresa["domicilioId"]].ToString()),
+                Convert.ToBoolean(reader[camposEmpresa["habilitada"]]));
         }
        
         public static List<Empresa> GetempresaByRazonSocial(string unaRazon)
@@ -77,20 +77,15 @@ namespace PalcoNet.Repositorios
             reader.Close();
             return empresas;
         }
-        public static List<Empresa> GetempresaByCuit(string unNumero)
+        public static Empresa getEmpresa(string cuit)
         {
-            var empresas = new List<Empresa>();
-            var parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@numero", unNumero));
-            var query = DataBase.ejecutarFuncion("Select * from empresa e where e.empr_cuit like('@numero%')", parametros);
-            SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read())
+            SqlDataReader reader = DataBase.GetDataReader("SELECT * from GESTION_DE_GATOS.Empresas e where e.Emp_Cuit LIKE '%" + cuit + "%'", "T", new List<SqlParameter>());
+            if(reader.HasRows && reader.Read())
             {
-                empresas.Add(
-                    ReadEmpresaFromDb(reader));
+                return ReadEmpresaFromDb(reader);
             }
             reader.Close();
-            return empresas;
+            return null;
         }
 
         public static Empresa GetEmpresaByUserId(int id)
@@ -133,11 +128,6 @@ namespace PalcoNet.Repositorios
         {
             List<SqlParameter> parametros = DataBase.GenerarParametrosDeleteFromString(empresa_cuit, username);
             DataBase.WriteInBase("[dbo].[eliminarEmpresa]", "SP", parametros);
-        }
-
-        internal static Empresa getEmpresa(string cuit)
-        {
-            throw new NotImplementedException();
         }
 
         internal static void actualizar(Empresa empresa)

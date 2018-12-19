@@ -36,8 +36,8 @@ namespace PalcoNet.Modelo
                 usuario = new Usuario(
                     lector.GetInt32(camposUsuario["id"]),
                     lector.GetString(camposUsuario["username"]),
-                    lector.GetBoolean(camposUsuario["estado"]),
-                    lector.GetBoolean(camposUsuario["primer_logueo"]));
+                    Convert.ToBoolean(lector[camposUsuario["estado"]]),
+                    Convert.ToBoolean(lector[camposUsuario["primer_logueo"]]));
             }
             lector.Close();
             return usuario;

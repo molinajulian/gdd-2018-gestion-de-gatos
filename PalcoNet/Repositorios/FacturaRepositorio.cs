@@ -66,10 +66,7 @@ namespace PalcoNet.Repositorios
                     MetodoPago = (string)reader.GetValue(Ordinales.Factura["Fact_Metodo_Pago"]),
                     Total = (double)reader.GetValue(Ordinales.Factura["Fact_Total"]),
                     Fecha=(DateTime)reader.GetValue(Ordinales.Factura["Fact_Fecha"]),
-                    Empresa=EmpresasRepositorio.GetempresaByCuit((string)reader.GetValue(Ordinales.Factura["Fact_Emoresa_Cuit"])).First(),
-                   
-                    
-
+                    Empresa=EmpresasRepositorio.getEmpresa((string)reader.GetValue(Ordinales.Factura["Fact_Emoresa_Cuit"])),
                 };
                 factura.EmpresaId = factura.Empresa.Cuit;
                 factura.Items = ItemFacturaRepositorio.ReadItemFacturaFromDb(factura.Id);

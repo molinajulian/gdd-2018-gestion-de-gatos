@@ -129,7 +129,8 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonEditarPublicacion_Click(object sender, EventArgs e)
         {
-
+            ListaPublicacion listaPublicacion = new ListaPublicacion();
+            listaPublicacion.ShowDialog();
         }
 
         private void buttonComprar_Click(object sender, EventArgs e)

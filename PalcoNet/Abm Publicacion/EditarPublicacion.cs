@@ -11,7 +11,6 @@ namespace PalcoNet.AbmPublicaciones
 {
     public partial class EditarPublicacion : MaterialForm
     {
-        List<Sector> sectoresRegistrados = new List<Sector>();
         private Domicilio domicilioElegido = null;
         private DateTime fechaElegidas;
         private PublicacionPuntual PublicacionPuntual;
@@ -34,6 +33,7 @@ namespace PalcoNet.AbmPublicaciones
             txtUsername.Text = PublicacionPuntual.Editor.username;
             dtpRealizacion.Value = PublicacionPuntual.Espectaculo.FechaOcurrencia;
             dtpVencimiento.Value = PublicacionPuntual.Espectaculo.FechaVencimiento;
+            chkEspecDeshabilitado.Checked = !PublicacionPuntual.Espectaculo.Habilitado;
             inicializarGrados(PublicacionPuntual.Grado);
             inicializarRubros(PublicacionPuntual.Espectaculo.Rubro);
             inicializarEstados(PublicacionPuntual.Estado);
@@ -93,8 +93,8 @@ namespace PalcoNet.AbmPublicaciones
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ListaSector altaSector = new ListaSector(PublicacionPuntual.getSectores());
-            altaSector.ShowDialog();
+            ListaSector listaSector = new ListaSector(PublicacionPuntual.getSectores());
+            listaSector.ShowDialog();
         }
 
         public PublicacionPuntual getPublicacionDeUi()
@@ -106,7 +106,7 @@ namespace PalcoNet.AbmPublicaciones
                                     (EstadoPublicacion) cmbEstado.SelectedItem,
                                     getEspectaculoDeUi(PublicacionPuntual.Espectaculo),
                                     UsuarioRepositorio.buscarUsuario(txtUsername.Text),
-                                    sectoresRegistrados);
+                                    PublicacionPuntual.getSectores());
         }
 
         private Espectaculo getEspectaculoDeUi(Espectaculo espectaculoOriginal)
@@ -136,7 +136,7 @@ namespace PalcoNet.AbmPublicaciones
             if(camposIngresadosInsuficientes()){
                 return false;
             }
-            if (!(dtpVencimiento.Value.CompareTo(dtpRealizacion) > 1))
+            if (dtpVencimiento.Value.CompareTo(dtpRealizacion.Value) != 1)
             {
                 MessageBox.Show(
                     "La fecha de vencimiento de la publicacion es anterior a alguna de las funciones planificadas.");
@@ -152,8 +152,8 @@ namespace PalcoNet.AbmPublicaciones
 
         private void button2_Click(object sender, EventArgs e)
         {
-            ListadoDomicilios listadoDomicilios = new ListadoDomicilios(PublicacionPuntual.Espectaculo.Domicilio);
-            listadoDomicilios.ShowDialog();
+            ModificarDomicilio modificarDomicilio = new ModificarDomicilio(PublicacionPuntual.Espectaculo.Domicilio);
+            modificarDomicilio.ShowDialog();
         }
     }
 }

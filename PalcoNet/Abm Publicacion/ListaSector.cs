@@ -24,6 +24,7 @@ namespace PalcoNet.AbmPublicaciones
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
             this.sectoresRegistrados = sectoresRegistrados;
             agregarEncabezadosTabla();
+            actualizarListado();
         }
 
         private void agregarEncabezadosTabla()
@@ -34,14 +35,12 @@ namespace PalcoNet.AbmPublicaciones
             tabla_sectores.Columns.Add("Precio");
         }
 
-
         private void actualizarTablaSectores()
         {
             data_listado_sectores.DataSource = tabla_sectores;
         }
 
-
-        private void actualizarListado()
+        public void actualizarListado()
         {
             tabla_sectores.Rows.Clear();
             foreach (Sector sector in sectoresRegistrados)
@@ -60,20 +59,18 @@ namespace PalcoNet.AbmPublicaciones
         {
             this.Close();
         }
-
+        
         private void button1_Click(object sender, EventArgs e)
         {
-
-            /*EditarSector editarSector = new EditarSector();
-            this.Close();*/
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            /*SqlDataReader lector = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Ubicaciones WHERE Ubic_Espec_Cod = " + espectaculo.Id, "T", new List<SqlParameter>());
-            while (lector.HasRows && lector.Read())
+            if (data_listado_sectores.SelectedRows.Count > 1)
             {
-            }*/
+                MessageBox.Show("Debe seleccionar 1 y solo 1 registro", "Advertencia", MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+            else
+            {
+                new EditarSector(sectoresRegistrados[data_listado_sectores.SelectedRows[0].Index], this).Show();
+            }
         }
     }
 }

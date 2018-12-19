@@ -6,15 +6,13 @@ namespace PalcoNet.Modelo
 {
     public class PublicacionPuntual
     {
-        public int    Codigo { get; set; }
+        public int Codigo { get; set; }
         public string Descripcion { get; set; }
-        public DateTime FechaPublicacion { get; set; }
         public Grado Grado { get; set; }
         public EstadoPublicacion Estado { get; set; }
         public Espectaculo Espectaculo { get; set; }
         private List<Sector> Sectores { get; set; }
         public Usuario Editor { get; set; }
-        public Boolean Finalizada { get; set; }
 
         public PublicacionPuntual(int codigo, string descripcion, Grado grado, 
                                     EstadoPublicacion estado, Espectaculo espectaculo,
@@ -40,7 +38,7 @@ namespace PalcoNet.Modelo
 
         private List<Sector> getSectoresDeBDD()
         {
-            return SectoresRepositorio.getSectoresDeEspectaculo(Espectaculo);
+            return UbicacionRepositorio.getSectoresDeEspectaculo(Espectaculo);
         }
     }
 }

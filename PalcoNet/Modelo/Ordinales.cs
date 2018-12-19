@@ -127,9 +127,8 @@ namespace PalcoNet.Modelo
                                                     {"fechaCreacion",2},
                                                     {"gradoCodigo",3},
                                                     {"especCodigo",4},
-                                                    {"factNum",5},
-                                                    {"estadoId",6},
-                                                    {"editor",7},
+                                                    {"estadoId",5},
+                                                    {"editor",6},
                                                     };
        public static Dictionary<string, int> Ubicacion = new Dictionary<string, int> 
                                                     {
