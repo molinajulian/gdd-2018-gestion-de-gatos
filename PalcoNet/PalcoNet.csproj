@@ -148,29 +148,11 @@
     <Compile Include="Abm Publicacion\EditarPublicacion.Designer.cs">
       <DependentUpon>EditarPublicacion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Publicacion\EditarSector.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Abm Publicacion\EditarSector.Designer.cs">
-      <DependentUpon>EditarSector.cs</DependentUpon>
-    </Compile>
     <Compile Include="Abm Publicacion\GenerarPublicacion.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Abm Publicacion\GenerarPublicacion.Designer.cs">
       <DependentUpon>GenerarPublicacion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Abm Publicacion\ListaPublicacion.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Abm Publicacion\ListaPublicacion.Designer.cs">
-      <DependentUpon>ListaPublicacion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Abm Publicacion\ListaSector.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Abm Publicacion\ListaSector.Designer.cs">
-      <DependentUpon>ListaSector.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Tarjeta\AltaTarjeta.cs">
       <SubType>Form</SubType>
@@ -214,17 +196,23 @@
     <Compile Include="Comprar\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Generar Rendicion Comisiones\Form1.cs">
+    <Compile Include="Generar Rendicion Comisiones\RendicionDeComisiones.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Generar Rendicion Comisiones\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Generar Rendicion Comisiones\RendicionDeComisiones.Designer.cs">
+      <DependentUpon>RendicionDeComisiones.cs</DependentUpon>
     </Compile>
-    <Compile Include="Historial Cliente\Form1.cs">
+    <Compile Include="Historial Cliente\HistorialCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Historial Cliente\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Historial Cliente\HistorialCliente.Designer.cs">
+      <DependentUpon>HistorialCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoEstadistico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoEstadistico.Designer.cs">
+      <DependentUpon>ListadoEstadistico.cs</DependentUpon>
     </Compile>
     <Compile Include="Modelo\Cliente.cs" />
     <Compile Include="Modelo\Compra.cs" />
@@ -232,7 +220,6 @@
     <Compile Include="Modelo\Factura.cs" />
     <Compile Include="Modelo\ItemFactura.cs" />
     <Compile Include="Modelo\Premio.cs" />
-    <Compile Include="Modelo\PublicacionPuntual.cs" />
     <Compile Include="Modelo\Sector.cs" />
     <Compile Include="Modelo\TiposDocumento.cs" />
     <Compile Include="Modelo\Empresa.cs" />
@@ -348,6 +335,7 @@
     <EmbeddedResource Include="Abm Grado\ListadoGrados.resx">
       <DependentUpon>ListadoGrados.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Abm Grado\ModificacionGrado.resx" />
     <EmbeddedResource Include="Abm Publicacion\AltaEspectaculo.resx">
       <DependentUpon>AltaEspectaculo.cs</DependentUpon>
     </EmbeddedResource>
@@ -360,17 +348,8 @@
     <EmbeddedResource Include="Abm Publicacion\EditarPublicacion.resx">
       <DependentUpon>EditarPublicacion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Abm Publicacion\EditarSector.resx">
-      <DependentUpon>EditarSector.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Abm Publicacion\GenerarPublicacion.resx">
       <DependentUpon>GenerarPublicacion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Abm Publicacion\ListaPublicacion.resx">
-      <DependentUpon>ListaPublicacion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Abm Publicacion\ListaSector.resx">
-      <DependentUpon>ListaSector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rubro\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -389,6 +368,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Tarjeta\ModificacionTarjeta.resx">
       <DependentUpon>ModificacionTarjeta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Rendicion Comisiones\RendicionDeComisiones.resx">
+      <DependentUpon>RendicionDeComisiones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Historial Cliente\HistorialCliente.resx">
+      <DependentUpon>HistorialCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\ListadoEstadistico.resx">
+      <DependentUpon>ListadoEstadistico.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -413,6 +401,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Registro de Usuario\Log.resx">
       <DependentUpon>Log.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Registro de Usuario\MenuABMs.resx">
       <DependentUpon>MenuABMs.cs</DependentUpon>
@@ -436,7 +425,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Canje Puntos\" />
-    <Folder Include="Listado Estadistico\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
