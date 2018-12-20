@@ -196,12 +196,6 @@
     <Compile Include="Abm Rol\ListadoRoles.designer.cs">
       <DependentUpon>ListadoRoles.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Rubro\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Abm Rubro\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Abm Tarjeta\ModificacionTarjeta.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -393,9 +387,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rol\ModificacionRol.resx">
       <DependentUpon>ModificacionRol.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Abm Rubro\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Tarjeta\AltaTarjeta.resx">
       <DependentUpon>AltaTarjeta.cs</DependentUpon>

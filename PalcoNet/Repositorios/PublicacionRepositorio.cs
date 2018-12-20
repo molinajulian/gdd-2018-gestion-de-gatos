@@ -39,8 +39,8 @@ namespace PalcoNet.Repositorios
 
         public static PublicacionPuntual GetPublicacionById(int id)
         {
-            SqlDataReader lector = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Publicaciones"
-                                                          + " WHERE Public_Cod = " + id, "T", new List<SqlParameter>());
+            var query = "SELECT Public_Cod,isnull(Public_Desc,''),Public_Fecha_Creacion,Public_Grado_Cod,Public_Espec_Cod,Public_Estado_Id,isnull(Public_Editor,-1) FROM GESTION_DE_GATOS.Publicaciones WHERE Public_Cod = " + id;
+            SqlDataReader lector = DataBase.GetDataReader(query, "T", new List<SqlParameter>());
             if (lector.HasRows && lector.Read())
             {
                 return PublicacionPuntual.build(lector);

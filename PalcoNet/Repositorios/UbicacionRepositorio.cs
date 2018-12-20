@@ -26,7 +26,7 @@ namespace PalcoNet.Repositorios
         public static void CreateUbicacion(Ubicacion ubicacion)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
-              parametros.Add(new SqlParameter("@Fila", ubicacion.Fila));
+            parametros.Add(new SqlParameter("@Fila", ubicacion.Fila));
             parametros.Add(new SqlParameter("@Asiento", ubicacion.Asiento));
             parametros.Add(new SqlParameter("@SinNumerar", ubicacion.SinNumerar));
             parametros.Add(new SqlParameter("@Precio", ubicacion.Precio));

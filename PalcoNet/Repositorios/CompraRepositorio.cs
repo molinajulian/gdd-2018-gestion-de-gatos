@@ -66,22 +66,23 @@ namespace PalcoNet.Repositorios
             return compra;
 
         }
-        public static List<Compra> GetHistorialCompra(int idcliente)
+        public static List<CompraListado> GetHistorialCompra(int tipoDoc,int doc)
         {
-            var historial = new List<Compra>();
-            var parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@idCliente", idcliente));
-            var query= DataBase.ejecutarFuncion("select  * from GESTION_DE_GATOS.Compras c < where concat(Convert(varchar(16),c.Compra_Cli_Doc) , Convert(varchar(11),c.Compra_Cli_Tipo_Doc) )= @idCliente",parametros);
-            SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read())
+            List<CompraListado> historial = new List<CompraListado>();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@tipoDoc", tipoDoc));
+            parametros.Add(new SqlParameter("@doc", doc));
+            parametros.Add(new SqlParameter("@flag", 2));
+            SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_historial_cliente]", "SP", parametros);
+            while (lector.Read())
             {
-                historial.Add(new Compra()
+                historial.Add(new CompraListado()
                 {
-                    Id = (int)reader.GetValue(Ordinales.Compra["Compra_Id"]),
-                    //Publicacion = PublicacionRepositorio.GetPublicacionById((int)Ordinales.Compra["Compra_Publicacion_Id"]),
-                    Cliente = ClienteRepositorio.getCliente(
-                    reader.GetValue(Ordinales.Compra["Compra_Cliente_Documento"]).ToString(), reader.GetValue(Ordinales.Compra["Compra_TipoDoc"]).ToString()),
-                    Fecha = (DateTime)reader.GetValue(Ordinales.Compra["Fecha_Id"])
+                    Total = lector.GetDecimal(Ordinales.camposHistorialCliente["total"]),
+                    FechaCompra = lector.GetDateTime(Ordinales.camposHistorialCliente["fecha_compra"]),
+                    FechaEspectaculo = lector.GetDateTime(Ordinales.camposHistorialCliente["fecha_espectaculo"]),
+                    EspectaculoDescripción = lector.GetString(Ordinales.camposHistorialCliente["descripcion_espectaculo"]),
+                    RubroDescripción = lector.GetString(Ordinales.camposHistorialCliente["tipo_espectaculo"])
                 });
             }
 
@@ -92,6 +93,22 @@ namespace PalcoNet.Repositorios
         {
             
 
+        }
+
+        internal static int GetCantidadHistorial(int tipoDoc, int doc)
+        {
+
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@tipoDoc", tipoDoc));
+            parametros.Add(new SqlParameter("@doc", doc));
+            parametros.Add(new SqlParameter("@flag", 1));
+            SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_historial_cliente]","SP", parametros);
+            int cantidad=-1;
+            while (lector.HasRows && lector.Read())
+            {
+                cantidad = lector.GetInt32(0);
+            }
+            return cantidad;
         }
     }
 }

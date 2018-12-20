@@ -13,6 +13,7 @@ using MaterialSkin;
 using PalcoNet.AbmPublicaciones;
 using PalcoNet.Modelo;
 using PalcoNet.Registro_de_usuario;
+using PalcoNet.Historial_Cliente;
 using PalcoNet.Repositorios;
 
 namespace PalcoNet.Registro_de_Usuario
@@ -141,7 +142,7 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonHistorialCliente_Click(object sender, EventArgs e)
         {
-
+            new HistorialCliente(user).ShowDialog();
         }
 
         private void buttonCanjeYAdminPuntos_Click(object sender, EventArgs e)

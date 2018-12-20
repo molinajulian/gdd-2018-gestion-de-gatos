@@ -284,7 +284,7 @@ CREATE TABLE [GESTION_DE_GATOS].[Compras]
 	[Compra_Cli_Doc]			numeric(18) NOT NULL,
 	[Compra_Cli_Tipo_Doc]		int NOT NULL,
 	[Compra_Fecha]				smalldatetime NOT NULL,
-	[Compra_FueFacturada]		Bit NULL
+	[Compra_Fue_Facturada]		Bit NULL
 )
 go
 
@@ -301,7 +301,7 @@ CREATE TABLE [GESTION_DE_GATOS].[Publicaciones]
 	[Public_Espec_Cod]			numeric(18) NOT NULL,
 	[Public_Fact_Num]			numeric(18) NULL,
 	[Public_Estado_Id]			int NOT NULL,
-	[Public_Editor]				int NOT NULL,
+	[Public_Editor]				int NULL,
 )
 go
 
@@ -805,6 +805,7 @@ begin
 	INSERT INTO GESTION_DE_GATOS.Funcionalidad_Por_Rol (Rol_Id,Func_Id) VALUES (3,11)
 	INSERT INTO GESTION_DE_GATOS.Funcionalidad_Por_Rol (Rol_Id,Func_Id) VALUES (3,12)
 	INSERT INTO GESTION_DE_GATOS.Funcionalidad_Por_Rol (Rol_Id,Func_Id) VALUES (3,13)
+	INSERT INTO GESTION_DE_GATOS.Funcionalidad_Por_Rol (Rol_Id,Func_Id) VALUES (3,19)
 	   -- Editor
     INSERT INTO GESTION_DE_GATOS.Funcionalidad_Por_Rol (Rol_Id,Func_Id) VALUES (4,17)
 	-- inserto domicilios de la empresa
@@ -845,9 +846,9 @@ begin
 		JOIN GESTION_DE_GATOS.Usuarios u ON u.Usuario_Username = convert(numeric(15),SUBSTRING(Espec_Empresa_Cuit,0,3)+SUBSTRING(Espec_Empresa_Cuit,4,8)+SUBSTRING(Espec_Empresa_Cuit,13,2))
 		GROUP BY Espec_Empresa_Cuit,Espec_Empresa_Razon_Social,Espec_Empresa_Fecha_Creacion,Espec_Empresa_Mail,Dom_Id,Usuario_Id
 	-- inserto rubros de los espectaculos
-	INSERT INTO GESTION_DE_GATOS.Rubros (Rubro_Descr) 
-		SELECT Espectaculo_Rubro_Descripcion FROM gd_esquema.Maestra
-		GROUP BY Espectaculo_Rubro_Descripcion
+	INSERT INTO GESTION_DE_GATOS.Rubros (Rubro_Descr) VALUES ('Teatro')
+	INSERT INTO GESTION_DE_GATOS.Rubros (Rubro_Descr) VALUES ('Cine')
+	INSERT INTO GESTION_DE_GATOS.Rubros (Rubro_Descr) VALUES ('Concierto')
 	-- inserto domicilios de los clientes
 	INSERT INTO GESTION_DE_GATOS.Domicilios 
 	(Dom_Cod_Postal,Dom_Piso,Dom_Depto,Dom_Nro_Calle,Dom_Calle)
@@ -893,10 +894,6 @@ begin
 		JOIN GESTION_DE_GATOS.Usuarios u ON u.Usuario_Username = convert(varchar,@dni)+convert(varchar,Cli_Dni)
 		JOIN GESTION_DE_GATOS.Domicilios d ON d.Dom_Calle+convert(varchar,d.Dom_Nro_Calle) = Cli_Dom_Calle+convert(varchar,Cli_Nro_Calle)
 		GROUP BY Cli_Dni,Cli_Apeliido,Cli_Nombre,Cli_Fecha_Nac,Cli_Mail,u.Usuario_Id,d.Dom_Id
-	-- inserto rubros
-	INSERT INTO GESTION_DE_GATOS.Rubros (Rubro_Descr) VALUES ('Teatro')
-	INSERT INTO GESTION_DE_GATOS.Rubros (Rubro_Descr) VALUES ('Cine')
-	INSERT INTO GESTION_DE_GATOS.Rubros (Rubro_Descr) VALUES ('Concierto')
 	-- inserto espectaculos
 	SET IDENTITY_INSERT GESTION_DE_GATOS.Espectaculos ON;
 	INSERT INTO GESTION_DE_GATOS.Espectaculos (Espec_Cod,Espec_Desc,Espec_Fecha,Espec_Fecha_Venc,Espec_Rubro_Cod,Espec_Emp_Cuit,Espec_Estado)
@@ -925,19 +922,19 @@ begin
 	--inserto publicaciones
 	-- ACLARACION: como la fecha de hoy es mayor a la fecha de vencimiento del espectaculo, todas las publciaciones estan finalizadas
 	-- establezco que todas tiene un grado de publicacion bajo(10%), y que la fecha de creacion es dos dias antes de la fecha del espectaculo
-	INSERT INTO GESTION_DE_GATOS.Publicaciones (Public_Fecha_Creacion,Public_Grado_Cod,Public_Espec_Cod,Public_Estado_Id,Public_Fact_Num)
-		SELECT DATEADD(DAY,-2,Espectaculo_Fecha),3,Espectaculo_Cod,3,Factura_Nro FROM gd_esquema.Maestra GROUP BY Espectaculo_Cod,Espectaculo_Fecha,Factura_Nro
+	INSERT INTO GESTION_DE_GATOS.Publicaciones (Public_Fecha_Creacion,Public_Grado_Cod,Public_Espec_Cod,Public_Estado_Id)
+		SELECT DATEADD(DAY,-2,Espectaculo_Fecha),3,Espectaculo_Cod,3 FROM gd_esquema.Maestra GROUP BY Espectaculo_Cod,Espectaculo_Fecha
 	-- inserto las compras
-	INSERT INTO GESTION_DE_GATOS.Compras (Compra_Publicacion,Compra_Forma_Pago_Desc,Compra_Cli_Doc,Compra_Cli_Tipo_Doc,Compra_Fecha,Compra_FueFacturada) 
+	INSERT INTO GESTION_DE_GATOS.Compras (Compra_Publicacion,Compra_Forma_Pago_Desc,Compra_Cli_Doc,Compra_Cli_Tipo_Doc,Compra_Fecha,Compra_Fue_Facturada) 
 		SELECT (SELECT TOP 1 Public_Cod FROM GESTION_DE_GATOS.Publicaciones  WHERE Public_Espec_Cod = Espectaculo_Cod and Public_Cod is not null)
 			,isnull(Forma_Pago_Desc,'Tarjeta')
 			,Cli_Dni
 			,1
 			,Compra_Fecha
-			,1
+			,(case when Factura_Nro is null then 0 else 1 end)
 		FROM gd_esquema.Maestra
 		WHERE Compra_Fecha is not null
-		GROUP BY Cli_Dni,Compra_Fecha,Espectaculo_Cod,Ubicacion_Tipo_Codigo,Ubicacion_Fila,Ubicacion_Asiento, Forma_Pago_Desc
+		GROUP BY Cli_Dni,Compra_Fecha,Espectaculo_Cod,Ubicacion_Tipo_Codigo,Ubicacion_Fila,Ubicacion_Asiento, Forma_Pago_Desc,Factura_Nro
 		ORDER BY Espectaculo_Cod,Cli_Dni
 	-- inserto ubicaciones
 	INSERT INTO GESTION_DE_GATOS.Ubicaciones (Ubic_Fila,Ubic_Asiento,Ubic_Sin_Numerar,Ubic_Precio,Ubic_Espec_Cod,Ubic_Tipo_Cod,Ubic_Compra_Id)
@@ -948,17 +945,10 @@ begin
 		ORDER BY Compra_Id
 	-- inserto items facturas
 	INSERT INTO GESTION_DE_GATOS.Item_Facturas (Item_Fact_Num,Item_Fact_Monto,Item_Fact_Cant) 
-		SELECT	p.Public_Fact_Num,
-				(SELECT TOP 1 Item_Factura_Monto 
-				FROM gd_esquema.Maestra 
-				WHERE u.Ubic_Asiento = Ubicacion_Asiento and u.Ubic_Fila = Ubicacion_Fila and u.Ubic_Precio = Ubicacion_Precio and Item_Factura_Monto is not null),
-				COUNT(u.Ubic_Compra_Id) 
-		FROM GESTION_DE_GATOS.Compras
-		JOIN GESTION_DE_GATOS.Publicaciones p ON Compra_Publicacion = p.Public_Cod
-		JOIN GESTION_DE_GATOS.Ubicaciones u ON u.Ubic_Compra_Id = Compra_Id
-		WHERE Public_Fact_Num is not null
-		GROUP BY p.Public_Fact_Num,u.Ubic_Compra_Id,u.Ubic_Precio,u.Ubic_Asiento,u.Ubic_Fila
-		ORDER BY p.Public_Fact_Num
+		SELECT Factura_Nro,SUM(Ubicacion_Precio),COUNT(*) 
+		FROM gd_esquema.Maestra 
+		WHERE Factura_Fecha is not null 
+		GROUP BY Factura_Nro,Ubicacion_Fila,Ubicacion_Asiento,Ubicacion_Tipo_Codigo,Ubicacion_Precio
 	-- inserto premios
 	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('TAZA',300)
 	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('PLATO',400)
@@ -985,6 +975,9 @@ AS BEGIN
 END 
 go
 
+
+SELECT * FROM GESTION_DE_GATOS.Clientes c JOIN GESTION_DE_GATOS.Usuarios u ON u.Usuario_Id = c.Cli_Usuario_Id WHERE u.Usuario_Id=783
+SELECT * FROM GESTION_DE_GATOS.Usuarios where Usuario_Id=783
 
 GO
 IF (OBJECT_ID('sp_get_clientes', 'P') IS NOT NULL) DROP PROCEDURE sp_get_clientes 
@@ -1059,6 +1052,33 @@ END
 go
 
 GO
+IF (OBJECT_ID('sp_historial_cliente', 'P') IS NOT NULL) DROP PROCEDURE sp_historial_cliente 
+GO
+CREATE PROCEDURE sp_historial_cliente(@tipoDoc int,@doc int,@flag int)
+AS BEGIN
+	if @flag = 1 
+		SELECT TOP 1 COUNT(*) OVER () AS TotalRecords
+		  FROM GESTION_DE_GATOS.Compras c
+		  JOIN GESTION_DE_GATOS.Ubicaciones u ON u.Ubic_Compra_Id = c.Compra_Id
+		  JOIN GESTION_DE_GATOS.Espectaculos e ON e.Espec_Cod = u.Ubic_Espec_Cod
+		  JOIN GESTION_DE_GATOS.Rubros r ON r.Rubro_Cod = e.Espec_Rubro_Cod
+		  WHERE c.Compra_Cli_Doc = @doc and c.Compra_Cli_Tipo_Doc=@tipoDoc
+		  GROUP BY c.Compra_Id,c.Compra_Fecha,e.Espec_Fecha,e.Espec_Desc,r.Rubro_Descr
+		  ORDER BY c.Compra_Id
+	else
+		SELECT  SUM (Ubic_Precio) as total,c.Compra_Fecha,e.Espec_Fecha as fecha_espectaculo,isnull(e.Espec_Desc,'') as descripcion_espectaculo,r.Rubro_Descr
+		  FROM GESTION_DE_GATOS.Compras c
+		  JOIN GESTION_DE_GATOS.Ubicaciones u ON u.Ubic_Compra_Id = c.Compra_Id
+		  JOIN GESTION_DE_GATOS.Espectaculos e ON e.Espec_Cod = u.Ubic_Espec_Cod
+		  JOIN GESTION_DE_GATOS.Rubros r ON r.Rubro_Cod = e.Espec_Rubro_Cod
+		  WHERE c.Compra_Cli_Doc = 43468403 and c.Compra_Cli_Tipo_Doc=1
+		  GROUP BY c.Compra_Id,c.Compra_Fecha,e.Espec_Fecha,e.Espec_Desc,r.Rubro_Descr
+		  ORDER BY c.Compra_Id
+END 
+go
+
+
+GO
 IF (OBJECT_ID('sp_modificar_grado', 'P') IS NOT NULL) DROP PROCEDURE sp_modificar_grado 
 GO
 CREATE PROCEDURE sp_modificar_grado(@id int,@comision float,@descripcion varchar(50),@habilitado bit)
@@ -1102,7 +1122,6 @@ AS BEGIN
 END
 GO
 
-SELECT TOP 1 isnull(COUNT(*),0) FROM GESTION_DE_GATOS.Roles where Rol_Id <> 5 and Rol_Nombre = 'JULIAN'
 /*go
 USE GD2C2018;
 ALTER TABLE [GESTION_DE_GATOS].[Rol_Por_Usuario] DROP CONSTRAINT FK_Usuario_Id,FK_Rol_Id
@@ -1118,6 +1137,7 @@ ALTER TABLE [GESTION_DE_GATOS].[Publicaciones] DROP CONSTRAINT FK_Public_Grado_C
 ALTER TABLE [GESTION_DE_GATOS].[Facturas] DROP CONSTRAINT FK_Fact_Empresa_Cuit
 ALTER TABLE [GESTION_DE_GATOS].[Item_Facturas] DROP CONSTRAINT FK_Item_Fact_Num
 ALTER TABLE [GESTION_DE_GATOS].[Puntos] DROP CONSTRAINT FK_Puntos_Cliente
+ALTER TABLE [GESTION_DE_GATOS].[Usuarios] DROP CONSTRAINT DF_Primer_Logueo
 DROP TABLE [GESTION_DE_GATOS].[Funcionalidad_Por_Rol]
 DROP TABLE [GESTION_DE_GATOS].[Rol_Por_Usuario]
 DROP TABLE [GESTION_DE_GATOS].[Premios_Adquiridos]
@@ -1133,15 +1153,16 @@ DROP TABLE [GESTION_DE_GATOS].[Clientes]
 DROP TABLE [GESTION_DE_GATOS].[Compras]
 DROP TABLE [GESTION_DE_GATOS].[Domicilios]
 DROP TABLE [GESTION_DE_GATOS].[Rubros]
-DROP TABLE [GESTION_DE_GATOS].[Usuarios]
 DROP TABLE [GESTION_DE_GATOS].[Publicaciones]
+DROP TABLE [GESTION_DE_GATOS].[Usuarios]
 DROP TABLE [GESTION_DE_GATOS].[Publicaciones_Estado]
 DROP TABLE [GESTION_DE_GATOS].[Espectaculos]
 DROP TABLE [GESTION_DE_GATOS].[Facturas]
 DROP TABLE [GESTION_DE_GATOS].[Empresas]
 DROP TABLE [GESTION_DE_GATOS].[Tipos_Doc]
 DROP TABLE [GESTION_DE_GATOS].[Puntos]
-
 GO
 DROP SCHEMA [GESTION_DE_GATOS]
 */
+
+SELECT * FROM GESTION_DE_GATOS.Clientes c JOIN GESTION_DE_GATOS.Usuarios u ON u.Usuario_Id = c.Cli_Usuario_Id
