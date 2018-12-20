@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.dtpHasta = new System.Windows.Forms.DateTimePicker();
@@ -39,9 +40,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.dtpDesde = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnVolver = new System.Windows.Forms.Button();
             this.btnAlta = new System.Windows.Forms.Button();
-            this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.data_publicaciones)).BeginInit();
             this.SuspendLayout();
@@ -66,6 +65,13 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos de Compra";
+            // 
+            // txtDescripcion
+            // 
+            this.txtDescripcion.Location = new System.Drawing.Point(87, 31);
+            this.txtDescripcion.Name = "txtDescripcion";
+            this.txtDescripcion.Size = new System.Drawing.Size(335, 20);
+            this.txtDescripcion.TabIndex = 37;
             // 
             // button1
             // 
@@ -154,16 +160,6 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Descripcion";
             // 
-            // btnVolver
-            // 
-            this.btnVolver.Location = new System.Drawing.Point(33, 451);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(132, 40);
-            this.btnVolver.TabIndex = 30;
-            this.btnVolver.Text = "Volver";
-            this.btnVolver.UseVisualStyleBackColor = true;
-            this.btnVolver.Click += new System.EventHandler(this.button2_Click);
-            // 
             // btnAlta
             // 
             this.btnAlta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -175,20 +171,12 @@
             this.btnAlta.UseVisualStyleBackColor = true;
             this.btnAlta.Click += new System.EventHandler(this.btnAlta_Click);
             // 
-            // txtDescripcion
-            // 
-            this.txtDescripcion.Location = new System.Drawing.Point(87, 31);
-            this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new System.Drawing.Size(335, 20);
-            this.txtDescripcion.TabIndex = 37;
-            // 
             // ElegirPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(821, 512);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnAlta);
             this.Name = "ElegirPublicacion";
             this.Text = "Comprar [Parte 1/3] - Seleccion de Publicacion";
@@ -205,7 +193,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.DateTimePicker dtpDesde;
-        private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.Button btnAlta;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker dtpHasta;

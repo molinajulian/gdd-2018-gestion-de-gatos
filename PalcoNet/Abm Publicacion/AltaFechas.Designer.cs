@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.epProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btn_volver = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.button2 = new System.Windows.Forms.Button();
@@ -40,15 +39,6 @@
             // epProvider
             // 
             this.epProvider.ContainerControl = this;
-            // 
-            // btn_volver
-            // 
-            this.btn_volver.Location = new System.Drawing.Point(35, 372);
-            this.btn_volver.Name = "btn_volver";
-            this.btn_volver.Size = new System.Drawing.Size(83, 44);
-            this.btn_volver.TabIndex = 10;
-            this.btn_volver.Text = "Volver";
-            this.btn_volver.UseVisualStyleBackColor = true;
             // 
             // button1
             // 
@@ -82,11 +72,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(565, 429);
+            this.ClientSize = new System.Drawing.Size(565, 372);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.btn_volver);
             this.Name = "AltaFechas";
             this.Text = "Alta Fechas";
             ((System.ComponentModel.ISupportInitialize)(this.epProvider)).EndInit();
@@ -96,7 +85,6 @@
 
         #endregion
         private System.Windows.Forms.ErrorProvider epProvider;
-        private System.Windows.Forms.Button btn_volver;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button button1;

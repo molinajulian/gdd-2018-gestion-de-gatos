@@ -37,7 +37,6 @@
             this.btn_buscar = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btn_atras = new System.Windows.Forms.Button();
             this.btn_limpiar = new System.Windows.Forms.Button();
             this.btn_editar = new System.Windows.Forms.Button();
             this.btn_cambiar_estado = new System.Windows.Forms.Button();
@@ -141,20 +140,9 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Razon Social";
             // 
-            // btn_atras
-            // 
-            this.btn_atras.Location = new System.Drawing.Point(10, 434);
-            this.btn_atras.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_atras.Name = "btn_atras";
-            this.btn_atras.Size = new System.Drawing.Size(74, 28);
-            this.btn_atras.TabIndex = 12;
-            this.btn_atras.Text = "Atras";
-            this.btn_atras.UseVisualStyleBackColor = true;
-            this.btn_atras.Click += new System.EventHandler(this.btn_atras_Click_1);
-            // 
             // btn_limpiar
             // 
-            this.btn_limpiar.Location = new System.Drawing.Point(561, 434);
+            this.btn_limpiar.Location = new System.Drawing.Point(477, 434);
             this.btn_limpiar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_limpiar.Name = "btn_limpiar";
             this.btn_limpiar.Size = new System.Drawing.Size(74, 28);
@@ -167,7 +155,7 @@
             // 
             this.btn_editar.Enabled = false;
             this.btn_editar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_editar.Location = new System.Drawing.Point(210, 434);
+            this.btn_editar.Location = new System.Drawing.Point(52, 434);
             this.btn_editar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_editar.Name = "btn_editar";
             this.btn_editar.Size = new System.Drawing.Size(74, 28);
@@ -180,7 +168,7 @@
             // 
             this.btn_cambiar_estado.Enabled = false;
             this.btn_cambiar_estado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_cambiar_estado.Location = new System.Drawing.Point(334, 434);
+            this.btn_cambiar_estado.Location = new System.Drawing.Point(209, 434);
             this.btn_cambiar_estado.Margin = new System.Windows.Forms.Padding(2);
             this.btn_cambiar_estado.Name = "btn_cambiar_estado";
             this.btn_cambiar_estado.Size = new System.Drawing.Size(157, 28);
@@ -196,7 +184,6 @@
             this.ClientSize = new System.Drawing.Size(644, 479);
             this.Controls.Add(this.btn_cambiar_estado);
             this.Controls.Add(this.btn_editar);
-            this.Controls.Add(this.btn_atras);
             this.Controls.Add(this.btn_limpiar);
             this.Controls.Add(this.grupo_filtros);
             this.Controls.Add(this.data_empresas);
@@ -218,7 +205,6 @@
         private System.Windows.Forms.Button btn_buscar;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btn_atras;
         private System.Windows.Forms.Button btn_limpiar;
         private System.Windows.Forms.TextBox txt_cuit;
         private System.Windows.Forms.TextBox txt_razon_social;

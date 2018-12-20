@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.btn_limpiar = new System.Windows.Forms.Button();
-            this.btn_volver = new System.Windows.Forms.Button();
             this.group_domicilio = new System.Windows.Forms.GroupBox();
             this.txDpto = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -49,25 +48,17 @@
             // 
             // btn_limpiar
             // 
-            this.btn_limpiar.Location = new System.Drawing.Point(442, 271);
+            this.btn_limpiar.Location = new System.Drawing.Point(374, 123);
             this.btn_limpiar.Name = "btn_limpiar";
             this.btn_limpiar.Size = new System.Drawing.Size(81, 39);
             this.btn_limpiar.TabIndex = 10;
             this.btn_limpiar.Text = "Limpiar";
             this.btn_limpiar.UseVisualStyleBackColor = true;
             // 
-            // btn_volver
-            // 
-            this.btn_volver.Location = new System.Drawing.Point(85, 271);
-            this.btn_volver.Name = "btn_volver";
-            this.btn_volver.Size = new System.Drawing.Size(83, 39);
-            this.btn_volver.TabIndex = 9;
-            this.btn_volver.Text = "Volver";
-            this.btn_volver.UseVisualStyleBackColor = true;
-            // 
             // group_domicilio
             // 
             this.group_domicilio.BackColor = System.Drawing.Color.White;
+            this.group_domicilio.Controls.Add(this.btn_limpiar);
             this.group_domicilio.Controls.Add(this.txDpto);
             this.group_domicilio.Controls.Add(this.label11);
             this.group_domicilio.Controls.Add(this.txNumero);
@@ -83,7 +74,7 @@
             this.group_domicilio.Controls.Add(this.btn_actualizar_domicilio);
             this.group_domicilio.Location = new System.Drawing.Point(35, 79);
             this.group_domicilio.Name = "group_domicilio";
-            this.group_domicilio.Size = new System.Drawing.Size(538, 177);
+            this.group_domicilio.Size = new System.Drawing.Size(508, 177);
             this.group_domicilio.TabIndex = 8;
             this.group_domicilio.TabStop = false;
             this.group_domicilio.Text = "Datos del domicilio";
@@ -187,7 +178,7 @@
             // btn_actualizar_domicilio
             // 
             this.btn_actualizar_domicilio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_actualizar_domicilio.Location = new System.Drawing.Point(225, 120);
+            this.btn_actualizar_domicilio.Location = new System.Drawing.Point(114, 117);
             this.btn_actualizar_domicilio.Name = "btn_actualizar_domicilio";
             this.btn_actualizar_domicilio.Size = new System.Drawing.Size(94, 45);
             this.btn_actualizar_domicilio.TabIndex = 0;
@@ -199,9 +190,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(630, 332);
-            this.Controls.Add(this.btn_limpiar);
-            this.Controls.Add(this.btn_volver);
+            this.ClientSize = new System.Drawing.Size(566, 276);
             this.Controls.Add(this.group_domicilio);
             this.Name = "ModificarDomicilio";
             this.Text = "Modificacion de Domicilio";
@@ -213,7 +202,6 @@
 
         #endregion
         private System.Windows.Forms.Button btn_limpiar;
-        private System.Windows.Forms.Button btn_volver;
         private System.Windows.Forms.GroupBox group_domicilio;
         private System.Windows.Forms.TextBox txDpto;
         private System.Windows.Forms.Label label11;

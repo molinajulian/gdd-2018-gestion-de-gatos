@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.epProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btn_volver = new System.Windows.Forms.Button();
             this.group_alta_espectaculo = new System.Windows.Forms.GroupBox();
             this.txtDepto = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -58,16 +57,6 @@
             // epProvider
             // 
             this.epProvider.ContainerControl = this;
-            // 
-            // btn_volver
-            // 
-            this.btn_volver.Location = new System.Drawing.Point(455, 547);
-            this.btn_volver.Name = "btn_volver";
-            this.btn_volver.Size = new System.Drawing.Size(83, 44);
-            this.btn_volver.TabIndex = 10;
-            this.btn_volver.Text = "Volver";
-            this.btn_volver.UseVisualStyleBackColor = true;
-            this.btn_volver.Click += new System.EventHandler(this.btn_volver_Click);
             // 
             // group_alta_espectaculo
             // 
@@ -250,8 +239,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(588, 606);
-            this.Controls.Add(this.btn_volver);
+            this.ClientSize = new System.Drawing.Size(588, 554);
             this.Controls.Add(this.group_alta_espectaculo);
             this.Name = "AltaEspectaculo";
             this.Text = "Alta Espectaculo";
@@ -265,7 +253,6 @@
 
         #endregion
         private System.Windows.Forms.ErrorProvider epProvider;
-        private System.Windows.Forms.Button btn_volver;
         private System.Windows.Forms.GroupBox group_alta_espectaculo;
         private System.Windows.Forms.DataGridView data_listado_sectores;
         private System.Windows.Forms.Button btn_alta_espectaculo;

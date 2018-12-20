@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.epProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btn_volver = new System.Windows.Forms.Button();
             this.group_alta_rol = new System.Windows.Forms.GroupBox();
             this.btn_agregar_tarjeta = new System.Windows.Forms.Button();
             this.data_ubicaciones = new System.Windows.Forms.DataGridView();
@@ -46,19 +45,10 @@
             // 
             this.epProvider.ContainerControl = this;
             // 
-            // btn_volver
-            // 
-            this.btn_volver.Location = new System.Drawing.Point(39, 438);
-            this.btn_volver.Name = "btn_volver";
-            this.btn_volver.Size = new System.Drawing.Size(83, 44);
-            this.btn_volver.TabIndex = 10;
-            this.btn_volver.Text = "Volver";
-            this.btn_volver.UseVisualStyleBackColor = true;
-            this.btn_volver.Click += new System.EventHandler(this.btn_volver_Click);
-            // 
             // group_alta_rol
             // 
             this.group_alta_rol.BackColor = System.Drawing.Color.White;
+            this.group_alta_rol.Controls.Add(this.btn_confirmar_compra);
             this.group_alta_rol.Controls.Add(this.btn_agregar_tarjeta);
             this.group_alta_rol.Controls.Add(this.data_ubicaciones);
             this.group_alta_rol.Controls.Add(this.comboBox1);
@@ -110,23 +100,21 @@
             // btn_confirmar_compra
             // 
             this.btn_confirmar_compra.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_confirmar_compra.Location = new System.Drawing.Point(356, 438);
+            this.btn_confirmar_compra.Location = new System.Drawing.Point(337, 293);
             this.btn_confirmar_compra.Name = "btn_confirmar_compra";
-            this.btn_confirmar_compra.Size = new System.Drawing.Size(163, 66);
+            this.btn_confirmar_compra.Size = new System.Drawing.Size(163, 46);
             this.btn_confirmar_compra.TabIndex = 11;
             this.btn_confirmar_compra.Text = "Confirmar Compra";
             this.btn_confirmar_compra.UseVisualStyleBackColor = true;
             this.btn_confirmar_compra.Click += new System.EventHandler(this.btnComprar_Click);
             // 
-            // ListaSector
+            // ConfirmarCompra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(617, 525);
-            this.Controls.Add(this.btn_confirmar_compra);
-            this.Controls.Add(this.btn_volver);
+            this.ClientSize = new System.Drawing.Size(617, 444);
             this.Controls.Add(this.group_alta_rol);
-            this.Name = "ListaSector";
+            this.Name = "ConfirmarCompra";
             this.Text = "Comprar [Parte 3/3] - Confirmacion de Compra";
             ((System.ComponentModel.ISupportInitialize)(this.epProvider)).EndInit();
             this.group_alta_rol.ResumeLayout(false);
@@ -138,7 +126,6 @@
 
         #endregion
         private System.Windows.Forms.ErrorProvider epProvider;
-        private System.Windows.Forms.Button btn_volver;
         private System.Windows.Forms.GroupBox group_alta_rol;
         private System.Windows.Forms.Button btn_confirmar_compra;
         private System.Windows.Forms.DataGridView data_ubicaciones;

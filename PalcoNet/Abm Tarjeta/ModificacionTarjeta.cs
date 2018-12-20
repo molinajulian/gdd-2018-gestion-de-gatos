@@ -60,9 +60,5 @@ namespace PalcoNet.AbmTarjeta
             return error;
         }
 
-        private void btnAlta_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

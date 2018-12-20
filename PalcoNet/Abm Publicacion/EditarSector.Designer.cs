@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btn_volver = new System.Windows.Forms.Button();
             this.group_alta_rol = new System.Windows.Forms.GroupBox();
             this.cmbTipo = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -41,16 +40,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.group_alta_rol.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btn_volver
-            // 
-            this.btn_volver.Location = new System.Drawing.Point(34, 215);
-            this.btn_volver.Name = "btn_volver";
-            this.btn_volver.Size = new System.Drawing.Size(83, 44);
-            this.btn_volver.TabIndex = 10;
-            this.btn_volver.Text = "Volver";
-            this.btn_volver.UseVisualStyleBackColor = true;
-            this.btn_volver.Click += new System.EventHandler(this.btn_volver_Click);
             // 
             // group_alta_rol
             // 
@@ -150,9 +139,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(581, 271);
+            this.ClientSize = new System.Drawing.Size(581, 235);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.btn_volver);
             this.Controls.Add(this.group_alta_rol);
             this.Name = "EditarSector";
             this.Text = "Editar Sector";
@@ -163,7 +151,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button btn_volver;
+
         private System.Windows.Forms.GroupBox group_alta_rol;
         private System.Windows.Forms.ComboBox cmbTipo;
         private System.Windows.Forms.Label label4;

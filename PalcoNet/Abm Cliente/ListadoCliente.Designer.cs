@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.btn_atras = new System.Windows.Forms.Button();
             this.btn_limpiar = new System.Windows.Forms.Button();
             this.data_clientes = new System.Windows.Forms.DataGridView();
             this.grupo_filtros = new System.Windows.Forms.GroupBox();
@@ -48,20 +47,9 @@
             this.grupo_filtros.SuspendLayout();
             this.SuspendLayout();
             // 
-            // btn_atras
-            // 
-            this.btn_atras.Location = new System.Drawing.Point(56, 456);
-            this.btn_atras.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_atras.Name = "btn_atras";
-            this.btn_atras.Size = new System.Drawing.Size(74, 28);
-            this.btn_atras.TabIndex = 25;
-            this.btn_atras.Text = "Atras";
-            this.btn_atras.UseVisualStyleBackColor = true;
-            this.btn_atras.Click += new System.EventHandler(this.btn_atras_Click);
-            // 
             // btn_limpiar
             // 
-            this.btn_limpiar.Location = new System.Drawing.Point(626, 456);
+            this.btn_limpiar.Location = new System.Drawing.Point(557, 456);
             this.btn_limpiar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_limpiar.Name = "btn_limpiar";
             this.btn_limpiar.Size = new System.Drawing.Size(74, 28);
@@ -202,7 +190,7 @@
             // btn_modificar
             // 
             this.btn_modificar.Enabled = false;
-            this.btn_modificar.Location = new System.Drawing.Point(257, 456);
+            this.btn_modificar.Location = new System.Drawing.Point(114, 456);
             this.btn_modificar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_modificar.Name = "btn_modificar";
             this.btn_modificar.Size = new System.Drawing.Size(74, 28);
@@ -214,7 +202,7 @@
             // button1
             // 
             this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(432, 456);
+            this.button1.Location = new System.Drawing.Point(300, 456);
             this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(144, 28);
@@ -229,7 +217,6 @@
             this.ClientSize = new System.Drawing.Size(775, 512);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_modificar);
-            this.Controls.Add(this.btn_atras);
             this.Controls.Add(this.btn_limpiar);
             this.Controls.Add(this.data_clientes);
             this.Controls.Add(this.grupo_filtros);
@@ -245,7 +232,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btn_atras;
         private System.Windows.Forms.Button btn_limpiar;
         private System.Windows.Forms.DataGridView data_clientes;
         private System.Windows.Forms.GroupBox grupo_filtros;
