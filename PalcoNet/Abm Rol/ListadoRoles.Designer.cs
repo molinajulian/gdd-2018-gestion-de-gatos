@@ -88,7 +88,6 @@
             this.data_listado_roles.ReadOnly = true;
             this.data_listado_roles.Size = new System.Drawing.Size(230, 150);
             this.data_listado_roles.TabIndex = 4;
-            this.data_listado_roles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.data_listado_roles_CellContentClick);
             // 
             // btn_limpiar
             // 
@@ -108,6 +107,7 @@
             this.buttonHabilitar.TabIndex = 7;
             this.buttonHabilitar.Text = "Habilitar/Deshabilitar";
             this.buttonHabilitar.UseVisualStyleBackColor = true;
+            this.buttonHabilitar.Click += new System.EventHandler(this.buttonHabilitar_Click);
             // 
             // buttonModificar
             // 
@@ -117,6 +117,7 @@
             this.buttonModificar.TabIndex = 8;
             this.buttonModificar.Text = "Modificar";
             this.buttonModificar.UseVisualStyleBackColor = true;
+            this.buttonModificar.Click += new System.EventHandler(this.buttonModificar_Click);
             // 
             // ListadoRoles
             // 

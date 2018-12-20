@@ -18,7 +18,6 @@ namespace PalcoNet.Modelo
 
         public Tarjeta(string numero, string banco, DateTime fecha)
         {
-            // TODO: Complete member initialization
             Numero = numero;
             Banco = banco;
             FechaVencimiento=fecha;
