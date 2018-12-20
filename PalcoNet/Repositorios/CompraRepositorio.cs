@@ -87,5 +87,11 @@ namespace PalcoNet.Repositorios
 
             return historial;
         }
+
+        public static void realizarCompra(List<Ubicacion> ubicacionesAComprar, PublicacionPuntual publicacionElegida)
+        {
+            
+
+        }
     }
 }

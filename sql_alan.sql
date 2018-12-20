@@ -382,6 +382,22 @@ AS BEGIN
 END
 GO
 
+IF (OBJECT_ID('sp_get_publicaciones_comprables', 'P') IS NOT NULL) DROP PROCEDURE sp_get_publicaciones_comprables
+go
+CREATE procedure sp_get_publicaciones_comprables(@pub_desc VARCHAR(255), @desde DATETIME, @hasta DATETIME, @rubros_str VARCHAR(255) )
+AS BEGIN 
+	SELECT [Public_Cod], [Public_Desc], [Public_Fecha_Creacion], [Public_Grado_Cod], [Public_Espec_Cod]
+      		, [Public_Estado_Id], [Public_Editor]
+		FROM GESTION_DE_GATOS.Publicaciones
+		JOIN GESTION_DE_GATOS.Espectaculos ON Public_Espec_Cod = Espec_Cod
+	     WHERE Public_Desc LIKE '%' + @pub_desc + '%'
+	     AND Public_Estado_Id = 2
+	     AND Espec_Fecha >= @desde
+	     AND Espec_Fecha_Venc <= @hasta
+	     AND Espec_Rubro_Cod IN @categorias_ids
+	     AND @rubros_str like '%,'+ cast(Espec_Rubro_Cod as varchar(20))+',%'
+END
+GO
 
 
 EXEC sp_rename 'GESTION_DE_GATOS.Ubicaciones_Tipo.Ubic_Cod', 'Ubic_Tipo_Cod', 'COLUMN';

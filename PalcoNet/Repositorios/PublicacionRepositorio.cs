@@ -39,25 +39,17 @@ namespace PalcoNet.Repositorios
 
         public static PublicacionPuntual GetPublicacionById(int id)
         {
-            Dictionary<string, int> camposPublicacion = Ordinales.Publicacion;
             SqlDataReader lector = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Publicaciones"
                                                           + " WHERE Public_Cod = " + id, "T", new List<SqlParameter>());
-            while (lector.HasRows && lector.Read())
+            if (lector.HasRows && lector.Read())
             {
-                return new PublicacionPuntual(
-                    Convert.ToInt32(lector[camposPublicacion["codigo"]]),
-                    lector[camposPublicacion["descripcion"]].ToString(),
-                    GradoRepositorio.ReadGradoFromDb(camposPublicacion["gradoCodigo"]),
-                    EstadoPublicacionRepositorio.ReadEstadoPublicacionFromDb(camposPublicacion["estadoId"]),
-                    EspectaculoRepositorio.ReadEspectaculoFromDb(Convert.ToInt32(lector[camposPublicacion["especCodigo"]])),
-                    UsuarioRepositorio.buscarUsuario(lector[camposPublicacion["editor"]].ToString()));
+                return PublicacionPuntual.build(lector);
             }
             return null;
         }
 
         public static List<PublicacionPuntual> getPublicacionesEditables(string tituloPub)
         {
-            Dictionary<string, int> camposPublicacion = Ordinales.Publicacion;
             EstadoPublicacion estadoBorrador = EstadoPublicacionRepositorio.getEstados()
                 .Find(publicacion => publicacion.Descripcion.Equals("BORRADOR"));
             List<PublicacionPuntual> publicaciones = new List<PublicacionPuntual>();
@@ -66,13 +58,7 @@ namespace PalcoNet.Repositorios
                                                           + " AND Public_Editor IS NOT NULL AND Public_Estado_Id = " + estadoBorrador.Id, "T", new List<SqlParameter>());
             while (lector.HasRows && lector.Read())
             {
-                publicaciones.Add(new PublicacionPuntual(
-                    Convert.ToInt32(lector[camposPublicacion["codigo"]]),
-                    lector[camposPublicacion["descripcion"]].ToString(),
-                    GradoRepositorio.ReadGradoFromDb(Convert.ToInt32(lector[camposPublicacion["gradoCodigo"]])),
-                    EstadoPublicacionRepositorio.ReadEstadoPublicacionFromDb(Convert.ToInt32(lector[camposPublicacion["estadoId"]])),
-                    EspectaculoRepositorio.ReadEspectaculoFromDb(Convert.ToInt32(lector[camposPublicacion["especCodigo"]])),
-                    UsuarioRepositorio.buscarUsuario(Convert.ToInt32(lector[camposPublicacion["editor"]]))));
+                publicaciones.Add(PublicacionPuntual.build(lector));
             }
             return publicaciones;
         }
@@ -95,7 +81,23 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@editor_id", publicacion.Editor.id));
             parametros.Add(new SqlParameter("@espec_cod", publicacion.Espectaculo.Id));
             DataBase.ejecutarSP("sp_actualizar_publicacion", parametros);
+        }
 
+        public static List<PublicacionPuntual> getPublicacionesComprables(string descripcion, DateTime desde, DateTime hasta, 
+                                                                          String rubrosStr)
+        {
+            List<PublicacionPuntual> publicaciones = new List<PublicacionPuntual>();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@pub_desc", descripcion));
+            parametros.Add(new SqlParameter("@desde", desde));
+            parametros.Add(new SqlParameter("@hasta", hasta));
+            parametros.Add(new SqlParameter("@rubros_str", rubrosStr));
+            SqlDataReader lector = DataBase.GetDataReader("sp_get_publicaciones_comprables", "SP", parametros);
+            while (lector.HasRows && lector.Read())
+            {
+                publicaciones.Add(PublicacionPuntual.buildCompuesta(lector));
+            }
+            return publicaciones;
         }
     }
 }

@@ -53,15 +53,7 @@ namespace PalcoNet.Repositorios
             Dictionary<string, int> camposEspec = Ordinales.Espectaculo;
             if (lector.HasRows && lector.Read())
             {
-                return new Espectaculo(
-                    Convert.ToInt32(lector[camposEspec["id"]]),
-                    lector[camposEspec["descripcion"]].ToString(),
-                    Convert.ToDateTime(lector[camposEspec["fecha"]]),
-                    Convert.ToDateTime(lector[camposEspec["fechaVencimiento"]]),
-                    RubroRepositorio.ReadRubroFromDb(Convert.ToInt32(lector[camposEspec["idRubro"]])),
-                    EmpresasRepositorio.getEmpresa(lector[camposEspec["idEmpresa"]].ToString()),
-                    DomiciliosRepositorio.getDomicilio(lector[camposEspec["idDomicilio"]].ToString()),
-                    Convert.ToBoolean(lector[camposEspec["estado"]]));
+                return Espectaculo.build(lector);
             }
             throw new EspectaculoNoEncontradoException(especId);
         }

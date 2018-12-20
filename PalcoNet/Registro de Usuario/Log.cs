@@ -56,10 +56,10 @@ namespace PalcoNet.Registro_de_usuario
         }
         public void getTiposDocumento()
         {
-            List<TiposDocumento> tipos = new List<TiposDocumento>();
+            List<TipoDocumento> tipos = new List<TipoDocumento>();
             comboTiposDoc.Items.Clear();
             tipos = ClienteRepositorio.getTiposDoc();
-            foreach (TiposDocumento tipo in tipos)
+            foreach (TipoDocumento tipo in tipos)
             {
                 comboTiposDoc.Items.Add(tipo);
                 comboTiposDoc.DisplayMember = "Descripcion";
@@ -80,7 +80,7 @@ namespace PalcoNet.Registro_de_usuario
                 try
                 {
                     Rol rolSeleccionado = (Rol)combo_roles.SelectedItem;
-                    TiposDocumento tipoDocumentoSeleccionado = (TiposDocumento)comboTiposDoc.SelectedItem;
+                    TipoDocumento tipoDocumentoSeleccionado = (TipoDocumento)comboTiposDoc.SelectedItem;
                     string tipoUsuario = setTipoUsuario(rolSeleccionado.nombre);
                     int TipoDocumento=0;
                     if (tipoUsuario == "C") TipoDocumento = Convert.ToInt32(tipoDocumentoSeleccionado.Id);
