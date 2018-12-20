@@ -33,6 +33,9 @@ namespace PalcoNet.Comprar
             {
                 lvCategorias.Items.Add(rubro);
             }
+
+            lvCategorias.DisplayMember = "Descripcion";
+            lvCategorias.ValueMember = "Codigo";
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -77,11 +80,13 @@ namespace PalcoNet.Comprar
 
         private String getCategoriasStr()
         {
-            String expr = ",";
+            String expr = "";
             foreach (Rubro rubro in lvCategorias.SelectedItems)
             {
                 expr += rubro.Codigo + ",";
             }
+
+            expr = expr.Trim(',');
             return expr;
         }
 

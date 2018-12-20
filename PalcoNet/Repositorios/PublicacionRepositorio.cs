@@ -92,7 +92,21 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@desde", desde));
             parametros.Add(new SqlParameter("@hasta", hasta));
             parametros.Add(new SqlParameter("@rubros_str", rubrosStr));
-            SqlDataReader lector = DataBase.GetDataReader("sp_get_publicaciones_comprables", "SP", parametros);
+            StringBuilder sb = new StringBuilder();
+            sb.Append("SELECT [Public_Cod], [Public_Desc], [Public_Fecha_Creacion], [Public_Grado_Cod], " +
+                      "[Public_Espec_Cod], [Public_Estado_Id], [Public_Editor], [Espec_Cod], [Espec_Desc], " +
+                      "[Espec_Fecha], [Espec_Fecha_Venc], [Espec_Rubro_Cod], [Espec_Emp_Cuit], [Espec_Dom_Id], [Espec_Estado] " +
+                      "FROM GESTION_DE_GATOS.Publicaciones " +
+                      "JOIN GESTION_DE_GATOS.Espectaculos " +
+                      "ON Public_Espec_Cod = Espec_Cod " +
+                      "WHERE Public_Desc LIKE '%@pub_desc%' " +
+                      "AND Public_Estado_Id = 2 " +
+                      "AND Espec_Fecha BETWEEN @desde AND @hasta ");
+            sb.Append(rubrosStr.Equals("")
+                ? ""
+                : "AND Espec_Rubro_Cod IN (SELECT value FROM STRING_SPLIT(@rubros_str, ',')); ");
+            sb.Append("ORDER BY Public_Grado_Cod ASC");
+            SqlDataReader lector = DataBase.GetDataReader(sb.ToString(), "T", parametros);
             while (lector.HasRows && lector.Read())
             {
                 publicaciones.Add(PublicacionPuntual.buildCompuesta(lector));

@@ -167,6 +167,7 @@ namespace PalcoNet.Repositorios
                 ubicacionesLibres.Add(Ubicacion.build(lector));
             }
             parametros.Clear();
+            return ubicacionesLibres;
         }
     }
 }

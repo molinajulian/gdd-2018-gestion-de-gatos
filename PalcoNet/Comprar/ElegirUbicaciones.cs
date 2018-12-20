@@ -80,7 +80,7 @@ namespace PalcoNet.Comprar
         {
             List<Ubicacion> ubicacionesDisponibles = UbicacionRepositorio.getUbicacionesDisponibles(sector, Publicacion.Espectaculo);
             txtTipo.Text = sector.TipoUbicacion.Descripcion;
-            cmbFila.Items
+            //cmbFila.Items
         }
 
         private void button2_Click(object sender, EventArgs e)
