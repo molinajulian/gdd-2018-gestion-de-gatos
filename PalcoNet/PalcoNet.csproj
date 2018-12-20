@@ -148,11 +148,35 @@
     <Compile Include="Abm Publicacion\EditarPublicacion.Designer.cs">
       <DependentUpon>EditarPublicacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Publicacion\EditarSector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Publicacion\EditarSector.Designer.cs">
+      <DependentUpon>EditarSector.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Publicacion\GenerarPublicacion.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Abm Publicacion\GenerarPublicacion.Designer.cs">
       <DependentUpon>GenerarPublicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Publicacion\ListaPublicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Publicacion\ListaPublicacion.Designer.cs">
+      <DependentUpon>ListaPublicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Publicacion\ListaSector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Publicacion\ListaSector.Designer.cs">
+      <DependentUpon>ListaSector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Rol\ModificacionRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\ModificacionRol.designer.cs">
+      <DependentUpon>ModificacionRol.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Tarjeta\AltaTarjeta.cs">
       <SubType>Form</SubType>
@@ -172,12 +196,6 @@
     <Compile Include="Abm Rol\ListadoRoles.designer.cs">
       <DependentUpon>ListadoRoles.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Rol\ModificacionRol.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Abm Rol\ModificacionRol.designer.cs">
-      <DependentUpon>ModificacionRol.cs</DependentUpon>
-    </Compile>
     <Compile Include="Abm Rubro\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -190,11 +208,23 @@
     <Compile Include="Abm Tarjeta\ModificacionTarjeta.Designer.cs">
       <DependentUpon>ModificacionTarjeta.cs</DependentUpon>
     </Compile>
-    <Compile Include="Comprar\Form1.cs">
+    <Compile Include="Comprar\ConfirmarCompra.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Comprar\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Comprar\ConfirmarCompra.Designer.cs">
+      <DependentUpon>ConfirmarCompra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Comprar\ElegirPublicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Comprar\ElegirPublicacion.Designer.cs">
+      <DependentUpon>ElegirPublicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Comprar\ElegirUbicaciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Comprar\ElegirUbicaciones.Designer.cs">
+      <DependentUpon>ElegirUbicaciones.cs</DependentUpon>
     </Compile>
     <Compile Include="Generar Rendicion Comisiones\RendicionDeComisiones.cs">
       <SubType>Form</SubType>
@@ -220,8 +250,9 @@
     <Compile Include="Modelo\Factura.cs" />
     <Compile Include="Modelo\ItemFactura.cs" />
     <Compile Include="Modelo\Premio.cs" />
+    <Compile Include="Modelo\PublicacionPuntual.cs" />
     <Compile Include="Modelo\Sector.cs" />
-    <Compile Include="Modelo\TiposDocumento.cs" />
+    <Compile Include="Modelo\TipoDocumento.cs" />
     <Compile Include="Modelo\Empresa.cs" />
     <Compile Include="Modelo\Espectaculo.cs" />
     <Compile Include="Modelo\EstadoPublicacion.cs" />
@@ -348,8 +379,20 @@
     <EmbeddedResource Include="Abm Publicacion\EditarPublicacion.resx">
       <DependentUpon>EditarPublicacion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Abm Publicacion\EditarSector.resx">
+      <DependentUpon>EditarSector.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Abm Publicacion\GenerarPublicacion.resx">
       <DependentUpon>GenerarPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Publicacion\ListaPublicacion.resx">
+      <DependentUpon>ListaPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Publicacion\ListaSector.resx">
+      <DependentUpon>ListaSector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\ModificacionRol.resx">
+      <DependentUpon>ModificacionRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rubro\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -363,11 +406,17 @@
     <EmbeddedResource Include="Abm Rol\ListadoRoles.resx">
       <DependentUpon>ListadoRoles.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Abm Rol\ModificacionRol.resx">
-      <DependentUpon>ModificacionRol.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Abm Tarjeta\ModificacionTarjeta.resx">
       <DependentUpon>ModificacionTarjeta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Comprar\ConfirmarCompra.resx">
+      <DependentUpon>ConfirmarCompra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Comprar\ElegirPublicacion.resx">
+      <DependentUpon>ElegirPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Comprar\ElegirUbicaciones.resx">
+      <DependentUpon>ElegirUbicaciones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Rendicion Comisiones\RendicionDeComisiones.resx">
       <DependentUpon>RendicionDeComisiones.cs</DependentUpon>

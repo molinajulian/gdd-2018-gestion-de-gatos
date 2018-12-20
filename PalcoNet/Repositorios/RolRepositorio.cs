@@ -30,26 +30,8 @@ namespace PalcoNet.Repositorios
             lector.Close();
             return funcionalidades;
         }
-
-        public static bool esRolExistente(String nombre)
-        {
-            SqlDataReader lector = buscarFilasRol(nombre);
-            bool esRolExistente = lector.HasRows;
-            lector.Close();
-            return esRolExistente;
-        }
-
-        public static SqlDataReader buscarFilasRol(String nombre)
-        {
-            List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@nombre", nombre));
-            return DataBase.GetDataReader("404_NOT_FOUND.SP_BUSCAR_ROL", "SP", parametros);
-        }
-
         public static void agregar(Rol rol, List<Funcionalidad> funcionalidades)
         {
-            List<SqlParameter> parametros_rol = new List<SqlParameter>();
-
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@nombre", rol.nombre));
             SqlParameter output = new SqlParameter("@id", -1);
@@ -100,41 +82,6 @@ namespace PalcoNet.Repositorios
             lector.Close();
             return funcionalidades;
         }
-
-
-        public static void deshabilitar(String nombre)
-        {
-            List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@nombre", nombre));
-            DataBase.WriteInBase("404_NOT_FOUND.SP_DESHABILITAR_ROL", "SP", parametros);
-        }
-
-        public static void modificarRol(Rol rol, List<String> funcionalidades)
-        {
-            List<SqlParameter> parametros_rol = new List<SqlParameter>();
-            List<SqlParameter> parametros_funcionalidades_rol = new List<SqlParameter>();
-            parametros_rol.Add(new SqlParameter("@nombre", rol.nombre));
-            parametros_rol.Add(new SqlParameter("@habilitado", rol.Habilitado));
-            DataBase.WriteInBase("404_NOT_FOUND.SP_MODIFICAR_ROL", "SP", parametros_rol);
-            foreach (String funcionalidad in funcionalidades)
-            {
-                parametros_funcionalidades_rol.Add(new SqlParameter("@rol", rol.nombre));
-                parametros_funcionalidades_rol.Add(new SqlParameter("@funcionalidad", funcionalidad));
-                DataBase.WriteInBase("404_NOT_FOUND.SP_AGREGAR_ROL_FUNCIONALIDAD", "SP", parametros_funcionalidades_rol);
-                parametros_funcionalidades_rol.Clear();
-            }
-        }
-
-        public static bool tieneFuncionalidad(int rol_nombre, String funcionalidad)
-        {
-            List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@rol_nombre", rol_nombre));
-            parametros.Add(new SqlParameter("@funcionalidad", funcionalidad));
-            SqlDataReader lector = DataBase.GetDataReader("404_NOT_FOUND.SP_TIENE_FUNCIONALIDAD", "SP", parametros);
-            bool tieneFuncionalidad = lector.HasRows && lector.Read();
-            lector.Close();
-            return tieneFuncionalidad;
-        }
         public static List<Rol> getRoles(string descripcion)
         {
             List<Rol> roles = new List<Rol>();
@@ -149,6 +96,31 @@ namespace PalcoNet.Repositorios
             }
             lector.Close();
             return roles;
+        }
+
+        internal static bool cambiarEstado(Rol seleccionada)
+        {
+
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@id", seleccionada.id));
+            parametros.Add(new SqlParameter("@estado_final", seleccionada.Habilitado ? 0 : 1));
+            DataBase.ejecutarSP("[dbo].[sp_cambiar_estado_rol]", parametros);
+            return !seleccionada.Habilitado;
+        }
+
+
+        internal static void modificar(Rol rol,List<Funcionalidad> funcionalidades)
+        {
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@id",rol.id));
+            parametros.Add(new SqlParameter("@nombre", rol.nombre));
+            parametros.Add(new SqlParameter("@habilitado", rol.Habilitado ? 1: 0));
+            DataBase.ejecutarSP("[dbo].[sp_modificar_rol]", parametros);
+            DataBase.GetDataReader("DELETE FROM GESTION_DE_GATOS.Funcionalidad_Por_Rol WHERE Rol_Id ="+rol.id.ToString(), "T", new List<SqlParameter>());
+            foreach (Funcionalidad fun in funcionalidades)
+            {
+                DataBase.GetDataReader("INSERT INTO GESTION_DE_GATOS.Funcionalidad_Por_Rol (Rol_Id,Func_Id) VALUES(" + rol.id + "," + fun.id + ")", "T", new List<SqlParameter>());
+            }
         }
     }
 }

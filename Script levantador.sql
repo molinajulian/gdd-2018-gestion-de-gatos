@@ -1079,7 +1079,31 @@ CREATE procedure dbo.sp_cambiar_estado_grado (@id int,@estado_final bit)
 AS BEGIN
 	UPDATE GESTION_DE_GATOS.Grados SET Grado_Habilitado = @estado_final WHERE Grado_Cod = @id
 END
+
 GO 
+IF (OBJECT_ID('sp_cambiar_estado_rol', 'P') IS NOT NULL) DROP PROCEDURE sp_cambiar_estado_rol
+GO
+CREATE procedure dbo.sp_cambiar_estado_rol (@id int,@estado_final bit)
+AS BEGIN
+	UPDATE GESTION_DE_GATOS.Roles SET Rol_Estado = @estado_final WHERE Rol_Id = @id
+END
+GO
+
+GO 
+IF (OBJECT_ID('sp_modificar_rol', 'P') IS NOT NULL) DROP PROCEDURE sp_modificar_rol
+GO
+CREATE procedure dbo.sp_modificar_rol (@id int,@nombre varchar(20),@habilitado bit)
+AS BEGIN
+	declare @cantidad int
+	set @cantidad = (SELECT TOP 1 isnull(COUNT(*),0) FROM GESTION_DE_GATOS.Roles where Rol_Id <> @id and Rol_Nombre =@nombre)
+	if @cantidad=0
+		UPDATE GESTION_DE_GATOS.Roles SET Rol_Nombre = @nombre,Rol_Estado=@habilitado WHERE Rol_Id=@id
+	else
+		raiserror('Ya existe un rol con ese nombre',16,0)
+END
+GO
+
+SELECT TOP 1 isnull(COUNT(*),0) FROM GESTION_DE_GATOS.Roles where Rol_Id <> 5 and Rol_Nombre = 'JULIAN'
 /*go
 USE GD2C2018;
 ALTER TABLE [GESTION_DE_GATOS].[Rol_Por_Usuario] DROP CONSTRAINT FK_Usuario_Id,FK_Rol_Id

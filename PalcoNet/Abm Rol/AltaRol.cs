@@ -29,9 +29,9 @@ namespace PalcoNet.AbmRol
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
             this.funcionalidades = FuncionalidadesRepositorio.getFuncionalidades();
-            llenarChecks();
+            llenarLabels();
         }
-        private void llenarChecks()
+        private void llenarLabels()
         {
             var labels = group_alta_rol.Controls.OfType<Label>();
             foreach (Label label in labels)
