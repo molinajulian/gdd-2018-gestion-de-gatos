@@ -15,23 +15,51 @@ CREATE PROCEDURE sp_autenticar_usuario
 	@salida INT OUTPUT)
 AS
 BEGIN
+	declare @usuarioExistente int
 	if @tipoUsuario = 'C'
+	begin
+		SET @usuarioExistente =(SELECT ISNULL((SELECT TOP 1 u.Usuario_Id
+			FROM [GD2C2018].[GESTION_DE_GATOS].Clientes c
+			JOIN [GD2C2018].[GESTION_DE_GATOS].Usuarios u ON u.Usuario_Id = c.Cli_Usuario_Id 
+			WHERE c.Cli_Tipo_Doc_Id = @tipoDocumento AND c.Cli_Doc = convert(int,@user)
+			GROUP BY u.Usuario_Estado,u.Usuario_Id), 0));
+		if @usuarioExistente <> 0
+			UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Intentos_Fallidos =  (SELECT TOP 1 Usuario_Intentos_Fallidos FROM GESTION_DE_GATOS.Usuarios where Usuario_Id = @usuarioExistente)+1 where  Usuario_Id = @usuarioExistente 
 		SET @salida = (SELECT ISNULL((SELECT TOP 1 u.Usuario_Id
-		FROM [GD2C2018].[GESTION_DE_GATOS].Clientes c
-		JOIN [GD2C2018].[GESTION_DE_GATOS].Usuarios u ON u.Usuario_Id = c.Cli_Usuario_Id 
-		WHERE u.Usuario_Password = HASHBYTES('SHA2_256', @password) AND c.Cli_Tipo_Doc_Id = @tipoDocumento AND c.Cli_Doc = convert(int,@user)
-		GROUP BY u.Usuario_Estado,u.Usuario_Id), 0));
+			FROM [GD2C2018].[GESTION_DE_GATOS].Clientes c
+			JOIN [GD2C2018].[GESTION_DE_GATOS].Usuarios u ON u.Usuario_Id = c.Cli_Usuario_Id 
+			WHERE u.Usuario_Password = HASHBYTES('SHA2_256', @password) AND c.Cli_Tipo_Doc_Id = @tipoDocumento AND c.Cli_Doc = convert(int,@user)
+			GROUP BY u.Usuario_Estado,u.Usuario_Id), 0));
+	end
 	if @tipoUsuario = 'E'
+	begin
+		SET @usuarioExistente =(SELECT ISNULL((SELECT u.Usuario_Id
+		FROM [GD2C2018].[GESTION_DE_GATOS].Empresas e
+		JOIN [GD2C2018].[GESTION_DE_GATOS].Usuarios u ON u.Usuario_Id = e.Emp_Usuario_Id 
+		WHERE e.Emp_Cuit = @user
+		GROUP BY u.Usuario_Estado,u.Usuario_Id), 0))
+		if @usuarioExistente<> 0
+			UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Intentos_Fallidos =  (SELECT TOP 1 Usuario_Intentos_Fallidos FROM GESTION_DE_GATOS.Usuarios where Usuario_Id = @usuarioExistente)+1 where  Usuario_Id = @usuarioExistente 
 		SET @salida = (SELECT ISNULL((SELECT u.Usuario_Id
 		FROM [GD2C2018].[GESTION_DE_GATOS].Empresas e
 		JOIN [GD2C2018].[GESTION_DE_GATOS].Usuarios u ON u.Usuario_Id = e.Emp_Usuario_Id 
 		WHERE u.Usuario_Password = HASHBYTES('SHA2_256', @password) AND  e.Emp_Cuit = @user
 		GROUP BY u.Usuario_Estado,u.Usuario_Id), 0));
+	end
 	if @tipoUsuario = 'O'
+	begin
+		SET @usuarioExistente =(SELECT ISNULL((SELECT u.Usuario_Id
+		FROM [GD2C2018].[GESTION_DE_GATOS].Usuarios u
+		WHERE u.Usuario_Username = @user
+		GROUP BY u.Usuario_Estado,u.Usuario_Id), 0))
+		if @usuarioExistente <> 0
+			UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Intentos_Fallidos =  (SELECT TOP 1 Usuario_Intentos_Fallidos FROM GESTION_DE_GATOS.Usuarios where Usuario_Id = @usuarioExistente)+1 where  Usuario_Id = @usuarioExistente 
 		SET @salida = (SELECT ISNULL((SELECT u.Usuario_Id
 		FROM [GD2C2018].[GESTION_DE_GATOS].Usuarios u
 		WHERE u.Usuario_Password = HASHBYTES('SHA2_256', @password) AND  u.Usuario_Username = @user
 		GROUP BY u.Usuario_Estado,u.Usuario_Id), 0));
+	end
+		
 	IF @salida = 0
 	BEGIN
 		RAISERROR ('Usuario o contraseña incorrecta', 16, 0)
@@ -64,7 +92,6 @@ AS BEGIN
 		WHERE u.Usuario_Id = @idUsuario
 END
 go
-
 IF (OBJECT_ID('sp_roles_usuario', 'P') IS NOT NULL) DROP PROCEDURE sp_roles_usuario
 go
 CREATE PROCEDURE sp_roles_usuario @user_id varchar(20)
@@ -133,7 +160,7 @@ GO
 CREATE PROCEDURE sp_get_domicilios (@calle nvarchar(50), @nro numeric(18))
 AS BEGIN
 	SELECT * FROM GESTION_DE_GATOS.Domicilios
-		WHERE Dom_Calle LIKE calle AND Dom_Nro_Calle = @nro;
+		WHERE Dom_Calle LIKE @calle AND Dom_Nro_Calle = @nro;
 END 
 go
 
@@ -424,9 +451,5 @@ BEGIN
 
 END
 
-EXEC sp_rename 'GESTION_DE_GATOS.Ubicaciones_Tipo.Ubic_Cod', 'Ubic_Tipo_Cod', 'COLUMN';
-EXEC sp_rename 'GESTION_DE_GATOS.Ubicaciones_Tipo.Ubic_Descr', 'Ubic_Tipo_Descr', 'COLUMN';
-ALTER TABLE GESTION_DE_GATOS.Espectaculos DROP COLUMN Espec_Hora;
-ALTER TABLE GESTION_DE_GATOS.Publicaciones DROP COLUMN Public_Fact_Num;
 
 
