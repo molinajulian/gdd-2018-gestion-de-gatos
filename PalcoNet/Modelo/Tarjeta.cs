@@ -33,7 +33,7 @@ namespace PalcoNet.Modelo
         
         public static Tarjeta build(SqlDataReader lector)
         {
-            Dictionary<string, int> camposTarjeta = Ordinales.TarjetaNueva;
+            Dictionary<string, int> camposTarjeta = Ordinales.Tarjeta;
             return new Tarjeta(
                 Convert.ToInt32(lector[camposTarjeta["id"]]),
                 Convert.ToInt64(lector[camposTarjeta["numero"]]),

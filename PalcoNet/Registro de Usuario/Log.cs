@@ -30,6 +30,7 @@ namespace PalcoNet.Registro_de_usuario
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900,
                 Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+            reiniciarSesiones();
             try
             {
                 getTiposDocumento();
@@ -42,6 +43,14 @@ namespace PalcoNet.Registro_de_usuario
                     MessageBoxIcon.Error);
             }
         }
+
+        public void reiniciarSesiones()
+        {
+            Usuario.Actual = null;
+            Empresa.Actual = null;
+            Cliente.Actual = null;
+        }
+
         public void getRoles()
         {
             List<Rol> roles = new List<Rol>();
@@ -88,6 +97,14 @@ namespace PalcoNet.Registro_de_usuario
                     if (tipoUsuario == "C") TipoDocumento = Convert.ToInt32(tipoDocumentoSeleccionado.Id);
                     int idUsuario = usuarioRepositorio.validarUsuario(textUsuario.Text, textContrasena.Text, tipoUsuario, TipoDocumento);
                     Usuario usuarioLogueado = UsuarioRepositorio.buscarUsuario(idUsuario);
+                    if (tipoUsuario == "C")
+                    {
+                        Cliente.Actual = ClienteRepositorio.getCliente(usuarioLogueado);
+                    }
+                    else if(tipoUsuario == "E")
+                    {
+                        Empresa.Actual = EmpresasRepositorio.getEmpresa(usuarioLogueado);
+                    }
                     if (usuarioLogueado.primerLogueo)
                     {
                         new CambiarContraseña(usuarioLogueado).ShowDialog();

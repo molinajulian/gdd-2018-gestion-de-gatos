@@ -22,7 +22,7 @@ namespace PalcoNet.Modelo
         public static Cliente Actual { get; set; }
 
         public Cliente(int tipoDeDocumento_id, int numeroDocumento, string cuil, string nombre, string apellido, 
-            string mail, string tel, bool habilitado, DateTime fechaNac, Domicilio domicilio)
+            string mail, string tel, bool habilitado, DateTime fechaNac, Domicilio domicilio, List<Tarjeta> tarjetas = null)
         {
             NombreCliente = nombre;
             Apellido = apellido;
@@ -34,6 +34,7 @@ namespace PalcoNet.Modelo
             Habilitado = habilitado;
             Telefono = tel;
             FechaDeNacimiento = fechaNac;
+            Tarjetas = tarjetas != null ? tarjetas : TarjetaRepositorio.getTarjetasCliente(this);
         }
         public Cliente()
         {

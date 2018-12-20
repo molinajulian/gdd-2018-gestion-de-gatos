@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btn_volver = new System.Windows.Forms.Button();
             this.group_alta_rol = new System.Windows.Forms.GroupBox();
             this.data_listado_sectores = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
@@ -45,16 +44,6 @@
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUbicacionAElegir)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btn_volver
-            // 
-            this.btn_volver.Location = new System.Drawing.Point(29, 707);
-            this.btn_volver.Name = "btn_volver";
-            this.btn_volver.Size = new System.Drawing.Size(83, 44);
-            this.btn_volver.TabIndex = 10;
-            this.btn_volver.Text = "Volver";
-            this.btn_volver.UseVisualStyleBackColor = true;
-            this.btn_volver.Click += new System.EventHandler(this.btn_volver_Click);
             // 
             // group_alta_rol
             // 
@@ -160,7 +149,6 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btn_volver);
             this.Controls.Add(this.group_alta_rol);
             this.Name = "ElegirUbicaciones";
             this.Text = "Comprar [Parte 2/3] - Seleccion de Ubicaciones ";
@@ -175,7 +163,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button btn_volver;
+
         private System.Windows.Forms.GroupBox group_alta_rol;
         private System.Windows.Forms.DataGridView data_listado_sectores;
         private System.Windows.Forms.Button button1;

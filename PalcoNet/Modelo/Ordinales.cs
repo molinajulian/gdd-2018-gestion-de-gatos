@@ -108,7 +108,7 @@ namespace PalcoNet.Modelo
                                                  { "numero",5},
                                                  {"calle",6}
                                                  };
-        public static Dictionary<string, int> TarjetaNueva = new Dictionary<string, int>
+        public static Dictionary<string, int> Tarjeta = new Dictionary<string, int>
                                                     {
                                                         {"id",0},
                                                         {"numero",1},
@@ -116,13 +116,6 @@ namespace PalcoNet.Modelo
                                                         {"banco_desc",3},
                                                         {"cli_tipo_doc",4},
                                                         {"cli_doc",5}
-                                                    };
-        public static Dictionary<string, int> Tarjeta = new Dictionary<string, int> 
-                                                    {
-                                                    {"numero",0},
-                                                    {"nombre",1},
-                                                    {"fechaVencimiento",2},
-                                                    {"ccv",3}
                                                     };
        public static Dictionary<string, int> Empresa = new Dictionary<string, int> 
                                                     {
@@ -175,10 +168,11 @@ namespace PalcoNet.Modelo
                                                     {"id", 0 },
                                                     {"fila",1},
                                                     {"asiento",2},
-                                                    {"espec_cod",3},
-                                                    {"tipo_cod",4},
-                                                    {"compra_id",5},
-                                                    {"sin_numerar",6},
+                                                    {"precio",3},
+                                                    {"espec_cod",4},
+                                                    {"tipo_cod",5},
+                                                    {"compra_id",6},
+                                                    {"sin_numerar",7},
                                                     };
         public static Dictionary<string, int> TipoUbicacion = new Dictionary<string, int>
                                                     {

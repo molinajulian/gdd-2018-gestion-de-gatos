@@ -192,6 +192,19 @@ namespace PalcoNet.Repositorios
             SqlCommand sqlCommand = DataBase.ejecutarSP("[dbo].[sp_cambiar_estado_empresa]", parametros);
             return Convert.ToInt32(sqlCommand.Parameters["@resultado"].Value) == 1;
         }
+
+        public static Empresa getEmpresa(Usuario usuarioLogueado)
+        {
+            String sql = "SELECT * FROM GESTION_DE_GATOS.Empresas WHERE Emp_Usuario_Id = " + usuarioLogueado.id;
+            SqlDataReader lector = DataBase.GetDataReader(sql, "T", new List<SqlParameter>());
+            if (lector.HasRows && lector.Read())
+            {
+                return Empresa.buildEmpresa(lector);
+            }
+            lector.Close();
+            return null;
+
+        }
     }
 }
 

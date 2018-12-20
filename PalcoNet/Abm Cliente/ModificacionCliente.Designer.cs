@@ -48,7 +48,6 @@
             this.groupBoxModifCli = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.checkHabilitado = new System.Windows.Forms.CheckBox();
-            this.btnVolver = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.directorySearcher1 = new System.DirectoryServices.DirectorySearcher();
             this.groupBoxModifCli.SuspendLayout();
@@ -220,7 +219,7 @@
             this.groupBoxModifCli.Controls.Add(this.txtNombre);
             this.groupBoxModifCli.Location = new System.Drawing.Point(8, 73);
             this.groupBoxModifCli.Name = "groupBoxModifCli";
-            this.groupBoxModifCli.Size = new System.Drawing.Size(513, 378);
+            this.groupBoxModifCli.Size = new System.Drawing.Size(513, 349);
             this.groupBoxModifCli.TabIndex = 2;
             this.groupBoxModifCli.TabStop = false;
             this.groupBoxModifCli.Text = "Datos del Nuevo Cliente";
@@ -245,20 +244,10 @@
             this.checkHabilitado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkHabilitado.Location = new System.Drawing.Point(39, 226);
             this.checkHabilitado.Name = "checkHabilitado";
-            this.checkHabilitado.Size = new System.Drawing.Size(97, 22);
+            this.checkHabilitado.Size = new System.Drawing.Size(97, 0);
             this.checkHabilitado.TabIndex = 20;
             this.checkHabilitado.Text = "Habilitado";
             this.checkHabilitado.UseVisualStyleBackColor = true;
-            // 
-            // btnVolver
-            // 
-            this.btnVolver.Location = new System.Drawing.Point(330, 457);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(178, 40);
-            this.btnVolver.TabIndex = 38;
-            this.btnVolver.Text = "Volver";
-            this.btnVolver.UseVisualStyleBackColor = true;
-            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // directorySearcher1
             // 
@@ -270,8 +259,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(532, 521);
-            this.Controls.Add(this.btnVolver);
+            this.ClientSize = new System.Drawing.Size(532, 451);
             this.Controls.Add(this.groupBoxModifCli);
             this.Name = "ModificacionCliente";
             this.Text = "Modificacion de Cliente";
@@ -301,7 +289,6 @@
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.GroupBox groupBoxModifCli;
-        private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.CheckBox checkHabilitado;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.DirectoryServices.DirectorySearcher directorySearcher1;

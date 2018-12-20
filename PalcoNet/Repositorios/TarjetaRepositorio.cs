@@ -71,7 +71,7 @@ namespace PalcoNet.Repositorios
         public static List<Tarjeta> getTarjetasCliente(Cliente cliente)
         {
             List<Tarjeta> tarjetas = new List<Tarjeta>();
-            SqlDataReader lector = DataBase.GetDataReader("SELECT [Tar_Cred_Id],[Tar_Cred_Num],[Tar_Cred_Venc],[Tar_Cred_Banco] " + 
+            SqlDataReader lector = DataBase.GetDataReader("SELECT * " + 
                                                           " FROM GESTION_DE_GATOS.Tarjetas_Credito " +
                                                           "WHERE Tar_Cred_Cli_Doc = " + cliente.NumeroDocumento + 
                                                           " AND Tar_Cred_Cli_Tipo_Doc = " + cliente.TipoDeDocumento.Id

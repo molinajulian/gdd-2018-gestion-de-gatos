@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btnVolver = new System.Windows.Forms.Button();
             this.grupo_empresa = new System.Windows.Forms.GroupBox();
             this.btn_modificar_domicilio = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
@@ -51,16 +50,6 @@
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
-            // 
-            // btnVolver
-            // 
-            this.btnVolver.Location = new System.Drawing.Point(58, 337);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(88, 40);
-            this.btnVolver.TabIndex = 44;
-            this.btnVolver.Text = "Volver";
-            this.btnVolver.UseVisualStyleBackColor = true;
-            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // grupo_empresa
             // 
@@ -203,8 +192,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(580, 399);
-            this.Controls.Add(this.btnVolver);
+            this.ClientSize = new System.Drawing.Size(580, 334);
             this.Controls.Add(this.grupo_empresa);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ModificacionEmpresa";
@@ -219,7 +207,6 @@
         #endregion
 
         private System.Windows.Forms.ErrorProvider errorProvider1;
-        private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.GroupBox grupo_empresa;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.CheckBox checkDeshabilitada;

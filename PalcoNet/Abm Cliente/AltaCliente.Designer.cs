@@ -29,6 +29,11 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.labelAclaracion = new System.Windows.Forms.Label();
+            this.txtUsuario = new System.Windows.Forms.TextBox();
+            this.txtContraseña = new System.Windows.Forms.TextBox();
+            this.labelContraseña = new System.Windows.Forms.Label();
+            this.labelUsuario = new System.Windows.Forms.Label();
             this.btnRegistrarDomicilio = new System.Windows.Forms.Button();
             this.txtCuil = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -48,12 +53,6 @@
             this.txMail = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txNombre = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.labelAclaracion = new System.Windows.Forms.Label();
-            this.txtUsuario = new System.Windows.Forms.TextBox();
-            this.txtContraseña = new System.Windows.Forms.TextBox();
-            this.labelContraseña = new System.Windows.Forms.Label();
-            this.labelUsuario = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -90,6 +89,55 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos del Nuevo Cliente";
+            // 
+            // labelAclaracion
+            // 
+            this.labelAclaracion.AutoSize = true;
+            this.labelAclaracion.Location = new System.Drawing.Point(18, 254);
+            this.labelAclaracion.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelAclaracion.Name = "labelAclaracion";
+            this.labelAclaracion.Size = new System.Drawing.Size(263, 13);
+            this.labelAclaracion.TabIndex = 58;
+            this.labelAclaracion.Text = "* Su nombre de usuario será su número de documento";
+            // 
+            // txtUsuario
+            // 
+            this.txtUsuario.Enabled = false;
+            this.txtUsuario.Location = new System.Drawing.Point(64, 206);
+            this.txtUsuario.Margin = new System.Windows.Forms.Padding(2);
+            this.txtUsuario.Name = "txtUsuario";
+            this.txtUsuario.Size = new System.Drawing.Size(173, 20);
+            this.txtUsuario.TabIndex = 57;
+            // 
+            // txtContraseña
+            // 
+            this.txtContraseña.Location = new System.Drawing.Point(315, 206);
+            this.txtContraseña.Margin = new System.Windows.Forms.Padding(2);
+            this.txtContraseña.Name = "txtContraseña";
+            this.txtContraseña.Size = new System.Drawing.Size(171, 20);
+            this.txtContraseña.TabIndex = 56;
+            this.txtContraseña.Click += new System.EventHandler(this.txtContraseña_Click);
+            this.txtContraseña.TextChanged += new System.EventHandler(this.txtContraseña_TextChanged);
+            // 
+            // labelContraseña
+            // 
+            this.labelContraseña.AutoSize = true;
+            this.labelContraseña.Location = new System.Drawing.Point(247, 209);
+            this.labelContraseña.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelContraseña.Name = "labelContraseña";
+            this.labelContraseña.Size = new System.Drawing.Size(61, 13);
+            this.labelContraseña.TabIndex = 55;
+            this.labelContraseña.Text = "Contraseña";
+            // 
+            // labelUsuario
+            // 
+            this.labelUsuario.AutoSize = true;
+            this.labelUsuario.Location = new System.Drawing.Point(12, 209);
+            this.labelUsuario.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelUsuario.Name = "labelUsuario";
+            this.labelUsuario.Size = new System.Drawing.Size(43, 13);
+            this.labelUsuario.TabIndex = 54;
+            this.labelUsuario.Text = "Usuario";
             // 
             // btnRegistrarDomicilio
             // 
@@ -252,71 +300,11 @@
             this.txNombre.Size = new System.Drawing.Size(175, 20);
             this.txNombre.TabIndex = 1;
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(12, 487);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(178, 40);
-            this.button2.TabIndex = 39;
-            this.button2.Text = "Volver";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // labelAclaracion
-            // 
-            this.labelAclaracion.AutoSize = true;
-            this.labelAclaracion.Location = new System.Drawing.Point(18, 254);
-            this.labelAclaracion.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.labelAclaracion.Name = "labelAclaracion";
-            this.labelAclaracion.Size = new System.Drawing.Size(263, 13);
-            this.labelAclaracion.TabIndex = 58;
-            this.labelAclaracion.Text = "* Su nombre de usuario será su número de documento";
-            // 
-            // txtUsuario
-            // 
-            this.txtUsuario.Enabled = false;
-            this.txtUsuario.Location = new System.Drawing.Point(64, 206);
-            this.txtUsuario.Margin = new System.Windows.Forms.Padding(2);
-            this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(173, 20);
-            this.txtUsuario.TabIndex = 57;
-            // 
-            // txtContraseña
-            // 
-            this.txtContraseña.Location = new System.Drawing.Point(315, 206);
-            this.txtContraseña.Margin = new System.Windows.Forms.Padding(2);
-            this.txtContraseña.Name = "txtContraseña";
-            this.txtContraseña.Size = new System.Drawing.Size(171, 20);
-            this.txtContraseña.TabIndex = 56;
-            this.txtContraseña.Click += new System.EventHandler(this.txtContraseña_Click);
-            this.txtContraseña.TextChanged += new System.EventHandler(this.txtContraseña_TextChanged);
-            // 
-            // labelContraseña
-            // 
-            this.labelContraseña.AutoSize = true;
-            this.labelContraseña.Location = new System.Drawing.Point(247, 209);
-            this.labelContraseña.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.labelContraseña.Name = "labelContraseña";
-            this.labelContraseña.Size = new System.Drawing.Size(61, 13);
-            this.labelContraseña.TabIndex = 55;
-            this.labelContraseña.Text = "Contraseña";
-            // 
-            // labelUsuario
-            // 
-            this.labelUsuario.AutoSize = true;
-            this.labelUsuario.Location = new System.Drawing.Point(12, 209);
-            this.labelUsuario.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.labelUsuario.Name = "labelUsuario";
-            this.labelUsuario.Size = new System.Drawing.Size(43, 13);
-            this.labelUsuario.TabIndex = 54;
-            this.labelUsuario.Text = "Usuario";
-            // 
             // AltaCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(558, 552);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox1);
             this.Name = "AltaCliente";
             this.Text = "AltaCliente";
@@ -347,7 +335,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox txtCuil;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btnRegistrarDomicilio;
         private System.Windows.Forms.Label labelAclaracion;
         private System.Windows.Forms.TextBox txtUsuario;

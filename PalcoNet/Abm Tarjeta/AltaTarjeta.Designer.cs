@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnVolver = new System.Windows.Forms.Button();
             this.btnAlta = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.datePickerFechaVenc = new System.Windows.Forms.DateTimePicker();
@@ -43,7 +42,6 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.White;
-            this.groupBox1.Controls.Add(this.btnVolver);
             this.groupBox1.Controls.Add(this.btnAlta);
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.datePickerFechaVenc);
@@ -53,24 +51,14 @@
             this.groupBox1.Controls.Add(this.txtNumero);
             this.groupBox1.Location = new System.Drawing.Point(12, 81);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(513, 201);
+            this.groupBox1.Size = new System.Drawing.Size(513, 153);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos de Nueva Tarjeta";
             // 
-            // btnVolver
-            // 
-            this.btnVolver.Location = new System.Drawing.Point(298, 145);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(178, 40);
-            this.btnVolver.TabIndex = 30;
-            this.btnVolver.Text = "Volver";
-            this.btnVolver.UseVisualStyleBackColor = true;
-            this.btnVolver.Click += new System.EventHandler(this.button2_Click);
-            // 
             // btnAlta
             // 
-            this.btnAlta.Location = new System.Drawing.Point(101, 145);
+            this.btnAlta.Location = new System.Drawing.Point(274, 95);
             this.btnAlta.Name = "btnAlta";
             this.btnAlta.Size = new System.Drawing.Size(178, 40);
             this.btnAlta.TabIndex = 13;
@@ -132,7 +120,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(535, 295);
+            this.ClientSize = new System.Drawing.Size(535, 244);
             this.Controls.Add(this.groupBox1);
             this.Name = "AltaTarjeta";
             this.Text = "AltaTarjeta";
@@ -151,7 +139,6 @@
         private System.Windows.Forms.TextBox txtBanco;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.DateTimePicker datePickerFechaVenc;
-        private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.Button btnAlta;
     }
 }

@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.epProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btn_volver = new System.Windows.Forms.Button();
             this.group_alta_rol = new System.Windows.Forms.GroupBox();
             this.cmbTipo = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -52,19 +51,10 @@
             // 
             this.epProvider.ContainerControl = this;
             // 
-            // btn_volver
-            // 
-            this.btn_volver.Location = new System.Drawing.Point(55, 399);
-            this.btn_volver.Name = "btn_volver";
-            this.btn_volver.Size = new System.Drawing.Size(83, 44);
-            this.btn_volver.TabIndex = 10;
-            this.btn_volver.Text = "Volver";
-            this.btn_volver.UseVisualStyleBackColor = true;
-            this.btn_volver.Click += new System.EventHandler(this.btn_volver_Click);
-            // 
             // group_alta_rol
             // 
             this.group_alta_rol.BackColor = System.Drawing.Color.White;
+            this.group_alta_rol.Controls.Add(this.button1);
             this.group_alta_rol.Controls.Add(this.cmbTipo);
             this.group_alta_rol.Controls.Add(this.label4);
             this.group_alta_rol.Controls.Add(this.label1);
@@ -159,7 +149,7 @@
             // btn_alta_sector
             // 
             this.btn_alta_sector.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_alta_sector.Location = new System.Drawing.Point(221, 262);
+            this.btn_alta_sector.Location = new System.Drawing.Point(86, 262);
             this.btn_alta_sector.Name = "btn_alta_sector";
             this.btn_alta_sector.Size = new System.Drawing.Size(97, 50);
             this.btn_alta_sector.TabIndex = 0;
@@ -170,7 +160,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(375, 399);
+            this.button1.Location = new System.Drawing.Point(328, 265);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(150, 44);
             this.button1.TabIndex = 11;
@@ -182,9 +172,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(581, 452);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.btn_volver);
+            this.ClientSize = new System.Drawing.Size(581, 406);
             this.Controls.Add(this.group_alta_rol);
             this.Name = "AltaSector";
             this.Text = "Alta Sector";
@@ -198,7 +186,6 @@
 
         #endregion
         private System.Windows.Forms.ErrorProvider epProvider;
-        private System.Windows.Forms.Button btn_volver;
         private System.Windows.Forms.GroupBox group_alta_rol;
         private System.Windows.Forms.ComboBox cmbTipo;
         private System.Windows.Forms.Label label4;

@@ -11,13 +11,12 @@ namespace PalcoNet.Comprar
 {
     public partial class ElegirPublicacion : MaterialForm
     {
-        Cliente cliente;
-        DataTable tabla_publicaciones = new DataTable();
-        List<PublicacionPuntual> Publicaciones = new List<PublicacionPuntual>();
+        private DataTable tabla_publicaciones = new DataTable();
+        private List<PublicacionPuntual> Publicaciones = new List<PublicacionPuntual>();
+        private int Offset = 0;
         public ElegirPublicacion()
         {
             InitializeComponent();
-            cliente = Cliente.Actual;
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
@@ -49,8 +48,14 @@ namespace PalcoNet.Comprar
         {
             if (dtpHasta.Value.CompareTo(dtpDesde.Value) != 1)
             {
-                MessageBox.Show("La fecha limite debe ser mayor que la inicial", "Compra", MessageBoxButtons.OK,
+                MessageBox.Show("La fecha limite debe ser mayor que la inicial", "Compras", MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
+                return false;
+            }
+            if (!int.TryParse(txtLimit.Text, out int n))
+            {
+                MessageBox.Show("El limite de visualizacion de publicaciones debe ser un numero entero", "Compras", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
                 return false;
             }
             return true;
@@ -62,8 +67,14 @@ namespace PalcoNet.Comprar
             {
                 return;
             }
-            actualizarListado(PublicacionRepositorio.getPublicacionesComprables(txtDescripcion.Text, dtpDesde.Value, dtpHasta.Value,
-                                                                                getCategoriasStr()));
+            actualizarListado(getPublicacionesComprables(Offset, Convert.ToInt32(txtLimit.Text)));
+        }
+
+        private List<PublicacionPuntual> getPublicacionesComprables(int offset, int limit, bool ascending = true)
+        {
+            Offset = offset;
+            return PublicacionRepositorio.getPublicacionesComprables(txtDescripcion.Text, dtpDesde.Value, dtpHasta.Value,
+                                                                     getCategoriasStr(), offset, limit, ascending);
         }
 
         private String getCategoriasStr()
@@ -102,6 +113,30 @@ namespace PalcoNet.Comprar
             {
                 new ElegirUbicaciones(Publicaciones[data_publicaciones.SelectedRows[0].Index]).ShowDialog();
             }
+        }
+        
+        private void btnPrev_Click(object sender, EventArgs e)
+        {
+            int limit = Convert.ToInt32(txtLimit.Text);
+            actualizarListado(getPublicacionesComprables(Math.Max(Offset - limit, 0), limit));
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            int limit = Convert.ToInt32(txtLimit.Text);
+            actualizarListado(getPublicacionesComprables(Offset + limit, limit));
+        }
+
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            int limit = Convert.ToInt32(txtLimit.Text);
+            actualizarListado(getPublicacionesComprables(0, limit));
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            int limit = Convert.ToInt32(txtLimit.Text);
+            actualizarListado(getPublicacionesComprables(0, limit, false));
         }
     }
 }

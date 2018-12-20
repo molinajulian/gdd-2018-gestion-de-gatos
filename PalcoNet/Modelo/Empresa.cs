@@ -17,7 +17,7 @@ namespace PalcoNet.Modelo
         public string Telefono { get; set; }
         public Domicilio Domicilio { get; set; }
         public bool Habilitada { get; set; }
-        public static Empresa EmpresaActual { get; set; }
+        public static Empresa Actual { get; set; }
 
         public Empresa()
         {
