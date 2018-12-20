@@ -57,5 +57,10 @@ namespace PalcoNet.Modelo
         {
             Actual = usuario;
         }
+
+        public bool esEmpresa()
+        {
+            return rol.id == 2; //El Id del Rol Empresa es 2
+        }
     }
 }

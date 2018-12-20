@@ -53,9 +53,17 @@ namespace PalcoNet.Repositorios
             EstadoPublicacion estadoBorrador = EstadoPublicacionRepositorio.getEstados()
                 .Find(publicacion => publicacion.Descripcion.Equals("BORRADOR"));
             List<PublicacionPuntual> publicaciones = new List<PublicacionPuntual>();
-            SqlDataReader lector = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Publicaciones"
-                                                          + " WHERE Public_Desc LIKE '%" + tituloPub + "%'" 
-                                                          + " AND Public_Editor IS NOT NULL AND Public_Estado_Id = " + estadoBorrador.Id, "T", new List<SqlParameter>());
+            //Si el rol es es empresa => solo puede ver las suyas, sino ve todas
+            StringBuilder sb = new StringBuilder();
+            sb.Append(
+                "SELECT * FROM GESTION_DE_GATOS.Publicaciones"
+                + " WHERE Public_Desc LIKE '%" + tituloPub + "%'"
+                + " AND Public_Editor IS NOT NULL AND Public_Estado_Id = " + estadoBorrador.Id);
+            if (Usuario.Actual.esEmpresa())
+            {
+                sb.Append(" AND Public_Editor = " + Usuario.Actual.id);
+            }
+            SqlDataReader lector = DataBase.GetDataReader(sb.ToString(), "T", new List<SqlParameter>());
             while (lector.HasRows && lector.Read())
             {
                 publicaciones.Add(PublicacionPuntual.build(lector));
