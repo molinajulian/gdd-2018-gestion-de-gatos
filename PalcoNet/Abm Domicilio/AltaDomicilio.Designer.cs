@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.group_alta_rol = new System.Windows.Forms.GroupBox();
+            this.btn_limpiar = new System.Windows.Forms.Button();
             this.txDpto = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.txNumero = new System.Windows.Forms.TextBox();
@@ -42,7 +43,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txCalle = new System.Windows.Forms.TextBox();
             this.btn_alta_domicilio = new System.Windows.Forms.Button();
-            this.btn_limpiar = new System.Windows.Forms.Button();
             this.group_alta_rol.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,6 +69,16 @@
             this.group_alta_rol.TabIndex = 3;
             this.group_alta_rol.TabStop = false;
             this.group_alta_rol.Text = "Datos del domicilio";
+            // 
+            // btn_limpiar
+            // 
+            this.btn_limpiar.Location = new System.Drawing.Point(287, 120);
+            this.btn_limpiar.Name = "btn_limpiar";
+            this.btn_limpiar.Size = new System.Drawing.Size(81, 39);
+            this.btn_limpiar.TabIndex = 7;
+            this.btn_limpiar.Text = "Limpiar";
+            this.btn_limpiar.UseVisualStyleBackColor = true;
+            this.btn_limpiar.Click += new System.EventHandler(this.btn_limpiar_Click);
             // 
             // txDpto
             // 
@@ -176,15 +186,6 @@
             this.btn_alta_domicilio.Text = "Dar de alta domicilio";
             this.btn_alta_domicilio.UseVisualStyleBackColor = true;
             this.btn_alta_domicilio.Click += new System.EventHandler(this.btn_alta_domicilio_Click);
-            // 
-            // btn_limpiar
-            // 
-            this.btn_limpiar.Location = new System.Drawing.Point(287, 120);
-            this.btn_limpiar.Name = "btn_limpiar";
-            this.btn_limpiar.Size = new System.Drawing.Size(81, 39);
-            this.btn_limpiar.TabIndex = 7;
-            this.btn_limpiar.Text = "Limpiar";
-            this.btn_limpiar.UseVisualStyleBackColor = true;
             // 
             // AltaDomicilio
             // 

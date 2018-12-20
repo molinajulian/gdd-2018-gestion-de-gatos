@@ -17,7 +17,10 @@ namespace PalcoNet.Comprar
         DataTable tabla_ubicaciones = new DataTable();
         private List<Ubicacion> UbicacionesElegidas;
         private PublicacionPuntual PublicacionElegida;
-        public ConfirmarCompra(List<Ubicacion> ubicacionesElegidas, PublicacionPuntual publicacionElegida)
+        private ElegirPublicacion parte1;
+        private ElegirUbicaciones parte2;
+        public ConfirmarCompra(List<Ubicacion> ubicacionesElegidas, PublicacionPuntual publicacionElegida,
+                                ElegirPublicacion parte1, ElegirUbicaciones parte2)
         {
             InitializeComponent();
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -26,6 +29,9 @@ namespace PalcoNet.Comprar
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
             UbicacionesElegidas = ubicacionesElegidas;
             PublicacionElegida = publicacionElegida;
+            this.parte1 = parte1;
+            this.parte2 = parte2;
+            parte2.Hide();
             agregarEncabezadosTabla();
             actualizarListado();
             inicializarTarjetas();
@@ -69,16 +75,23 @@ namespace PalcoNet.Comprar
             actualizarTablaUbicaciones();
         }
 
-        private void btn_volver_Click(object sender, EventArgs e)
+        protected override void OnClosed(EventArgs e)
         {
-            this.Close();
+            base.OnClosed(e);
+            parte2.Show();
         }
-        
 
         private void btnComprar_Click(object sender, EventArgs e)
         {
             //CompraRepositorio.realizarCompra(UbicacionesElegidas, PublicacionElegida, getTarjetaElegida());
             MessageBox.Show(getMensajeDeConfirmacion());
+            cerrarProceso();
+        }
+
+        private void cerrarProceso()
+        {
+            parte1.Close();
+            parte2.Close();
             this.Close();
         }
 

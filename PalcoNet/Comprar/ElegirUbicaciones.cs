@@ -19,8 +19,9 @@ namespace PalcoNet.Comprar
         private List<Ubicacion> ubiacionesElegidas = new List<Ubicacion>();
         private PublicacionPuntual Publicacion;
         private List<Ubicacion> ubicacionesDisponibles;
+        private ElegirPublicacion parte1;
 
-        public ElegirUbicaciones(PublicacionPuntual publicacion)
+        public ElegirUbicaciones(PublicacionPuntual publicacion, ElegirPublicacion elegirPublicacion)
         {
             InitializeComponent();
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -28,6 +29,8 @@ namespace PalcoNet.Comprar
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
             Publicacion = publicacion;
+            parte1 = elegirPublicacion;
+            elegirPublicacion.Hide();
             sectoresRegistrados = publicacion.getSectores();
             inicializarUbicacionesDisponibles();
             agregarEncabezadosTablas();
@@ -167,12 +170,18 @@ namespace PalcoNet.Comprar
 
         private void button3_Click(object sender, EventArgs e)
         {
-            new ConfirmarCompra(ubiacionesElegidas, Publicacion).ShowDialog();
+            new ConfirmarCompra(ubiacionesElegidas, Publicacion, parte1, this).ShowDialog();
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            parte1.Show();
         }
     }
 }
