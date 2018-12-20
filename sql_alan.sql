@@ -85,9 +85,9 @@ CREATE PROCEDURE sp_buscar_usuario @idUsuario int
 AS BEGIN
 		SELECT u.Usuario_Id, u.Usuario_Username, u.Usuario_Estado, ISNULL(u.Usuario_Primer_Logueo, 0)
 		FROM GESTION_DE_GATOS.Usuarios u
-				JOIN  GESTION_DE_GATOS.Rol_Por_Usuario
+				LEFT JOIN  GESTION_DE_GATOS.Rol_Por_Usuario
 					ON GESTION_DE_GATOS.Rol_Por_Usuario.Usuario_Id = u.Usuario_Id
-                JOIN GESTION_DE_GATOS.Roles
+                LEFT JOIN GESTION_DE_GATOS.Roles
 					ON GESTION_DE_GATOS.Roles.Rol_Id = GESTION_DE_GATOS.Rol_Por_Usuario.Rol_Id
 		WHERE u.Usuario_Id = @idUsuario
 END
