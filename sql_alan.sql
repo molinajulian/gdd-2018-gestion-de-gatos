@@ -133,7 +133,7 @@ GO
 CREATE PROCEDURE sp_get_domicilios (@calle nvarchar(50), @nro numeric(18))
 AS BEGIN
 	SELECT * FROM GESTION_DE_GATOS.Domicilios
-		WHERE Dom_Calle LIKE calle AND Dom_Nro_Calle = @nro;
+		WHERE Dom_Calle LIKE 'calle' AND Dom_Nro_Calle = @nro;
 END 
 go
 
@@ -371,7 +371,7 @@ CREATE procedure sp_eliminar_ubicaciones(@ubic_espec_codigo NUMERIC(18))
 AS BEGIN 
 	DELETE FROM GESTION_DE_GATOS.Ubicaciones WHERE Ubic_Espec_Cod = @ubic_espec_codigo;
 END
-
+go
 
 IF (OBJECT_ID('sp_get_sectores', 'P') IS NOT NULL) DROP PROCEDURE sp_get_sectores
 go
