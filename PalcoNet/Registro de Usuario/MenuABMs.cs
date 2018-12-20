@@ -199,7 +199,7 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonModificacionEmpresa_Click(object sender, EventArgs e)
         {
-            
+            new ListadoEmpresas("Modificacion").ShowDialog();
         }
 
         private void buttonModificacionCliente_Click(object sender, EventArgs e)
@@ -233,7 +233,7 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonBajaEmpresa_Click(object sender, EventArgs e)
         {
-            ListadoEmpresas me = new ListadoEmpresas("modo?");
+            ListadoEmpresas me = new ListadoEmpresas("baja");
             me.ShowDialog();
         }
 
