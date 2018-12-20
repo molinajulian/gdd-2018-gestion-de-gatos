@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using System.IO;
+using System.Globalization;
 namespace PalcoNet.Repositorios
 {
     static class DataBase
@@ -16,13 +18,52 @@ namespace PalcoNet.Repositorios
         {
             if (connection.State == ConnectionState.Closed)
             {
-                connection.ConnectionString = @System.Configuration.ConfigurationManager.ConnectionStrings["GddDB"].ConnectionString;
+                connection.ConnectionString = GetConnectionString();
                 connection.Open();
             }
             return connection;
         }
 
+        public static List<string> GetConfigFile()
+        {   List<string> config= new List<string>();
+            //Path.Combine(System.Environment.CurrentDirectory, @"\Futuro ZIP\src\configuracion.txt");
+    
+        var path = @"..\..\..\Futuro Zip\src\configuracion.txt";
+                StreamReader sr = new StreamReader(path);
+                string line = sr.ReadLine();
 
+
+                while (line != null)
+                {
+                    config.Add(line);
+                    line = sr.ReadLine();
+                    
+                }
+
+
+                sr.Close(); 
+                
+            
+            return config;
+
+        }
+        public static DateTime GetFechaHoy()
+        {   DateTime fecha;
+             List<string> config= GetConfigFile();
+             if (!String.IsNullOrEmpty(config.ElementAt(0)))
+             {
+                  fecha = Convert.ToDateTime(config.ElementAt(0), CultureInfo.InvariantCulture);
+             }
+             else { fecha =DateTime.Today }
+            return fecha;
+        }
+        public static string GetConnectionString()
+        {
+             List<string> config= GetConfigFile();
+             return config.ElementAt(1);
+        }
+        
+        
         public static SqlCommand BuildSQLCommand(String commandtext, List<SqlParameter> parameters)
         {
             SqlCommand sqlCommand = new SqlCommand();

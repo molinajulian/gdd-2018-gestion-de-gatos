@@ -187,7 +187,8 @@ CREATE TABLE [GESTION_DE_GATOS].[Puntos]
 	[Cli_Tipo_Doc]	  int NOT NULL,
 	[Cli_Doc]         numeric(18)  NOT NULL ,
 	[Puntos_FechaVencimiento] datetime NOT NULL,
-	[Puntos_Cantidad] int NULL
+	[Puntos_Cantidad] int NULL,
+	[Puntos_Fue_Canjeado]  bit not null
 )
 go
 ALTER TABLE [GESTION_DE_GATOS].[Puntos]
@@ -574,28 +575,6 @@ end
 
 
 go
-IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'actualizarPuntos' AND [type] = 'TR')
-BEGIN
-      DROP TRIGGER [GESTION_DE_GATOS].[actualizarPuntos];
-END;
-go
-create trigger actualizarPuntos on GESTION_DE_GATOS.Compras after INSERT 
-as
-begin
-	declare @idCompra int;
-	declare @totalCompra int;
-	declare @puntosAnteriores int;
-	declare @clienteDoc numeric(18);
-	declare @clienteTipoDoc int;
-	set @idCompra = (select top 1 Compra_Id from GESTION_DE_GATOS.Compras ORDER BY Compra_Id ASC)
-	set @clienteDoc = (select top 1 Compra_Cli_Doc from GESTION_DE_GATOS.Compras ORDER BY Compra_Id ASC)
-	set @clienteTipoDoc = (select top 1 Compra_Cli_Tipo_Doc from GESTION_DE_GATOS.Compras ORDER BY Compra_Id ASC)
-	set @totalCompra = (select SUM(Ubic_Precio) from GESTION_DE_GATOS.Ubicaciones WHERE Ubic_Compra_id = @idCompra)
-	set @puntosAnteriores = (select top 1 isnull(Cli_Puntos,0) from GESTION_DE_GATOS.Clientes where Cli_Tipo_Doc_Id+Cli_Doc = @clienteTipoDoc+@clienteDoc )
-	UPDATE GESTION_DE_GATOS.Clientes SET Cli_Puntos = @puntosAnteriores+(ROUND(@totalCompra*0.1,0)) WHERE Cli_Tipo_Doc_Id+Cli_Doc = @clienteTipoDoc+@clienteDoc
-end
-
-go
 
 IF EXISTS ( SELECT  *
             FROM    sys.objects
@@ -706,41 +685,6 @@ begin
 	IF @@TRANCOUNT > 0  
         commit transaction;
 end
-
-
-GO
-IF (OBJECT_ID('canjearPuntos', 'P') IS NOT NULL) DROP PROCEDURE canjearPuntos
-GO
-create procedure canjearPuntos (@clienteTipoDoc int,@ClienteDoc numeric(18),@PremioId int)
-as
-begin
-	declare @tienePermisos char(3);
-	declare @puntosCliente int;
-	declare @puntosPremio int;
-	declare @errorMensaje varchar;
-	set @puntosCliente = (select top 1 Cli_Puntos from GESTION_DE_GATOS.Clientes where Cli_Tipo_Doc_Id+Cli_Doc = @clienteTipoDoc+@ClienteDoc)
-	set @puntosPremio = (select top 1 Premio_Puntos from GESTION_DE_GATOS.Premios where Premio_Id = @PremioId)
-	set @tienePermisos = dbo.tienePermisos('1'+convert(varchar,@clienteDoc),'CANJEAR PUNTOS')
-	if(@tienePermisos = 'SI')
-	begin
-		if @puntosCliente > @puntosPremio
-			begin
-			begin tran 
-			UPDATE GESTION_DE_GATOS.Clientes SET Cli_Puntos = @puntosCliente-@puntosPremio WHERE Cli_Tipo_Doc_Id+Cli_Doc = @clienteTipoDoc+@ClienteDoc
-			INSERT INTO GESTION_DE_GATOS.Premios_Adquiridos (Cli_Tipo_Doc,Cli_Doc,Premio_Id) VALUES (@clienteTipoDoc,@ClienteDoc,@PremioId)
-			if @@ERROR <> 0 
-				rollback 
-			commit tran 
-			end
-		else
-			RAISERROR('El usuario no tiene puntos suficientes',11,2)
-	end
-	else
-		RAISERROR('El usuario no tiene permisos para realizar esta acción',11,2)
-end
-
-
-
 go
 
 IF EXISTS ( SELECT  *
