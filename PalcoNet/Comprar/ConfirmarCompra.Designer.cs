@@ -34,7 +34,7 @@
             this.group_alta_rol = new System.Windows.Forms.GroupBox();
             this.btn_agregar_tarjeta = new System.Windows.Forms.Button();
             this.data_ubicaciones = new System.Windows.Forms.DataGridView();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cmbTarjetas = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btn_confirmar_compra = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.epProvider)).BeginInit();
@@ -61,7 +61,7 @@
             this.group_alta_rol.BackColor = System.Drawing.Color.White;
             this.group_alta_rol.Controls.Add(this.btn_agregar_tarjeta);
             this.group_alta_rol.Controls.Add(this.data_ubicaciones);
-            this.group_alta_rol.Controls.Add(this.comboBox1);
+            this.group_alta_rol.Controls.Add(this.cmbTarjetas);
             this.group_alta_rol.Controls.Add(this.label1);
             this.group_alta_rol.Location = new System.Drawing.Point(23, 73);
             this.group_alta_rol.Name = "group_alta_rol";
@@ -90,13 +90,13 @@
             this.data_ubicaciones.Size = new System.Drawing.Size(570, 229);
             this.data_ubicaciones.TabIndex = 32;
             // 
-            // comboBox1
+            // cmbTarjetas
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(207, 263);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(369, 21);
-            this.comboBox1.TabIndex = 12;
+            this.cmbTarjetas.FormattingEnabled = true;
+            this.cmbTarjetas.Location = new System.Drawing.Point(207, 263);
+            this.cmbTarjetas.Name = "cmbTarjetas";
+            this.cmbTarjetas.Size = new System.Drawing.Size(369, 21);
+            this.cmbTarjetas.TabIndex = 12;
             // 
             // label1
             // 
@@ -118,7 +118,7 @@
             this.btn_confirmar_compra.UseVisualStyleBackColor = true;
             this.btn_confirmar_compra.Click += new System.EventHandler(this.btnComprar_Click);
             // 
-            // ListaSector
+            // ConfirmarCompra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -126,7 +126,7 @@
             this.Controls.Add(this.btn_confirmar_compra);
             this.Controls.Add(this.btn_volver);
             this.Controls.Add(this.group_alta_rol);
-            this.Name = "ListaSector";
+            this.Name = "ConfirmarCompra";
             this.Text = "Comprar [Parte 3/3] - Confirmacion de Compra";
             ((System.ComponentModel.ISupportInitialize)(this.epProvider)).EndInit();
             this.group_alta_rol.ResumeLayout(false);
@@ -143,7 +143,7 @@
         private System.Windows.Forms.Button btn_confirmar_compra;
         private System.Windows.Forms.DataGridView data_ubicaciones;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cmbTarjetas;
         private System.Windows.Forms.Button btn_agregar_tarjeta;
     }
 }

@@ -83,8 +83,9 @@ namespace PalcoNet.Repositorios
             DataBase.ejecutarSP("sp_actualizar_publicacion", parametros);
         }
 
-        public static List<PublicacionPuntual> getPublicacionesComprables(string descripcion, DateTime desde, DateTime hasta, 
-                                                                          String rubrosStr)
+        public static List<PublicacionPuntual> getPublicacionesComprables(string descripcion, DateTime desde,
+                                                                          DateTime hasta, string rubrosStr, 
+                                                                          int offset, int limit, bool ascending)
         {
             List<PublicacionPuntual> publicaciones = new List<PublicacionPuntual>();
             List<SqlParameter> parametros = new List<SqlParameter>();
@@ -105,7 +106,9 @@ namespace PalcoNet.Repositorios
             sb.Append(rubrosStr.Equals("")
                 ? ""
                 : "AND Espec_Rubro_Cod IN (SELECT * FROM dbo.SPLIT_STRING(@rubros_str, ',')) ");
-            sb.Append(" ORDER BY Public_Grado_Cod ASC");
+            sb.Append(" ORDER BY Public_Grado_Cod " + (ascending ? "ASC" : "DESC") +
+                      " OFFSET " + offset + " ROWS" +
+                      " FETCH NEXT " + limit + " ROWS ONLY;");
             SqlDataReader lector = DataBase.GetDataReader(sb.ToString(), "T", parametros);
             while (lector.HasRows && lector.Read())
             {

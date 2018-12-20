@@ -284,7 +284,8 @@ CREATE TABLE [GESTION_DE_GATOS].[Compras]
 	[Compra_Cli_Doc]			numeric(18) NOT NULL,
 	[Compra_Cli_Tipo_Doc]		int NOT NULL,
 	[Compra_Fecha]				smalldatetime NOT NULL,
-	[Compra_Fue_Facturada]		Bit NULL
+	[Compra_Fue_Facturada]		Bit NULL,
+	[Compra_Tarj_Cred_Id]		int,
 )
 go
 

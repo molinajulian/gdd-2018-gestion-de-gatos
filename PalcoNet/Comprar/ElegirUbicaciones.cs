@@ -16,7 +16,7 @@ namespace PalcoNet.Comprar
         DataTable tabla_ubicaciones_elegidas= new DataTable();
         private List<Sector> sectoresRegistrados;
         private List<Ubicacion> ubicacionesAElegir;
-        private List<Ubicacion> ubiacionesElegidas;
+        private List<Ubicacion> ubiacionesElegidas = new List<Ubicacion>();
         private PublicacionPuntual Publicacion;
         private List<Ubicacion> ubicacionesDisponibles;
 
@@ -108,6 +108,7 @@ namespace PalcoNet.Comprar
 
         public void actualizarListadoUbicacionAElegir(List<Ubicacion> ubicaciones)
         {
+            ubicacionesAElegir = ubicaciones;
             tabla_ubicaciones_a_elegir.Rows.Clear();
             foreach (Ubicacion ubicacion in ubicaciones)
             {
@@ -123,6 +124,7 @@ namespace PalcoNet.Comprar
 
         public void actualizarListadoUbicacionElegidas(Ubicacion ubicacion)
         {
+            ubiacionesElegidas.Add(ubicacion);
             String[] ubiacionRow =
             {
                 ubicacion.TipoUbicacion.Descripcion, ubicacion.Fila.ToString(), ubicacion.Asiento.ToString(),
@@ -134,21 +136,38 @@ namespace PalcoNet.Comprar
 
         private void actualizarSeleccionDeAsiento(Sector sector)
         {
-            ubicacionesAElegir =
-                ubicacionesDisponibles.FindAll(ubicacion => ubicacion.TipoUbicacion.Id == sector.TipoUbicacion.Id);
-            actualizarListadoUbicacionAElegir(ubicacionesAElegir);
+            actualizarListadoUbicacionAElegir(getUbicacionesAElegir(sector));
+        }
+
+        private List<Ubicacion> getUbicacionesAElegir(Sector sector)
+        {
+            return ubicacionesDisponibles
+                            .FindAll(ubicacion => ubicacion.TipoUbicacion.Id == sector.TipoUbicacion.Id)
+                            .FindAll(ubicacion => noReservada(ubicacion));
+        }
+
+        private Boolean noReservada(Ubicacion ubicacion)
+        {
+            return !ubiacionesElegidas.Contains(ubicacion);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            actualizarListadoUbicacionElegidas(ubicacionesAElegir[dgvUbicacionAElegir.SelectedRows[0].Index]);
-            //Elimina la ubicacion de ubicaciones a elegir
+            if (data_listado_sectores.SelectedRows.Count > 1)
+            {
+                MessageBox.Show("Debe seleccionar 1 y solo 1 registro", "Advertencia", MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+            else
+            {
+                actualizarListadoUbicacionElegidas(ubicacionesAElegir[dgvUbicacionAElegir.SelectedRows[0].Index]);
+                dgvUbicacionAElegir.Rows.Remove(dgvUbicacionAElegir.SelectedRows[0]); //Actualizo el estado de opciones
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            //Paso a la pantalla siguiente las ubicaciones elegidas y la publicacionPuntual
-            new ConfirmarCompra(ubiacionesElegidas, Publicacion.Espectaculo).ShowDialog();
+            new ConfirmarCompra(ubiacionesElegidas, Publicacion).ShowDialog();
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)

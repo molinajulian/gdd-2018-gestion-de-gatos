@@ -86,6 +86,14 @@ namespace PalcoNet.Registro_de_usuario
                     if (tipoUsuario == "C") TipoDocumento = Convert.ToInt32(tipoDocumentoSeleccionado.Id);
                     int idUsuario = usuarioRepositorio.validarUsuario(textUsuario.Text, textContrasena.Text, tipoUsuario, TipoDocumento);
                     Usuario usuarioLogueado = UsuarioRepositorio.buscarUsuario(idUsuario);
+                    if (tipoUsuario == "C")
+                    {
+                        Cliente.Actual = ClienteRepositorio.getCliente(usuarioLogueado);
+                    }
+                    else if(tipoUsuario == "E")
+                    {
+                        Empresa.EmpresaActual = EmpresasRepositorio.getEmpresa(usuarioLogueado);
+                    }
                     if (usuarioLogueado.primerLogueo)
                     {
                         new CambiarContraseña(usuarioLogueado).ShowDialog();
