@@ -95,32 +95,35 @@ namespace PalcoNet.Registro_de_usuario
                     string tipoUsuario = setTipoUsuario(rolSeleccionado.nombre);
                     int TipoDocumento=0;
                     if (tipoUsuario == "C") TipoDocumento = Convert.ToInt32(tipoDocumentoSeleccionado.Id);
-                    int idUsuario = usuarioRepositorio.validarUsuario(textUsuario.Text, textContrasena.Text, tipoUsuario, TipoDocumento);
-                    Usuario usuarioLogueado = UsuarioRepositorio.buscarUsuario(idUsuario);
-                    if (tipoUsuario == "C")
+                    Usuario u=usuarioRepositorio.validarIntentosFallidos(textUsuario.Text, tipoUsuario, TipoDocumento);
+                    if (u.intentosFallidos >= 3 || !u.isActive)
                     {
-                        Cliente.Actual = ClienteRepositorio.getCliente(usuarioLogueado);
-                    }
-                    else if(tipoUsuario == "E")
-                    {
-                        Empresa.Actual = EmpresasRepositorio.getEmpresa(usuarioLogueado);
-                    }
-                    if (usuarioLogueado.primerLogueo)
-                    {
-                        new CambiarContraseña(usuarioLogueado).ShowDialog();
-                        textContrasena.Text = "Contraseña";
-                        textUsuario.Text = "Nombre de Usuario";
-                        textContrasena.UseSystemPasswordChar = false;
+                        usuarioRepositorio.deshabilitar(u.id);
+                        MessageBox.Show("Su usuario ha sido deshabilitado debido a reiterados intentos de ingresar al sistema sin éxito", errorAlIngresar, MessageBoxButtons.OK,MessageBoxIcon.Error);
                         this.Show();
                     }
                     else
                     {
-                        ConfiguracionInicial ci = new ConfiguracionInicial(usuarioLogueado);
-                        if (ci.IsDisposed) this.Show(); ;
-                        textContrasena.Text = "Contraseña";
-                        textUsuario.Text = "Nombre de Usuario";
-                        textContrasena.UseSystemPasswordChar = false;
+                        int idUsuario = usuarioRepositorio.validarUsuario(textUsuario.Text, textContrasena.Text, tipoUsuario, TipoDocumento);
+                        Usuario usuarioLogueado = UsuarioRepositorio.buscarUsuario(idUsuario);
+                        if (usuarioLogueado.primerLogueo)
+                        {
+                            new CambiarContraseña(usuarioLogueado).ShowDialog();
+                            textContrasena.Text = "Contraseña";
+                            textUsuario.Text = "Nombre de Usuario";
+                            textContrasena.UseSystemPasswordChar = false;
+                            this.Show();
+                        }
+                        else
+                        {
+                            ConfiguracionInicial ci = new ConfiguracionInicial(usuarioLogueado);
+                            if (ci.IsDisposed) this.Show(); ;
+                            textContrasena.Text = "Contraseña";
+                            textUsuario.Text = "Nombre de Usuario";
+                            textContrasena.UseSystemPasswordChar = false;
+                        }
                     }
+                    
                 }
                 catch (SqlException ex)
                 {

@@ -147,11 +147,12 @@ ALTER TABLE [GESTION_DE_GATOS].[Rol_Por_Usuario]
 go
 CREATE TABLE [GESTION_DE_GATOS].[Usuarios]
 ( 
-	[Usuario_Id]				int identity(1,1)  NOT NULL ,
-	[Usuario_Username]			varchar(20) NOT NULL ,
-	[Usuario_Password]			binary(32) NOT NULL ,
-	[Usuario_Estado]			bit NULL,
-	[Usuario_Primer_Logueo]		bit not null,
+	[Usuario_Id]					int identity(1,1)  NOT NULL ,
+	[Usuario_Username]				varchar(20) NOT NULL ,
+	[Usuario_Password]				binary(32) NOT NULL ,
+	[Usuario_Estado]				bit NULL,
+	[Usuario_Primer_Logueo]			bit not null,
+	[Usuario_Intentos_Fallidos]		int not null
 )
 go
 
@@ -160,6 +161,9 @@ ALTER TABLE [GESTION_DE_GATOS].[Usuarios]
 go
 ALTER TABLE [GESTION_DE_GATOS].[Usuarios]
 	ADD CONSTRAINT DF_Primer_Logueo DEFAULT 1 FOR Usuario_Primer_Logueo;
+go
+ALTER TABLE [GESTION_DE_GATOS].[Usuarios]
+	ADD CONSTRAINT DF_Intentos DEFAULT 0 FOR Usuario_Intentos_Fallidos;
 go
 --premios, premios adquiridos y tarjetas de credito
 CREATE TABLE [GESTION_DE_GATOS].[Premios_Adquiridos]
@@ -301,7 +305,6 @@ CREATE TABLE [GESTION_DE_GATOS].[Publicaciones]
 	[Public_Fecha_Creacion]		datetime NOT NULL,
 	[Public_Grado_Cod]			int NOT NULL,
 	[Public_Espec_Cod]			numeric(18) NOT NULL,
-	[Public_Fact_Num]			numeric(18) NULL,
 	[Public_Estado_Id]			int NOT NULL,
 	[Public_Editor]				int NULL,
 )
@@ -474,11 +477,6 @@ ALTER TABLE [GESTION_DE_GATOS].[Publicaciones]
 		ON UPDATE NO ACTION
 go
 
-ALTER TABLE [GESTION_DE_GATOS].[Publicaciones]
-	ADD CONSTRAINT [FK_Public_Fact_Num] FOREIGN KEY ([Public_Fact_Num]) REFERENCES [GESTION_DE_GATOS].[Facturas]([Fact_Num])
-		ON DELETE NO ACTION
-		ON UPDATE NO ACTION
-go
 
 
 ALTER TABLE [GESTION_DE_GATOS].[Publicaciones]
@@ -921,10 +919,6 @@ AS BEGIN
 END 
 go
 
-
-SELECT * FROM GESTION_DE_GATOS.Clientes c JOIN GESTION_DE_GATOS.Usuarios u ON u.Usuario_Id = c.Cli_Usuario_Id WHERE u.Usuario_Id=783
-SELECT * FROM GESTION_DE_GATOS.Usuarios where Usuario_Id=783
-
 GO
 IF (OBJECT_ID('sp_get_clientes', 'P') IS NOT NULL) DROP PROCEDURE sp_get_clientes 
 GO
@@ -1078,7 +1072,7 @@ ALTER TABLE [GESTION_DE_GATOS].[Tarjetas_Credito] DROP CONSTRAINT FK_Tarjeta_Cli
 ALTER TABLE [GESTION_DE_GATOS].[Espectaculos] DROP CONSTRAINT FK_Espec_Rubro_Cod, FK_Espec_Emp_Cuit,FK_Espec_Dom_Id
 ALTER TABLE [GESTION_DE_GATOS].[Ubicaciones] DROP CONSTRAINT FK_Ubic_Tipo_Cod,FK_Ubic_Compra_Id,FK_Ubic_Espec_Cod
 ALTER TABLE [GESTION_DE_GATOS].[Compras] DROP CONSTRAINT FK_Compra_Publicacion_Id,FK_Compra_Cliente
-ALTER TABLE [GESTION_DE_GATOS].[Publicaciones] DROP CONSTRAINT FK_Public_Grado_Cod,FK_Public_Espec_Cod,FK_Public_Fact_Num,FK_Public_Estado_Id
+ALTER TABLE [GESTION_DE_GATOS].[Publicaciones] DROP CONSTRAINT FK_Public_Grado_Cod,FK_Public_Espec_Cod,FK_Public_Estado_Id
 ALTER TABLE [GESTION_DE_GATOS].[Facturas] DROP CONSTRAINT FK_Fact_Empresa_Cuit
 ALTER TABLE [GESTION_DE_GATOS].[Item_Facturas] DROP CONSTRAINT FK_Item_Fact_Num
 ALTER TABLE [GESTION_DE_GATOS].[Puntos] DROP CONSTRAINT FK_Puntos_Cliente
@@ -1109,5 +1103,3 @@ DROP TABLE [GESTION_DE_GATOS].[Puntos]
 GO
 DROP SCHEMA [GESTION_DE_GATOS]
 */
-
-SELECT * FROM GESTION_DE_GATOS.Clientes c JOIN GESTION_DE_GATOS.Usuarios u ON u.Usuario_Id = c.Cli_Usuario_Id

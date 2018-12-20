@@ -90,5 +90,32 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@tamaño", nuevaContraseña.Length));
             DataBase.ejecutarSP("[dbo].[sp_cambiar_contraseña]", parametros);
         }
+
+        internal Usuario validarIntentosFallidos(string username, string tipoUsuario, int TipoDocumento)
+        {
+            string query;
+            if (tipoUsuario == "C")
+            {
+                query = "SELECT * FROM GESTION_DE_GATOS.Usuarios u JOIN GESTION_DE_GATOS.Clientes c ON c.Cli_Usuario_Id = u.Usuario_Id WHERE c.Cli_Tipo_Doc_Id =" + TipoDocumento + " and c.Cli_Doc ='"+username+"'";
+            }
+            else
+            {
+                if (tipoUsuario == "E")
+                {
+                    query = "SELECT * FROM GESTION_DE_GATOS.Usuarios u JOIN GESTION_DE_GATOS.Empresas e ON e.Emp_Usuario_Id = u.Usuario_Id WHERE e.Emp_Cuit='" + username+"'";
+                }
+                else
+                {
+                    query = "SELECT * FROM GESTION_DE_GATOS.Usuarios where Usuario_Username='"+username+"'";
+                }
+            }
+            SqlDataReader usuario = DataBase.GetDataReader(query,"T",new List<SqlParameter>());
+            return usuario.HasRows && usuario.Read() ? new Usuario() { id = usuario.GetInt32(0), username=usuario.GetString(1),isActive = usuario.GetBoolean(3),primerLogueo = usuario.GetBoolean(4),intentosFallidos = usuario.GetInt32(5)} : new Usuario();
+        }
+
+        internal void deshabilitar(int idUsuario)
+        {
+            SqlDataReader usuario = DataBase.GetDataReader("UPDATE GESTION_DE_GATOS.Usuarios SET Usuario_Estado=0 WHERE Usuario_Id ="+idUsuario, "T", new List<SqlParameter>());
+        }
     }
 }

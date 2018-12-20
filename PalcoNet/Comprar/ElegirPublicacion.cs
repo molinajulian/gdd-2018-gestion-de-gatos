@@ -52,7 +52,8 @@ namespace PalcoNet.Comprar
                     MessageBoxIcon.Warning);
                 return false;
             }
-            if (!int.TryParse(txtLimit.Text, out int n))
+            int n;
+            if (!int.TryParse(txtLimit.Text,out n))
             {
                 MessageBox.Show("El limite de visualizacion de publicaciones debe ser un numero entero", "Compras", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
