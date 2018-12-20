@@ -150,15 +150,20 @@ namespace PalcoNet.Repositorios
             }
         }
 
-        internal static Cliente getCliente(Usuario usuario)
+        internal static Cliente getCliente(Usuario usuario,int tipoDoc = -1,int doc = -1)
         {
-            String sql = "SELECT * FROM GESTION_DE_GATOS.Clientes c JOIN GESTION_DE_GATOS.Usuarios u ON u.Usuario_Id = c.Cli_Usuario_Id WHERE u.Usuario_Id ="+usuario.id;
+            String sql = tipoDoc==-1 || doc ==-1 ? "SELECT * FROM GESTION_DE_GATOS.Clientes c JOIN GESTION_DE_GATOS.Usuarios u ON u.Usuario_Id = c.Cli_Usuario_Id WHERE u.Usuario_Id ="+usuario.id
+                : "SELECT * FROM GESTION_DE_GATOS.Clientes WHERE Cli_Tipo_Doc_Id ="+tipoDoc+" and Cli_doc="+doc;
             SqlDataReader lector = DataBase.GetDataReader(sql, "T", new List<SqlParameter>());
             Cliente cliente = new Cliente();
             if (lector.HasRows && lector.Read())
             {
                 cliente = Cliente.build(lector);
                 lector.Close();
+            }
+            else
+            {
+                throw new Exception("No existe un cliente con esa combinación de tipo de documento y documento.");
             }
             lector.Close();
             return cliente;

@@ -50,8 +50,8 @@ namespace PalcoNet.Comprar
             {
                 String[] ubicacionRow = 
                 {
-                    ubicacion.Fila.ToString(), ubicacion.Asiento.ToString(),
-                    ubicacion.Precio.ToString(), ubicacionesElegidas.Espectaculo.Descripcion
+                    ubicacion.Fila.ToString(), ubicacion.Asiento.ToString()
+                    // ,ubicacion.Precio.ToString(), ubicacionesElegidas.Espectaculo.Descripcion
                 };
                 tabla_ubicaciones.Rows.Add(ubicacionRow);
             }
@@ -66,7 +66,7 @@ namespace PalcoNet.Comprar
 
         private void btnComprar_Click(object sender, EventArgs e)
         {
-            CompraRepositorio.realizarCompra(UbicacionesAComprar, PublicacionElegida);
+            // CompraRepositorio.realizarCompra(UbicacionesAComprar, PublicacionElegida);
         }
 
         private void btn_agregar_tarjeta_Click(object sender, EventArgs e)

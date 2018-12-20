@@ -1055,7 +1055,7 @@ go
 GO
 IF (OBJECT_ID('sp_historial_cliente', 'P') IS NOT NULL) DROP PROCEDURE sp_historial_cliente 
 GO
-CREATE PROCEDURE sp_historial_cliente(@tipoDoc int,@doc int,@flag int)
+CREATE PROCEDURE sp_historial_cliente(@tipoDoc int,@doc int,@flag int,@pagina int)
 AS BEGIN
 	if @flag = 1 
 		SELECT TOP 1 COUNT(*) OVER () AS TotalRecords
@@ -1075,6 +1075,7 @@ AS BEGIN
 		  WHERE c.Compra_Cli_Doc = 43468403 and c.Compra_Cli_Tipo_Doc=1
 		  GROUP BY c.Compra_Id,c.Compra_Fecha,e.Espec_Fecha,e.Espec_Desc,r.Rubro_Descr
 		  ORDER BY c.Compra_Id
+		  OFFSET @pagina ROWS FETCH NEXT 20 ROWS ONLY
 END 
 go
 
