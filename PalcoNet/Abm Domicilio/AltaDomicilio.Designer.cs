@@ -42,7 +42,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txCalle = new System.Windows.Forms.TextBox();
             this.btn_alta_domicilio = new System.Windows.Forms.Button();
-            this.btn_volver = new System.Windows.Forms.Button();
             this.btn_limpiar = new System.Windows.Forms.Button();
             this.group_alta_rol.SuspendLayout();
             this.SuspendLayout();
@@ -50,6 +49,7 @@
             // group_alta_rol
             // 
             this.group_alta_rol.BackColor = System.Drawing.Color.White;
+            this.group_alta_rol.Controls.Add(this.btn_limpiar);
             this.group_alta_rol.Controls.Add(this.txDpto);
             this.group_alta_rol.Controls.Add(this.label11);
             this.group_alta_rol.Controls.Add(this.txNumero);
@@ -65,7 +65,7 @@
             this.group_alta_rol.Controls.Add(this.btn_alta_domicilio);
             this.group_alta_rol.Location = new System.Drawing.Point(36, 76);
             this.group_alta_rol.Name = "group_alta_rol";
-            this.group_alta_rol.Size = new System.Drawing.Size(538, 177);
+            this.group_alta_rol.Size = new System.Drawing.Size(514, 177);
             this.group_alta_rol.TabIndex = 3;
             this.group_alta_rol.TabStop = false;
             this.group_alta_rol.Text = "Datos del domicilio";
@@ -169,7 +169,7 @@
             // btn_alta_domicilio
             // 
             this.btn_alta_domicilio.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.btn_alta_domicilio.Location = new System.Drawing.Point(225, 120);
+            this.btn_alta_domicilio.Location = new System.Drawing.Point(144, 117);
             this.btn_alta_domicilio.Name = "btn_alta_domicilio";
             this.btn_alta_domicilio.Size = new System.Drawing.Size(94, 45);
             this.btn_alta_domicilio.TabIndex = 0;
@@ -177,19 +177,9 @@
             this.btn_alta_domicilio.UseVisualStyleBackColor = true;
             this.btn_alta_domicilio.Click += new System.EventHandler(this.btn_alta_domicilio_Click);
             // 
-            // btn_volver
-            // 
-            this.btn_volver.Location = new System.Drawing.Point(86, 268);
-            this.btn_volver.Name = "btn_volver";
-            this.btn_volver.Size = new System.Drawing.Size(83, 39);
-            this.btn_volver.TabIndex = 4;
-            this.btn_volver.Text = "Volver";
-            this.btn_volver.UseVisualStyleBackColor = true;
-            this.btn_volver.Click += new System.EventHandler(this.btn_volver_Click);
-            // 
             // btn_limpiar
             // 
-            this.btn_limpiar.Location = new System.Drawing.Point(443, 268);
+            this.btn_limpiar.Location = new System.Drawing.Point(287, 120);
             this.btn_limpiar.Name = "btn_limpiar";
             this.btn_limpiar.Size = new System.Drawing.Size(81, 39);
             this.btn_limpiar.TabIndex = 7;
@@ -200,9 +190,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(638, 319);
-            this.Controls.Add(this.btn_limpiar);
-            this.Controls.Add(this.btn_volver);
+            this.ClientSize = new System.Drawing.Size(568, 263);
             this.Controls.Add(this.group_alta_rol);
             this.Name = "AltaDomicilio";
             this.Text = "AltaDomicilio";
@@ -215,7 +203,6 @@
         #endregion
         private System.Windows.Forms.GroupBox group_alta_rol;
         private System.Windows.Forms.Button btn_alta_domicilio;
-        private System.Windows.Forms.Button btn_volver;
         private System.Windows.Forms.TextBox txDpto;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txNumero;

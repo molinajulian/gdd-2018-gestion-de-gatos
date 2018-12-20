@@ -30,7 +30,6 @@
         {
             this.btn_cambiar_estado = new System.Windows.Forms.Button();
             this.btn_editar = new System.Windows.Forms.Button();
-            this.btn_atras = new System.Windows.Forms.Button();
             this.btn_limpiar = new System.Windows.Forms.Button();
             this.grupo_filtros = new System.Windows.Forms.GroupBox();
             this.txt_titulo_pub = new System.Windows.Forms.TextBox();
@@ -44,7 +43,7 @@
             // btn_cambiar_estado
             // 
             this.btn_cambiar_estado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_cambiar_estado.Location = new System.Drawing.Point(335, 421);
+            this.btn_cambiar_estado.Location = new System.Drawing.Point(224, 421);
             this.btn_cambiar_estado.Margin = new System.Windows.Forms.Padding(2);
             this.btn_cambiar_estado.Name = "btn_cambiar_estado";
             this.btn_cambiar_estado.Size = new System.Drawing.Size(157, 28);
@@ -55,7 +54,7 @@
             // btn_editar
             // 
             this.btn_editar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_editar.Location = new System.Drawing.Point(211, 421);
+            this.btn_editar.Location = new System.Drawing.Point(85, 421);
             this.btn_editar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_editar.Name = "btn_editar";
             this.btn_editar.Size = new System.Drawing.Size(74, 28);
@@ -64,19 +63,9 @@
             this.btn_editar.UseVisualStyleBackColor = true;
             this.btn_editar.Click += new System.EventHandler(this.btn_editar_Click);
             // 
-            // btn_atras
-            // 
-            this.btn_atras.Location = new System.Drawing.Point(12, 421);
-            this.btn_atras.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_atras.Name = "btn_atras";
-            this.btn_atras.Size = new System.Drawing.Size(74, 28);
-            this.btn_atras.TabIndex = 18;
-            this.btn_atras.Text = "Atras";
-            this.btn_atras.UseVisualStyleBackColor = true;
-            // 
             // btn_limpiar
             // 
-            this.btn_limpiar.Location = new System.Drawing.Point(562, 421);
+            this.btn_limpiar.Location = new System.Drawing.Point(478, 421);
             this.btn_limpiar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_limpiar.Name = "btn_limpiar";
             this.btn_limpiar.Size = new System.Drawing.Size(74, 28);
@@ -147,7 +136,6 @@
             this.ClientSize = new System.Drawing.Size(645, 480);
             this.Controls.Add(this.btn_cambiar_estado);
             this.Controls.Add(this.btn_editar);
-            this.Controls.Add(this.btn_atras);
             this.Controls.Add(this.btn_limpiar);
             this.Controls.Add(this.grupo_filtros);
             this.Controls.Add(this.data_publicaciones);
@@ -164,7 +152,6 @@
 
         private System.Windows.Forms.Button btn_cambiar_estado;
         private System.Windows.Forms.Button btn_editar;
-        private System.Windows.Forms.Button btn_atras;
         private System.Windows.Forms.Button btn_limpiar;
         private System.Windows.Forms.GroupBox grupo_filtros;
         private System.Windows.Forms.TextBox txt_titulo_pub;

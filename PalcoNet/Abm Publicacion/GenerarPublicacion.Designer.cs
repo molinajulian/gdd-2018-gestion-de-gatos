@@ -47,7 +47,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.cmbGrado = new System.Windows.Forms.ComboBox();
-            this.btn_volver = new System.Windows.Forms.Button();
             this.group_alta_rol.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -239,22 +238,11 @@
             this.cmbGrado.Size = new System.Drawing.Size(121, 21);
             this.cmbGrado.TabIndex = 52;
             // 
-            // btn_volver
-            // 
-            this.btn_volver.Location = new System.Drawing.Point(38, 508);
-            this.btn_volver.Name = "btn_volver";
-            this.btn_volver.Size = new System.Drawing.Size(83, 44);
-            this.btn_volver.TabIndex = 4;
-            this.btn_volver.Text = "Volver";
-            this.btn_volver.UseVisualStyleBackColor = true;
-            this.btn_volver.Click += new System.EventHandler(this.btn_volver_Click);
-            // 
             // GenerarPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(607, 565);
-            this.Controls.Add(this.btn_volver);
+            this.ClientSize = new System.Drawing.Size(607, 514);
             this.Controls.Add(this.group_alta_rol);
             this.Name = "GenerarPublicacion";
             this.Text = "Generar Publicacion";
@@ -270,7 +258,6 @@
         private System.Windows.Forms.TextBox txtDescripcion;
         private System.Windows.Forms.GroupBox group_alta_rol;
         private System.Windows.Forms.Button btn_alta_publicacion;
-        private System.Windows.Forms.Button btn_volver;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox cmbEstado;
         private System.Windows.Forms.TextBox txtUsername;

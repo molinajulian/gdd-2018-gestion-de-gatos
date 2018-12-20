@@ -46,7 +46,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.epProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btnVolver = new System.Windows.Forms.Button();
             this.grupo_empresa.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.epProvider)).BeginInit();
             this.SuspendLayout();
@@ -73,7 +72,7 @@
             this.grupo_empresa.Margin = new System.Windows.Forms.Padding(2);
             this.grupo_empresa.Name = "grupo_empresa";
             this.grupo_empresa.Padding = new System.Windows.Forms.Padding(2);
-            this.grupo_empresa.Size = new System.Drawing.Size(539, 264);
+            this.grupo_empresa.Size = new System.Drawing.Size(539, 250);
             this.grupo_empresa.TabIndex = 0;
             this.grupo_empresa.TabStop = false;
             this.grupo_empresa.Text = "Datos de Empresa";
@@ -224,21 +223,11 @@
             // 
             this.epProvider.ContainerControl = this;
             // 
-            // btnVolver
-            // 
-            this.btnVolver.Location = new System.Drawing.Point(12, 353);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(128, 40);
-            this.btnVolver.TabIndex = 42;
-            this.btnVolver.Text = "Volver";
-            this.btnVolver.UseVisualStyleBackColor = true;
-            // 
             // AltaEmpresa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(561, 434);
-            this.Controls.Add(this.btnVolver);
+            this.ClientSize = new System.Drawing.Size(561, 345);
             this.Controls.Add(this.grupo_empresa);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "AltaEmpresa";
@@ -259,7 +248,6 @@
         private System.Windows.Forms.TextBox txtRazon;
         private System.Windows.Forms.ErrorProvider epProvider;
         private System.Windows.Forms.Button btn_alta_empresa;
-        private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.TextBox txtTel;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtMail;

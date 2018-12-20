@@ -35,7 +35,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txCalle = new System.Windows.Forms.TextBox();
             this.data_listado_domicilios = new System.Windows.Forms.DataGridView();
-            this.btn_volver = new System.Windows.Forms.Button();
             this.btn_limpiar = new System.Windows.Forms.Button();
             this.btn_eliminar = new System.Windows.Forms.Button();
             this.btn_agregar = new System.Windows.Forms.Button();
@@ -113,19 +112,9 @@
             this.data_listado_domicilios.TabIndex = 4;
             this.data_listado_domicilios.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.data_listado_domicilios_RowStateChanged);
             // 
-            // btn_volver
-            // 
-            this.btn_volver.Location = new System.Drawing.Point(28, 319);
-            this.btn_volver.Name = "btn_volver";
-            this.btn_volver.Size = new System.Drawing.Size(80, 29);
-            this.btn_volver.TabIndex = 5;
-            this.btn_volver.Text = "Volver";
-            this.btn_volver.UseVisualStyleBackColor = true;
-            this.btn_volver.Click += new System.EventHandler(this.btn_volver_Click);
-            // 
             // btn_limpiar
             // 
-            this.btn_limpiar.Location = new System.Drawing.Point(492, 318);
+            this.btn_limpiar.Location = new System.Drawing.Point(461, 319);
             this.btn_limpiar.Name = "btn_limpiar";
             this.btn_limpiar.Size = new System.Drawing.Size(81, 28);
             this.btn_limpiar.TabIndex = 6;
@@ -137,7 +126,7 @@
             // 
             this.btn_eliminar.Enabled = false;
             this.btn_eliminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_eliminar.Location = new System.Drawing.Point(376, 318);
+            this.btn_eliminar.Location = new System.Drawing.Point(316, 318);
             this.btn_eliminar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_eliminar.Name = "btn_eliminar";
             this.btn_eliminar.Size = new System.Drawing.Size(83, 28);
@@ -150,7 +139,7 @@
             // 
             this.btn_agregar.Enabled = false;
             this.btn_agregar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_agregar.Location = new System.Drawing.Point(152, 318);
+            this.btn_agregar.Location = new System.Drawing.Point(64, 318);
             this.btn_agregar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_agregar.Name = "btn_agregar";
             this.btn_agregar.Size = new System.Drawing.Size(74, 28);
@@ -163,7 +152,7 @@
             // 
             this.btn_editar.Enabled = false;
             this.btn_editar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_editar.Location = new System.Drawing.Point(268, 318);
+            this.btn_editar.Location = new System.Drawing.Point(186, 318);
             this.btn_editar.Margin = new System.Windows.Forms.Padding(2);
             this.btn_editar.Name = "btn_editar";
             this.btn_editar.Size = new System.Drawing.Size(74, 28);
@@ -194,7 +183,6 @@
             this.Controls.Add(this.btn_eliminar);
             this.Controls.Add(this.btn_agregar);
             this.Controls.Add(this.btn_limpiar);
-            this.Controls.Add(this.btn_volver);
             this.Controls.Add(this.data_listado_domicilios);
             this.Controls.Add(this.group_filtros_domicilio);
             this.Name = "ListadoDomicilios";
@@ -210,7 +198,6 @@
         private System.Windows.Forms.Button btn_buscar;
         private System.Windows.Forms.GroupBox group_filtros_domicilio;
         private System.Windows.Forms.DataGridView data_listado_domicilios;
-        private System.Windows.Forms.Button btn_volver;
         private System.Windows.Forms.Button btn_limpiar;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txNumero;

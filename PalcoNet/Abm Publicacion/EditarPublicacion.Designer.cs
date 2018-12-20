@@ -48,7 +48,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btn_alta_publicacion = new System.Windows.Forms.Button();
-            this.btn_volver = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.chkEspecDeshabilitado = new System.Windows.Forms.CheckBox();
             this.group_alta_rol.SuspendLayout();
@@ -230,23 +229,13 @@
             // btn_alta_publicacion
             // 
             this.btn_alta_publicacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_alta_publicacion.Location = new System.Drawing.Point(489, 345);
+            this.btn_alta_publicacion.Location = new System.Drawing.Point(424, 348);
             this.btn_alta_publicacion.Name = "btn_alta_publicacion";
             this.btn_alta_publicacion.Size = new System.Drawing.Size(132, 67);
             this.btn_alta_publicacion.TabIndex = 0;
             this.btn_alta_publicacion.Text = "Confirmar";
             this.btn_alta_publicacion.UseVisualStyleBackColor = true;
             this.btn_alta_publicacion.Click += new System.EventHandler(this.btn_alta_publicacion_Click);
-            // 
-            // btn_volver
-            // 
-            this.btn_volver.Location = new System.Drawing.Point(57, 368);
-            this.btn_volver.Name = "btn_volver";
-            this.btn_volver.Size = new System.Drawing.Size(83, 44);
-            this.btn_volver.TabIndex = 4;
-            this.btn_volver.Text = "Volver";
-            this.btn_volver.UseVisualStyleBackColor = true;
-            this.btn_volver.Click += new System.EventHandler(this.btn_volver_Click);
             // 
             // groupBox1
             // 
@@ -286,7 +275,6 @@
             this.ClientSize = new System.Drawing.Size(1069, 427);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btn_alta_publicacion);
-            this.Controls.Add(this.btn_volver);
             this.Controls.Add(this.group_alta_rol);
             this.Name = "EditarPublicacion";
             this.Text = "Editar Publicacion";
@@ -304,7 +292,6 @@
         private System.Windows.Forms.TextBox txtDescripcion;
         private System.Windows.Forms.GroupBox group_alta_rol;
         private System.Windows.Forms.Button btn_alta_publicacion;
-        private System.Windows.Forms.Button btn_volver;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox cmbEstado;
         private System.Windows.Forms.TextBox txtUsername;

@@ -66,13 +66,14 @@ namespace PalcoNet.Repositorios
             return compra;
 
         }
-        public static List<CompraListado> GetHistorialCompra(int tipoDoc,int doc)
+        public static List<CompraListado> GetHistorialCompra(int tipoDoc,int doc,int pagina)
         {
             List<CompraListado> historial = new List<CompraListado>();
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@tipoDoc", tipoDoc));
             parametros.Add(new SqlParameter("@doc", doc));
             parametros.Add(new SqlParameter("@flag", 2));
+            parametros.Add(new SqlParameter("@pagina", pagina));
             SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_historial_cliente]", "SP", parametros);
             while (lector.Read())
             {
@@ -101,13 +102,14 @@ namespace PalcoNet.Repositorios
             DataBase.ejecutarSP("[dbo].[sp_realizar_compra]", parametros);
         }
 
-        internal static int GetCantidadHistorial(int tipoDoc, int doc)
+        internal static int GetCantidadHistorial(int tipoDoc, int doc,int pagina=1)
         {
 
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@tipoDoc", tipoDoc));
             parametros.Add(new SqlParameter("@doc", doc));
             parametros.Add(new SqlParameter("@flag", 1));
+            parametros.Add(new SqlParameter("@pagina", pagina));
             SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_historial_cliente]","SP", parametros);
             int cantidad=-1;
             while (lector.HasRows && lector.Read())

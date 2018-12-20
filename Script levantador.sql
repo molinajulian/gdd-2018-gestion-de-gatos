@@ -1029,13 +1029,11 @@ END
 GO
 
 GO
-IF (OBJECT_ID('sp_eliminar_cliente', 'P') IS NOT NULL) DROP PROCEDURE sp_eliminar_cliente 
+IF (OBJECT_ID('sp_cambiar_estado_cliente', 'P') IS NOT NULL) DROP PROCEDURE sp_cambiar_estado_cliente 
 GO
-CREATE PROCEDURE sp_eliminar_cliente (@tipoDocDescr nvarchar(30),@doc decimal)
+CREATE PROCEDURE sp_cambiar_estado_cliente (@tipoDoc int,@doc decimal,@estadoFinal bit)
 AS BEGIN
-	UPDATE GESTION_DE_GATOS.Clientes SET Cli_Habilitado = 0 WHERE convert(nvarchar,Cli_Tipo_Doc_Id)+convert(nvarchar,Cli_Doc) = 
-	(SELECT convert(nvarchar,c.Cli_Tipo_Doc_Id)+convert(nvarchar,c.Cli_Doc) FROM GESTION_DE_GATOS.Clientes c JOIN GESTION_DE_GATOS.Tipos_Doc td ON td.Tipo_Doc_Id = c.Cli_Tipo_Doc_Id
-	WHERE td.Tipo_Doc_Descr = @tipoDocDescr AND c.Cli_Doc = @doc)
+	UPDATE GESTION_DE_GATOS.Clientes SET Cli_Habilitado = @estadoFinal WHERE Cli_Tipo_Doc_Id = @tipoDoc AND Cli_Doc = @doc
 END
 
 
@@ -1056,7 +1054,7 @@ go
 GO
 IF (OBJECT_ID('sp_historial_cliente', 'P') IS NOT NULL) DROP PROCEDURE sp_historial_cliente 
 GO
-CREATE PROCEDURE sp_historial_cliente(@tipoDoc int,@doc int,@flag int)
+CREATE PROCEDURE sp_historial_cliente(@tipoDoc int,@doc int,@flag int,@pagina int)
 AS BEGIN
 	if @flag = 1 
 		SELECT TOP 1 COUNT(*) OVER () AS TotalRecords
@@ -1076,6 +1074,7 @@ AS BEGIN
 		  WHERE c.Compra_Cli_Doc = 43468403 and c.Compra_Cli_Tipo_Doc=1
 		  GROUP BY c.Compra_Id,c.Compra_Fecha,e.Espec_Fecha,e.Espec_Desc,r.Rubro_Descr
 		  ORDER BY c.Compra_Id
+		  OFFSET @pagina ROWS FETCH NEXT 20 ROWS ONLY
 END 
 go
 

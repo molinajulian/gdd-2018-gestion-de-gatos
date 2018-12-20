@@ -5,6 +5,7 @@ using PalcoNet.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -14,7 +15,7 @@ namespace PalcoNet.AbmCliente
     {
         DataTable tabla_clientes = new DataTable();
         List<Cliente> clientes = new List<Cliente>();
-        public ListadoCliente()
+        public ListadoCliente(char modo)
         {
             InitializeComponent();
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -22,6 +23,8 @@ namespace PalcoNet.AbmCliente
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
             initColumns();
+            if (modo == 'B') buttonModificar.Hide();
+            else buttonHabilitar.Hide();
         }
 
         private void initColumns()
@@ -79,11 +82,11 @@ namespace PalcoNet.AbmCliente
             }
             actualizarTabla();
             if(clientes.Count > 0) { 
-                btn_modificar.Enabled = true;
+                buttonModificar.Enabled = true;
             }
             else
             {
-                btn_modificar.Enabled = false;
+                buttonModificar.Enabled = false;
             }
         }
         public void actualizarTabla()
@@ -120,15 +123,41 @@ namespace PalcoNet.AbmCliente
                 MessageBox.Show("Busque y seleccione un cliente antes.");
             }
         }
-
-        private void ListadoCliente_Load(object sender, EventArgs e)
+        private void actualizarEstado(int indice, Cliente c)
         {
-
+            string[] row = { c.TipoDeDocumento.Descripcion, c.NumeroDocumento.ToString(), c.Cuil,
+                    c.NombreCliente, c.Apellido, c.Email, c.Domicilio.Calle, c.Domicilio.Numero,
+                    c.Domicilio.Localidad, c.Domicilio.CodPostal, c.Habilitado ? "Si" : "No"};
+            data_clientes.Rows[indice].SetValues(row);
         }
-
-        private void data_clientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void buttonHabilitar_Click(object sender, EventArgs e)
         {
-
+            if (this.data_clientes.RowCount > 0)
+            {
+                if (data_clientes.SelectedRows.Count > 1)
+                {
+                    MessageBox.Show("Debe seleccionar de a 1 registro", "Advertencia", MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    try
+                    {
+                        Cliente seleccionado= clientes[data_clientes.SelectedRows[0].Index];
+                        seleccionado.Habilitado = ClienteRepositorio.eliminarCliente(Convert.ToInt32(seleccionado.TipoDeDocumento.Id), Convert.ToDecimal(seleccionado.NumeroDocumento), !seleccionado.Habilitado);
+                        actualizarEstado(data_clientes.SelectedRows[0].Index, seleccionado);
+                        actualizarTabla();
+                    }
+                    catch (SqlException ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error al cambiar el estado del cliente", MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Busque y seleccione un cliente antes.");
+            }
         }
     }
 }

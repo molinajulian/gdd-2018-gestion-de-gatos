@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.epProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btn_volver = new System.Windows.Forms.Button();
             this.group_alta_rol = new System.Windows.Forms.GroupBox();
             this.data_listado_sectores = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
@@ -42,16 +41,6 @@
             // epProvider
             // 
             this.epProvider.ContainerControl = this;
-            // 
-            // btn_volver
-            // 
-            this.btn_volver.Location = new System.Drawing.Point(55, 377);
-            this.btn_volver.Name = "btn_volver";
-            this.btn_volver.Size = new System.Drawing.Size(83, 44);
-            this.btn_volver.TabIndex = 10;
-            this.btn_volver.Text = "Volver";
-            this.btn_volver.UseVisualStyleBackColor = true;
-            this.btn_volver.Click += new System.EventHandler(this.btn_volver_Click);
             // 
             // group_alta_rol
             // 
@@ -76,7 +65,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(243, 349);
+            this.button1.Location = new System.Drawing.Point(199, 349);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(150, 44);
             this.button1.TabIndex = 11;
@@ -88,9 +77,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(528, 435);
+            this.ClientSize = new System.Drawing.Size(528, 408);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.btn_volver);
             this.Controls.Add(this.group_alta_rol);
             this.Name = "ListaSector";
             this.Text = "Lista Sector";
@@ -103,7 +91,6 @@
 
         #endregion
         private System.Windows.Forms.ErrorProvider epProvider;
-        private System.Windows.Forms.Button btn_volver;
         private System.Windows.Forms.GroupBox group_alta_rol;
         private System.Windows.Forms.DataGridView data_listado_sectores;
         private System.Windows.Forms.Button button1;
