@@ -11,7 +11,7 @@ namespace PalcoNet.AbmTarjeta
     {
         Cliente cliente;
 
-        public AltaTarjeta(ref Cliente c)
+        public AltaTarjeta(Cliente c)
         {
             InitializeComponent();
             cliente = c;
@@ -59,7 +59,7 @@ namespace PalcoNet.AbmTarjeta
             }
             else
             {
-                cliente.Tarjetas.Add(new Tarjeta(txtNumero.Text, txtBanco.Text, datePickerFechaVenc.Value));
+                cliente.Tarjetas.Add(new Tarjeta(Convert.ToInt64(txtNumero.Text), txtBanco.Text, datePickerFechaVenc.Value));
                 MessageBox.Show("Tarjeta creada con exito.","", MessageBoxButtons.OK, MessageBoxIcon.None);
                 this.Hide();
             }

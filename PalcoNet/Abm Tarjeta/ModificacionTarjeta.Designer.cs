@@ -76,6 +76,7 @@
             this.btnAlta.TabIndex = 13;
             this.btnAlta.Text = "Modificacion de Tarjeta";
             this.btnAlta.UseVisualStyleBackColor = true;
+            this.btnAlta.Click += new System.EventHandler(this.btnAlta_Click);
             // 
             // label12
             // 
@@ -125,13 +126,13 @@
             this.txNombre.Size = new System.Drawing.Size(166, 20);
             this.txNombre.TabIndex = 1;
             // 
-            // AltaCliente
+            // ModificacionTarjeta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(535, 295);
             this.Controls.Add(this.groupBox1);
-            this.Name = "AltaCliente";
+            this.Name = "ModificacionTarjeta";
             this.Text = "ModificacionTarjeta";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
