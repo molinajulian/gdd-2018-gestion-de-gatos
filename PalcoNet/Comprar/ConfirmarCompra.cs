@@ -15,19 +15,30 @@ namespace PalcoNet.Comprar
     public partial class ConfirmarCompra : MaterialForm
     {
         DataTable tabla_ubicaciones = new DataTable();
-        private List<Ubicacion> ubicacionesElegidas;
-        private Espectaculo EspectaculoElegido;
-        public ConfirmarCompra(List<Ubicacion> ubicacionesElegidas, Espectaculo espectaculoElegido)
+        private List<Ubicacion> UbicacionesElegidas;
+        private PublicacionPuntual PublicacionElegida;
+        public ConfirmarCompra(List<Ubicacion> ubicacionesElegidas, PublicacionPuntual publicacionElegida)
         {
             InitializeComponent();
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-            ubicacionesElegidas = ubicacionesElegidas;
-            EspectaculoElegido = espectaculoElegido;
+            UbicacionesElegidas = ubicacionesElegidas;
+            PublicacionElegida = publicacionElegida;
             agregarEncabezadosTabla();
             actualizarListado();
+            inicializarTarjetas();
+        }
+
+        private void inicializarTarjetas()
+        {
+            cmbTarjetas.Items.Clear();
+            foreach (Tarjeta tarjeta in Cliente.Actual.Tarjetas)
+            {
+                cmbTarjetas.Items.Add(tarjeta);
+            }
+            cmbTarjetas.DisplayMember = "Numero";
         }
 
         private void agregarEncabezadosTabla()
@@ -46,12 +57,12 @@ namespace PalcoNet.Comprar
         public void actualizarListado()
         {
             tabla_ubicaciones.Rows.Clear();
-            foreach (Ubicacion ubicacion in ubicacionesElegidas)
+            foreach (Ubicacion ubicacion in UbicacionesElegidas)
             {
                 String[] ubicacionRow = 
                 {
-                    ubicacion.Fila.ToString(), ubicacion.Asiento.ToString()
-                    // ,ubicacion.Precio.ToString(), ubicacionesElegidas.Espectaculo.Descripcion
+                    ubicacion.Fila.ToString(), ubicacion.Asiento.ToString(),
+                    ubicacion.Precio.ToString(), PublicacionElegida.Espectaculo.Descripcion
                 };
                 tabla_ubicaciones.Rows.Add(ubicacionRow);
             }
@@ -66,12 +77,29 @@ namespace PalcoNet.Comprar
 
         private void btnComprar_Click(object sender, EventArgs e)
         {
-            // CompraRepositorio.realizarCompra(UbicacionesAComprar, PublicacionElegida);
+            //CompraRepositorio.realizarCompra(UbicacionesElegidas, PublicacionElegida, getTarjetaElegida());
+            MessageBox.Show(getMensajeDeConfirmacion());
+            this.Close();
+        }
+
+        private Tarjeta getTarjetaElegida()
+        {
+            return (Tarjeta) cmbTarjetas.SelectedItem;
+        }
+
+        private string getMensajeDeConfirmacion()
+        {
+            return "Compra realizada con exito! " +
+                   "Monto total : $" + UbicacionesElegidas.Select(ubicacion => ubicacion.Precio).Sum() + 
+                   System.Environment.NewLine + "Se le enviara un correo a la direccion " + Cliente.Actual.Email +
+                   " con los detalles de su compra." +
+                   System.Environment.NewLine + "Muchas gracias por utilizar PalcoNet.";
         }
 
         private void btn_agregar_tarjeta_Click(object sender, EventArgs e)
         {
-            new AltaTarjeta(Cliente.Actual).ShowDialog();
+            new AltaTarjeta(Cliente.Actual, true).ShowDialog();
+            inicializarTarjetas();
         }
     }
 }

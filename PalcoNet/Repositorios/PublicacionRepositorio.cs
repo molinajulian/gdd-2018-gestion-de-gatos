@@ -53,9 +53,22 @@ namespace PalcoNet.Repositorios
             EstadoPublicacion estadoBorrador = EstadoPublicacionRepositorio.getEstados()
                 .Find(publicacion => publicacion.Descripcion.Equals("BORRADOR"));
             List<PublicacionPuntual> publicaciones = new List<PublicacionPuntual>();
-            SqlDataReader lector = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Publicaciones"
-                                                          + " WHERE Public_Desc LIKE '%" + tituloPub + "%'" 
-                                                          + " AND Public_Editor IS NOT NULL AND Public_Estado_Id = " + estadoBorrador.Id, "T", new List<SqlParameter>());
+            //Si el rol es es empresa => solo puede ver las suyas, sino ve todas
+            StringBuilder sb = new StringBuilder();
+            sb.Append(
+                "SELECT * FROM GESTION_DE_GATOS.Publicaciones"
+                + " JOIN GESTION_DE_GATOS.Espectaculos ON Espec_Cod = Public_Espec_Cod"
+                + " WHERE Public_Desc LIKE '%" + tituloPub + "%'"
+                + " AND Public_Editor IS NOT NULL AND Public_Estado_Id = " + estadoBorrador.Id);
+            if (!Usuario.Actual.esEmpresa())
+            {
+                sb.Append(" AND Public_Editor = " + Usuario.Actual.id);
+            }
+            else
+            {
+                sb.Append(" AND Espec_Emp_Cuit = '" + Empresa.Actual.Cuit + "'");
+            }
+            SqlDataReader lector = DataBase.GetDataReader(sb.ToString(), "T", new List<SqlParameter>());
             while (lector.HasRows && lector.Read())
             {
                 publicaciones.Add(PublicacionPuntual.build(lector));
@@ -83,8 +96,9 @@ namespace PalcoNet.Repositorios
             DataBase.ejecutarSP("sp_actualizar_publicacion", parametros);
         }
 
-        public static List<PublicacionPuntual> getPublicacionesComprables(string descripcion, DateTime desde, DateTime hasta, 
-                                                                          String rubrosStr)
+        public static List<PublicacionPuntual> getPublicacionesComprables(string descripcion, DateTime desde,
+                                                                          DateTime hasta, string rubrosStr, 
+                                                                          int offset, int limit, bool ascending)
         {
             List<PublicacionPuntual> publicaciones = new List<PublicacionPuntual>();
             List<SqlParameter> parametros = new List<SqlParameter>();
@@ -105,7 +119,9 @@ namespace PalcoNet.Repositorios
             sb.Append(rubrosStr.Equals("")
                 ? ""
                 : "AND Espec_Rubro_Cod IN (SELECT * FROM dbo.SPLIT_STRING(@rubros_str, ',')) ");
-            sb.Append(" ORDER BY Public_Grado_Cod ASC");
+            sb.Append(" ORDER BY Public_Grado_Cod " + (ascending ? "ASC" : "DESC") +
+                      " OFFSET " + offset + " ROWS" +
+                      " FETCH NEXT " + limit + " ROWS ONLY;");
             SqlDataReader lector = DataBase.GetDataReader(sb.ToString(), "T", parametros);
             while (lector.HasRows && lector.Read())
             {

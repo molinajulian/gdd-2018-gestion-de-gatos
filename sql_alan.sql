@@ -413,6 +413,19 @@ AS BEGIN
 END
 GO
 
+IF (OBJECT_ID('sp_realizar_compra', 'P') IS NOT NULL) DROP PROCEDURE sp_realizar_compra
+go
+CREATE procedure sp_realizar_compra(@public_id INT, @cli_doc_num numeric(18), @cli_doc_tipo INT,
+									@fecha DATETIME, @cli_tarj_cred_id INT)
+AS BEGIN
+	INSERT INTO GESTION_DE_GATOS.Compras ([Compra_Publicacion],[Compra_Cli_Doc],[Compra_Cli_Tipo_Doc],[Compra_Fecha],[Compra_Tarj_Cred_Id])
+		VALUES(@public_id, @cli_doc_num, @cli_doc_tipo, @fecha, @cli_tarj_cred_id);
+	INSERT INTO GESTION_DE_GATOS.PUNTOS ([Cli_Tipo_Doc], [Cli_Doc], [Puntos_FechaVencimiento], [Puntos_Cantidad])
+		VALUES (@cli_doc_tipo, @cli_doc_num, DATEADD(day, 30, @fecha), 100);
+END
+GO
+
+
 CREATE FUNCTION dbo.SPLIT_STRING
 (
     @sString nvarchar(2048),

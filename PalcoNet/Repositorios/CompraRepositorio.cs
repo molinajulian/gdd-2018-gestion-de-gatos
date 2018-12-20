@@ -90,10 +90,16 @@ namespace PalcoNet.Repositorios
             return historial;
         }
 
-        public static void realizarCompra(List<Ubicacion> ubicacionesAComprar, PublicacionPuntual publicacionElegida)
+        public static void realizarCompra(List<Ubicacion> ubicacionesAComprar, PublicacionPuntual publicacionElegida,
+                                            Tarjeta tarjetaElegida)
         {
-            
-
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@public_id", publicacionElegida.Codigo));
+            parametros.Add(new SqlParameter("@cli_doc_num", Cliente.Actual.NumeroDocumento));
+            parametros.Add(new SqlParameter("@cli_doc_tipo", Cliente.Actual.TipoDeDocumento.Id));
+            parametros.Add(new SqlParameter("@fecha", DateTime.Now));
+            parametros.Add(new SqlParameter("@cli_tarj_cred_id", tarjetaElegida.Id));
+            DataBase.ejecutarSP("[dbo].[sp_realizar_compra]", parametros);
         }
 
         internal static int GetCantidadHistorial(int tipoDoc, int doc,int pagina=1)

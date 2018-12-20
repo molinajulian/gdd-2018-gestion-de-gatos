@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btn_cambiar_estado = new System.Windows.Forms.Button();
             this.btn_editar = new System.Windows.Forms.Button();
             this.btn_limpiar = new System.Windows.Forms.Button();
             this.grupo_filtros = new System.Windows.Forms.GroupBox();
@@ -39,17 +38,6 @@
             this.grupo_filtros.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.data_publicaciones)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btn_cambiar_estado
-            // 
-            this.btn_cambiar_estado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_cambiar_estado.Location = new System.Drawing.Point(224, 421);
-            this.btn_cambiar_estado.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_cambiar_estado.Name = "btn_cambiar_estado";
-            this.btn_cambiar_estado.Size = new System.Drawing.Size(157, 28);
-            this.btn_cambiar_estado.TabIndex = 20;
-            this.btn_cambiar_estado.Text = "Deshabilitar/Habilitar";
-            this.btn_cambiar_estado.UseVisualStyleBackColor = true;
             // 
             // btn_editar
             // 
@@ -134,7 +122,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(645, 480);
-            this.Controls.Add(this.btn_cambiar_estado);
             this.Controls.Add(this.btn_editar);
             this.Controls.Add(this.btn_limpiar);
             this.Controls.Add(this.grupo_filtros);
@@ -149,8 +136,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btn_cambiar_estado;
         private System.Windows.Forms.Button btn_editar;
         private System.Windows.Forms.Button btn_limpiar;
         private System.Windows.Forms.GroupBox grupo_filtros;

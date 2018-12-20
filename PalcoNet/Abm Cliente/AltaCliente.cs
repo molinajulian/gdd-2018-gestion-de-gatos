@@ -174,7 +174,7 @@ namespace PalcoNet.AbmCliente
 
         private void button1_Click(object sender, EventArgs e)
         {
-            AltaTarjeta t = new AltaTarjeta(cliente);
+            AltaTarjeta t = new AltaTarjeta(cliente, false);
             t.ShowDialog();
         }
 

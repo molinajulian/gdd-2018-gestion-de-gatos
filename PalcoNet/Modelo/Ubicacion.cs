@@ -7,11 +7,12 @@ namespace PalcoNet.Modelo
 {
    public class Ubicacion
    {
-       private Ubicacion(int id, char fila, int asiento, int especId, TipoUbicacion tipoUbicacion, int compraId)
+       private Ubicacion(int id, char fila, int asiento, double precio, int especId, TipoUbicacion tipoUbicacion, int compraId)
        {
            Id = id;
            Fila = fila;
            Asiento = asiento;
+           Precio = precio;
            EspectaculoId = especId;
            TipoUbicacion = tipoUbicacion;
            CompraID = compraId;
@@ -33,9 +34,10 @@ namespace PalcoNet.Modelo
                  Convert.ToInt32(lector[camposUbicacion["id"]]),
                  Convert.ToChar(lector[camposUbicacion["fila"]].ToString()),
                  Convert.ToInt32(lector[camposUbicacion["asiento"]]),
+                 Convert.ToDouble(lector[camposUbicacion["precio"]]),
                  Convert.ToInt32(lector[camposUbicacion["espec_cod"]]),
                  TipoUbicacionRepositorio.ReadTipoUbicacionFromDb(Convert.ToInt32(lector[camposUbicacion["tipo_cod"]])),
-                 lector[camposUbicacion["compra_id"]].Equals("{}") ? -1 : Convert.ToInt32(lector[camposUbicacion["compra_id"]])
+                 lector[camposUbicacion["compra_id"]].ToString().Equals("") ? -1 : Convert.ToInt32(lector[camposUbicacion["compra_id"]])
                 );
         }
    }

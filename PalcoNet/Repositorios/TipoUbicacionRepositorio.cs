@@ -42,18 +42,17 @@ namespace PalcoNet.Repositorios
 
         public static TipoUbicacion ReadTipoUbicacionFromDb(int id)
         {
-            TipoUbicacion tipoUbicacion = null ;
-            var parametros = new List<SqlParameter>();
+            List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@id", id));
-            var query = DataBase.ejecutarFuncion("Select top 1 * from tipoUbicacion t where t.Ubic_cod = @id", parametros);
-            SqlDataReader reader = query.ExecuteReader();
-            if (reader.Read())
+            SqlCommand query = DataBase.ejecutarFuncion("SELECT * from GESTION_DE_GATOS.Ubicaciones_Tipo t " +
+                                                 "WHERE t.Ubic_Tipo_Cod = @id", parametros);
+            SqlDataReader lector = query.ExecuteReader();
+            if (lector.Read())
             {
-                tipoUbicacion = new TipoUbicacion((int)reader.GetValue(Ordinales.TipoUbicacion["TipoPubl_id"]),
-                    reader.GetValue(Ordinales.TipoUbicacion["TipoPubl_descripcion"]).ToString());
+                return TipoUbicacion.build(lector);
 
             }
-            return tipoUbicacion;
+            return null;
 
         }
     }

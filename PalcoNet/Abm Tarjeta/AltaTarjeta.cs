@@ -1,17 +1,20 @@
 ﻿using PalcoNet.Modelo;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using MaterialSkin.Controls;
 using MaterialSkin;
+using PalcoNet.Repositorios;
 
 namespace PalcoNet.AbmTarjeta
 {
     public partial class AltaTarjeta : MaterialForm
     {
         Cliente cliente;
+        private bool Persistente;
 
-        public AltaTarjeta(Cliente c)
+        public AltaTarjeta(Cliente c, bool persistente = false)
         {
             InitializeComponent();
             cliente = c;
@@ -19,7 +22,7 @@ namespace PalcoNet.AbmTarjeta
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-
+            Persistente = persistente;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -59,7 +62,15 @@ namespace PalcoNet.AbmTarjeta
             }
             else
             {
-                cliente.Tarjetas.Add(new Tarjeta(Convert.ToInt64(txtNumero.Text), txtBanco.Text, datePickerFechaVenc.Value));
+                Tarjeta tarjeta = new Tarjeta(Convert.ToInt64(txtNumero.Text), txtBanco.Text,
+                    datePickerFechaVenc.Value);
+                cliente.Tarjetas.Add(tarjeta);
+                if (Persistente)
+                {
+                    List<Tarjeta> tarjetas = new List<Tarjeta>();
+                    tarjetas.Add(tarjeta);
+                    TarjetaRepositorio.agregar(tarjetas, cliente);
+                }
                 MessageBox.Show("Tarjeta creada con exito.","", MessageBoxButtons.OK, MessageBoxIcon.None);
                 this.Hide();
             }
