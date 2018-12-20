@@ -66,7 +66,7 @@ namespace PalcoNet.Modelo
                 EstadoPublicacionRepositorio.ReadEstadoPublicacionFromDb(
                     Convert.ToInt32(lector[camposPublicacionCompuesta["pub_estadoId"]])),
                 Espectaculo.buildCompuesto(lector),
-                UsuarioRepositorio.buscarUsuario(Convert.ToInt32(lector[camposPublicacionCompuesta["pub_editor"]])));
+                null);
         }
     }
 }

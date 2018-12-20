@@ -12,20 +12,20 @@ using PalcoNet.Repositorios;
 
 namespace PalcoNet.Comprar
 {
-    public partial class ListaSector : MaterialForm
+    public partial class ConfirmarCompra : MaterialForm
     {
         DataTable tabla_ubicaciones = new DataTable();
-        private List<Ubicacion> UbicacionesAComprar;
-        private PublicacionPuntual PublicacionElegida;
-        public ListaSector(List<Ubicacion> ubicacionesElegidas, PublicacionPuntual publicacionElegida)
+        private List<Ubicacion> ubicacionesElegidas;
+        private Espectaculo EspectaculoElegido;
+        public ConfirmarCompra(List<Ubicacion> ubicacionesElegidas, Espectaculo espectaculoElegido)
         {
             InitializeComponent();
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-            UbicacionesAComprar = ubicacionesElegidas;
-            PublicacionElegida = publicacionElegida;
+            ubicacionesElegidas = ubicacionesElegidas;
+            EspectaculoElegido = espectaculoElegido;
             agregarEncabezadosTabla();
             actualizarListado();
         }
@@ -46,12 +46,12 @@ namespace PalcoNet.Comprar
         public void actualizarListado()
         {
             tabla_ubicaciones.Rows.Clear();
-            foreach (Ubicacion ubicacion in UbicacionesAComprar)
+            foreach (Ubicacion ubicacion in ubicacionesElegidas)
             {
                 String[] ubicacionRow = 
                 {
                     ubicacion.Fila.ToString(), ubicacion.Asiento.ToString(),
-                    ubicacion.Precio.ToString(), PublicacionElegida.Espectaculo.Descripcion
+                    ubicacion.Precio.ToString(), ubicacionesElegidas.Espectaculo.Descripcion
                 };
                 tabla_ubicaciones.Rows.Add(ubicacionRow);
             }

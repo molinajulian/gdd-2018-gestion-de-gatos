@@ -50,7 +50,7 @@ namespace PalcoNet.Modelo
 
         public static Espectaculo buildCompuesto(SqlDataReader lector)
         {
-            Dictionary<string, int> camposEspec = Ordinales.Espectaculo;
+            Dictionary<string, int> camposEspec = Ordinales.PublicacionCompuesta;
             return new Espectaculo(
                 Convert.ToInt32(lector[camposEspec["esp_id"]]),
                 lector[camposEspec["esp_descripcion"]].ToString(),

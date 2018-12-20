@@ -149,5 +149,19 @@ namespace PalcoNet.Repositorios
 
             }
         }
+
+        internal static Cliente getCliente(Usuario usuario)
+        {
+            String sql = "SELECT * FROM GESTION_DE_GATOS.Clientes c JOIN GESTION_DE_GATOS.Usuarios u ON u.Usuario_Id = c.Cli_Usuario_Id WHERE u.Usuario_Id ="+usuario.id;
+            SqlDataReader lector = DataBase.GetDataReader(sql, "T", new List<SqlParameter>());
+            Cliente cliente = new Cliente();
+            if (lector.HasRows && lector.Read())
+            {
+                cliente = Cliente.build(lector);
+                lector.Close();
+            }
+            lector.Close();
+            return cliente;
+        }
     }
 }

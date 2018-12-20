@@ -12,8 +12,13 @@ namespace PalcoNet.Comprar
     public partial class ElegirUbicaciones : MaterialForm
     {
         DataTable tabla_sectores = new DataTable();
+        DataTable tabla_ubicaciones_a_elegir = new DataTable();
+        DataTable tabla_ubicaciones_elegidas= new DataTable();
         private List<Sector> sectoresRegistrados;
+        private List<Ubicacion> ubicacionesAElegir;
+        private List<Ubicacion> ubiacionesElegidas;
         private PublicacionPuntual Publicacion;
+        private List<Ubicacion> ubicacionesDisponibles;
 
         public ElegirUbicaciones(PublicacionPuntual publicacion)
         {
@@ -24,24 +29,51 @@ namespace PalcoNet.Comprar
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
             Publicacion = publicacion;
             sectoresRegistrados = publicacion.getSectores();
-            agregarEncabezadosTabla();
-            actualizarListado();
+            inicializarUbicacionesDisponibles();
+            agregarEncabezadosTablas();
+            actualizarListadoSectores();
         }
 
-        private void agregarEncabezadosTabla()
+        private void inicializarUbicacionesDisponibles()
         {
+            ubicacionesDisponibles = UbicacionRepositorio.getUbicacionesDisponibles(Publicacion.Espectaculo);
+        }
+
+        private void agregarEncabezadosTablas()
+        {
+            agregarEncabezadosTablaSectores();
+            agregarEncabezadosTablaUbicacionesAElegir();
+            agregarEncabezadosTablaUbicacionesElegidas();
+        }
+
+        private void agregarEncabezadosTablaSectores()
+        {
+            tabla_sectores.Clear();
             tabla_sectores.Columns.Add("Tipo de ubicacion");
             tabla_sectores.Columns.Add("Cantidad de Filas");
             tabla_sectores.Columns.Add("Cantidad de Asientos");
             tabla_sectores.Columns.Add("Precio");
         }
 
-        private void actualizarTablaSectores()
+        private void agregarEncabezadosTablaUbicacionesAElegir()
         {
-            data_listado_sectores.DataSource = tabla_sectores;
+            tabla_ubicaciones_a_elegir.Clear();
+            tabla_ubicaciones_a_elegir.Columns.Add("Tipo de ubicacion");
+            tabla_ubicaciones_a_elegir.Columns.Add("Fila");
+            tabla_ubicaciones_a_elegir.Columns.Add("Asiento");
+            tabla_ubicaciones_a_elegir.Columns.Add("Precio");
         }
 
-        public void actualizarListado()
+        private void agregarEncabezadosTablaUbicacionesElegidas()
+        {
+            tabla_ubicaciones_elegidas.Clear();
+            tabla_ubicaciones_elegidas.Columns.Add("Tipo de ubicacion");
+            tabla_ubicaciones_elegidas.Columns.Add("Fila");
+            tabla_ubicaciones_elegidas.Columns.Add("Asiento");
+            tabla_ubicaciones_elegidas.Columns.Add("Precio");
+        }
+
+        public void actualizarListadoSectores()
         {
             tabla_sectores.Rows.Clear();
             foreach (Sector sector in sectoresRegistrados)
@@ -53,7 +85,7 @@ namespace PalcoNet.Comprar
                 };
                 tabla_sectores.Rows.Add(sectorRow);
             }
-            actualizarTablaSectores();
+            data_listado_sectores.DataSource = tabla_sectores;
         }
 
         private void btn_volver_Click(object sender, EventArgs e)
@@ -74,22 +106,49 @@ namespace PalcoNet.Comprar
             }
         }
 
+        public void actualizarListadoUbicacionAElegir(List<Ubicacion> ubicaciones)
+        {
+            tabla_ubicaciones_a_elegir.Rows.Clear();
+            foreach (Ubicacion ubicacion in ubicaciones)
+            {
+                String[] ubiacionRow =
+                {
+                    ubicacion.TipoUbicacion.Descripcion, ubicacion.Fila.ToString(), ubicacion.Asiento.ToString(),
+                    ubicacion.Precio.ToString()
+                };
+                tabla_ubicaciones_a_elegir.Rows.Add(ubiacionRow);
+            }
+            dgvUbicacionAElegir.DataSource = tabla_ubicaciones_a_elegir;
+        }
+
+        public void actualizarListadoUbicacionElegidas(Ubicacion ubicacion)
+        {
+            String[] ubiacionRow =
+            {
+                ubicacion.TipoUbicacion.Descripcion, ubicacion.Fila.ToString(), ubicacion.Asiento.ToString(),
+                ubicacion.Precio.ToString()
+            };
+            tabla_ubicaciones_elegidas.Rows.Add(ubiacionRow);
+            dgvUbicacionesElegidas.DataSource = tabla_ubicaciones_elegidas;
+        }
+
         private void actualizarSeleccionDeAsiento(Sector sector)
         {
-            List<Ubicacion> ubicacionesDisponibles = UbicacionRepositorio.getUbicacionesDisponibles(sector, Publicacion.Espectaculo);
-            txtTipo.Text = sector.TipoUbicacion.Descripcion;
-            //cmbFila.Items
+            ubicacionesAElegir =
+                ubicacionesDisponibles.FindAll(ubicacion => ubicacion.TipoUbicacion.Id == sector.TipoUbicacion.Id);
+            actualizarListadoUbicacionAElegir(ubicacionesAElegir);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //Agrego la ubicacion a ubicaciones elegidas
-            //Actualizo el dgv de ubicaciones de abajo
+            actualizarListadoUbicacionElegidas(ubicacionesAElegir[dgvUbicacionAElegir.SelectedRows[0].Index]);
+            //Elimina la ubicacion de ubicaciones a elegir
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             //Paso a la pantalla siguiente las ubicaciones elegidas y la publicacionPuntual
+            new ConfirmarCompra(ubiacionesElegidas, Publicacion.Espectaculo).ShowDialog();
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)

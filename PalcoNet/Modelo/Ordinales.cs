@@ -39,6 +39,14 @@ namespace PalcoNet.Modelo
                                                     {"nombre", 1},
                                                     {"habilitado",2}
                                                 };
+       public static Dictionary<string, int> camposHistorialCliente = new Dictionary<string, int>
+                                                {
+                                                    {"total", 0},
+                                                    {"fecha_compra", 1},
+                                                    {"fecha_espectaculo",2},
+                                                    {"descripcion_espectaculo",3},
+                                                    {"tipo_espectaculo",4}
+                                                };
        public static Dictionary<string, int> camposGetClientes = new Dictionary<string, int>
                                                 {
                                                     {"tipo_doc_descr", 0},
