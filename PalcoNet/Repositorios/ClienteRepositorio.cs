@@ -12,12 +12,14 @@ namespace PalcoNet.Repositorios
     class ClienteRepositorio
     {
 
-        internal static void eliminarCliente(string tipoDocDescr,string doc)
+        internal static bool eliminarCliente(int tipoDoc,decimal doc, bool habilitado)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@tipoDocDescr", tipoDocDescr));
-            parametros.Add(new SqlParameter("@doc", Convert.ToInt32(doc)));
-            DataBase.ejecutarSP("[dbo].[sp_eliminar_cliente]", parametros);
+            parametros.Add(new SqlParameter("@tipoDoc", tipoDoc));
+            parametros.Add(new SqlParameter("@doc", doc));
+            parametros.Add(new SqlParameter("@estadoFinal", habilitado ? 1 : 0));
+            DataBase.ejecutarSP("[dbo].[sp_cambiar_estado_cliente]", parametros);
+            return !habilitado;
         }
 
         internal static void habilitarCliente(int p)

@@ -1028,13 +1028,11 @@ END
 GO
 
 GO
-IF (OBJECT_ID('sp_eliminar_cliente', 'P') IS NOT NULL) DROP PROCEDURE sp_eliminar_cliente 
+IF (OBJECT_ID('sp_cambiar_estado_cliente', 'P') IS NOT NULL) DROP PROCEDURE sp_cambiar_estado_cliente 
 GO
-CREATE PROCEDURE sp_eliminar_cliente (@tipoDocDescr nvarchar(30),@doc decimal)
+CREATE PROCEDURE sp_cambiar_estado_cliente (@tipoDoc int,@doc decimal,@estadoFinal bit)
 AS BEGIN
-	UPDATE GESTION_DE_GATOS.Clientes SET Cli_Habilitado = 0 WHERE convert(nvarchar,Cli_Tipo_Doc_Id)+convert(nvarchar,Cli_Doc) = 
-	(SELECT convert(nvarchar,c.Cli_Tipo_Doc_Id)+convert(nvarchar,c.Cli_Doc) FROM GESTION_DE_GATOS.Clientes c JOIN GESTION_DE_GATOS.Tipos_Doc td ON td.Tipo_Doc_Id = c.Cli_Tipo_Doc_Id
-	WHERE td.Tipo_Doc_Descr = @tipoDocDescr AND c.Cli_Doc = @doc)
+	UPDATE GESTION_DE_GATOS.Clientes SET Cli_Habilitado = @estadoFinal WHERE Cli_Tipo_Doc_Id = @tipoDoc AND Cli_Doc = @doc
 END
 
 
