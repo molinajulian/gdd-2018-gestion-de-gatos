@@ -345,13 +345,17 @@ AS BEGIN
 	DECLARE @indice_fila INT = 0;
 	DECLARE @indice_asiento INT = 0;
 	BEGIN
+		IF @ubic_precio < 0
+		BEGIN
+			RAISERROR ('El precio de las ubicaciones no puede ser menor a 0', 16, 0)
+		END
 		WHILE @indice_fila < @cnt_filas
 		BEGIN
 		    WHILE @indice_asiento < @cnt_asientos
 			BEGIN
 				INSERT INTO GESTION_DE_GATOS.Ubicaciones(Ubic_Fila, Ubic_Asiento, Ubic_Precio,
 									  Ubic_Espec_Cod, Ubic_Tipo_Cod, Ubic_Sin_Numerar) 
-						VALUES(obtenerLetra(@indice_fila), @indice_asiento, @ubic_precio, @ubic_espec_codigo, @ubic_tipo, 0);
+						VALUES(dbo.obtenerLetra(@indice_fila), @indice_asiento, @ubic_precio, @ubic_espec_codigo, @ubic_tipo, 0);
 				SET @indice_asiento = @indice_asiento + 1;
 			END;
 		   SET @indice_fila = @indice_fila + 1;
@@ -382,27 +386,43 @@ AS BEGIN
 END
 GO
 
-
-IF (OBJECT_ID('sp_get_publicaciones_comprables', 'P') IS NOT NULL) DROP PROCEDURE sp_get_publicaciones_comprables
-go
-CREATE procedure sp_get_publicaciones_comprables(@pub_desc VARCHAR(255), @desde DATETIME, @hasta DATETIME, @rubros_str VARCHAR(255) )
-AS BEGIN 
-	SELECT [Public_Cod], [Public_Desc], [Public_Fecha_Creacion], [Public_Grado_Cod], [Public_Espec_Cod]
-      		, [Public_Estado_Id], [Public_Editor],
-      		[Espec_Cod], [Espec_Desc], [Espec_Fecha], [Espec_Fecha_Venc], [Espec_Rubro_Cod], [Espec_Emp_Cuit]
-      		, [Espec_Dom_Id], [Espec_Estado]
-	FROM GESTION_DE_GATOS.Publicaciones
-	JOIN GESTION_DE_GATOS.Espectaculos ON Public_Espec_Cod = Espec_Cod
-    WHERE Public_Desc LIKE '%' + @pub_desc + '%'
-     AND Public_Estado_Id = 2
-     AND Espec_Fecha >= @desde
-     AND Espec_Fecha_Venc <= @hasta
-     AND @rubros_str like '%,'+ cast(Espec_Rubro_Cod as varchar(20))+',%'
- 	ORDER BY Public_Grado_Cod ASC;
+CREATE FUNCTION dbo.SPLIT_STRING
+(
+    @sString nvarchar(2048),
+    @cDelimiter nchar(1)
+)
+RETURNS @tParts TABLE ( part nvarchar(2048) )
+AS
+BEGIN
+    if @sString is null return
+    declare @iStart int,
+            @iPos int
+    if substring( @sString, 1, 1 ) = @cDelimiter 
+    begin
+        set @iStart = 2
+        insert into @tParts
+        values( null )
+    end
+    else 
+        set @iStart = 1
+    while 1=1
+    begin
+        set @iPos = charindex( @cDelimiter, @sString, @iStart )
+        if @iPos = 0
+            set @iPos = len( @sString )+1
+        if @iPos - @iStart > 0          
+            insert into @tParts
+            values  ( substring( @sString, @iStart, @iPos-@iStart ))
+        else
+            insert into @tParts
+            values( null )
+        set @iStart = @iPos+1
+        if @iStart > len( @sString ) 
+            break
+    end
+    RETURN
 
 END
-GO
-
 
 EXEC sp_rename 'GESTION_DE_GATOS.Ubicaciones_Tipo.Ubic_Cod', 'Ubic_Tipo_Cod', 'COLUMN';
 EXEC sp_rename 'GESTION_DE_GATOS.Ubicaciones_Tipo.Ubic_Descr', 'Ubic_Tipo_Descr', 'COLUMN';

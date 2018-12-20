@@ -39,9 +39,9 @@
             this.label12 = new System.Windows.Forms.Label();
             this.dtpDesde = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.btnVolver = new System.Windows.Forms.Button();
             this.btnAlta = new System.Windows.Forms.Button();
+            this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.data_publicaciones)).BeginInit();
             this.SuspendLayout();
@@ -49,6 +49,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.White;
+            this.groupBox1.Controls.Add(this.txtDescripcion);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.dtpHasta);
@@ -59,14 +60,12 @@
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.dtpDesde);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.txtDescripcion);
             this.groupBox1.Location = new System.Drawing.Point(12, 72);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(798, 365);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos de Compra";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // button1
             // 
@@ -155,15 +154,6 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Descripcion";
             // 
-            // txtDescripcion
-            // 
-            this.txtDescripcion.Location = new System.Drawing.Point(87, 31);
-            this.txtDescripcion.MaxLength = 16;
-            this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new System.Drawing.Size(320, 20);
-            this.txtDescripcion.TabIndex = 1;
-            this.txtDescripcion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumero_KeyPress);
-            // 
             // btnVolver
             // 
             this.btnVolver.Location = new System.Drawing.Point(33, 451);
@@ -185,7 +175,14 @@
             this.btnAlta.UseVisualStyleBackColor = true;
             this.btnAlta.Click += new System.EventHandler(this.btnAlta_Click);
             // 
-            // ListadoComprar
+            // txtDescripcion
+            // 
+            this.txtDescripcion.Location = new System.Drawing.Point(87, 31);
+            this.txtDescripcion.Name = "txtDescripcion";
+            this.txtDescripcion.Size = new System.Drawing.Size(335, 20);
+            this.txtDescripcion.TabIndex = 37;
+            // 
+            // ElegirPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -193,7 +190,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnAlta);
-            this.Name = "ListadoComprar";
+            this.Name = "ElegirPublicacion";
             this.Text = "Comprar [Parte 1/3] - Seleccion de Publicacion";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -205,7 +202,6 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox txtDescripcion;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.DateTimePicker dtpDesde;
@@ -218,5 +214,6 @@
         private System.Windows.Forms.ListBox lvCategorias;
         private System.Windows.Forms.DataGridView data_publicaciones;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox txtDescripcion;
     }
 }

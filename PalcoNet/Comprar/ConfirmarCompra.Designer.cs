@@ -1,6 +1,6 @@
 ﻿namespace PalcoNet.Comprar
 {
-    partial class ListaSector
+    partial class ConfirmarCompra
     {
         /// <summary>
         /// Required designer variable.

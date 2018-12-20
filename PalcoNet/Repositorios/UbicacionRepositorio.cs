@@ -152,22 +152,20 @@ namespace PalcoNet.Repositorios
             crearUbicacionesPorEspectaculo(sectores, espectaculo);
         }
 
-        public static List<Ubicacion> getUbicacionesDisponibles(Sector sector, Espectaculo espectaculo)
+        public static List<Ubicacion> getUbicacionesDisponibles(Espectaculo espectaculo)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
             List<Ubicacion> ubicacionesLibres = new List<Ubicacion>();
-            parametros.Add(new SqlParameter("@ubic_tipo", sector.TipoUbicacion.Id));
             parametros.Add(new SqlParameter("@ubic_espec_codigo", espectaculo.Id));
             SqlDataReader lector = DataBase.GetDataReader("SELECT * FROM GESTION_DE_GATOS.Ubicaciones " +
                                                           "WHERE Ubic_Compra_Id IS NULL " +
-                                                          "AND Ubic_Tipo_Cod = @ubic_tipo " +
                                                           "AND Ubic_Espec_Cod = @ubic_espec_codigo", "T", parametros);
             while (lector.HasRows && lector.Read())
             {
                 ubicacionesLibres.Add(Ubicacion.build(lector));
             }
             parametros.Clear();
-            return new List<Ubicacion>();
+            return ubicacionesLibres;
         }
     }
 }
