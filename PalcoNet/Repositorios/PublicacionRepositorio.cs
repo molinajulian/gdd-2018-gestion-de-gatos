@@ -57,11 +57,16 @@ namespace PalcoNet.Repositorios
             StringBuilder sb = new StringBuilder();
             sb.Append(
                 "SELECT * FROM GESTION_DE_GATOS.Publicaciones"
+                + " JOIN GESTION_DE_GATOS.Espectaculos ON Espec_Cod = Public_Espec_Cod"
                 + " WHERE Public_Desc LIKE '%" + tituloPub + "%'"
                 + " AND Public_Editor IS NOT NULL AND Public_Estado_Id = " + estadoBorrador.Id);
-            if (Usuario.Actual.esEmpresa())
+            if (!Usuario.Actual.esEmpresa())
             {
                 sb.Append(" AND Public_Editor = " + Usuario.Actual.id);
+            }
+            else
+            {
+                sb.Append(" AND Espec_Emp_Cuit = '" + Empresa.Actual.Cuit + "'");
             }
             SqlDataReader lector = DataBase.GetDataReader(sb.ToString(), "T", new List<SqlParameter>());
             while (lector.HasRows && lector.Read())

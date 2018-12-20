@@ -30,6 +30,7 @@ namespace PalcoNet.Registro_de_usuario
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900,
                 Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+            reiniciarSesiones();
             try
             {
                 getTiposDocumento();
@@ -42,6 +43,14 @@ namespace PalcoNet.Registro_de_usuario
                     MessageBoxIcon.Error);
             }
         }
+
+        public void reiniciarSesiones()
+        {
+            Usuario.Actual = null;
+            Empresa.Actual = null;
+            Cliente.Actual = null;
+        }
+
         public void getRoles()
         {
             List<Rol> roles = new List<Rol>();
@@ -92,7 +101,7 @@ namespace PalcoNet.Registro_de_usuario
                     }
                     else if(tipoUsuario == "E")
                     {
-                        Empresa.EmpresaActual = EmpresasRepositorio.getEmpresa(usuarioLogueado);
+                        Empresa.Actual = EmpresasRepositorio.getEmpresa(usuarioLogueado);
                     }
                     if (usuarioLogueado.primerLogueo)
                     {
