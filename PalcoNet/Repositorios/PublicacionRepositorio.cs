@@ -99,13 +99,13 @@ namespace PalcoNet.Repositorios
                       "FROM GESTION_DE_GATOS.Publicaciones " +
                       "JOIN GESTION_DE_GATOS.Espectaculos " +
                       "ON Public_Espec_Cod = Espec_Cod " +
-                      "WHERE Public_Desc LIKE '%@pub_desc%' " +
+                      "WHERE Public_Desc LIKE '%' + @pub_desc + '%' " +
                       "AND Public_Estado_Id = 2 " +
                       "AND Espec_Fecha BETWEEN @desde AND @hasta ");
             sb.Append(rubrosStr.Equals("")
                 ? ""
-                : "AND Espec_Rubro_Cod IN (SELECT value FROM STRING_SPLIT(@rubros_str, ',')); ");
-            sb.Append("ORDER BY Public_Grado_Cod ASC");
+                : "AND Espec_Rubro_Cod IN (SELECT * FROM dbo.SPLIT_STRING(@rubros_str, ',')) ");
+            sb.Append(" ORDER BY Public_Grado_Cod ASC");
             SqlDataReader lector = DataBase.GetDataReader(sb.ToString(), "T", parametros);
             while (lector.HasRows && lector.Read())
             {

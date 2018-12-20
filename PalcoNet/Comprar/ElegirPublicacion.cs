@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using System.Windows.Forms;
 using MaterialSkin.Controls;
 using MaterialSkin;
@@ -24,6 +23,9 @@ namespace PalcoNet.Comprar
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
+            tabla_publicaciones.Columns.Add("Descripcion Publicacion", typeof(string));
+            tabla_publicaciones.Columns.Add("Titulo Espectaculo", typeof(string));
+            tabla_publicaciones.Columns.Add("Fecha ocurrencia", typeof(string));
             inicializarRubros();
         }
 
@@ -42,10 +44,6 @@ namespace PalcoNet.Comprar
         {
             this.Hide();
         }
-        private void limpiarVentana()
-        {
-            txtDescripcion.Clear();
-        }
 
         private bool validarCamposCompra()
         {
@@ -56,16 +54,6 @@ namespace PalcoNet.Comprar
                 return false;
             }
             return true;
-        }
-
-        private void txtNumero_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -96,7 +84,8 @@ namespace PalcoNet.Comprar
             tabla_publicaciones.Rows.Clear();
             foreach (PublicacionPuntual publicacion in publicaciones)
             {
-                String[] publicacionRow = { publicacion.Descripcion };
+                String[] publicacionRow = { publicacion.Descripcion , publicacion.Espectaculo.Descripcion,
+                                            publicacion.Espectaculo.FechaOcurrencia.ToString() };
                 tabla_publicaciones.Rows.Add(publicacionRow);
             }
             data_publicaciones.DataSource = tabla_publicaciones;

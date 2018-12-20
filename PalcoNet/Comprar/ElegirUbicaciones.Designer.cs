@@ -33,21 +33,17 @@
             this.data_listado_sectores = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.cmbAsiento = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtTipo = new System.Windows.Forms.TextBox();
+            this.dgvUbicacionesElegidas = new System.Windows.Forms.DataGridView();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.cmbFila = new System.Windows.Forms.ComboBox();
+            this.dgvUbicacionAElegir = new System.Windows.Forms.DataGridView();
             this.group_alta_rol.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.data_listado_sectores)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUbicacionesElegidas)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUbicacionAElegir)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_volver
@@ -95,7 +91,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.White;
-            this.groupBox1.Controls.Add(this.dataGridView1);
+            this.groupBox1.Controls.Add(this.dgvUbicacionesElegidas);
             this.groupBox1.Location = new System.Drawing.Point(23, 421);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(861, 270);
@@ -103,62 +99,19 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Ubicaciones Elegidas";
             // 
-            // dataGridView1
+            // dgvUbicacionesElegidas
             // 
-            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 19);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(844, 237);
-            this.dataGridView1.TabIndex = 2;
-            // 
-            // cmbAsiento
-            // 
-            this.cmbAsiento.FormattingEnabled = true;
-            this.cmbAsiento.Location = new System.Drawing.Point(105, 60);
-            this.cmbAsiento.Name = "cmbAsiento";
-            this.cmbAsiento.Size = new System.Drawing.Size(58, 21);
-            this.cmbAsiento.TabIndex = 13;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 35);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(23, 13);
-            this.label1.TabIndex = 14;
-            this.label1.Text = "Fila";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(102, 35);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(42, 13);
-            this.label2.TabIndex = 15;
-            this.label2.Text = "Asiento";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(190, 60);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(28, 13);
-            this.label3.TabIndex = 16;
-            this.label3.Text = "Tipo";
-            // 
-            // txtTipo
-            // 
-            this.txtTipo.Enabled = false;
-            this.txtTipo.Location = new System.Drawing.Point(234, 57);
-            this.txtTipo.Name = "txtTipo";
-            this.txtTipo.Size = new System.Drawing.Size(132, 20);
-            this.txtTipo.TabIndex = 17;
+            this.dgvUbicacionesElegidas.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.dgvUbicacionesElegidas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUbicacionesElegidas.Location = new System.Drawing.Point(6, 19);
+            this.dgvUbicacionesElegidas.Name = "dgvUbicacionesElegidas";
+            this.dgvUbicacionesElegidas.Size = new System.Drawing.Size(844, 237);
+            this.dgvUbicacionesElegidas.TabIndex = 2;
             // 
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(53, 149);
+            this.button2.Location = new System.Drawing.Point(52, 269);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(280, 43);
             this.button2.TabIndex = 18;
@@ -180,13 +133,8 @@
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.White;
+            this.groupBox2.Controls.Add(this.dgvUbicacionAElegir);
             this.groupBox2.Controls.Add(this.button2);
-            this.groupBox2.Controls.Add(this.txtTipo);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.cmbFila);
-            this.groupBox2.Controls.Add(this.cmbAsiento);
-            this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Location = new System.Drawing.Point(509, 73);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(379, 342);
@@ -195,13 +143,14 @@
             this.groupBox2.Text = "Seleccion de asiento";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
-            // cmbFila
+            // dgvUbicacionAElegir
             // 
-            this.cmbFila.FormattingEnabled = true;
-            this.cmbFila.Location = new System.Drawing.Point(18, 60);
-            this.cmbFila.Name = "cmbFila";
-            this.cmbFila.Size = new System.Drawing.Size(59, 21);
-            this.cmbFila.TabIndex = 12;
+            this.dgvUbicacionAElegir.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.dgvUbicacionAElegir.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUbicacionAElegir.Location = new System.Drawing.Point(16, 28);
+            this.dgvUbicacionAElegir.Name = "dgvUbicacionAElegir";
+            this.dgvUbicacionAElegir.Size = new System.Drawing.Size(348, 223);
+            this.dgvUbicacionAElegir.TabIndex = 12;
             // 
             // ElegirUbicaciones
             // 
@@ -218,9 +167,9 @@
             this.group_alta_rol.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.data_listado_sectores)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUbicacionesElegidas)).EndInit();
             this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUbicacionAElegir)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -230,16 +179,11 @@
         private System.Windows.Forms.GroupBox group_alta_rol;
         private System.Windows.Forms.DataGridView data_listado_sectores;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox txtTipo;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cmbAsiento;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvUbicacionesElegidas;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox cmbFila;
+        private System.Windows.Forms.DataGridView dgvUbicacionAElegir;
     }
 }
