@@ -42,10 +42,10 @@ namespace PalcoNet.AbmCliente
 
         public void getTiposDocumento()
         {
-            List<TiposDocumento> tipos = new List<TiposDocumento>();
+            List<TipoDocumento> tipos = new List<TipoDocumento>();
             comboTiposDoc.Items.Clear();
             tipos = ClienteRepositorio.getTiposDoc();
-            foreach (TiposDocumento tipo in tipos)
+            foreach (TipoDocumento tipo in tipos)
             {
                 comboTiposDoc.Items.Add(tipo);
                 comboTiposDoc.DisplayMember = "Descripcion";
@@ -59,8 +59,8 @@ namespace PalcoNet.AbmCliente
             try
             {
                 domicilio.Id = DomiciliosRepositorio.agregar(domicilio);
-                string clienteId = ClienteRepositorio.agregar(cliente, esRegistro ? txtContraseña.Text : "");
-                TarjetaRepositorio.agregar(cliente.Tarjetas, clienteId);
+                ClienteRepositorio.agregar(cliente, esRegistro ? txtContraseña.Text : "");
+                TarjetaRepositorio.agregar(cliente.Tarjetas, cliente);
                 limpiarVentana();
                 MessageBox.Show("Cliente agregado correctamente con sus respectivas tarjetas y domicilio");
             }
@@ -72,8 +72,8 @@ namespace PalcoNet.AbmCliente
 
         private void actualizarInstanciaCliente()
         {
-            cliente.TipoDeDocumento = new TiposDocumento();
-            cliente.TipoDeDocumento.Id = ((TiposDocumento)comboTiposDoc.SelectedItem).Id;
+            cliente.TipoDeDocumento = new TipoDocumento();
+            cliente.TipoDeDocumento.Id = ((TipoDocumento)comboTiposDoc.SelectedItem).Id;
             cliente.NumeroDocumento = Convert.ToInt32(txDni.Text);
             cliente.nombre = txNombre.Text;
             cliente.Apellido = txApellido.Text;
@@ -102,7 +102,7 @@ namespace PalcoNet.AbmCliente
                 MessageBox.Show("Ingrese un DNI válido.");
                 return false;
             }
-            if (ClienteRepositorio.esClienteExistente(Int32.Parse(((TiposDocumento)comboTiposDoc.SelectedItem).Id), Decimal.Parse(txDni.Text)))
+            if (ClienteRepositorio.esClienteExistente(Int32.Parse(((TipoDocumento)comboTiposDoc.SelectedItem).Id), Decimal.Parse(txDni.Text)))
             {
                 MessageBox.Show("Ya existe un cliente con el dni ingresado");
                 return false;
@@ -174,7 +174,7 @@ namespace PalcoNet.AbmCliente
 
         private void button1_Click(object sender, EventArgs e)
         {
-            AltaTarjeta t = new AltaTarjeta(ref cliente);
+            AltaTarjeta t = new AltaTarjeta(cliente);
             t.ShowDialog();
         }
 

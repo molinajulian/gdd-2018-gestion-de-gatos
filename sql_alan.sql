@@ -351,7 +351,7 @@ AS BEGIN
 			BEGIN
 				INSERT INTO GESTION_DE_GATOS.Ubicaciones(Ubic_Fila, Ubic_Asiento, Ubic_Precio,
 									  Ubic_Espec_Cod, Ubic_Tipo_Cod, Ubic_Sin_Numerar) 
-						VALUES(@indice_fila, @indice_asiento, @ubic_precio, @ubic_espec_codigo, @ubic_tipo, 0);
+						VALUES(obtenerLetra(@indice_fila), @indice_asiento, @ubic_precio, @ubic_espec_codigo, @ubic_tipo, 0);
 				SET @indice_asiento = @indice_asiento + 1;
 			END;
 		   SET @indice_fila = @indice_fila + 1;
@@ -382,6 +382,26 @@ AS BEGIN
 END
 GO
 
+
+IF (OBJECT_ID('sp_get_publicaciones_comprables', 'P') IS NOT NULL) DROP PROCEDURE sp_get_publicaciones_comprables
+go
+CREATE procedure sp_get_publicaciones_comprables(@pub_desc VARCHAR(255), @desde DATETIME, @hasta DATETIME, @rubros_str VARCHAR(255) )
+AS BEGIN 
+	SELECT [Public_Cod], [Public_Desc], [Public_Fecha_Creacion], [Public_Grado_Cod], [Public_Espec_Cod]
+      		, [Public_Estado_Id], [Public_Editor],
+      		[Espec_Cod], [Espec_Desc], [Espec_Fecha], [Espec_Fecha_Venc], [Espec_Rubro_Cod], [Espec_Emp_Cuit]
+      		, [Espec_Dom_Id], [Espec_Estado]
+	FROM GESTION_DE_GATOS.Publicaciones
+	JOIN GESTION_DE_GATOS.Espectaculos ON Public_Espec_Cod = Espec_Cod
+    WHERE Public_Desc LIKE '%' + @pub_desc + '%'
+     AND Public_Estado_Id = 2
+     AND Espec_Fecha >= @desde
+     AND Espec_Fecha_Venc <= @hasta
+     AND @rubros_str like '%,'+ cast(Espec_Rubro_Cod as varchar(20))+',%'
+ 	ORDER BY Public_Grado_Cod ASC;
+
+END
+GO
 
 
 EXEC sp_rename 'GESTION_DE_GATOS.Ubicaciones_Tipo.Ubic_Cod', 'Ubic_Tipo_Cod', 'COLUMN';

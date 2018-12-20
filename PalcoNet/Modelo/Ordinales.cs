@@ -100,8 +100,16 @@ namespace PalcoNet.Modelo
                                                  { "numero",5},
                                                  {"calle",6}
                                                  };
-
-       public static Dictionary<string, int> Tarjeta = new Dictionary<string, int> 
+        public static Dictionary<string, int> TarjetaNueva = new Dictionary<string, int>
+                                                    {
+                                                        {"id",0},
+                                                        {"numero",1},
+                                                        {"vencimiento",2},
+                                                        {"banco_desc",3},
+                                                        {"cli_tipo_doc",4},
+                                                        {"cli_doc",5}
+                                                    };
+        public static Dictionary<string, int> Tarjeta = new Dictionary<string, int> 
                                                     {
                                                     {"numero",0},
                                                     {"nombre",1},
@@ -136,11 +144,33 @@ namespace PalcoNet.Modelo
                                                     {"estadoId",5},
                                                     {"editor",6},
                                                     };
-       public static Dictionary<string, int> Ubicacion = new Dictionary<string, int> 
+        public static Dictionary<string, int> PublicacionCompuesta = new Dictionary<string, int>
                                                     {
-                                                    {"fila",0},
-                                                    {"asiento",1},
-                                                    {"tipo",3}
+                                                        {"pub_codigo",0},
+                                                        {"pub_desc",1},
+                                                        {"pub_fechaCreacion",2},
+                                                        {"pub_gradoCodigo",3},
+                                                        {"pub_especCodigo",4},
+                                                        {"pub_estadoId",5},
+                                                        {"pub_editor",6},
+                                                        {"esp_id",7},
+                                                        {"esp_descripcion",8},
+                                                        {"esp_fecha",9},
+                                                        {"esp_vencimiento",10},
+                                                        {"esp_idRubro",11},
+                                                        {"esp_idEmpresa",12},
+                                                        {"esp_idDomicilio",13},
+                                                        {"esp_estado",14}
+                                                    };
+        public static Dictionary<string, int> Ubicacion = new Dictionary<string, int> 
+                                                    {
+                                                    {"id", 0 },
+                                                    {"fila",1},
+                                                    {"asiento",2},
+                                                    {"espec_cod",3},
+                                                    {"tipo_cod",4},
+                                                    {"compra_id",5},
+                                                    {"sin_numerar",6},
                                                     };
         public static Dictionary<string, int> TipoUbicacion = new Dictionary<string, int>
                                                     {

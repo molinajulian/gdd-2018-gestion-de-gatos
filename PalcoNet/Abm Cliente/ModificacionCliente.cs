@@ -51,7 +51,7 @@ namespace PalcoNet.AbmCliente
         private void llenarComboTiposDoc()
         {
             comboTiposDoc.Items.Clear();
-            foreach (TiposDocumento tipo in ClienteRepositorio.getTiposDoc())
+            foreach (TipoDocumento tipo in ClienteRepositorio.getTiposDoc())
             {
                 comboTiposDoc.Items.Add(tipo);
             }
@@ -88,8 +88,8 @@ namespace PalcoNet.AbmCliente
         private Cliente getClienteDeUi()
         {
             Cliente clienteModificado = new Cliente();
-            TiposDocumento seleccionado = (TiposDocumento)comboTiposDoc.SelectedItem;
-            clienteModificado.TipoDeDocumento = new TiposDocumento();
+            TipoDocumento seleccionado = (TipoDocumento)comboTiposDoc.SelectedItem;
+            clienteModificado.TipoDeDocumento = new TipoDocumento();
             clienteModificado.TipoDeDocumento.Id = seleccionado.Id;
             clienteModificado.NumeroDocumento = Convert.ToInt32(txtNumDoc.Text);
             clienteModificado.nombre = txtNombre.Text;
@@ -112,8 +112,8 @@ namespace PalcoNet.AbmCliente
                 return false;
             }
             if ((cliente.NumeroDocumento != Int32.Parse(txtNumDoc.Text) || 
-                 cliente.TipoDeDocumento.Descripcion != ((TiposDocumento)comboTiposDoc.SelectedItem).Descripcion)
-                && ClienteRepositorio.esClienteExistente(Int32.Parse(((TiposDocumento)comboTiposDoc.SelectedItem).Id), Decimal.Parse(txtNumDoc.Text)))
+                 cliente.TipoDeDocumento.Descripcion != ((TipoDocumento)comboTiposDoc.SelectedItem).Descripcion)
+                && ClienteRepositorio.esClienteExistente(Int32.Parse(((TipoDocumento)comboTiposDoc.SelectedItem).Id), Decimal.Parse(txtNumDoc.Text)))
             {
                 MessageBox.Show("Ya existe un cliente con el dni ingresado");
                 return false;

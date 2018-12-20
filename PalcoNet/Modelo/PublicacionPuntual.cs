@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using PalcoNet.Repositorios;
 
 namespace PalcoNet.Modelo
@@ -39,6 +40,33 @@ namespace PalcoNet.Modelo
         private List<Sector> getSectoresDeBDD()
         {
             return UbicacionRepositorio.getSectoresDeEspectaculo(Espectaculo);
+        }
+
+        public static PublicacionPuntual build(SqlDataReader lector)
+        {
+            Dictionary<string, int> camposPublicacion = Ordinales.Publicacion;
+            return new PublicacionPuntual(
+                Convert.ToInt32(lector[camposPublicacion["codigo"]]),
+                lector[camposPublicacion["descripcion"]].ToString(),
+                GradoRepositorio.ReadGradoFromDb(Convert.ToInt32(lector[camposPublicacion["gradoCodigo"]])),
+                EstadoPublicacionRepositorio.ReadEstadoPublicacionFromDb(
+                    Convert.ToInt32(lector[camposPublicacion["estadoId"]])),
+                EspectaculoRepositorio.ReadEspectaculoFromDb(Convert.ToInt32(lector[camposPublicacion["especCodigo"]])),
+                UsuarioRepositorio.buscarUsuario(Convert.ToInt32(lector[camposPublicacion["editor"]])));
+        }
+
+
+        public static PublicacionPuntual buildCompuesta(SqlDataReader lector)
+        {
+            Dictionary<string, int> camposPublicacionCompuesta = Ordinales.PublicacionCompuesta;
+            return new PublicacionPuntual(
+                Convert.ToInt32(lector[camposPublicacionCompuesta["pub_codigo"]]),
+                lector[camposPublicacionCompuesta["pub_desc"]].ToString(),
+                GradoRepositorio.ReadGradoFromDb(Convert.ToInt32(lector[camposPublicacionCompuesta["pub_gradoCodigo"]])),
+                EstadoPublicacionRepositorio.ReadEstadoPublicacionFromDb(
+                    Convert.ToInt32(lector[camposPublicacionCompuesta["pub_estadoId"]])),
+                Espectaculo.buildCompuesto(lector),
+                UsuarioRepositorio.buscarUsuario(Convert.ToInt32(lector[camposPublicacionCompuesta["pub_editor"]])));
         }
     }
 }

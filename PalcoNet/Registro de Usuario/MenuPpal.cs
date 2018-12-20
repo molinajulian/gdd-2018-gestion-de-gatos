@@ -135,6 +135,7 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonComprar_Click(object sender, EventArgs e)
         {
+            new Comprar.ElegirPublicacion().ShowDialog();
 
         }
 

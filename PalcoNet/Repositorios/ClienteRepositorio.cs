@@ -110,16 +110,16 @@ namespace PalcoNet.Repositorios
             return cliente;
         }
 
-        internal static List<TiposDocumento> getTiposDoc()
+        internal static List<TipoDocumento> getTiposDoc()
         {
-            var tipos = new List<TiposDocumento>();
+            var tipos = new List<TipoDocumento>();
             List<SqlParameter> parametros = new List<SqlParameter>();
             SqlDataReader lector = DataBase.GetDataReader("[dbo].[sp_get_tipos_doc]", "SP", parametros);
             if (lector.HasRows)
             {
                 while (lector.Read())
                 {
-                    TiposDocumento tipo = TiposDocumento.buildGetTiposDoc(lector);
+                    TipoDocumento tipo = TipoDocumento.buildGetTiposDoc(lector);
                     tipos.Add(tipo);
                 }
                 lector.Close();
@@ -127,14 +127,14 @@ namespace PalcoNet.Repositorios
             return tipos;
         }
 
-        public static TiposDocumento getTipoDoc(int tipoDeDocumentoId)
+        public static TipoDocumento getTipoDoc(int tipoDeDocumentoId)
         {
             String sql = "SELECT [Tipo_Doc_Id] ,[Tipo_Doc_Descr] FROM [GESTION_DE_GATOS].[Tipos_Doc]" +
                          " WHERE Tipo_Doc_Id = " + tipoDeDocumentoId;
             SqlDataReader lector = DataBase.GetDataReader(sql, "T", new List<SqlParameter>());
             if(lector.HasRows && lector.Read())
             {
-                TiposDocumento tipoDoc = TiposDocumento.buildGetTiposDoc(lector);
+                TipoDocumento tipoDoc = TipoDocumento.buildGetTiposDoc(lector);
                 lector.Close();
                 return tipoDoc;
             }

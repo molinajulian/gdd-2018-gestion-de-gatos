@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace PalcoNet.Modelo
 {
-    public class TiposDocumento 
+    public class TipoDocumento 
     {
 
-        public TiposDocumento(int id,string descripcion)
+        public TipoDocumento(int id,string descripcion)
         {
             Id=id.ToString();
             Descripcion = descripcion;
         }
-        public TiposDocumento(string descripcion)
+        public TipoDocumento(string descripcion)
         {
             Descripcion = descripcion;
         }
 
-        public TiposDocumento()
+        public TipoDocumento()
         {
             // TODO: Complete member initialization
         }
@@ -28,10 +28,10 @@ namespace PalcoNet.Modelo
         public string Descripcion { get; set; }
 
 
-        internal static TiposDocumento buildGetTiposDoc(System.Data.SqlClient.SqlDataReader lector)
+        internal static TipoDocumento buildGetTiposDoc(System.Data.SqlClient.SqlDataReader lector)
         {
             Dictionary<string, int> camposTiposDoc = Ordinales.camposGetTiposDoc;
-            return new TiposDocumento(lector.GetInt32(camposTiposDoc["tipos_doc_id"]),
+            return new TipoDocumento(lector.GetInt32(camposTiposDoc["tipos_doc_id"]),
                 lector.GetString(camposTiposDoc["tipos_doc_descr"]));
         }
     }

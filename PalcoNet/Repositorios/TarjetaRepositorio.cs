@@ -14,7 +14,6 @@ namespace PalcoNet.Repositorios
         public static List<SqlParameter> GenerarParametrosTarjeta(Tarjeta tarjeta)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@tarjeta", tarjeta.Nombre));
             parametros.Add(new SqlParameter("@tarjeta", tarjeta.Numero));
             parametros.Add(new SqlParameter("@FechaVencimiento", tarjeta.FechaVencimiento));
             return parametros;
@@ -26,21 +25,18 @@ namespace PalcoNet.Repositorios
 
         }
 
-        public static void agregar(List<Tarjeta> tarjetas, string clienteId)
+        public static void agregar(List<Tarjeta> tarjetas, Cliente cliente)
         {
-            int tipoDoc = Convert.ToInt32(clienteId.Substring(0, 1));
-            decimal doc = Convert.ToDecimal(clienteId.Substring(1, clienteId.Length-1));
             foreach (Tarjeta tar in tarjetas)
             {
                 List<SqlParameter> parametros = new List<SqlParameter>();
                 parametros.Add(new SqlParameter("@num", Convert.ToDecimal(tar.Numero)));
                 parametros.Add(new SqlParameter("@venc", tar.FechaVencimiento));
                 parametros.Add(new SqlParameter("@banco", tar.Banco));
-                parametros.Add(new SqlParameter("@tipoDoc", tipoDoc));
-                parametros.Add(new SqlParameter("@doc",doc));
+                parametros.Add(new SqlParameter("@tipoDoc", cliente.TipoDeDocumento.Id));
+                parametros.Add(new SqlParameter("@doc",cliente.NumeroDocumento));
                 DataBase.ejecutarSP("[dbo].[sp_crear_tarjeta]", parametros);
             }
-
         }
 
         public static void UpdateTarjeta(Tarjeta tarjeta)
@@ -58,9 +54,8 @@ namespace PalcoNet.Repositorios
 
         }
 
-        public static Tarjeta ReadTarjetaFromDb(SqlDataReader reader)
+        /*public static Tarjeta ReadTarjetaFromDb(SqlDataReader reader)
         {
-            var tarjeta = new Tarjeta();
             while (reader.Read())
             {
                 tarjeta = new Tarjeta(
@@ -70,12 +65,24 @@ namespace PalcoNet.Repositorios
                              reader.GetValue(Ordinales.Tarjeta["ccv"]).ToString()
                              );
             }
-
-
             return tarjeta;
-
-
+        }*/
+        
+        public static List<Tarjeta> getTarjetasCliente(Cliente cliente)
+        {
+            List<Tarjeta> tarjetas = new List<Tarjeta>();
+            SqlDataReader lector = DataBase.GetDataReader("SELECT [Tar_Cred_Id],[Tar_Cred_Num],[Tar_Cred_Venc],[Tar_Cred_Banco] " + 
+                                                          " FROM GESTION_DE_GATOS.Tarjetas_Credito " +
+                                                          "WHERE Tar_Cred_Cli_Doc = " + cliente.NumeroDocumento + 
+                                                          " AND Tar_Cred_Cli_Tipo_Doc = " + cliente.TipoDeDocumento.Id
+                                                           , "T", new List<SqlParameter>());
+            while (lector.HasRows && lector.Read())
+            {
+                tarjetas.Add(Tarjeta.build(lector));
+            }
+            return tarjetas;
         }
+
         public static List<Tarjeta> GetTarjetasById(string id)
         {   
             var parametros = new List<SqlParameter>();
@@ -85,7 +92,7 @@ namespace PalcoNet.Repositorios
             SqlDataReader reader = query.ExecuteReader();
             while (reader.Read())
             {
-                tarjetas.Add(ReadTarjetaFromDb(reader));
+                //tarjetas.Add(ReadTarjetaFromDb(reader));
 
             }
             return tarjetas  ;

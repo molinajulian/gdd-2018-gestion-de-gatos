@@ -208,11 +208,23 @@
     <Compile Include="Abm Tarjeta\ModificacionTarjeta.Designer.cs">
       <DependentUpon>ModificacionTarjeta.cs</DependentUpon>
     </Compile>
-    <Compile Include="Comprar\Form1.cs">
+    <Compile Include="Comprar\ConfirmarCompra.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Comprar\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Comprar\ConfirmarCompra.Designer.cs">
+      <DependentUpon>ConfirmarCompra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Comprar\ElegirPublicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Comprar\ElegirPublicacion.Designer.cs">
+      <DependentUpon>ElegirPublicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Comprar\ElegirUbicaciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Comprar\ElegirUbicaciones.Designer.cs">
+      <DependentUpon>ElegirUbicaciones.cs</DependentUpon>
     </Compile>
     <Compile Include="Generar Rendicion Comisiones\RendicionDeComisiones.cs">
       <SubType>Form</SubType>
@@ -240,7 +252,7 @@
     <Compile Include="Modelo\Premio.cs" />
     <Compile Include="Modelo\PublicacionPuntual.cs" />
     <Compile Include="Modelo\Sector.cs" />
-    <Compile Include="Modelo\TiposDocumento.cs" />
+    <Compile Include="Modelo\TipoDocumento.cs" />
     <Compile Include="Modelo\Empresa.cs" />
     <Compile Include="Modelo\Espectaculo.cs" />
     <Compile Include="Modelo\EstadoPublicacion.cs" />
@@ -396,6 +408,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Tarjeta\ModificacionTarjeta.resx">
       <DependentUpon>ModificacionTarjeta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Comprar\ConfirmarCompra.resx">
+      <DependentUpon>ConfirmarCompra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Comprar\ElegirPublicacion.resx">
+      <DependentUpon>ElegirPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Comprar\ElegirUbicaciones.resx">
+      <DependentUpon>ElegirUbicaciones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Rendicion Comisiones\RendicionDeComisiones.resx">
       <DependentUpon>RendicionDeComisiones.cs</DependentUpon>

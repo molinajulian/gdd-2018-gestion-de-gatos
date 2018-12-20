@@ -9,7 +9,7 @@ namespace PalcoNet.Modelo
     {
         public string NombreCliente { get; set; }
         public string Apellido { get; set; }
-        public TiposDocumento TipoDeDocumento { get; set; }
+        public TipoDocumento TipoDeDocumento { get; set; }
         public int NumeroDocumento { get; set; }
         public string Cuil { get; set; }
         public string Email { get; set; }
@@ -19,6 +19,7 @@ namespace PalcoNet.Modelo
         public DateTime FechaDeCreacion { get; set; }
         public List<Tarjeta> Tarjetas { get; set; }
         public Boolean Habilitado { get; set; }
+        public static Cliente Actual { get; set; }
 
         public Cliente(int tipoDeDocumento_id, int numeroDocumento, string cuil, string nombre, string apellido, 
             string mail, string tel, bool habilitado, DateTime fechaNac, Domicilio domicilio)
