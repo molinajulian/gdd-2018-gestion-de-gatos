@@ -71,7 +71,15 @@ namespace PalcoNet.AbmPublicaciones
             {
                 Convert.ToInt32(txtAsientos.Text);
                 Convert.ToDouble(txtPrecio.Text);
-                Convert.ToInt32(txtFilas.Text);
+                int cantFilas = Convert.ToInt32(txtFilas.Text);
+
+                if(cantFilas > 27) { 
+                    MessageBox.Show("Las filas se traducen a su correspondiente letra. " +
+                                "No puede registrar mas de 27 filas por sector. " +
+                                "Ingrese menos filas y registre un sector nuevo para continuar ingresando.",
+                    "Editar Sector", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+                }
             }
             catch (Exception ex)
             {

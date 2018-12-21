@@ -75,10 +75,22 @@ namespace PalcoNet.Registro_de_usuario
         private void avanzarAMenuPpal()
         {
             this.Hide();
-            Usuario.inicializarUsuarioActual(this.user);
+            inicializarSesion();
             MenuPpal menu = new MenuPpal(this.user);
             menu.ShowDialog();
             this.Close();
+        }
+
+        private void inicializarSesion()
+        {
+            Usuario.inicializarUsuarioActual(this.user);
+            if (this.user.rol.id ==  2)
+            {
+                Empresa.Actual = EmpresasRepositorio.getEmpresa(this.user);
+            } else if (this.user.rol.id == 3)
+            {
+                Cliente.Actual = ClienteRepositorio.getCliente(this.user);
+            }
         }
 
         private bool camposVacios()

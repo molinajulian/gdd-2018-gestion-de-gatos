@@ -117,7 +117,8 @@ namespace PalcoNet.Registro_de_usuario
                         else
                         {
                             ConfiguracionInicial ci = new ConfiguracionInicial(usuarioLogueado);
-                            if (ci.IsDisposed) this.Show(); ;
+                            if (ci.IsDisposed) this.Show();
+                            this.Hide();
                             textContrasena.Text = "Contraseña";
                             textUsuario.Text = "Nombre de Usuario";
                             textContrasena.UseSystemPasswordChar = false;

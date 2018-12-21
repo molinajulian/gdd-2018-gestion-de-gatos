@@ -11,23 +11,19 @@ namespace PalcoNet.AbmDomicilio
 {
     public partial class AltaDomicilio : MaterialForm
     {
-
+        private bool modoAbm;
         private Domicilio domicilio = null;
-        public AltaDomicilio(ref Domicilio domicilio)
+        public AltaDomicilio(ref Domicilio domicilio, bool modoAbm = false)
         {
             InitializeComponent();
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-
+            this.modoAbm = modoAbm;
             this.domicilio = domicilio;
         }
 
-        private void btn_volver_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-        }
 
         private void setDomicilioDeUi()
         {
@@ -44,6 +40,10 @@ namespace PalcoNet.AbmDomicilio
             try
             {
                 setDomicilioDeUi();
+                if (modoAbm)
+                {
+                    DomiciliosRepositorio.agregar(domicilio);
+                }
                 MessageBox.Show("Domicilio Registrado Exitosamente", "Alta Domicilio", MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
                 this.Close();
@@ -54,16 +54,6 @@ namespace PalcoNet.AbmDomicilio
                     MessageBoxIcon.Error);
             }
         }
-
-        private void limpiarVentana()
-        {
-            var textBoxes = group_alta_rol.Controls.OfType<TextBox>();
-            foreach(TextBox textbox in textBoxes)
-            {
-                textbox.Clear();
-            }
-        }
-
         private bool validarCamposDomicilio()
         {
             if (!Regex.IsMatch(txLocalidad.Text, @"^[a-zA-Z0-9\s]{1,20}$"))
@@ -97,6 +87,16 @@ namespace PalcoNet.AbmDomicilio
                 return false;
             }
             return true;
+        }
+
+        private void btn_limpiar_Click(object sender, EventArgs e)
+        {
+            txCalle.Clear();
+            txNumero.Clear();
+            txLocalidad.Clear();
+            txDpto.Clear();
+            txPiso.Clear();
+            txCp.Clear();
         }
     }
 }
