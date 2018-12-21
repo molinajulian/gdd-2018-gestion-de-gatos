@@ -696,7 +696,7 @@ create procedure migracion
 as
 begin
 	-- Inserto roles
-	INSERT INTO GESTION_DE_GATOS.Roles (Rol_Nombre,Rol_Estado) VALUES ('ADMINISTRATIVO',1)
+	INSERT INTO GESTION_DE_GATOS.Roles (Rol_Nombre,Rol_Estado) VALUES ('ADMINISTRADOR GENERAL',1)
 	INSERT INTO GESTION_DE_GATOS.Roles (Rol_Nombre,Rol_Estado) VALUES ('EMPRESA',1)
 	INSERT INTO GESTION_DE_GATOS.Roles (Rol_Nombre,Rol_Estado) VALUES ('CLIENTE',1)
 	INSERT INTO GESTION_DE_GATOS.Roles (Rol_Nombre, Rol_Estado) VALUES('EDITOR', 1);
@@ -916,7 +916,7 @@ begin
 	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('SOMBRILLA',6800)
 	INSERT INTO GESTION_DE_GATOS.Premios (Premio_Desc,Premio_Puntos) VALUES ('CARPA',17000)
 	-- inserto un usuario administrador
-	INSERT INTO GESTION_DE_GATOS.Usuarios (Usuario_Username,Usuario_Password,Usuario_Estado) VALUES ('admin',HASHBYTES('SHA2_256','admin'),1)
+	INSERT INTO GESTION_DE_GATOS.Usuarios (Usuario_Username,Usuario_Password,Usuario_Estado) VALUES ('admin',HASHBYTES('SHA2_256','w23e'),1)
 	INSERT INTO GESTION_DE_GATOS.Rol_Por_Usuario (Usuario_Id,Rol_Id)
 		SELECT Usuario_Id,1 FROM GESTION_DE_GATOS.Usuarios where Usuario_Username='admin'
 end
