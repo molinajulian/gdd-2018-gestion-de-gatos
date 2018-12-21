@@ -226,5 +226,15 @@ namespace PalcoNet.AbmCliente
             txtContraseña.UseSystemPasswordChar = true;
         }
 
+        private void comboTiposDoc_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txDni_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
