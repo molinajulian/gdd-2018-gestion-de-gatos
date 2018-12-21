@@ -56,7 +56,7 @@ namespace PalcoNet.Repositorios
                 premio = new Premio()
                 {
                     Id = (int)reader.GetValue(Ordinales.Premio["Premio_Id"]),
-                    Descripcion = (double)reader.GetValue(Ordinales.Premio["Premio_Desc"]),
+                    Descripcion = reader.GetValue(Ordinales.Premio["Premio_Desc"]).ToString(),
                     Puntos = (int)reader.GetValue(Ordinales.Premio["Premio_Puntos"])
 
                 };

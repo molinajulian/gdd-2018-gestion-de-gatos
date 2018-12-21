@@ -75,7 +75,7 @@ go
 
 CREATE TABLE [GESTION_DE_GATOS].[Facturas]
 ( 
-	[Fact_Num]				numeric(18)  NOT NULL ,
+	[Fact_Num]				numeric(18) identity(1,1)  NOT NULL ,
 	[Fact_Total]			numeric(18,2)  NOT NULL ,
 	[Fact_Fecha]			datetime  NOT NULL ,
 	[Fact_Emp_Cuit]			nvarchar(255)  NOT NULL 
@@ -872,10 +872,12 @@ begin
 	INSERT INTO GESTION_DE_GATOS.Publicaciones_Estado (Public_Est_Descr,Public_Est_Posible_Cambio) VALUES ('PUBLICADA',1)
 	INSERT INTO GESTION_DE_GATOS.Publicaciones_Estado (Public_Est_Descr,Public_Est_Posible_Cambio) VALUES ('FINALIZADA',0)
 	-- inserto facturas
+	SET IDENTITY_INSERT GESTION_DE_GATOS.Facturas  ON;
 	INSERT INTO GESTION_DE_GATOS.Facturas (Fact_Num,Fact_Total,Fact_Fecha,Fact_Emp_Cuit)
 		SELECT Factura_Nro,Factura_Total,Factura_Fecha,Espec_Empresa_Cuit FROM gd_esquema.Maestra
 		WHERE Factura_Nro is not null 
 		GROUP BY Espectaculo_Cod,Espectaculo_Fecha,Factura_Nro,Factura_Total,Factura_Fecha,Espec_Empresa_Cuit ORDER BY Factura_Nro
+	SET IDENTITY_INSERT GESTION_DE_GATOS.Facturas  OFF;
 	--inserto publicaciones
 	-- ACLARACION: como la fecha de hoy es mayor a la fecha de vencimiento del espectaculo, todas las publciaciones estan finalizadas
 	-- establezco que todas tiene un grado de publicacion bajo(10%), y que la fecha de creacion es dos dias antes de la fecha del espectaculo

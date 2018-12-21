@@ -1,2 +1,2 @@
 2018-12-20
-Server=DESKTOP-4ELU9F5\SQLSERVER2012;Database=GD2C2018;Trusted_Connection=True;User Id=gdEspectaculos2018;Password=gd2018;MultipleActiveResultSets=True
+Server=DESKTOP-NIT844G\SQLSERVER2012;Database=GD2C2018;Trusted_Connection=True;User Id=gdEspectaculos2018;Password=gd2018;MultipleActiveResultSets=True
