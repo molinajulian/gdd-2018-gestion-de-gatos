@@ -14,6 +14,7 @@ using PalcoNet.AbmPublicaciones;
 using PalcoNet.Modelo;
 using PalcoNet.Registro_de_usuario;
 using PalcoNet.Historial_Cliente;
+using PalcoNet.Listado_Estadistico;
 using PalcoNet.Repositorios;
 using PalcoNet.Canje_Puntos;
 
@@ -115,7 +116,7 @@ namespace PalcoNet.Registro_de_Usuario
         
         private void buttonListadoEstadistico_Click(object sender, EventArgs e)
         {
-
+            new ListadoEstadistico().ShowDialog();
         }
 
         private void buttonRegistroUsuario_Click(object sender, EventArgs e)
