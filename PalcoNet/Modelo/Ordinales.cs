@@ -168,11 +168,11 @@ namespace PalcoNet.Modelo
                                                     {"id", 0 },
                                                     {"fila",1},
                                                     {"asiento",2},
-                                                    {"precio",3},
-                                                    {"espec_cod",4},
-                                                    {"tipo_cod",5},
-                                                    {"compra_id",6},
-                                                    {"sin_numerar",7},
+                                                    {"sin_numerar",3},
+                                                    {"precio",4},
+                                                    {"espec_cod",5},
+                                                    {"tipo_cod",6},
+                                                    {"compra_id",7}
                                                     };
         public static Dictionary<string, int> TipoUbicacion = new Dictionary<string, int>
                                                     {

@@ -39,10 +39,6 @@ namespace PalcoNet.Comprar
             lvCategorias.ValueMember = "Codigo";
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-        }
 
         private bool validarCamposCompra()
         {
@@ -105,14 +101,14 @@ namespace PalcoNet.Comprar
 
         private void btnAlta_Click(object sender, EventArgs e)
         {
-            if (data_publicaciones.SelectedRows.Count > 1)
+            if (data_publicaciones.SelectedRows.Count != 1)
             {
                 MessageBox.Show("Debe seleccionar 1 y solo 1 registro", "Advertencia", MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
             }
             else
             {
-                new ElegirUbicaciones(Publicaciones[data_publicaciones.SelectedRows[0].Index]).ShowDialog();
+                new ElegirUbicaciones(Publicaciones[data_publicaciones.SelectedRows[0].Index], this).ShowDialog();
             }
         }
         

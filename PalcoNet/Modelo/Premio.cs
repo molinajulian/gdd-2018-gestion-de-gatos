@@ -9,7 +9,7 @@ namespace PalcoNet.Modelo
     class Premio
     {
         public int Id { get; set; }
-        public double Descuento { get; set; }
+        public string  Descripcion { get; set; }
         public int Puntos { get; set; }
     }
 }

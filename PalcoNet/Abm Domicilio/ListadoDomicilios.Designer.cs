@@ -36,9 +36,7 @@
             this.txCalle = new System.Windows.Forms.TextBox();
             this.data_listado_domicilios = new System.Windows.Forms.DataGridView();
             this.btn_limpiar = new System.Windows.Forms.Button();
-            this.btn_eliminar = new System.Windows.Forms.Button();
             this.btn_agregar = new System.Windows.Forms.Button();
-            this.btn_editar = new System.Windows.Forms.Button();
             this.btn_seleccionar = new System.Windows.Forms.Button();
             this.group_filtros_domicilio.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.data_listado_domicilios)).BeginInit();
@@ -110,7 +108,6 @@
             this.data_listado_domicilios.ReadOnly = true;
             this.data_listado_domicilios.Size = new System.Drawing.Size(545, 150);
             this.data_listado_domicilios.TabIndex = 4;
-            this.data_listado_domicilios.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.data_listado_domicilios_RowStateChanged);
             // 
             // btn_limpiar
             // 
@@ -122,22 +119,8 @@
             this.btn_limpiar.UseVisualStyleBackColor = true;
             this.btn_limpiar.Click += new System.EventHandler(this.btn_limpiar_Click);
             // 
-            // btn_eliminar
-            // 
-            this.btn_eliminar.Enabled = false;
-            this.btn_eliminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_eliminar.Location = new System.Drawing.Point(316, 318);
-            this.btn_eliminar.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_eliminar.Name = "btn_eliminar";
-            this.btn_eliminar.Size = new System.Drawing.Size(83, 28);
-            this.btn_eliminar.TabIndex = 16;
-            this.btn_eliminar.Text = "Eliminar";
-            this.btn_eliminar.UseVisualStyleBackColor = true;
-            this.btn_eliminar.Click += new System.EventHandler(this.btn_eliminar_Click);
-            // 
             // btn_agregar
             // 
-            this.btn_agregar.Enabled = false;
             this.btn_agregar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_agregar.Location = new System.Drawing.Point(64, 318);
             this.btn_agregar.Margin = new System.Windows.Forms.Padding(2);
@@ -147,19 +130,6 @@
             this.btn_agregar.Text = "Nuevo";
             this.btn_agregar.UseVisualStyleBackColor = true;
             this.btn_agregar.Click += new System.EventHandler(this.btn_agregar_Click);
-            // 
-            // btn_editar
-            // 
-            this.btn_editar.Enabled = false;
-            this.btn_editar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_editar.Location = new System.Drawing.Point(186, 318);
-            this.btn_editar.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_editar.Name = "btn_editar";
-            this.btn_editar.Size = new System.Drawing.Size(74, 28);
-            this.btn_editar.TabIndex = 17;
-            this.btn_editar.Text = "Editar";
-            this.btn_editar.UseVisualStyleBackColor = true;
-            this.btn_editar.Click += new System.EventHandler(this.button1_Click);
             // 
             // btn_seleccionar
             // 
@@ -179,8 +149,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(704, 377);
             this.Controls.Add(this.btn_seleccionar);
-            this.Controls.Add(this.btn_editar);
-            this.Controls.Add(this.btn_eliminar);
             this.Controls.Add(this.btn_agregar);
             this.Controls.Add(this.btn_limpiar);
             this.Controls.Add(this.data_listado_domicilios);
@@ -203,9 +171,7 @@
         private System.Windows.Forms.TextBox txNumero;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txCalle;
-        private System.Windows.Forms.Button btn_eliminar;
         private System.Windows.Forms.Button btn_agregar;
-        private System.Windows.Forms.Button btn_editar;
         private System.Windows.Forms.Button btn_seleccionar;
     }
 }

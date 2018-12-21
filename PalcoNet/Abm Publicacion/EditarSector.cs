@@ -73,13 +73,58 @@ namespace PalcoNet.AbmPublicaciones
                               Convert.ToDouble(txtPrecio.Text));
         }
 
-        private void btn_volver_Click(object sender, EventArgs e)
+        private bool validarTipos()
         {
-            this.Close();
+            try
+            {
+                Convert.ToInt32(txtAsientos.Text);
+                Convert.ToDouble(txtPrecio.Text);
+                int cantFilas = Convert.ToInt32(txtFilas.Text);
+                if (cantFilas > 27)
+                {
+                    MessageBox.Show("Las filas se traducen a su correspondiente letra. " +
+                                    "No puede registrar mas de 27 filas por sector. " +
+                                    "Ingrese menos filas y registre un sector nuevo para continuar ingresando.",
+                        "Editar Sector", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Ingrese un valor numerico entero para Filas y Asientos, Precio puede ser con decimales");
+                return false;
+            }
+            
+            return true;
+
+        }
+
+        private bool validarCamposSector()
+        {
+            return validarFormularioCompleto() && validarTipos();
+        }
+
+        private bool validarFormularioCompleto()
+        {
+            bool completo = true;
+            var controles = group_alta_rol.Controls;
+            foreach (Control control in controles)
+            {
+                if ((control.Name == "txtFilas" || control.Name == "txtFilas" || control.Name == "txtPrecio") && string.IsNullOrWhiteSpace(control.Text))
+                {
+                    MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    completo = false;
+                    break;
+                }
+
+            }
+            return completo;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (!validarCamposSector()) { return; }
             sector.reemplazar(getSectorDeUi());
             listaSector.actualizarListado();
             MessageBox.Show("Sectores Agregados", "Alta Sectores", MessageBoxButtons.OK, MessageBoxIcon.Information);

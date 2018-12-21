@@ -34,6 +34,7 @@ namespace PalcoNet.AbmDomicilio
             domicilioElegido = domicilioAElegir;
         }
 
+
         public void actualizarListado()
         {
             data_listado_domicilios.DataSource = tabla_domicilios;
@@ -60,10 +61,6 @@ namespace PalcoNet.AbmDomicilio
             actualizarListado();
         }
 
-        private void btn_volver_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
 
         private void btn_limpiar_Click(object sender, EventArgs e)
         {
@@ -72,48 +69,6 @@ namespace PalcoNet.AbmDomicilio
             limpiarTabla();
         }
 
-        private void modificarDomicilio(Domicilio domicilio)
-        {
-            new ModificarDomicilio(domicilio).ShowDialog();
-            limpiarTabla();
-            actualizarListado();
-        }
-
-        private void eliminarDomicilio()
-        {
-            try
-            {
-                DomiciliosRepositorio.eliminar(getDomicilioSeleccionado());
-                tabla_domicilios.Rows[data_listado_domicilios.SelectedRows[0].Index].Delete();
-                actualizarListado();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private Domicilio getDomicilioSeleccionado()
-        {
-            if (data_listado_domicilios.SelectedRows.Count != 1)
-            {
-                throw new DomicilioNoSeleccionadoException();
-            }
-            return domicilios[data_listado_domicilios.SelectedRows[0].Index];
-        }
-
-        public class DomicilioNoSeleccionadoException : Exception
-        {
-            public DomicilioNoSeleccionadoException() : base("No se selecciono ningun domicilio del listado")
-            {
-
-            }
-        }
-
-        private void btn_eliminar_Click(object sender, EventArgs e)
-        {
-            eliminarDomicilio();
-        }
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -130,32 +85,10 @@ namespace PalcoNet.AbmDomicilio
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            modificarDomicilio(getDomicilioSeleccionado());
-        }
-
         private void btn_agregar_Click(object sender, EventArgs e)
         {
-            AltaDomicilio alta = new AltaDomicilio(ref domicilioElegido);
+            AltaDomicilio alta = new AltaDomicilio(ref domicilioElegido, true);
             alta.ShowDialog();
-        }
-        
-
-        private void data_listado_domicilios_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
-        {
-            if (e.StateChanged != DataGridViewElementStates.Selected)
-            {
-                btn_editar.Enabled = false;
-                btn_eliminar.Enabled = false;
-                btn_seleccionar.Enabled = false;
-            }
-            else
-            {
-                btn_editar.Enabled = true;
-                btn_eliminar.Enabled = true;
-                btn_seleccionar.Enabled = true;
-            }
         }
     }
 }
