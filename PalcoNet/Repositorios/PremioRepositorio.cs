@@ -14,7 +14,7 @@ namespace PalcoNet.Repositorios
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
 
-            parametros.Add(new SqlParameter("@Descuento", premio.Descuento));
+            parametros.Add(new SqlParameter("@Descuento", premio.Descripcion));
             parametros.Add(new SqlParameter("@Puntos", premio.Puntos));
 
 
@@ -56,7 +56,7 @@ namespace PalcoNet.Repositorios
                 premio = new Premio()
                 {
                     Id = (int)reader.GetValue(Ordinales.Premio["Premio_Id"]),
-                    Descuento = (double)reader.GetValue(Ordinales.Premio["Premio_Desc"]),
+                    Descripcion = (double)reader.GetValue(Ordinales.Premio["Premio_Desc"]),
                     Puntos = (int)reader.GetValue(Ordinales.Premio["Premio_Puntos"])
 
                 };

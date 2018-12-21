@@ -54,7 +54,7 @@ namespace PalcoNet.Repositorios
              {
                   fecha = Convert.ToDateTime(config.ElementAt(0), CultureInfo.InvariantCulture);
              }
-             else { fecha =DateTime.Today }
+             else { fecha = DateTime.Today; }
             return fecha;
         }
         public static string GetConnectionString()
