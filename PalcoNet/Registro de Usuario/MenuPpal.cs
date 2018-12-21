@@ -15,6 +15,7 @@ using PalcoNet.Modelo;
 using PalcoNet.Registro_de_usuario;
 using PalcoNet.Historial_Cliente;
 using PalcoNet.Repositorios;
+using PalcoNet.Canje_Puntos;
 
 namespace PalcoNet.Registro_de_Usuario
 {
@@ -147,7 +148,8 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonCanjeYAdminPuntos_Click(object sender, EventArgs e)
         {
-
+            new CanjePuntos(Usuario.Actual);
+            
         }
 
         private void buttonPagoComisiones_Click(object sender, EventArgs e)
