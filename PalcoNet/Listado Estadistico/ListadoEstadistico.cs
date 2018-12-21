@@ -1,5 +1,6 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
+using PalcoNet.Modelo;
 using PalcoNet.Repositorios;
 using System;
 using System.Collections.Generic;
@@ -30,11 +31,31 @@ namespace PalcoNet.Listado_Estadistico
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-            var parametros = new List<SqlParameter>();
-            tipoListado.Items.Add("EmpresasConMasLocalidadesSinVender");
-            tipoListado.Items.Add("ClientesConMasPuntosVencidos");
-            tipoListado.Items.Add("ClientesConMasComprasRealizadas");
-                    }
+            comboTrimestre.Items.Add("Primero");
+            comboTrimestre.Items.Add("Segundo");
+            comboTrimestre.Items.Add("Tercero");
+            comboTrimestre.Items.Add("Cuarto");
+            comboListado.Items.Add("Empresas con mas localidades sin vender");
+            comboListado.Items.Add("Clientes con mas puntos vencidos");
+            comboListado.Items.Add("Clientes con mas compras realizadas");
+            getGrados();
+            txtMes.Hide();
+            comboGrados.Hide();
+            labelGrado.Hide();
+            labelMes.Hide();
+            initColumnsParaEmpresasConLocalidades();
+            initColumnsParaClientesConMasPuntosVencidos();
+            initColumnsParaClientesConMayorCantidadDeCompras();
+        }
+        private void getGrados()
+        {
+            List<Grado> grados = GradoRepositorio.getGrados();
+            foreach (Grado g in grados)
+            {
+                comboGrados.Items.Add(g);
+            }
+            comboGrados.DisplayMember = "Descripcion";
+        }
         private void initColumnsParaEmpresasConLocalidades()
         {
             tablaEmpresasConLocalidades.Clear();
@@ -59,111 +80,140 @@ namespace PalcoNet.Listado_Estadistico
             tabla_clientesConMasCompras.Columns.Add("RazonSocial", typeof(string));
             data_Listado.DataSource = tabla_clientesConMasCompras;
         }
-
-        private void data_clientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private int getTrimestre(string trimestre)
         {
-
-        }
-
-        private void combo_roles_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            tipoListadoseleccionado =(string)tipoListado.SelectedItem;
-            
-        }
-
-        private void tx_dni_TextChanged(object sender, EventArgs e)
-        {
-            try
+            switch (trimestre)
             {
-                if (int.Parse(trimestre.Text) > 4 || int.Parse(trimestre.Text) < 1)
-                    throw new Exception("ingrese un valor de trimestre valido");
-                else { trimestreIngresado=trimestre.Text; }
+                case "Primero": return 1;
+                case "Segundo": return 2;
+                case "Tercero": return 3;
+                case "Cuarto": return 4;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Advertencia.", MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
-            }
+            return -1;
         }
-
-        private void ListadoEstadistico_Load(object sender, EventArgs e)
+        public void refreshValues(DataTable tabla)
         {
-            
+            data_Listado.DataSource = tabla;
         }
-
         private void btn_buscar_Click(object sender, EventArgs e)
         {
-        parametros.Add(new SqlParameter("@Trimestre", int.Parse(trimestre.Text)));
-        parametros.Add(new SqlParameter("@Año", int.Parse(textBox1.Text)));
-        switch (tipoListadoseleccionado)
-        {   
-            case ("EmpresasConMasLocalidadesSinVender"):
-                initColumnsParaEmpresasConLocalidades();
-                SqlDataReader reader = DataBase.ejecutarFuncion("select empresasConLocalidadesSinVender(@Año,@Trimestre)", parametros).ExecuteReader();
-                var lista= new List<ListadoEstadisticoEmpresasConMasLocalidadesSinVender>();
-                while (reader.Read())
-                {    lista.Add(
-                    new ListadoEstadisticoEmpresasConMasLocalidadesSinVender()
-                    {
-                        RazonSocial=reader.GetValue(0).ToString(),
-                        FechaEspectaculo=reader.GetValue(1).ToString(),
-                        Grado=reader.GetValue(2).ToString()
-                    });       
-                }
-                foreach (var emp in lista)
+            if (string.IsNullOrEmpty(txtAño.Text) || comboListado.SelectedIndex == -1 || comboTrimestre.SelectedIndex == -1)
+            {
+                MessageBox.Show("Complete todos los campos para continuar", "Error al buscar el listado", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+                
+                Grado g = (Grado)comboGrados.SelectedItem;
+                List<SqlParameter> parametros = new List<SqlParameter>();
+                parametros.Add(new SqlParameter("@año", Convert.ToInt32(txtAño.Text)));
+                parametros.Add(new SqlParameter("@trimestre", getTrimestre((string)comboTrimestre.SelectedItem)));
+                if (!string.IsNullOrEmpty(txtMes.Text)) parametros.Add(new SqlParameter("@mes", Convert.ToInt32(txtMes.Text)));
+                if (g != null) parametros.Add(new SqlParameter("@gradoVisibilidad", g.Id));
+                switch (tipoListadoseleccionado)
                 {
-                    string[] row = { emp.RazonSocial, emp.Grado, emp.FechaEspectaculo};
-                    data_Listado.Rows.Add(row);
-                }
-                break;
-            case ("ClientesConMasPuntosVencidos"):
-                var lista1=new List<ListadoEstadisticoClientesConMasPuntosVencidos>();
-                initColumnsParaClientesConMasPuntosVencidos();
-                reader = DataBase.ejecutarFuncion("select clientesConMayoresPuntosVencidos(@Año,@Trimestre)", parametros).ExecuteReader();
-                while (reader.Read())
-                {
-                    lista1.Add(
-                        new ListadoEstadisticoClientesConMasPuntosVencidos()
+                    case ("Empresas con mas localidades sin vender"):
+                        tablaEmpresasConLocalidades.Rows.Clear();
+                        refreshValues(tablaEmpresasConLocalidades);
+                        txtMes.Show();
+                        comboGrados.Show();
+                        labelGrado.Show();
+                        labelMes.Show();
+                        string query = "select * from empresasConLocalidadesSinVender(null,null2,@Año,@Trimestre)";
+                        if (g != null) query=query.Replace("null", "@gradoVisibilidad");
+                        if (!string.IsNullOrEmpty(txtMes.Text)) {query = query.Replace("@gradoVisibilidad2", "@mes"); query = query.Replace("null2","@mes");};
+                        query = query.Replace("@gradoVisibilidad2", "null");
+                        query = query.Replace("null2", "null");
+                        SqlDataReader reader = DataBase.ejecutarFuncion(query, parametros).ExecuteReader();
+                        var lista = new List<ListadoEstadisticoEmpresasConMasLocalidadesSinVender>();
+                        while (reader.Read())
                         {
-                            ClienteNombre = reader.GetValue(0).ToString(),
-                            PuntosVencidos= reader.GetValue(1).ToString()
-                        });
+                            lista.Add(
+                                new ListadoEstadisticoEmpresasConMasLocalidadesSinVender()
+                                {
+                                    RazonSocial = reader.GetValue(0).ToString(),
+                                    FechaEspectaculo = reader.GetValue(1).ToString(),
+                                    Grado = reader.GetValue(2).ToString()
+                                });
+                        }
+                        foreach (var emp in lista)
+                        {
+                            string[] row = { emp.RazonSocial, emp.Grado, emp.FechaEspectaculo };
+                            tablaEmpresasConLocalidades.Rows.Add(row);
+                        }
+                        refreshValues(tablaEmpresasConLocalidades);
+                        break;
+                    case ("Clientes con mas puntos vencidos"):
+                        txtMes.Hide();
+                        comboGrados.Hide();
+                        txtMes.Text = "";
+                        comboGrados.SelectedIndex = -1;
+                        labelGrado.Hide();
+                        labelMes.Hide();
+                        tablaClientesConMasPuntosVencidos.Rows.Clear();
+                        refreshValues(tablaClientesConMasPuntosVencidos);
+                        if (parametros.Count == 3) parametros.RemoveAt(2);
+                        if (parametros.Count == 4) { parametros.RemoveAt(3); parametros.RemoveAt(2); }
+                        var lista1 = new List<ListadoEstadisticoClientesConMasPuntosVencidos>();
+                        reader = DataBase.ejecutarFuncion("select * from clientesConMayoresPuntosVencidos(@Año,@Trimestre)", parametros).ExecuteReader();
+                        while (reader.Read())
+                        {
+                            lista1.Add(
+                                new ListadoEstadisticoClientesConMasPuntosVencidos()
+                                {
+                                    ClienteNombre = reader.GetValue(0).ToString(),
+                                    PuntosVencidos = reader.GetValue(1).ToString()
+                                });
+                        }
+                        foreach (var cli in lista1)
+                        {
+                            string[] row1 = { cli.ClienteNombre, cli.PuntosVencidos };
+                            tablaClientesConMasPuntosVencidos.Rows.Add(row1);
+                        }
+                        refreshValues(tablaClientesConMasPuntosVencidos);
+                        break;
+                    case ("Clientes con mas compras realizadas"):
+                        txtMes.Hide();
+                        comboGrados.Hide();
+                        txtMes.Text = "";
+                        comboGrados.SelectedIndex = -1;
+                        labelGrado.Hide();
+                        labelMes.Hide();
+                        tabla_clientesConMasCompras.Rows.Clear();
+                        refreshValues(tabla_clientesConMasCompras);
+                        if (parametros.Count == 3) parametros.RemoveAt(2);
+                        if (parametros.Count == 4) { parametros.RemoveAt(3); parametros.RemoveAt(2); }
+                        var lista2 = new List<ListadoEstadisticoClientesConMayorCantidadDeCompras>();
+                        reader = DataBase.ejecutarFuncion("select * from clientesConMayorCantidadDeComprasPorEmpresa(@Año,@Trimestre) ", parametros).ExecuteReader();
+                        while (reader.Read())
+                        {
+                            lista2.Add(
+                            new ListadoEstadisticoClientesConMayorCantidadDeCompras()
+                            {
+                                RazonSocial = reader.GetValue(2).ToString(),
+                                ClienteNombre = reader.GetValue(0).ToString(),
+                                CantidadCompras = (int)reader.GetValue(1)
+                            });
+                        }
+                        foreach (var cli in lista2)
+                        {
+                            string[] row2 = { cli.ClienteNombre, cli.CantidadCompras.ToString(), cli.RazonSocial };
+                            tabla_clientesConMasCompras.Rows.Add(row2);
+                        }
+                        refreshValues(tabla_clientesConMasCompras);
+                        break;
+                    default: break;
                 }
-                foreach (var cli in lista1)
-                {
-                    string[] row1 = { cli.ClienteNombre, cli.PuntosVencidos};
-                    data_Listado.Rows.Add(row1);
-                }
-                break;
-            case ("ClientesConMasComprasRealizadas"):
-                var lista2 = new List<ListadoEstadisticoClientesConMayorCantidadDeCompras>();
-                initColumnsParaClientesConMayorCantidadDeCompras();
-                reader = DataBase.ejecutarFuncion("select clientesConMayorCantidadDeComprasPorEmpresa(@Año,@Trimestre) ", parametros).ExecuteReader();
-                while (reader.Read())
-                {
-                    lista2.Add(
-                    new ListadoEstadisticoClientesConMayorCantidadDeCompras()
-                    {
-                        RazonSocial = reader.GetValue(2).ToString(),
-                        ClienteNombre = reader.GetValue(0).ToString(),
-                        CantidadCompras = (int)reader.GetValue(1)
-                    });     
-                }
-                foreach (var cli in lista2)
-                {
-                    string[] row2 = {cli.ClienteNombre,cli.CantidadCompras.ToString(),cli.RazonSocial};
-                    data_Listado.Rows.Add(row2);
-                }
-                break;
-            default: break;
-        }
+            }
+        
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void txtAño_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (int.Parse(textBox1.Text) > 0)
-            {   
-               añoIngresado= textBox1.Text; }
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
     }
     public class ListadoEstadisticoEmpresasConMasLocalidadesSinVender

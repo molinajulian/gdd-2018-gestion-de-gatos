@@ -76,6 +76,8 @@ namespace PalcoNet.Registro_de_usuario
         }
         private void btn_login_Click(object sender, EventArgs e)
         {
+            
+            
             if ((string.IsNullOrEmpty(textUsuario.Text) || textUsuario.Text == "Nombre de Usuario") ||
                 (string.IsNullOrEmpty(textContrasena.Text) || textContrasena.Text == "Contraseña") ||
                     string.IsNullOrEmpty(combo_roles.Text) ||

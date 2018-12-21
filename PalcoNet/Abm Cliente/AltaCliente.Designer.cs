@@ -182,6 +182,7 @@
             this.comboTiposDoc.Name = "comboTiposDoc";
             this.comboTiposDoc.Size = new System.Drawing.Size(121, 21);
             this.comboTiposDoc.TabIndex = 34;
+            this.comboTiposDoc.SelectedIndexChanged += new System.EventHandler(this.comboTiposDoc_SelectedIndexChanged);
             // 
             // label13
             // 
@@ -250,6 +251,7 @@
             this.txDni.Name = "txDni";
             this.txDni.Size = new System.Drawing.Size(136, 20);
             this.txDni.TabIndex = 3;
+            this.txDni.TextChanged += new System.EventHandler(this.txDni_TextChanged);
             this.txDni.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txDni_KeyPress);
             // 
             // txApellido
