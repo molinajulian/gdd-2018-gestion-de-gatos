@@ -11,6 +11,7 @@ using System.Windows.Forms.VisualStyles;
 using MaterialSkin.Controls;
 using MaterialSkin;
 using PalcoNet.AbmPublicaciones;
+using PalcoNet.Generar_Rendicion_Comisiones;
 using PalcoNet.Modelo;
 using PalcoNet.Registro_de_usuario;
 using PalcoNet.Historial_Cliente;
@@ -152,7 +153,7 @@ namespace PalcoNet.Registro_de_Usuario
 
         private void buttonPagoComisiones_Click(object sender, EventArgs e)
         {
-
+            new RendicionDeComisiones().ShowDialog();
         }
     }
 }

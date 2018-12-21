@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using PalcoNet.Modelo;
 using PalcoNet.Repositorios;
 namespace PalcoNet.Generar_Rendicion_Comisiones
 {
@@ -19,6 +20,7 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
         public string cuitIngresado { get; set; }
         public int cantIngresada { get; set; }
         public List<SqlParameter> parametros { get; set; }
+        private DataTable tabla_facturas = new DataTable();
         public RendicionDeComisiones()
         {   
             InitializeComponent();
@@ -26,41 +28,49 @@ namespace PalcoNet.Generar_Rendicion_Comisiones
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-            
+
+            tabla_facturas.Columns.Add("Fecha Facturacion");
+            tabla_facturas.Columns.Add("Numero Factura");
+            tabla_facturas.Columns.Add("Total");
+            tabla_facturas.Columns.Add("Empresa Cuit");
         }
 
-        private void txtMail_TextChanged(object sender, EventArgs e)
+
+        private void actualizarTablaRendiciones()
         {
-            if (!Regex.IsMatch(txtMail.Text, @"[0-9]{2}-[0-9]{5,9}-[0-9]{1,2}$"))
+            Factura factura = FacturaRepositorio.getUltimaFactura();
+            tabla_facturas.Rows.Clear();
+            String[] ubiacionRow =
             {
-                MessageBox.Show("Ingrese un CUIT válido.");
-
-            }
-            else { cuitIngresado = txtMail.Text; }
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            if(int.Parse(textBox1.Text) > 0 )
-                MessageBox.Show("Ingrese una cantidad válida.");
-            else { cantIngresada = int.Parse(textBox1.Text); }
+                factura.Fecha.ToString(), factura.Numero.ToString(), factura.Total.ToString(),
+                factura.EmpresaCuit
+            };
+            tabla_facturas.Rows.Add(ubiacionRow);
+            dgvFacturas.DataSource = tabla_facturas;
         }
 
         private void btn_login_Click(object sender, EventArgs e)
         {
             try
             {
-                parametros.Clear();
-                parametros.Add(new SqlParameter("@empresaCuit", cuitIngresado));
-                parametros.Add(new SqlParameter("@cantidad", cantIngresada));
-                //agregar el Usuario 
-                //agregarlafechadehoy
-                DataBase.WriteInBase("GenerarRendicionComisiones", "SP", parametros);
+                List<SqlParameter> parametros = new List<SqlParameter>();
+                parametros.Add(new SqlParameter("@empresaCuit", txtEmpresa.Text));
+                parametros.Add(new SqlParameter("@cantidad", Convert.ToInt32(txtCantidad.Text)));
+                parametros.Add(new SqlParameter("@username", Usuario.Actual.username));
+                parametros.Add(new SqlParameter("@fechaHoy", DateTime.Now));
+                DataBase.ejecutarSP("GenerarRendicionComisiones", parametros);
+                MessageBox.Show("Factura realizada", "Facturacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                actualizarTablaRendiciones();
             }
             catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void RendicionDeComisiones_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

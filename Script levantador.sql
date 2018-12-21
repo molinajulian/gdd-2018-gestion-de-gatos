@@ -75,7 +75,7 @@ go
 
 CREATE TABLE [GESTION_DE_GATOS].[Facturas]
 ( 
-	[Fact_Num]				numeric(18)  NOT NULL ,
+	[Fact_Num]				numeric(18)  identity(1,1) NOT NULL ,
 	[Fact_Total]			numeric(18,2)  NOT NULL ,
 	[Fact_Fecha]			datetime  NOT NULL ,
 	[Fact_Emp_Cuit]			nvarchar(255)  NOT NULL 

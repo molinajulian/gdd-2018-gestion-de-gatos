@@ -45,10 +45,7 @@ namespace PalcoNet.AbmPublicaciones
             EstadoPublicacion estadoInicial = estados.Find(estado => estado.Id == estadoPublicacion.Id);
             foreach (EstadoPublicacion estado in estados)
             {
-                if (estadoPublicacion.Editable)
-                {
-                    cmbEstado.Items.Add(estado);
-                }
+                cmbEstado.Items.Add(estado);
             }
             cmbEstado.DisplayMember = "Descripcion";
             cmbEstado.ValueMember = "Id";

@@ -1,6 +1,7 @@
 ﻿using PalcoNet.Modelo;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -94,6 +95,14 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@editor_id", publicacion.Editor.id));
             parametros.Add(new SqlParameter("@espec_cod", publicacion.Espectaculo.Id));
             DataBase.ejecutarSP("sp_actualizar_publicacion", parametros);
+
+            parametros.Clear();
+            if (publicacion.Estado.Id == 3)
+            {
+                parametros.Add(new SqlParameter("@PublicacionCod", publicacion.Codigo));
+                parametros.Add(new SqlParameter("@fechaHoy", DateTime.Now));
+                DataBase.ejecutarSP("FacturarPublicacion", parametros);
+            }
         }
 
         public static List<PublicacionPuntual> getPublicacionesComprables(string descripcion, DateTime desde,

@@ -195,11 +195,10 @@ namespace PalcoNet.Modelo
                                                     };
         public static Dictionary<string, int> Factura = new Dictionary<string, int>
                                                     {
-                                                    {"Fact_Id",0},
-                                                    {"Fact_Metodo_Pago",1},
-                                                    {"Fact_Total",2},
-                                                    {"Fact_Fecha",3 },
-                                                    {"Fact_Empresa_Cuit",4 }
+                                                    {"Fact_Num",0},
+                                                    {"Fact_Total",1},
+                                                    {"Fact_Fecha",2},
+                                                    {"Fact_Empresa_Cuit",3}
                                                     };
         public static Dictionary<string, int> Compra = new Dictionary<string, int>
                                                     {
