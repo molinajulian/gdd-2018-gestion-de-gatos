@@ -90,6 +90,9 @@ AS BEGIN
                 LEFT JOIN GESTION_DE_GATOS.Roles
 					ON GESTION_DE_GATOS.Roles.Rol_Id = GESTION_DE_GATOS.Rol_Por_Usuario.Rol_Id
 		WHERE u.Usuario_Id = @idUsuario
+		UPDATE GESTION_DE_GATOS.Usuarios 
+			SET Usuario_Estado = 1, Usuario_Intentos_Fallidos = 0
+			WHERE Usuario_Id = @idUsuario
 END
 go
 IF (OBJECT_ID('sp_roles_usuario', 'P') IS NOT NULL) DROP PROCEDURE sp_roles_usuario

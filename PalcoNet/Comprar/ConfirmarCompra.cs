@@ -83,7 +83,7 @@ namespace PalcoNet.Comprar
 
         private void btnComprar_Click(object sender, EventArgs e)
         {
-            //CompraRepositorio.realizarCompra(UbicacionesElegidas, PublicacionElegida, getTarjetaElegida());
+            CompraRepositorio.realizarCompra(UbicacionesElegidas, PublicacionElegida, getTarjetaElegida());
             MessageBox.Show(getMensajeDeConfirmacion());
             cerrarProceso();
         }
