@@ -151,7 +151,7 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@telefono", empresa.Telefono));
             parametros.Add(new SqlParameter("@dom_id", empresa.Domicilio.Id));
             parametros.Add(new SqlParameter("@contraseña",contraseña));
-            parametros.Add(new SqlParameter("@fecha_creacion", DateTime.Now));
+            parametros.Add(new SqlParameter("@fecha_creacion", DataBase.GetFechaHoy()));
             DataBase.ejecutarSP("[dbo].[sp_crear_empresa]", parametros);
         }
 

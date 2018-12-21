@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using PalcoNet.AbmCliente;
+using PalcoNet.Repositorios;
 using PalcoNet.AbmDomicilio;
 
 namespace PalcoNet.AbmCliente
@@ -98,7 +99,7 @@ namespace PalcoNet.AbmCliente
             clienteModificado.Telefono = string.IsNullOrEmpty(txtTel.Text) ? "0" : txtTel.Text;
             clienteModificado.FechaDeNacimiento = datePickerFechaNac.Value.Date;
             clienteModificado.Cuil = string.IsNullOrEmpty(txtCuil.Text) ? "" : txtCuil.Text;
-            clienteModificado.FechaDeCreacion = DateTime.Now;
+            clienteModificado.FechaDeCreacion = DataBase.GetFechaHoy();
             clienteModificado.NombreCliente = txtNombre.Text;
             clienteModificado.Habilitado = checkHabilitado.Checked;
             return clienteModificado;

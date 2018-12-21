@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using PalcoNet.Repositorios;
 
 namespace PalcoNet.Modelo
 {
@@ -25,7 +26,7 @@ namespace PalcoNet.Modelo
             Espectaculos = espectaculos;
             Sectores = sectoresRegistrados;
             Editor = editor;
-            FechaPublicacion = DateTime.Now;
+            FechaPublicacion = DataBase.GetFechaHoy();
         }
     }
 }

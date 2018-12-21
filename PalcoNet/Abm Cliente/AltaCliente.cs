@@ -82,7 +82,7 @@ namespace PalcoNet.AbmCliente
             cliente.FechaDeNacimiento = datePickerFechaNac.Value.Date;
             cliente.Cuil = txtCuil.Text;
             cliente.Domicilio = domicilio;
-            cliente.FechaDeCreacion = DateTime.Now;
+            cliente.FechaDeCreacion = DataBase.GetFechaHoy();
             cliente.NombreCliente = txNombre.Text;
         }
 

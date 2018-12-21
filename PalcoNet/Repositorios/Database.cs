@@ -26,7 +26,6 @@ namespace PalcoNet.Repositorios
 
         public static List<string> GetConfigFile()
         {   List<string> config= new List<string>();
-            //Path.Combine(System.Environment.CurrentDirectory, @"\Futuro ZIP\src\configuracion.txt");
     
         var path = @"..\..\..\Futuro Zip\src\configuracion.txt";
                 StreamReader sr = new StreamReader(path);

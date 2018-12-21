@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using PalcoNet.Modelo;
 using MaterialSkin.Controls;
+using PalcoNet.Repositorios;
 using MaterialSkin;
 
 namespace PalcoNet.AbmPublicaciones
@@ -42,7 +43,7 @@ namespace PalcoNet.AbmPublicaciones
         {
             if (flowLayoutPanel1.Controls.Count == 0)
             {
-                return DateTime.Now;
+                return DataBase.GetFechaHoy();
             }
             return ((EslabonFecha) flowLayoutPanel1.Controls[flowLayoutPanel1.Controls.Count - 1]).getDateTimeElegido();
         }

@@ -68,7 +68,7 @@ namespace PalcoNet.Repositorios
             parametros.Add(new SqlParameter("@mail", cliente.Email));
             parametros.Add(new SqlParameter("@telefono", cliente.Telefono));
             parametros.Add(new SqlParameter("@contraseña", contraseña));
-            parametros.Add(new SqlParameter("@fecha_creacion", DateTime.Now));
+            parametros.Add(new SqlParameter("@fecha_creacion", DataBase.GetFechaHoy()));
             SqlParameter output = new SqlParameter("@cli_id", -1);
             output.Direction = ParameterDirection.Output;
             parametros.Add(output);
