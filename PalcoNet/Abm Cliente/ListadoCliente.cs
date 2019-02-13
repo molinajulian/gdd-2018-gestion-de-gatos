@@ -1,159 +1,163 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
-using Palconet.Repositorios;
+using PalcoNet.Modelo;
+using PalcoNet.Repositorios;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.Data.SqlClient;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Palconet.AbmCliente
+namespace PalcoNet.AbmCliente
 {
     public partial class ListadoCliente : MaterialForm
     {
         DataTable tabla_clientes = new DataTable();
-        public ListadoCliente(Char modo)
+        List<Cliente> clientes = new List<Cliente>();
+        public ListadoCliente(char modo)
         {
             InitializeComponent();
-
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+            initColumns();
+            if (modo == 'B') buttonModificar.Hide();
+            else buttonHabilitar.Hide();
+        }
 
-            tabla_clientes.Columns.Add("DNI", typeof(string));
+        private void initColumns()
+        {
+            tabla_clientes.Columns.Add("Tipo doc", typeof(string));
+            tabla_clientes.Columns.Add("Documento", typeof(string));
+            tabla_clientes.Columns.Add("Cuil", typeof(string));
             tabla_clientes.Columns.Add("Nombre", typeof(string));
             tabla_clientes.Columns.Add("Apellido", typeof(string));
+            tabla_clientes.Columns.Add("Email", typeof(string));
+            tabla_clientes.Columns.Add("Calle", typeof(string));
+            tabla_clientes.Columns.Add("Numero", typeof(string));
+            tabla_clientes.Columns.Add("Localidad", typeof(string));
+            tabla_clientes.Columns.Add("Codigo postal", typeof(string));
             tabla_clientes.Columns.Add("Habilitado", typeof(string));
-
-            if (modo == 'B')
-                btn_modificar.Hide();
-            else
-                switch_habilitacion.Hide();
+            actualizarTabla();
         }
-        private void btn_buscar_Click(object sender, EventArgs e)
+
+        private bool validarBusqueda()
         {
-            if (!Regex.IsMatch(tx_dni.Text, @"^[0-9]{1,8}$") && !string.IsNullOrEmpty(tx_dni.Text))
+            if (!string.IsNullOrEmpty(tx_dni.Text) && !Regex.IsMatch(tx_dni.Text, @"^[0-9]{1,8}$"))
             {
                 MessageBox.Show("Ingrese un DNI válido.");
-                return;
+                return false;
             }
-            if (!Regex.IsMatch(tx_nombre.Text, @"^[a-zA-Z\s]{1,30}$") && !string.IsNullOrEmpty(tx_nombre.Text))
+            if (!string.IsNullOrEmpty(tx_nombre.Text) && !Regex.IsMatch(tx_nombre.Text, @"^[a-zA-Z\s]{1,30}$"))
             {
                 MessageBox.Show("Ingrese un nombre válido.");
-                return;
+                return false;
             }
-            if (!Regex.IsMatch(tx_apellido.Text, @"^[a-zA-Z\s]{1,30}$") && !string.IsNullOrEmpty(tx_apellido.Text))
+            if (!string.IsNullOrEmpty(tx_apellido.Text) && !Regex.IsMatch(tx_apellido.Text, @"^[a-zA-Z\s]{1,30}$"))
             {
                 MessageBox.Show("Ingrese un apellido válido.");
-                return;
+                return false;
             }
-            tabla_clientes.Clear();
-            List<Cliente> clientes = ClientesRepositorio.getClientes(tx_dni.Text, tx_nombre.Text, tx_apellido.Text);
-            foreach (Cliente cliente in clientes)
+            if (!string.IsNullOrEmpty(txEmail.Text) && !Regex.IsMatch(txEmail.Text, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"))
             {
-                String hab = cliente.habilitado ? "Si" : "No";
-                String[] row = new String[] { cliente.dni.ToString(), cliente.nombre, cliente.apellido, hab };
+                MessageBox.Show("Ingrese un mail válido.");
+                return false;
+            }
+            return true;
+        }
+
+        private void btn_buscar_Click(object sender, EventArgs e)
+        {
+            if (!validarBusqueda()) { return; }
+            tabla_clientes.Clear();
+            clientes = ClienteRepositorio.getClientes(tx_nombre.Text, tx_apellido.Text, tx_dni.Text, txEmail.Text);
+            foreach (Cliente c in clientes)
+            {
+                string[] row = { c.TipoDeDocumento.Descripcion, c.NumeroDocumento.ToString(), c.Cuil,
+                    c.NombreCliente, c.Apellido, c.Email, c.Domicilio.Calle, c.Domicilio.Numero,
+                    c.Domicilio.Localidad, c.Domicilio.CodPostal, c.Habilitado ? "Si" : "No" };
                 tabla_clientes.Rows.Add(row);
             }
-            refreshValues();
-            if (this.data_clientes.RowCount > 0)
-            {
-                DataGridViewRow r = this.data_clientes.SelectedRows[0];
-                if (r.Cells["Habilitado"].Value.ToString() == "No")
-                {
-                    switch_habilitacion.Text = "Habilitar";
-                }
-                else
-                {
-                    switch_habilitacion.Text = "Inhabilitar";
-                }
+            actualizarTabla();
+            if(clientes.Count > 0) { 
+                buttonModificar.Enabled = true;
             }
-
+            else
+            {
+                buttonModificar.Enabled = false;
+            }
         }
-        public void refreshValues()
+        public void actualizarTabla()
         {
             data_clientes.DataSource = tabla_clientes;
-        }
-
-
-        private void grupo_filtros_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void data_clientes_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (data_clientes.SelectedRows.Count != 0)
-            {
-                DataGridViewRow row = this.data_clientes.SelectedRows[0];
-                if (row.Cells["Habilitado"].Value.ToString() == "No")
-                {
-                    switch_habilitacion.Text="Habilitar";
-                }
-                else
-                {
-                    switch_habilitacion.Text="Inhabilitar";
-                }
-            }
         }
 
         private void btn_limpiar_Click(object sender, EventArgs e)
         {
             tabla_clientes.Rows.Clear();
-            refreshValues();
+            actualizarTabla();
         }
 
         private void btn_atras_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
         }
 
         private void btn_modificar_Click(object sender, EventArgs e)
         {
             if (this.data_clientes.RowCount > 0)
             {
-                Int32 dni = Convert.ToInt32(this.data_clientes.SelectedRows[0].Cells["DNI"].Value.ToString());
-                this.Hide();
-                new ModificacionCliente(dni).Show();
+                if (data_clientes.SelectedRows.Count > 1)
+                {
+                    MessageBox.Show("Debe seleccionar de a 1 registro", "Advertencia", MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                } else { 
+                    new ModificacionCliente(clientes[data_clientes.SelectedRows[0].Index]).Show();
+                    this.Hide();
+                }
             }
             else
+            {
                 MessageBox.Show("Busque y seleccione un cliente antes.");
+            }
         }
-
-        private void switch_habilitacion_Click(object sender, EventArgs e)
+        private void actualizarEstado(int indice, Cliente c)
+        {
+            string[] row = { c.TipoDeDocumento.Descripcion, c.NumeroDocumento.ToString(), c.Cuil,
+                    c.NombreCliente, c.Apellido, c.Email, c.Domicilio.Calle, c.Domicilio.Numero,
+                    c.Domicilio.Localidad, c.Domicilio.CodPostal, c.Habilitado ? "Si" : "No"};
+            data_clientes.Rows[indice].SetValues(row);
+        }
+        private void buttonHabilitar_Click(object sender, EventArgs e)
         {
             if (this.data_clientes.RowCount > 0)
             {
-                if (this.data_clientes.SelectedRows[0].Cells["Habilitado"].Value.ToString() == "Si")
+                if (data_clientes.SelectedRows.Count > 1)
                 {
-                    ClientesRepositorio.eliminarCliente(Convert.ToInt32(this.data_clientes.SelectedRows[0].Cells["DNI"].Value.ToString()));
+                    MessageBox.Show("Debe seleccionar de a 1 registro", "Advertencia", MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
                 }
                 else
                 {
-                    ClientesRepositorio.habilitarCliente(Convert.ToInt32(this.data_clientes.SelectedRows[0].Cells["DNI"].Value.ToString()));
+                    try
+                    {
+                        Cliente seleccionado= clientes[data_clientes.SelectedRows[0].Index];
+                        seleccionado.Habilitado = ClienteRepositorio.eliminarCliente(Convert.ToInt32(seleccionado.TipoDeDocumento.Id), Convert.ToDecimal(seleccionado.NumeroDocumento), !seleccionado.Habilitado);
+                        actualizarEstado(data_clientes.SelectedRows[0].Index, seleccionado);
+                        actualizarTabla();
+                    }
+                    catch (SqlException ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error al cambiar el estado del cliente", MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    }
                 }
-                object s = new object();
-                EventArgs ea = new EventArgs();
-                btn_buscar_Click(s, ea);
             }
             else
             {
                 MessageBox.Show("Busque y seleccione un cliente antes.");
             }
         }
-
-        private void data_clientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        
-
     }
 }

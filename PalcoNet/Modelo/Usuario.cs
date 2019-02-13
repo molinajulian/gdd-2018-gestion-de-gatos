@@ -3,54 +3,70 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-using PalcoNet.Modelo;
 using System.Security.Cryptography;
 using System.Data.SqlClient;
+using System.Runtime.CompilerServices;
 using PalcoNet.Repositorios;
 
 namespace PalcoNet.Modelo
 {
     public class Usuario
     {
+        public int id { get; set; }
         public String username { get; set; }
-        public String contrasenaCifrada { get; set; } //Se almacena en la instancia solo la version cifrada
         public Rol rol { get; set; }
         public Boolean isActive { get; set; }
+        public static Usuario Actual { get; set; }
+        public Boolean primerLogueo { get; set; }
+        public int intentosFallidos { get; set; }
 
-        public Usuario(String username, String contrasena, Rol rol, Boolean isActive)
+        public Usuario(int id, String username, Boolean isActive, Boolean primerLogueo = true)
         {
+            this.id = id;
             this.username = username;
-            this.contrasenaCifrada = cifrar(contrasena);
-            this.rol = rol;
             this.isActive = isActive;
+            this.primerLogueo = primerLogueo;
         }
 
-        public static string cifrar(string contrasena)
+        public Usuario()
         {
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(contrasena));
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                return builder.ToString();
-            }
+            // TODO: Complete member initialization
         }
 
         public static Usuario buildUsuario(SqlDataReader lector)
         {
             Usuario usuario = null;
-            if (lector.HasRows)
+            Dictionary<string, int> camposUsuario = Ordinales.camposUsuario;
+            if (lector.HasRows && lector.Read())
             {
-                lector.Read();
-                usuario = new Usuario(lector.GetString(0), lector.GetString(1),
-                    RolRepositorio.buscarRol(lector.GetString(2)), lector.GetBoolean(3));
+                usuario = new Usuario(
+                    lector.GetInt32(camposUsuario["id"]),
+                    lector.GetString(camposUsuario["username"]),
+                    Convert.ToBoolean(lector[camposUsuario["estado"]]),
+                    Convert.ToBoolean(lector[camposUsuario["primer_logueo"]]));
             }
+            lector.Close();
             return usuario;
+        }
 
+        internal bool isAdmin()
+        {
+            return rol.nombre.Equals("ADMINISTRATIVO");
+        }
+
+        public List<Rol> obtenerRoles()
+        {
+            return UsuarioRepositorio.getRoles(this);
+        }
+
+        public static void inicializarUsuarioActual(Usuario usuario)
+        {
+            Actual = usuario;
+        }
+
+        public bool esEmpresa()
+        {
+            return rol.id == 2; //El Id del Rol Empresa es 2
         }
     }
 }

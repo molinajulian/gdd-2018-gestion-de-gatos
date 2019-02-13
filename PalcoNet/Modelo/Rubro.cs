@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace PalcoNet.Modelo
 {
-    class Rubro
+   public  class Rubro
     {
+        public Rubro(int codigo, string descripcion)
+        {
+            Codigo = codigo;
+            Descripcion = descripcion;
+        }
+
         public int Codigo { get; set; }
         public string Descripcion { get; set; }
     }

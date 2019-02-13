@@ -1,160 +1,156 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
 using PalcoNet.Modelo;
+using PalcoNet.Repositorios;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
+using PalcoNet.AbmCliente;
+using PalcoNet.Repositorios;
+using PalcoNet.AbmDomicilio;
 
-namespace Palconet.AbmCliente
+namespace PalcoNet.AbmCliente
 {
     public partial class ModificacionCliente : MaterialForm
     {
-        String mail_original;
-        Boolean hab_original;
-        public ModificacionCliente(Int32 dni)
+        private Cliente cliente;
+        public ModificacionCliente(Cliente cliente)
         {
-            /*InitializeComponent();
+            try
+            {
+                InitializeComponent();
+                var materialSkinManager = MaterialSkinManager.Instance;
+                materialSkinManager.AddFormToManage(this);
+                materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+                materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+                this.cliente = cliente;
+                llenarCamposUi();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Hubo un error al obtener los datos del cliente",e.Message);
+                this.Show();
+            }
+        }
 
-            var materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+        private void llenarCamposUi()
+        {
+            checkHabilitado.Checked = cliente.Habilitado;
+            txtNombre.Text = cliente.NombreCliente;
+            txtApellido.Text = cliente.Apellido;
+            txtNumDoc.Text = cliente.NumeroDocumento.ToString();
+            txtMail.Text = cliente.Email;
+            txtTel.Text = cliente.Telefono == "0" ? "" : cliente.Telefono;
+            txtCuil.Text = cliente.Cuil;
+            datePickerFechaNac.Value = cliente.FechaDeNacimiento;
+            llenarComboTiposDoc();
+            comboTiposDoc.SelectedIndex = comboTiposDoc.FindString(cliente.TipoDeDocumento.Descripcion);
+        }
 
-            Cliente cliente = ClientesRepositorio.getClientes(dni.ToString(), null, null).First();
-            hab_original = cliente.habilitado;
-            txNombre.Text = cliente.nombre;
-            txApellido.Text = cliente.apellido;
-            txDni.Text = cliente.dni.ToString();
-            mail_original = txMail.Text = cliente.mail;
-            txTelefono.Text = cliente.telefono;
-            txLocalidad.Text = cliente.direccion.localidad;
-            txCp.Text = cliente.direccion.cp.ToString();
-            txNumero.Text = cliente.direccion.calle.Split(' ').Last();
-            var auxiliar = cliente.direccion.calle.Split(' ').ToList();
-            auxiliar.RemoveAt(auxiliar.Count-1);
-            txCalle.Text = String.Join(" ",auxiliar);
-            txPiso.Text = cliente.direccion.piso.ToString() == "0" ? "" : cliente.direccion.piso.ToString();
-            txDpto.Text = cliente.direccion.dpto.ToString();
-            dateTimePicker1.Value = cliente.fecha_nac;
+        private void llenarComboTiposDoc()
+        {
+            comboTiposDoc.Items.Clear();
+            foreach (TipoDocumento tipo in ClienteRepositorio.getTiposDoc())
+            {
+                comboTiposDoc.Items.Add(tipo);
+            }
+            comboTiposDoc.DisplayMember = "Descripcion";
+            comboTiposDoc.ValueMember = "Id";
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (validarCamposVaciosCliente()) { return; }
-            if (txMail.Text != mail_original) 
-            { 
-                if (ClientesRepositorio.esClienteExistenteMail(txMail.Text))
-                {
-                    MessageBox.Show("Ya existe un cliente con el mail ingresado");
-                    return;
-                }
+            ModificarDomicilio modificarDomicilio = new ModificarDomicilio(cliente.Domicilio);
+            modificarDomicilio.ShowDialog();
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnAlta_Click(object sender, EventArgs e)
+        {
+            if (!validarCamposCliente()) { return; }
+            try
+            {
+                ClienteRepositorio.modificarCliente(getClienteDeUi());
+                MessageBox.Show("Cliente modificado correctamente.");
+                this.Hide();
             }
-            Cliente cliente = new Cliente();
-            Direccion direccion = new Direccion();
-            cliente.dni = Convert.ToInt32(txDni.Text);
-            if (!Regex.IsMatch(txNombre.Text, @"^[a-zA-Z\s]{1,30}$"))
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Ha ocurrido un error al modificar el cliente", ex.Message);
+            }
+        }
+
+        private Cliente getClienteDeUi()
+        {
+            Cliente clienteModificado = new Cliente();
+            TipoDocumento seleccionado = (TipoDocumento)comboTiposDoc.SelectedItem;
+            clienteModificado.TipoDeDocumento = new TipoDocumento();
+            clienteModificado.TipoDeDocumento.Id = seleccionado.Id;
+            clienteModificado.NumeroDocumento = Convert.ToInt32(txtNumDoc.Text);
+            clienteModificado.nombre = txtNombre.Text;
+            clienteModificado.Apellido = txtApellido.Text;
+            clienteModificado.Email = txtMail.Text;
+            clienteModificado.Telefono = string.IsNullOrEmpty(txtTel.Text) ? "0" : txtTel.Text;
+            clienteModificado.FechaDeNacimiento = datePickerFechaNac.Value.Date;
+            clienteModificado.Cuil = string.IsNullOrEmpty(txtCuil.Text) ? "" : txtCuil.Text;
+            clienteModificado.FechaDeCreacion = DataBase.GetFechaHoy();
+            clienteModificado.NombreCliente = txtNombre.Text;
+            clienteModificado.Habilitado = checkHabilitado.Checked;
+            return clienteModificado;
+        }
+
+        private bool validarCamposCliente()
+        {
+            if (!Regex.IsMatch(txtNumDoc.Text, @"^[0-9]{1,8}$"))
+            {
+                MessageBox.Show("Ingrese un DNI válido.");
+                return false;
+            }
+            if ((cliente.NumeroDocumento != Int32.Parse(txtNumDoc.Text) || 
+                 cliente.TipoDeDocumento.Descripcion != ((TipoDocumento)comboTiposDoc.SelectedItem).Descripcion)
+                && ClienteRepositorio.esClienteExistente(Int32.Parse(((TipoDocumento)comboTiposDoc.SelectedItem).Id), Decimal.Parse(txtNumDoc.Text)))
+            {
+                MessageBox.Show("Ya existe un cliente con el dni ingresado");
+                return false;
+            }
+            if (!txtCuil.Text.Equals("") && !Regex.IsMatch(txtCuil.Text, @"[0-9]{2}-[0-9]{5,9}-[0-9]{1,2}$"))
+            {
+                MessageBox.Show("Ingrese un cuil valido.");
+                return false;
+            }
+            if (cliente.Cuil != txtCuil.Text && ClienteRepositorio.esClienteExistente(0, 0, txtCuil.Text))
+            {
+                MessageBox.Show("Ya existe un cliente con ese CUIL.");
+                return false;
+            }
+            if (!Regex.IsMatch(txtNombre.Text, @"^[a-zA-Z\s]{1,30}$"))
             {
                 MessageBox.Show("Ingrese un nombre válido.");
-                return;
+                return false;
             }
-            cliente.nombre = txNombre.Text;
-            if (!Regex.IsMatch(txApellido.Text, @"^[a-zA-Z\s]{1,30}$"))
+            if (!Regex.IsMatch(txtApellido.Text, @"^[a-zA-Z\sáéíóú]{1,30}$"))
             {
                 MessageBox.Show("Ingrese un apellido válido.");
-                return;
+                return false;
             }
-            cliente.apellido = txApellido.Text;
-            if (!Regex.IsMatch(txMail.Text, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"))
+            if (!Regex.IsMatch(txtMail.Text, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"))
             {
                 MessageBox.Show("Ingrese un mail válido.");
-                return;
+                return false;
             }
-            cliente.mail = txMail.Text;
-            cliente.habilitado = hab_original;
-            if (!Regex.IsMatch(txTelefono.Text, @"^[0-9]{1,20}$"))
+            if (!txtTel.Text.Equals("") && !Regex.IsMatch(txtTel.Text, @"^[0-9]{1,20}$"))
             {
                 MessageBox.Show("Ingrese un telefono válido.");
-                return;
+                return false;
             }
-            cliente.telefono = txTelefono.Text;
-            cliente.fecha_nac = dateTimePicker1.Value.Date;
-            if (!Regex.IsMatch(txLocalidad.Text, @"^[a-zA-Z0-9\s]{1,20}$"))
-            {
-                MessageBox.Show("Ingrese una localidad válida.");
-                return;
-            }
-            direccion.localidad = txLocalidad.Text;
-            if (!Regex.IsMatch(txCp.Text, @"^[0-9]{1,4}$"))
-            {
-                MessageBox.Show("Ingrese un código postal válido.");
-                return;
-            }
-            direccion.cp = Convert.ToInt16(txCp.Text);
-            if (!Regex.IsMatch(txPiso.Text, @"^[0-9]{1,3}$") && !string.IsNullOrEmpty(txPiso.Text))
-            {
-                MessageBox.Show("Ingrese un piso válido.");
-                return;
-            }
-            direccion.piso = string.IsNullOrWhiteSpace(txPiso.Text) ? short.MaxValue : Convert.ToInt16(txPiso.Text);
-            if (!Regex.IsMatch(txDpto.Text, @"^[a-zA-Z]$") && !string.IsNullOrEmpty(txDpto.Text))
-            {
-                MessageBox.Show("Ingrese un departamento válido.");
-                return;
-            }
-            direccion.dpto = string.IsNullOrWhiteSpace(txDpto.Text) ? ' ' : txDpto.Text.First();
-            if (!Regex.IsMatch(txCalle.Text, @"^[a-zA-Z0-9\s]{1,50}$"))
-            {
-                MessageBox.Show("Ingrese una calle válida.");
-                return;
-            }
-            if (!Regex.IsMatch(txNumero.Text, @"^[0-9]{1,6}$"))
-            {
-                MessageBox.Show("Ingrese un número válido.");
-                return;
-            }
-            direccion.calle = txCalle.Text + " " + txNumero.Text;
-            cliente.direccion = direccion;
-
-            ClientesRepositorio.modificarCliente(cliente);
-            MessageBox.Show("Cliente modificado correctamente.");
-            this.Hide();
-            new ListadoCliente('M').Show();
+            
+            return true;
         }
-
-        private bool validarCamposVaciosCliente()
-        {
-            bool error = false;
-            var controles = groupBox1.Controls;
-            foreach (Control control in controles)
-            {
-                if (control == txPiso || control == txDpto)
-                {
-
-                }
-                else if (string.IsNullOrWhiteSpace(control.Text))
-                {
-                    MessageBox.Show("Por favor complete todos los campos");
-                    error = true;
-                }
-            }
-            return error;
-        }
-
-        private void ModificacionCliente_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-        }*/
     }
 }

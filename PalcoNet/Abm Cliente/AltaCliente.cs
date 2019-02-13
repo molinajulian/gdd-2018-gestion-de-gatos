@@ -1,25 +1,24 @@
-﻿using Palconet.Repositorios;
+﻿using PalcoNet.Modelo;
+using PalcoNet.Repositorios;
+using PalcoNet.AbmTarjeta;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using MaterialSkin.Controls;
 using MaterialSkin;
-using PalcoNet.Modelo;
+using PalcoNet.AbmDomicilio;
 
-namespace Palconet.AbmCliente
+namespace PalcoNet.AbmCliente
 {
     public partial class AltaCliente : MaterialForm
     {
         Cliente cliente = new Cliente();
-        Direccion direccion = new Direccion();
-        public AltaCliente()
+        Domicilio domicilio = new Domicilio();
+        bool esRegistro;
+        public AltaCliente(bool registro=false)
         {
             InitializeComponent();
 
@@ -27,152 +26,64 @@ namespace Palconet.AbmCliente
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox6_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-        }
-        /*private void boton_alta_Click(object sender, EventArgs e)
-        {
-            //epProvider.Clear();
-            if(validarCamposVaciosCliente()) { return; }
-
-            cliente.habilitado = true;
-            if (!Regex.IsMatch(txDni.Text, @"^[0-9]{1,8}$"))
+            cliente.Tarjetas = new List<Tarjeta>();
+            esRegistro = registro;
+            getTiposDocumento();
+            if (!registro)
             {
-                MessageBox.Show("Ingrese un DNI válido.");
-                return;
+                labelAclaracion.Hide();
+                labelUsuario.Hide();
+                labelContraseña.Hide();
+                txtContraseña.Hide();
+                txtUsuario.Hide();
+                txtUsuario.Enabled = false;
             }
-            if (ClientesRepositorio.esClienteExistente(Convert.ToInt32(txDni.Text)))
+        }
+
+        public void getTiposDocumento()
+        {
+            List<TipoDocumento> tipos = new List<TipoDocumento>();
+            comboTiposDoc.Items.Clear();
+            tipos = ClienteRepositorio.getTiposDoc();
+            foreach (TipoDocumento tipo in tipos)
             {
-                MessageBox.Show("Ya existe un cliente con el dni ingresado");
-                return;
+                comboTiposDoc.Items.Add(tipo);
+                comboTiposDoc.DisplayMember = "Descripcion";
             }
-            cliente.dni = Convert.ToInt32(txDni.Text);
-            if (!Regex.IsMatch(txNombre.Text, @"^[a-zA-Z\s]{1,30}$"))
+        }
+
+        private void boton_alta_Click(object sender, EventArgs e)
+        {
+            if(!validarIngreso()) { return; }
+            actualizarInstanciaCliente();
+            try
             {
-                MessageBox.Show("Ingrese un nombre válido.");
-                return;
+                domicilio.Id = DomiciliosRepositorio.agregar(domicilio);
+                ClienteRepositorio.agregar(cliente, esRegistro ? txtContraseña.Text : "");
+                TarjetaRepositorio.agregar(cliente.Tarjetas, cliente);
+                limpiarVentana();
+                MessageBox.Show("Cliente agregado correctamente con sus respectivas tarjetas y domicilio");
             }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
+        }
+
+        private void actualizarInstanciaCliente()
+        {
+            cliente.TipoDeDocumento = new TipoDocumento();
+            cliente.TipoDeDocumento.Id = ((TipoDocumento)comboTiposDoc.SelectedItem).Id;
+            cliente.NumeroDocumento = Convert.ToInt32(txDni.Text);
             cliente.nombre = txNombre.Text;
-            if (!Regex.IsMatch(txApellido.Text, @"^[a-zA-Z\s]{1,30}$"))
-            {
-                MessageBox.Show("Ingrese un apellido válido.");
-                return;
-            }
-            cliente.apellido = txApellido.Text;
-            if (!Regex.IsMatch(txMail.Text, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"))
-            {
-                MessageBox.Show("Ingrese un mail válido.");
-                return;
-            }
-            else if (ClientesRepositorio.esClienteExistenteMail(txMail.Text))
-            {
-                MessageBox.Show("Ya existe un cliente con el mail ingresado");
-                return;
-            }
-            cliente.mail = txMail.Text;
-            if (!Regex.IsMatch(txTelefono.Text, @"^[0-9]{1,20}$"))
-            {
-                MessageBox.Show("Ingrese un telefono válido.");
-                return;
-            }
-            cliente.telefono = txTelefono.Text;
-            cliente.fecha_nac = datePickerFechaNac.Value.Date;
-            if (!Regex.IsMatch(txLocalidad.Text, @"^[a-zA-Z0-9\s]{1,20}$"))
-            {
-                MessageBox.Show("Ingrese una localidad válida.");
-                return;
-            }
-            direccion.localidad = txLocalidad.Text;
-            if (!Regex.IsMatch(txCp.Text, @"^[0-9]{1,4}$"))
-            {
-                MessageBox.Show("Ingrese un código postal válido.");
-                return;
-            }
-            direccion.cp = Convert.ToInt16(txCp.Text);
-            if (!Regex.IsMatch(txPiso.Text, @"^[0-9]{1,3}$") && !string.IsNullOrEmpty(txPiso.Text))
-            {
-                MessageBox.Show("Ingrese un piso válido.");
-                return;
-            }
-            direccion.piso = string.IsNullOrWhiteSpace(txPiso.Text) ? short.MaxValue : Convert.ToInt16(txPiso.Text);
-            if (!Regex.IsMatch(txDpto.Text, @"^[a-zA-Z]$") && !string.IsNullOrEmpty(txDpto.Text))
-            {
-                MessageBox.Show("Ingrese un departamento válido.");
-                return;
-            }
-            direccion.dpto = string.IsNullOrWhiteSpace(txDpto.Text) ? ' ' : txDpto.Text.First();
-            if (!Regex.IsMatch(txCalle.Text, @"[a-zA-Z0-9\s]{1,50}$"))
-            {
-                MessageBox.Show("Ingrese una calle válida.");
-                return;
-            }
-            if (!Regex.IsMatch(txNumero.Text, @"^[0-9]{1,6}$"))
-            {
-                MessageBox.Show("Ingrese un número válido.");
-                return;
-            }
-            direccion.calle = txCalle.Text + " " + txNumero.Text;
-            cliente.direccion = direccion;
-
-
-            ClientesRepositorio.agregar(cliente);
-            limpiarVentana();
-            MessageBox.Show("Cliente agregado correctamente");
-
+            cliente.Apellido = txApellido.Text;
+            cliente.Email = txMail.Text;
+            cliente.Telefono = txTelefono.Text;
+            cliente.FechaDeNacimiento = datePickerFechaNac.Value.Date;
+            cliente.Cuil = txtCuil.Text;
+            cliente.Domicilio = domicilio;
+            cliente.FechaDeCreacion = DataBase.GetFechaHoy();
+            cliente.NombreCliente = txNombre.Text;
         }
 
         private void limpiarVentana()
@@ -184,29 +95,146 @@ namespace Palconet.AbmCliente
             }
         }
 
-        private bool validarCamposVaciosCliente()
+        private bool validarTipos()
         {
-            bool error = false;
+            if (!Regex.IsMatch(txDni.Text, @"^[0-9]{1,8}$"))
+            {
+                MessageBox.Show("Ingrese un DNI válido.");
+                return false;
+            }
+            if (ClienteRepositorio.esClienteExistente(Int32.Parse(((TipoDocumento)comboTiposDoc.SelectedItem).Id), Decimal.Parse(txDni.Text)))
+            {
+                MessageBox.Show("Ya existe un cliente con el dni ingresado");
+                return false;
+            }
+            if (!Regex.IsMatch(txtCuil.Text, @"[0-9]{2}-[0-9]{5,9}-[0-9]{1,2}$"))
+            {
+                MessageBox.Show("Ingrese un cuil valido.");
+                return false;
+            }
+            if (ClienteRepositorio.esClienteExistente(0, 0, txtCuil.Text))
+            {
+                MessageBox.Show("Ya existe un cliente con ese CUIL.");
+                return false;
+            }
+            if (!Regex.IsMatch(txNombre.Text, @"^[a-zA-Z\s]{1,30}$"))
+            {
+                MessageBox.Show("Ingrese un nombre válido.");
+                return false;
+            }
+            if (!Regex.IsMatch(txApellido.Text, @"^[a-zA-Z\s]{1,30}$"))
+            {
+                MessageBox.Show("Ingrese un apellido válido.");
+                return false;
+            }
+            if (!Regex.IsMatch(txMail.Text, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"))
+            {
+                MessageBox.Show("Ingrese un mail válido.");
+                return false;
+            }
+            if (!Regex.IsMatch(txMail.Text, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"))
+            {
+                MessageBox.Show("Ingrese un mail válido.");
+                return false;
+            }
+            if (!Regex.IsMatch(txTelefono.Text, @"^[0-9]{1,20}$"))
+            {
+                MessageBox.Show("Ingrese un telefono válido.");
+                return false;
+            }
+            if (cliente.Tarjetas.Count == 0)
+            {
+                MessageBox.Show("Debe registrar al menos una tarjeta para la plataforma.");
+                return false;
+            }
+            return true;
+        }
+
+        private bool validarIngreso()
+        {
+            return validarFormularioCompleto() && validarTipos();
+        }
+
+        private bool validarFormularioCompleto()
+        {
+            bool completo = true;
             var controles = groupBox1.Controls;
             foreach (Control control in controles)
             {
-                if (control == txPiso || control == txDpto)
-                {
-                     
-                }
-                else if(string.IsNullOrWhiteSpace(control.Text))
+                if (((control.Name == "txtUsuario" || control.Name == "txtContraseña") && esRegistro) && string.IsNullOrWhiteSpace(control.Text))
                 {
                     MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    error = true;
+                    completo = false;
                     break;
                 }
+               
             }
-            return error;
+            return completo;
         }
 
-        private void AltaCliente_Load(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
+        {
+            AltaTarjeta t = new AltaTarjeta(cliente, false);
+            t.ShowDialog();
+        }
+
+        private void btnRegistrarDomicilio_Click(object sender, EventArgs e)
+        {
+            AltaDomicilio altaDomicilio = new AltaDomicilio(ref domicilio);
+            altaDomicilio.ShowDialog();
+            if (!string.IsNullOrEmpty(domicilio.Calle))
+            {
+                btnRegistrarDomicilio.Enabled = false;
+            }
+            
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+        private void txDni_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (txtUsuario.Visible && !char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '-'))
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                if (e.KeyChar == '\b')
+                {
+                    if (txDni.Text.Length > 0)
+                    {
+                        txtUsuario.Text = txDni.Text.Substring(0, txDni.Text.Length - 1);
+                    }
+                }
+                else
+                {
+                    txtUsuario.Text += e.KeyChar.ToString();
+                }
+
+            }
+        }
+        private void txtContraseña_Click(object sender, EventArgs e)
+        {
+            txtContraseña.Clear();
+            txtContraseña.UseSystemPasswordChar = true;
+        }
+
+        private void txtContraseña_TextChanged(object sender, EventArgs e)
+        {
+            txtContraseña.UseSystemPasswordChar = true;
+        }
+
+        private void comboTiposDoc_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-        }*/
+        }
+
+        private void txDni_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

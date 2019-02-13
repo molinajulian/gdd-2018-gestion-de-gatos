@@ -2,89 +2,58 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PalcoNet.Repositorios;
+using PalcoNet.Modelo;
 using MaterialSkin.Controls;
 using MaterialSkin;
 using System.Text.RegularExpressions;
-using PalcoNet.Modelo;
+using PalcoNet.AbmDomicilio;
 
-namespace Palconet.AbmEmpresa
+namespace PalcoNet.AbmEmpresa
 {
     public partial class ModificacionEmpresa : MaterialForm
     {
-        Empresa empresa = new Empresa();
-       
-        public ModificacionEmpresa(String cuit)
+        Empresa empresa;
+        public ModificacionEmpresa(Empresa empresa)
         {
             InitializeComponent();
+            this.empresa = empresa;
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-
-           empresa = EmpresasRepositorio.getEmpresa(cuit);
-           cargarRubros();
-
-           tx_cuit.Text = empresa.cuit;
-           tx_nombre.Text = empresa.nombre.ToString();
-           tx_direccion.Text = empresa.direccion;
-           combo_rubros.Text = empresa.rubro.ToString();
-
-           if (empresa.habilitado)
-           {
-               check_box_habilitacion.Checked = true;
-               check_box_habilitacion.Enabled = false;
-           }
-           else
-           {
-               check_box_habilitacion.Checked = false;
-               check_box_habilitacion.Enabled = true;
-           }
+            mostrarDatosEmpresa();
         }
 
-        private void cargarRubros()
+        public void mostrarDatosEmpresa()
         {
-            List<Rubro> rubros = RubrosRepositorio.getRubros();
-            foreach (Rubro rubro in rubros)
-            {
-                combo_rubros.Items.Add(rubro);
-            }
-            combo_rubros.DisplayMember = "id";
+            txtRazon.Text = empresa.RazonSocial;
+            txtCuit.Text = empresa.Cuit;
+            txtMail.Text = empresa.Email;
+            txtTel.Text = empresa.Telefono;
+            checkDeshabilitada.Checked = !empresa.Habilitada;
         }
 
-        private void btn_modificar_empresa_Click(object sender, EventArgs e)
+        public void actualizarInstanciaEmpresa()
         {
-            if (!verificaValidaciones()) return;
-            
-            empresa.habilitado = check_box_habilitacion.Checked;
-            empresa.cuit = tx_cuit.Text;
-            empresa.nombre = tx_nombre.Text;
-            empresa.direccion = tx_direccion.Text;
-            empresa.rubro = Convert.ToInt32(combo_rubros.Text);
-
-            EmpresasRepositorio.modificar(empresa);
-            limpiarVentana();
-            MessageBox.Show("La empresa ha sido modificada exitosamente", "Modificacion de empresa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            empresa.RazonSocial = txtRazon.Text;
+            empresa.Cuit = txtCuit.Text;
+            empresa.Email = txtMail.Text;
+            empresa.Telefono = txtTel.Text;
+            empresa.Habilitada = !checkDeshabilitada.Checked;
         }
 
         private bool verificaValidaciones()
         {
             errorProvider1.Clear();
-            if (!formularioCompleto()) return false;
-           
-
-            return true;
-        }
-
-       
-        private void btn_atras_Click(object sender, EventArgs e)
-        {
-            this.Hide();
+            return formularioCompleto();
         }
 
          private void limpiarVentana()
@@ -107,6 +76,7 @@ namespace Palconet.AbmEmpresa
              bool error = true;
 
              var controles = grupo_empresa.Controls;
+             controles.Remove(controles.Find("checkDeshabilitada", false)[0]);
              foreach (Control control in controles)
              {
                  if (string.IsNullOrWhiteSpace(control.Text))
@@ -116,6 +86,38 @@ namespace Palconet.AbmEmpresa
                  }
              }
              return error;
-         }   
+         }
+
+        private void button1_Click(object sender, EventArgs e)
+         {
+            grupo_empresa.Enabled = false;
+            if (!verificaValidaciones())
+            {
+                grupo_empresa.Enabled = true;
+                return;
+            }
+            try
+            {
+                actualizarInstanciaEmpresa();
+                EmpresasRepositorio.actualizar(empresa);
+                MessageBox.Show("La empresa ha sido modificada exitosamente", "Modificacion de empresa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            grupo_empresa.Enabled = true;
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
+
+        private void btn_modificar_domicilio_Click(object sender, EventArgs e)
+        {
+            ModificarDomicilio modificarDomicilio = new ModificarDomicilio(empresa.Domicilio);
+            modificarDomicilio.ShowDialog();
+        }
     }
 }

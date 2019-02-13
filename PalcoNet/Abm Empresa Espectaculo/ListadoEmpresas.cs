@@ -7,17 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PalcoNet.Modelo; 
+using PalcoNet.Repositorios;
 using MaterialSkin.Controls;
 using MaterialSkin;
 using System.Text.RegularExpressions;
-using PalcoNet.Modelo;
+using PalcoNet.AbmEmpresa;
 
-namespace Palconet.AbmEmpresa
+namespace PalcoNet.AbmEmpresa
 {
     public partial class ListadoEmpresas : MaterialForm
     {
         DataTable tabla_empresas = new DataTable();
         String modo;
+        private List<Empresa> empresas;
         public ListadoEmpresas(String modo)
         {
             InitializeComponent();
@@ -26,20 +29,19 @@ namespace Palconet.AbmEmpresa
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-
-
             this.modo = modo;
-
             tabla_empresas.Columns.Add("Cuit", typeof(string));
-            tabla_empresas.Columns.Add("Nombre", typeof(string));
-            tabla_empresas.Columns.Add("Direccion", typeof(string));
-            tabla_empresas.Columns.Add("Rubro", typeof(string));
-            tabla_empresas.Columns.Add("Habilitacion", typeof(string));
-            //actualizarTablaEmpresas();
-            //this.cargarRubros();
+            tabla_empresas.Columns.Add("Razon Social", typeof(string));
+            tabla_empresas.Columns.Add("Email", typeof(string));
+            tabla_empresas.Columns.Add("Telefono", typeof(string));
+            tabla_empresas.Columns.Add("Calle", typeof(string));
+            tabla_empresas.Columns.Add("Numero", typeof(string));
+            tabla_empresas.Columns.Add("Localidad", typeof(string));
+            tabla_empresas.Columns.Add("Codigo postal", typeof(string));
+            tabla_empresas.Columns.Add("Habilitado", typeof(string));
             this.cargarBotonLogico();
-
         }
+
 
         private void cargarBotonLogico()
         {
@@ -60,91 +62,94 @@ namespace Palconet.AbmEmpresa
                 btn.Name = "btn_modificacion";
                 btn.UseColumnTextForButtonValue = true;
             }
-            
-            data_empresas.Columns.Add(btn);
-        }
-
-       /* private void cargarRubros()
-        {
-            List<Rubro> rubros = RubrosRepositorio.getRubros();
-            foreach(Rubro rubro in rubros)
-            {
-                combo_rubros.Items.Add(rubro);
-            }
-            combo_rubros.DisplayMember = "detalle";
         }
 
 
-        private void btn_buscar_Click(object sender, EventArgs e)
+        private String[] generarFila(Empresa empresa)
         {
-            if (!verificaTiposDatos()) return;
-
-            tabla_empresas.Rows.Clear();
-            String rubro_id = "";
-            if(!String.IsNullOrWhiteSpace(combo_rubros.Text)) rubro_id = (((Rubro)combo_rubros.SelectedItem).id).ToString();
-
-            
-            List<Empresa> empresas = EmpresasRepositorio.getEmpresas(tx_tipo.Text,tx_numero_cuit.Text,tx_verificador.Text, tx_nombre.Text, rubro_id);
-
-            foreach (Empresa empresa in empresas)
-            {
-               
-                String[] row = new String[] { empresa.cuit, empresa.nombre, empresa.direccion, 
-                    Convert.ToString(empresa.rubro),Convert.ToString(empresa.habilitado) };
-                tabla_empresas.Rows.Add(row);
-            }
-            actualizarTablaEmpresas();
-
-            if (empresas.Count == 0) MessageBox.Show("No se han encontrado resultados", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return new []{ empresa.Cuit, empresa.RazonSocial,
+                empresa.Email, empresa.Telefono,  empresa.Domicilio.Calle, empresa.Domicilio.Numero,
+                    empresa.Domicilio.Localidad, empresa.Domicilio.CodPostal, empresa.Habilitada ? "Si" : "No" };
         }
-
-        public bool verificaTiposDatos()
+        private bool validarBusqueda()
         {
-
-            if ((String.IsNullOrEmpty(tx_tipo.Text) || String.IsNullOrEmpty(tx_numero_cuit.Text) || String.IsNullOrEmpty(tx_verificador.Text))
-                && (!String.IsNullOrEmpty(tx_tipo.Text) || !String.IsNullOrEmpty(tx_numero_cuit.Text) || !String.IsNullOrEmpty(tx_verificador.Text)))
+            if (!string.IsNullOrEmpty(txt_cuit.Text) && !Regex.IsMatch(txt_cuit.Text, @"[0-9]{2}-[0-9]{5,9}-[0-9]{1,2}$"))
             {
-                MessageBox.Show("Debe completar el cuit", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ingrese un cuit válido.");
                 return false;
             }
-
-            if (!String.IsNullOrEmpty(tx_tipo.Text) && !Regex.IsMatch(tx_tipo.Text, @"\d{1,2}$"))
+            if (!string.IsNullOrEmpty(txt_mail.Text) && !Regex.IsMatch(txt_mail.Text, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"))
             {
-                MessageBox.Show("Ingrese un tipo para el cuit valido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (!String.IsNullOrEmpty(tx_numero_cuit.Text) && !Regex.IsMatch(tx_numero_cuit.Text, @"\d{8}$"))
-            {
-                MessageBox.Show("Ingrese un numero para el cuit valido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (!String.IsNullOrEmpty(tx_verificador.Text) && !Regex.IsMatch(tx_verificador.Text, @"\d{1}$"))
-            {
-                MessageBox.Show("Ingrese un verificador para el cuit valido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ingrese un mail válido.");
                 return false;
             }
             return true;
         }
-
-        private void btn_atras_Click(object sender, EventArgs e)
+        private void btn_buscar_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            if (!validarBusqueda()) { return; }
+            tabla_empresas.Rows.Clear();
+            try
+            {
+                empresas = EmpresasRepositorio.getEmpresas(txt_razon_social.Text, txt_mail.Text, txt_cuit.Text);
+                foreach (Empresa empresa in empresas)
+                {
+                    tabla_empresas.Rows.Add(generarFila(empresa));
+                }
+                actualizarTablaEmpresas();
+                if (empresas.Count == 0)
+                {
+                    MessageBox.Show("No se han encontrado resultados", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    btn_editar.Enabled = false;
+                    btn_cambiar_estado.Enabled = false;
+
+                }
+                else
+                {
+                    btn_editar.Enabled = true;
+                    btn_cambiar_estado.Enabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
-        private void btn_limpiar_Click(object sender, EventArgs e)
+        private bool verificarAlgunIngreso()
         {
-            this.limpiarEmpresas();
+            if (txt_razon_social.Text.Equals("") && txt_mail.Text.Equals("") && txt_cuit.Text.Equals(""))
+            {
+                MessageBox.Show("Debe completar alguno de los campos de filtrado", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool verificaTiposDatos()
+        {
+            if (!txt_mail.Text.Equals("") && !Regex.IsMatch(txt_mail.Text, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"))
+            {
+                MessageBox.Show("Ingrese un mail válido.");
+                return false;
+            }
+
+            if (!txt_cuit.Text.Equals("") && !Regex.IsMatch(txt_cuit.Text, @"[0-9]{2}-[0-9]{5,9}-[0-9]{1,2}$"))
+            {
+                MessageBox.Show("Ingrese un CUIT válido.");
+                return false;
+            }
+
+            return true;
         }
 
         private void limpiarEmpresas()
         {
             tabla_empresas.Rows.Clear();
+            data_empresas.ClearSelection();
             actualizarTablaEmpresas();
         }
-
-     
 
         private void actualizarTablaEmpresas()
         {
@@ -152,57 +157,75 @@ namespace Palconet.AbmEmpresa
 
         }
 
-        private void data_empresas_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            if (e.RowIndex < 0) return;
-            if (tabla_empresas.Rows.Count == 0) return;
-            
-            if (tabla_empresas.Rows.Count < e.RowIndex + 1) return;
-            if (e.ColumnIndex == 5 || e.ColumnIndex == 0)
-            {
-                int indice = e.RowIndex;
-                DataGridViewRow row = data_empresas.Rows[indice];
-                String empresa_cuit = row.Cells["Cuit"].Value.ToString();
-                if (modo.Equals("modificacion")) modificarEmpresa(empresa_cuit);
-                else bajarEmpresa(empresa_cuit, indice);
-             
-            }
-        }
-
-        private void modificarEmpresa(String empresa_cuit)
-        {
-            this.Hide();
-            new ModificacionEmpresa(empresa_cuit).ShowDialog();
-            tabla_empresas.Rows.Clear();
-            actualizarTablaEmpresas();
-            this.Show();
-        }
-
-        private void bajarEmpresa(String empresa_cuit,int indice)
-        {
-            if (!EmpresasRepositorio.esEmpresaHabilitada(empresa_cuit))
-            {
-                MessageBox.Show("La empresa ya se encuentra inhabilitada", "Inhabilitacion de empresa", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             try
             {
-                EmpresasRepositorio.deshabilitar(empresa_cuit);
+                Empresa seleccionada = getEmpresaSeleccionada();
+                if (seleccionada.Cuit != null)
+                {
+                    ModificacionEmpresa modificacionEmpresa = new ModificacionEmpresa(seleccionada);
+                    modificacionEmpresa.ShowDialog();
+                    this.Hide();
+                }
             }
-            catch (EmpresaNoRendidaError e)
+            catch (Exception ex)
             {
-                MessageBox.Show(e.Message, "ERROR", MessageBoxButtons.OK,MessageBoxIcon.Error);
-              
-                return;
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
-           
+        }
 
-            tabla_empresas.Rows[indice].Delete();
-            actualizarTablaEmpresas();
-            MessageBox.Show("La empresa ha sido inhabilitada exitosamente", "Inhabilitacion de empresa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }*/
+        private Empresa getEmpresaSeleccionada()
+        {
+            if (data_empresas.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Debe seleccionar una empresa", "Error al habilitar/deshabilitar una empresa", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new Empresa();
+            }
+            else
+            {
+                return empresas[data_empresas.SelectedRows[0].Index];
+            }
+        }
 
+        private void btn_limpiar_Click_1(object sender, EventArgs e)
+        {
+            this.limpiarEmpresas();
+        }
+
+        private void btn_atras_Click_1(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
+
+        private void btn_cambiar_estado_Click(object sender, EventArgs e)
+        {
+            Empresa empresa = getEmpresaSeleccionada();
+            if (empresa .Cuit != null)
+            {
+                empresa.Habilitada = EmpresasRepositorio.cambiarEstado(empresa);
+                String detalleHabilitacion = empresa.Habilitada ? "HABILITADA" : "DESHABILITADA";
+                actualizarFilaSeleccionada(empresa);
+                MessageBox.Show("Estado de " + empresa.RazonSocial + " cambiado a : " + detalleHabilitacion, "Estado de Empresa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        public void actualizarFilaSeleccionada(Empresa empresa)
+        {
+            data_empresas.Rows[data_empresas.SelectedRows[0].Index].SetValues(generarFila(empresa));
+        }
+
+        private void ListadoEmpresas_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+
+
+    public class EmpresaNoSeleccionadaException : Exception
+    {
+        public EmpresaNoSeleccionadaException(): base ("Seleccione 1 y solo 1 empresa para editar")
+        {
+        }
     }
 }

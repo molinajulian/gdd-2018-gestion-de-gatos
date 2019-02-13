@@ -9,15 +9,22 @@ namespace PalcoNet.Modelo
 {
     public class Funcionalidad
     {
-        public int Codigo { get; set; }
-        public string Detalle { get; set; }
+        public int id { get; set; }
+        public string detalle { get; set; }
+
+
+        public Funcionalidad(int id, string detalle)
+        {
+            this.id = id;
+            this.detalle = detalle;
+        }
 
         public static Funcionalidad buildFuncionalidad(SqlDataReader lector)
         {
-            Funcionalidad funcionalidad = new Funcionalidad();
-            funcionalidad.Codigo = (int)lector["func_nombre"];
-            funcionalidad.Detalle = (String)lector["func_detalle"];
-            return funcionalidad;
+            Dictionary<string, int> camposFuncionalidad = Ordinales.camposFuncionalidad;
+            return new Funcionalidad(
+                lector.GetInt32(camposFuncionalidad["id"]),
+                lector.GetString(camposFuncionalidad["descripcion"]));
         }
     }
 }

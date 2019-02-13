@@ -7,18 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PalcoNet.Modelo;
 using MaterialSkin.Controls;
 using MaterialSkin;
-using PalcoNet.Modelo;
-using Palconet.Repositorios;
+using PalcoNet.Repositorios;
+using System.Data.SqlClient;
 
-namespace Palconet.AbmRol
+namespace PalcoNet.AbmRol
 {
     public partial class AltaRol : MaterialForm
     {
         Rol rol = new Rol();
         DataTable tabla_funcionalidades = new DataTable();
-        List<String> funcionalidades = new List<String>();
+        List<Funcionalidad> funcionalidades;
         public AltaRol()
         {
             InitializeComponent();
@@ -26,49 +27,56 @@ namespace Palconet.AbmRol
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900,
-                Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-            fillFuncionalidadesDgv();
+            materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+            this.funcionalidades = FuncionalidadesRepositorio.getFuncionalidades();
+            llenarLabels();
         }
-
-        private void fillFuncionalidadesDgv()
+        private void llenarLabels()
         {
-            DataGridViewCheckBoxColumn check_funcionalidad = new DataGridViewCheckBoxColumn();
-            tabla_funcionalidades.Columns.Add("Nombre");
-            tabla_funcionalidades.Columns.Add("Descripcion");
-            data_listado_funcionalidades.Columns.Add(check_funcionalidad);
-            List<Funcionalidad> funcionalidades = FuncionalidadesRepositorio.getFuncionalidades();
-
-            foreach (Funcionalidad funcionalidad in funcionalidades)
+            var labels = group_alta_rol.Controls.OfType<Label>();
+            foreach (Label label in labels)
             {
-                String[] row = new String[] { funcionalidad.Codigo.ToString(), funcionalidad.Detalle };
-                tabla_funcionalidades.Rows.Add(row);
+                if (label.Name != "labelNombre")
+                {
+                    int indexC = label.Name.IndexOf('c');
+                    int id = Convert.ToInt32(label.Name.Substring(indexC + 1, label.Name.Length - (indexC+1)));
+                    label.Text = funcionalidades[id - 1].detalle;
+                }
             }
-            data_listado_funcionalidades.DataSource = tabla_funcionalidades;
         }
-
-        private void btn_volver_Click(object sender, EventArgs e)
+        private List<Funcionalidad> obtenerFuncionalidadesElegidas()
         {
-            this.Hide();
+            var checkboxs = group_alta_rol.Controls.OfType<CheckBox>();
+            List<Funcionalidad> elegidas= new List<Funcionalidad>();
+            foreach (CheckBox ch in checkboxs)
+            {
+                int indexK = ch.Name.IndexOf('k');
+                int id = Convert.ToInt32(ch.Name.Substring(indexK + 1, ch.Name.Length - (indexK + 1)));
+                if (ch.Checked == true) elegidas.Add(funcionalidades[id - 1]);
+            }
+            return elegidas;
         }
-
         private void btn_alta_rol_Click(object sender, EventArgs e)
         {
-            epProvider.Clear();
-            if (validarCamposRol()) { return; }
-
-            if (RolesRepositorio.esRolExistente(tx_nombre_rol.Text))
+            List<Funcionalidad> elegidas = obtenerFuncionalidadesElegidas();
+            if (string.IsNullOrEmpty(tx_nombre_rol.Text) || elegidas.Count == 0)
             {
-                MessageBox.Show("Ya existe un rol con el nombre ingresado", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                MessageBox.Show("Complete el nombre y alguna funcionalidad.", "Error al crear el rol", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-
-            rol.Nombre = tx_nombre_rol.Text;
-            rol.Habilitado = true;
-            listarFuncionalidades();
-            RolesRepositorio.agregar(rol,funcionalidades);
-            funcionalidades.Clear();
-            limpiarVentana();
+            else
+            {
+                try
+                {
+                    rol.nombre = tx_nombre_rol.Text.ToUpper();
+                    RolRepositorio.agregar(rol, elegidas);
+                    limpiarVentana();
+                    elegidas.Clear();
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show(ex.Message, "Error al crear el rol", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void limpiarVentana()
@@ -78,47 +86,28 @@ namespace Palconet.AbmRol
             {
                 textbox.Clear();
             }
-
-            foreach (DataGridViewRow row in data_listado_funcionalidades.Rows)
+            var checkboxs = group_alta_rol.Controls.OfType<CheckBox>();
+            foreach (CheckBox ch in checkboxs)
             {
-                row.Cells[0].Value = false;
+                ch.Checked = false;
             }
 
         }
 
-        private bool validarCamposRol()
+        private void AltaRol_Load(object sender, EventArgs e)
         {
-            bool error = false;
-            bool tildoAlgunCheckBox = false;
-            if (String.IsNullOrWhiteSpace(tx_nombre_rol.Text))
-            {
-                epProvider.SetError(tx_nombre_rol, "Por favor complete el campo");
-                error = true;
-            }
-            foreach(DataGridViewRow row in data_listado_funcionalidades.Rows)
-            {
-                if (Convert.ToBoolean(row.Cells[0].Value)) { tildoAlgunCheckBox = true; } 
-            }
 
-            if (!tildoAlgunCheckBox)
-            {
-                epProvider.SetError(data_listado_funcionalidades, "Por favor seleccione alguna funcionalidad");
-                error = true;
-            }
-            return error;
         }
 
-        private void listarFuncionalidades()
+        private void group_alta_rol_Enter(object sender, EventArgs e)
         {
-            foreach(DataGridViewRow row in data_listado_funcionalidades.Rows)
-            {
-                //if (Convert.ToBoolean(row.Cells[0].Value))
-                //TODO: Probar si funciona igual
-                if (row.Selected)
-                {
-                    funcionalidades.Add(Convert.ToString(row.Cells[1].Value));
-                }
-            }
+
         }
+
+        private void check8_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
